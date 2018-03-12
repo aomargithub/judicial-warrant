@@ -5,7 +5,7 @@
     </div>
     <ul class="list-unstyled components">
         <li ng-repeat="item in items track by item.code">
-            <a href="#{{item.route}}" ng-click="preventDefault($event)" data-toggle="collapse" aria-expanded="false">
+            <a href="#{{item.route}}" onclick="event.preventDefault();" data-toggle="collapse" aria-expanded="false">
                 <i ng-class="item.classes"></i>
                 {{item.title}}
             </a>
