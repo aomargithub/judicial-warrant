@@ -1,0 +1,8 @@
+app:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: judicialwarrant
+    password: oracle
+    pool-properties:
+      initial-size: 30
+      max-active: 10
