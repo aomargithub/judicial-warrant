@@ -1,3 +1,0 @@
-app:
-  datasource:
-    name: jdbc/judicialwarrant-ds

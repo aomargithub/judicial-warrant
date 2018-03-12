@@ -1,2 +1,6 @@
 frontend/jwapp/node_modules/
 backend/judicial-warrant/target
+backend/judicial-warrant/.settings
+backend/judicial-warrant/.classpath
+backend/judicial-warrant/.project
+
