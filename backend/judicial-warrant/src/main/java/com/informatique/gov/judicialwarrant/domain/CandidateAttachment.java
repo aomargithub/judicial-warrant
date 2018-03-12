@@ -23,7 +23,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "candidate", "attachmentType"})
 @EqualsAndHashCode(of = {"candidate", "attachmentType"}, callSuper = false)
-public class CandidateAttachment extends DomainEntity<Integer> {
+public class CandidateAttachment extends DomainEntity<Long> {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class CandidateAttachment extends DomainEntity<Integer> {
     @SequenceGenerator(name = "CandidateAttachmentSequence", sequenceName = "candidate_attachment_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CandidateAttachmentSequence")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 	
 	@Version
 	@Column(name="orm_version")

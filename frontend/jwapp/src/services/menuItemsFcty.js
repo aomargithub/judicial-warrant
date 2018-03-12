@@ -21,7 +21,7 @@ module.exports = function(app){
                             get title () {
                                 return $rootScope.messages[this.code];
                             },
-                            route : '#',
+                            route : '.organizationUnits',
                             showFilter : function(role){
                                 return role === appRoleFcty.client.code;
                             }

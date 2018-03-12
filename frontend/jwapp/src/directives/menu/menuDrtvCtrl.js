@@ -3,9 +3,6 @@ module.exports = function (app) {
         var self = this;
 
         $scope.isMenuOpen = true;
-        $scope.preventDefault = function(event){
-            event.preventDefault();
-        };
         $scope.items = menuItemsFcty.items.filter(function (item) {
             return item.showFilter(appSessionSrvc.getCurrentUser().role);
         });

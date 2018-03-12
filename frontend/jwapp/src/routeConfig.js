@@ -6,10 +6,12 @@ module.exports = function(app){
             .state('login', {
                 url : '/login',
                 template : templateSrvcProvider.getTemplate('login')
-            })
-            .state('home', {
+            }).state('home', {
                 url : '/home',
                 template : templateSrvcProvider.getTemplate('home')
+            }).state('home.organizationUnits', {
+                url : '/organizationUnits',
+                template : templateSrvcProvider.getTemplate('organizationUnits')
             })
     });
 };

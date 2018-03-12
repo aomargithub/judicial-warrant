@@ -22,7 +22,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "candidate", "status"})
 @EqualsAndHashCode(of = {"candidate", "status"}, callSuper = false)
-public class CandidateHistoryLog extends DomainEntity<Integer> {
+public class CandidateHistoryLog extends DomainEntity<Long> {
 	
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class CandidateHistoryLog extends DomainEntity<Integer> {
     @SequenceGenerator(name = "CandidateHistoryLogSequence", sequenceName = "candidate_history_log_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CandidateHistoryLogSequence")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "CANDIDATE_ID")

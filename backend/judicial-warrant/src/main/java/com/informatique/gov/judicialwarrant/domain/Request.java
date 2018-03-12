@@ -44,8 +44,8 @@ public class Request extends DomainEntity<Integer> {
 	private Short ormVersion;
 	
 	@NaturalId
-	@Column(name="NUMBER", updatable = false)
-	private String number;
+	@Column(name="SERIAL", updatable = false)
+	private String serial;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TYPE_ID")

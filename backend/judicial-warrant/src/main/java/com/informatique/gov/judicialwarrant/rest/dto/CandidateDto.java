@@ -9,13 +9,13 @@ import lombok.ToString;
 @Data
 @ToString(of = { "id", "civilId", "request", "arabicName", "englishName" })
 @EqualsAndHashCode(of = { "civilId", "request" }, callSuper = false)
-public class CandidateDto implements UserModel<Integer> {
+public class CandidateDto implements UserModel<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7323040331827005680L;
-	private Integer id;
+	private Long id;
 	private String englishName;
 	private String arabicName;
 	private Long civilId;
