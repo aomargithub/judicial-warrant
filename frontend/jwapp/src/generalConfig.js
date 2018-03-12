@@ -1,4 +1,4 @@
- module.exports = function(app){
+module.exports = function(app){
     app.config(function($httpProvider){
         $httpProvider.interceptors.push('authenticationInterceptor');
     }).run(function($rootScope){
