@@ -7,4 +7,5 @@ module.exports = function(app){
     require('./httpStatusSrvc')(app);
     require('./menuItemsFcty')(app);
     require('./appRoleFcty')(app);
+    require('./organizationUnitSrvc')(app);
 };

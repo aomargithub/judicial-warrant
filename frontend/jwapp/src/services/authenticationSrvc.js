@@ -10,9 +10,9 @@ module.exports = function (app) {
             return $http.get(loginUrl, { headers: headers }).then(function success(response) {
                 if (response.status = 200) {
                     appSessionSrvc.setIsAuthenticated(true);
-                    appSessionSrvc.setCurrentUser(response.data.userDetails);
-                    appSessionSrvc.setAuthenticationToken(response.data.userDetails.token.value);
-                    appSessionSrvc.setMaxInactiveInterval(response.data.userDetails.token.maxInactiveInterval);
+                    appSessionSrvc.setCurrentUser(response.data);
+                    appSessionSrvc.setAuthenticationToken(response.data.token.value);
+                    appSessionSrvc.setMaxInactiveInterval(response.data.token.maxInactiveInterval);
                 }else{
                     appSessionSrvc.empty();
                 }

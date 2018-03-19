@@ -8,5 +8,6 @@ module.exports = function(app){
         
         
         urlSrvcProvider.addUrl('login', '/login');
+        urlSrvcProvider.addUrl('organizationUnits', '/organizationUnits')
     });
 };

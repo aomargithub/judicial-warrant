@@ -1,19 +1,19 @@
 <div>
     <div>
-        <p>{{messages[statusText]}}</p>
+        <p>{{messages[loginDrtvCtrl.statusText]}}</p>
     </div>
     <form action = "#" name="login_form" autocomplete="off">
         <fieldset ng-disabled="loginInProgress">
             <div>
                 <label for="username">{{messages.username}}</label>
-                <input type="text" id="username" ng-model="credentials.username"/>
+                <input type="text" id="username" ng-model="loginDrtvCtrl.credentials.username"/>
             </div>
             <div>
                 <label for="password">{{messages.password}}</label>
-                <input type="password" id="password" ng-model="credentials.password"/>
+                <input type="password" id="password" ng-model="loginDrtvCtrl.credentials.password"/>
             </div>
             <div>
-                <button ng-click="doLogin()">{{messages.login}}</button>
+                <button ng-click="loginDrtvCtrl.doLogin()">{{messages.login}}</button>
             </div>
         </fieldset>
     </form> <!-- login_form -->

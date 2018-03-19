@@ -141,6 +141,9 @@ i, span {
     background: #6d7fcc;
 }
 
+.list-unstyled {
+    padding-right: 0;
+}
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -161,7 +164,7 @@ a[aria-expanded="true"]::before {
 
 ul ul a {
     font-size: 0.9em !important;
-    padding-left: 30px !important;
+    padding-right: 35px !important;
     background: #6d7fcc;
 }
 

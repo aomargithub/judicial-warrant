@@ -133,7 +133,7 @@ eval("__webpack_require__(/*! ./angular */ \"./node_modules/angular/angular.js\"
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./login */ \"./src/directives/login/index.js\")(app);\r\n    __webpack_require__(/*! ./menu */ \"./src/directives/menu/index.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/directives/index.js?");
+eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./login */ \"./src/directives/login/index.js\")(app);\r\n    __webpack_require__(/*! ./menu */ \"./src/directives/menu/index.js\")(app);\r\n    __webpack_require__(/*! ./organizationUnit */ \"./src/directives/organizationUnit/index.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/directives/index.js?");
 
 /***/ }),
 
@@ -155,7 +155,7 @@ eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./loginDrtv
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div>\\r\\n    <div>\\r\\n        <p>{{messages[statusText]}}</p>\\r\\n    </div>\\r\\n    <form action = \\\"#\\\" name=\\\"login_form\\\" autocomplete=\\\"off\\\">\\r\\n        <fieldset ng-disabled=\\\"loginInProgress\\\">\\r\\n            <div>\\r\\n                <label for=\\\"username\\\">{{messages.username}}</label>\\r\\n                <input type=\\\"text\\\" id=\\\"username\\\" ng-model=\\\"credentials.username\\\"/>\\r\\n            </div>\\r\\n            <div>\\r\\n                <label for=\\\"password\\\">{{messages.password}}</label>\\r\\n                <input type=\\\"password\\\" id=\\\"password\\\" ng-model=\\\"credentials.password\\\"/>\\r\\n            </div>\\r\\n            <div>\\r\\n                <button ng-click=\\\"doLogin()\\\">{{messages.login}}</button>\\r\\n            </div>\\r\\n        </fieldset>\\r\\n    </form> <!-- login_form -->\\r\\n</div>\"\n\n//# sourceURL=webpack:///./src/directives/login/login-drtv.html?");
+eval("module.exports = \"<div>\\r\\n    <div>\\r\\n        <p>{{messages[loginDrtvCtrl.statusText]}}</p>\\r\\n    </div>\\r\\n    <form action = \\\"#\\\" name=\\\"login_form\\\" autocomplete=\\\"off\\\">\\r\\n        <fieldset ng-disabled=\\\"loginInProgress\\\">\\r\\n            <div>\\r\\n                <label for=\\\"username\\\">{{messages.username}}</label>\\r\\n                <input type=\\\"text\\\" id=\\\"username\\\" ng-model=\\\"loginDrtvCtrl.credentials.username\\\"/>\\r\\n            </div>\\r\\n            <div>\\r\\n                <label for=\\\"password\\\">{{messages.password}}</label>\\r\\n                <input type=\\\"password\\\" id=\\\"password\\\" ng-model=\\\"loginDrtvCtrl.credentials.password\\\"/>\\r\\n            </div>\\r\\n            <div>\\r\\n                <button ng-click=\\\"loginDrtvCtrl.doLogin()\\\">{{messages.login}}</button>\\r\\n            </div>\\r\\n        </fieldset>\\r\\n    </form> <!-- login_form -->\\r\\n</div>\"\n\n//# sourceURL=webpack:///./src/directives/login/login-drtv.html?");
 
 /***/ }),
 
@@ -177,7 +177,7 @@ eval("module.exports = function(app){\r\n    app.directive('login', function(){\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports=function(app){\r\n    app.controller('loginDrtvCtrl', function ($scope, $state, authenticationSrvc){\r\n        $scope.doLogin = function(){\r\n            authenticationSrvc.login($scope.credentials).then(function(status){\r\n                if(status.code === 200){\r\n                    $state.go('home');\r\n                }else{\r\n                    $scope.statusText = status.text;\r\n                }\r\n            });\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/directives/login/loginDrtvCtrl.js?");
+eval("module.exports=function(app){\r\n    app.controller('loginDrtvCtrl', function ($state, authenticationSrvc){\r\n        var vm = this;\r\n        vm.doLogin = function(){\r\n            authenticationSrvc.login(vm.credentials).then(function(status){\r\n                if(status.code === 200){\r\n                    $state.go('home');\r\n                }else{\r\n                    vm.statusText = status.text;\r\n                }\r\n            });\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/directives/login/loginDrtvCtrl.js?");
 
 /***/ }),
 
@@ -199,7 +199,7 @@ eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./menuDrtv 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<nav id=\\\"sidebar\\\">\\r\\n    <div class=\\\"sidebar-header\\\">\\r\\n        <h3>{{messages['sidebare.header']}}</h3>\\r\\n        <strong class= \\\"glyphicon glyphicon-menu-hamburger\\\"></strong>\\r\\n    </div>\\r\\n    <ul class=\\\"list-unstyled components\\\">\\r\\n        <li ng-repeat=\\\"item in items track by item.code\\\">\\r\\n            <a href=\\\"#{{item.route}}\\\" ng-click=\\\"preventDefault($event)\\\" data-toggle=\\\"collapse\\\" aria-expanded=\\\"false\\\">\\r\\n                <i ng-class=\\\"item.classes\\\"></i>\\r\\n                {{item.title}}\\r\\n            </a>\\r\\n            <ul class=\\\"collapse list-unstyled\\\" id=\\\"{{item.route}}\\\">\\r\\n                <li ng-repeat=\\\"subItem in item.subItems\\\">\\r\\n                    <a href=\\\"\\\" ui-sref=\\\"{{subItem.route}}\\\">{{subItem.title}}</a>\\r\\n                </li>\\r\\n            </ul>\\r\\n        </li>\\r\\n    </ul>\\r\\n</nav>\"\n\n//# sourceURL=webpack:///./src/directives/menu/menu-drtv.html?");
+eval("module.exports = \"<nav id=\\\"sidebar\\\">\\r\\n    <div class=\\\"sidebar-header\\\">\\r\\n        <h3>{{messages['sidebare.header']}}</h3>\\r\\n        <strong class= \\\"glyphicon glyphicon-menu-hamburger\\\"></strong>\\r\\n    </div>\\r\\n    <ul class=\\\"list-unstyled components\\\">\\r\\n        <li ng-repeat=\\\"item in menuDrtvCtrl.items track by item.code\\\">\\r\\n            <a href=\\\"#{{item.route}}\\\" onclick=\\\"event.preventDefault();\\\" data-toggle=\\\"collapse\\\" aria-expanded=\\\"false\\\">\\r\\n                <i ng-class=\\\"item.classes\\\"></i>\\r\\n                {{item.title}}\\r\\n            </a>\\r\\n            <ul class=\\\"collapse list-unstyled\\\" id=\\\"{{item.route}}\\\">\\r\\n                <li ng-repeat=\\\"subItem in item.subItems\\\">\\r\\n                    <a href=\\\"\\\" ui-sref=\\\"{{subItem.route}}\\\">{{subItem.title}}</a>\\r\\n                </li>\\r\\n            </ul>\\r\\n        </li>\\r\\n    </ul>\\r\\n</nav>\"\n\n//# sourceURL=webpack:///./src/directives/menu/menu-drtv.html?");
 
 /***/ }),
 
@@ -221,7 +221,51 @@ eval("module.exports = function(app){\r\n    app.directive('menu', function(){\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function (app) {\r\n    app.controller('menuDrtvCtrl', function ($scope, menuItemsFcty, appSessionSrvc) {\r\n        var self = this;\r\n\r\n        $scope.isMenuOpen = true;\r\n        $scope.preventDefault = function(event){\r\n            event.preventDefault();\r\n        };\r\n        $scope.items = menuItemsFcty.items.filter(function (item) {\r\n            return item.showFilter(appSessionSrvc.getCurrentUser().role);\r\n        });\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/directives/menu/menuDrtvCtrl.js?");
+eval("module.exports = function (app) {\r\n    app.controller('menuDrtvCtrl', function (menuItemsFcty, appSessionSrvc) {\r\n        var vm = this;\r\n\r\n        vm.isMenuOpen = true;\r\n        vm.items = menuItemsFcty.items.filter(function (item) {\r\n            return item.showFilter(appSessionSrvc.getCurrentUser().role);\r\n        });\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/directives/menu/menuDrtvCtrl.js?");
+
+/***/ }),
+
+/***/ "./src/directives/organizationUnit/index.js":
+/*!**************************************************!*\
+  !*** ./src/directives/organizationUnit/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./organizationUnitDrtv */ \"./src/directives/organizationUnit/organizationUnitDrtv.js\")(app);\r\n    __webpack_require__(/*! ./organizationUnitDrtvCtrl */ \"./src/directives/organizationUnit/organizationUnitDrtvCtrl.js\")(app);\r\n}\n\n//# sourceURL=webpack:///./src/directives/organizationUnit/index.js?");
+
+/***/ }),
+
+/***/ "./src/directives/organizationUnit/organizationUnit-drtv.html":
+/*!********************************************************************!*\
+  !*** ./src/directives/organizationUnit/organizationUnit-drtv.html ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \"<div>\\r\\n    <div>\\r\\n        <div>\\r\\n            <label for=\\\"arabicName\\\">{{messages.label.arabicName}}</label>\\r\\n            <input type=\\\"text\\\" id=\\\"arabicName\\\" ng-model=\\\"organizationUnitDrtvCtrl.organizationUnit.arabicName\\\" />\\r\\n        </div>\\r\\n        <div>\\r\\n            <label for=\\\"englishName\\\">{{messages.label.englishName}}</label>\\r\\n            <input type=\\\"text\\\" id=\\\"englishName\\\" ng-model=\\\"organizationUnitDrtvCtrl.organizationUnit.englishName\\\" />\\r\\n        </div>\\r\\n        <div>\\r\\n            <label for=\\\"isActive\\\">{{messages.label.isActive}}</label>\\r\\n            <input type=\\\"checkbox\\\" id=\\\"isActive\\\" ng-model=\\\"organizationUnitDrtvCtrl.organizationUnit.isActive\\\" />\\r\\n        </div>\\r\\n        <div>\\r\\n            <div ng-if=\\\"!organizationUnitDrtvCtrl.editMode\\\">\\r\\n                <button ng-click=\\\"organizationUnitDrtvCtrl.add()\\\">{{messages.label.add}}</button>\\r\\n            </div>\\r\\n            <div ng-if=\\\"organizationUnitDrtvCtrl.editMode\\\">\\r\\n                <button ng-click=\\\"organizationUnitDrtvCtrl.update()\\\">{{messages.label.update}}</button>\\r\\n            </div>\\r\\n            <div ng-if=\\\"organizationUnitDrtvCtrl.organizationUnit.$dirty\\\">\\r\\n                <button ng-click=\\\"organizationUnitDrtvCtrl.reset()\\\">{{messages.label.reset}}</button>\\r\\n            </div>\\r\\n            <div ng-if=\\\"organizationUnitDrtvCtrl.editMode\\\">\\r\\n                <button ng-click=\\\"organizationUnitDrtvCtrl.cancel()\\\">{{messages.label.cancel}}</button>\\r\\n            </div>\\r\\n        </div>\\r\\n    </div>\\r\\n    <div>\\r\\n        <table class=\\\"table table-striped table-bordered table-hover\\\">\\r\\n            <thead>\\r\\n                <tr>\\r\\n                    <th>\\r\\n                        {{messages.label.arabicName}}\\r\\n                    </th>\\r\\n                    <th>\\r\\n                        {{messages.label.englishName}}\\r\\n                    </th>\\r\\n                    <th>\\r\\n                        {{messages.label.isActive}}\\r\\n                    </th>\\r\\n                </tr>\\r\\n            </thead>\\r\\n            <tbody>\\r\\n                <tr ng-repeat=\\\"ou in organizationUnitDrtvCtrl.organizationUnits track by ou.id\\\">\\r\\n                    <td>\\r\\n                        {{ou.arabicName}}\\r\\n                    </td>\\r\\n                    <td>\\r\\n                        {{ou.englishName}}\\r\\n                    </td>\\r\\n                    <td>\\r\\n                        {{ou.isActive}}\\r\\n                    </td>\\r\\n                </tr>\\r\\n            </tbody>\\r\\n        </table>\\r\\n    </div>\\r\\n</div>\"\n\n//# sourceURL=webpack:///./src/directives/organizationUnit/organizationUnit-drtv.html?");
+
+/***/ }),
+
+/***/ "./src/directives/organizationUnit/organizationUnitDrtv.js":
+/*!*****************************************************************!*\
+  !*** ./src/directives/organizationUnit/organizationUnitDrtv.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = function(app){\r\n    app.directive('organizationUnitDrtv', function(){\r\n        return {\r\n            controllerAs: 'organizationUnitDrtvCtrl',\r\n            controller: 'organizationUnitDrtvCtrl',\r\n            template: __webpack_require__(/*! ./organizationUnit-drtv.html */ \"./src/directives/organizationUnit/organizationUnit-drtv.html\"),\r\n            replace: true\r\n        };\r\n    });\r\n}\n\n//# sourceURL=webpack:///./src/directives/organizationUnit/organizationUnitDrtv.js?");
+
+/***/ }),
+
+/***/ "./src/directives/organizationUnit/organizationUnitDrtvCtrl.js":
+/*!*********************************************************************!*\
+  !*** ./src/directives/organizationUnit/organizationUnitDrtvCtrl.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(app){\r\n    app.controller('organizationUnitDrtvCtrl', function(OrganizationUnit, organizationUnitSrvc){\r\n        var vm = this;\r\n        vm.organizationUnit = new OrganizationUnit();\r\n\r\n        organizationUnitSrvc.getAll().then(function(response){\r\n            vm.organizationUnits = response.data;\r\n        });\r\n\r\n        vm.add = function(){\r\n            organizationUnitSrvc.save(vm.organizationUnit).then(function(response){\r\n                vm.organizationUnits.push(response.data);\r\n            });\r\n        };\r\n    });\r\n}\n\n//# sourceURL=webpack:///./src/directives/organizationUnit/organizationUnitDrtvCtrl.js?");
 
 /***/ }),
 
@@ -243,7 +287,7 @@ eval("module.exports = function(app){\r\n    app.config(function($httpProvider){
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./directives */ \"./src/directives/index.js\")(app);\r\n    __webpack_require__(/*! ./services */ \"./src/services/index.js\")(app);\r\n    __webpack_require__(/*! ./urlConfig */ \"./src/urlConfig.js\")(app);\r\n    __webpack_require__(/*! ./generalConfig */ \"./src/generalConfig.js\")(app);\r\n    __webpack_require__(/*! ./routeConfig */ \"./src/routeConfig.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./directives */ \"./src/directives/index.js\")(app);\r\n    __webpack_require__(/*! ./services */ \"./src/services/index.js\")(app);\r\n    __webpack_require__(/*! ./urlConfig */ \"./src/urlConfig.js\")(app);\r\n    __webpack_require__(/*! ./generalConfig */ \"./src/generalConfig.js\")(app);\r\n    __webpack_require__(/*! ./routeConfig */ \"./src/routeConfig.js\")(app);\r\n    __webpack_require__(/*! ./models */ \"./src/models/index.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -262,10 +306,32 @@ eval("(function(){\r\n    var angular = __webpack_require__(/*! angular */ \"./n
 /*!***************************!*\
   !*** ./src/messages.json ***!
   \***************************/
-/*! exports provided: username, password, login, UNAUTHORIZED, NOT_FOUND, SAME_ORIGIN_POLICY_VIOLATION, LOOKUPS, ORGANIZATION_UNITS, ATTACHMENT_TYPES, CANDIDATE_ATTACHMENT_TYPES, REQUEST_ATTACHMENT_TYPES, USERS, sidebare.header, default */
+/*! exports provided: username, password, login, UNAUTHORIZED, NOT_FOUND, SAME_ORIGIN_POLICY_VIOLATION, LOOKUPS, ORGANIZATION_UNITS, ATTACHMENT_TYPES, CANDIDATE_ATTACHMENT_TYPES, REQUEST_ATTACHMENT_TYPES, USERS, sidebare.header, label, default */
 /***/ (function(module) {
 
-eval("module.exports = {\"username\":\"اسم الدخول\",\"password\":\"كلمة المرور\",\"login\":\"تسجيل دخول\",\"UNAUTHORIZED\":\"اسم المستخدم او كلمة المرور خطأ\",\"NOT_FOUND\":\"حدث خطأ اثناء الاتصال بالخادم\",\"SAME_ORIGIN_POLICY_VIOLATION\":\"حدث خطأ اثناء الاتصال بالخادم\",\"LOOKUPS\":\"ادارة الرموز\",\"ORGANIZATION_UNITS\":\"الوحدات التنظيمية\",\"ATTACHMENT_TYPES\":\"انواع المرفقات\",\"CANDIDATE_ATTACHMENT_TYPES\":\"مرفقات المرشحين\",\"REQUEST_ATTACHMENT_TYPES\":\"مرفقات انواع الخدمات\",\"USERS\":\"المستخدمين\",\"sidebare.header\":\"القائمة الرئيسية\"};\n\n//# sourceURL=webpack:///./src/messages.json?");
+eval("module.exports = {\"username\":\"اسم الدخول\",\"password\":\"كلمة المرور\",\"login\":\"تسجيل دخول\",\"UNAUTHORIZED\":\"اسم المستخدم او كلمة المرور خطأ\",\"NOT_FOUND\":\"حدث خطأ اثناء الاتصال بالخادم\",\"SAME_ORIGIN_POLICY_VIOLATION\":\"حدث خطأ اثناء الاتصال بالخادم\",\"LOOKUPS\":\"ادارة الرموز\",\"ORGANIZATION_UNITS\":\"الوحدات التنظيمية\",\"ATTACHMENT_TYPES\":\"انواع المرفقات\",\"CANDIDATE_ATTACHMENT_TYPES\":\"مرفقات المرشحين\",\"REQUEST_ATTACHMENT_TYPES\":\"مرفقات انواع الخدمات\",\"USERS\":\"المستخدمين\",\"sidebare.header\":\"القائمة الرئيسية\",\"label\":{\"arabicName\":\"الاسم بالعربية\",\"englishName\":\"الاسم بالانجليزية\",\"isActive\":\"نشط؟\",\"add\":\"إضافة\",\"update\":\"تعديل\",\"reset\":\"مسح\",\"cancel\":\"الغاء\"}};\n\n//# sourceURL=webpack:///./src/messages.json?");
+
+/***/ }),
+
+/***/ "./src/models/OrganizationUnit.js":
+/*!****************************************!*\
+  !*** ./src/models/OrganizationUnit.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(app){\r\n    app.factory('OrganizationUnit', function(){\r\n        return function OrganizationUnit(){\r\n            var self = this;\r\n            self.id = null;\r\n            self.englishName = null;\r\n            self.arabicName = null;\r\n            self.isActive = null;\r\n            self.listOrder = null;\r\n        }\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/models/OrganizationUnit.js?");
+
+/***/ }),
+
+/***/ "./src/models/index.js":
+/*!*****************************!*\
+  !*** ./src/models/index.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./OrganizationUnit */ \"./src/models/OrganizationUnit.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/models/index.js?");
 
 /***/ }),
 
@@ -287,7 +353,7 @@ eval("module.exports = function(app){\r\n    app.config(function($stateProvider,
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function(app){\r\n    app.factory('appRoleFcty', function(){\r\n        return {\r\n            moj : {\r\n                code : 'MOJ',\r\n                description : ''\r\n            },\r\n            mla : {\r\n                code : 'MLA',\r\n                description : ''\r\n            },\r\n            client : {\r\n                code : 'CLIENT',\r\n                description : ''\r\n            },\r\n            jti : {\r\n                code : 'JTI',\r\n                description : ''\r\n            }\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/services/appRoleFcty.js?");
+eval("module.exports = function(app){\r\n    app.factory('appRoleFcty', function(){\r\n        return {\r\n            mojAdmin : {\r\n                code : 'MOJ_ADMIN',\r\n                description : ''\r\n            },\r\n            moj : {\r\n                code : 'MOJ',\r\n                description : ''\r\n            },\r\n            mla : {\r\n                code : 'MLA',\r\n                description : ''\r\n            },\r\n            client : {\r\n                code : 'CLIENT',\r\n                description : ''\r\n            },\r\n            jti : {\r\n                code : 'JTI',\r\n                description : ''\r\n            }\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/services/appRoleFcty.js?");
 
 /***/ }),
 
@@ -320,7 +386,7 @@ eval("module.exports = function(app){\r\n    app.factory('authenticationIntercep
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function (app) {\r\n    app.service('authenticationSrvc', function ($http, urlSrvc, appSessionSrvc, httpStatusSrvc) {\r\n        var self = this;\r\n\r\n        self.login = function (credentials) {\r\n            var loginUrl = urlSrvc.getUrl('login');\r\n            var headers = {\r\n                authorization: \"Basic \" + btoa(credentials.username + \":\" + credentials.password)\r\n            };\r\n            return $http.get(loginUrl, { headers: headers }).then(function success(response) {\r\n                if (response.status = 200) {\r\n                    appSessionSrvc.setIsAuthenticated(true);\r\n                    appSessionSrvc.setCurrentUser(response.data.userDetails);\r\n                    appSessionSrvc.setAuthenticationToken(response.data.userDetails.token.value);\r\n                    appSessionSrvc.setMaxInactiveInterval(response.data.userDetails.token.maxInactiveInterval);\r\n                }else{\r\n                    appSessionSrvc.empty();\r\n                }\r\n                return httpStatusSrvc.getStatus(response.status);\r\n\r\n            }, function error(response) {\r\n\r\n                appSessionSrvc.empty();\r\n                return httpStatusSrvc.getStatus(response.status);\r\n            });\r\n        };\r\n    });\r\n}\n\n//# sourceURL=webpack:///./src/services/authenticationSrvc.js?");
+eval("module.exports = function (app) {\r\n    app.service('authenticationSrvc', function ($http, urlSrvc, appSessionSrvc, httpStatusSrvc) {\r\n        var self = this;\r\n\r\n        self.login = function (credentials) {\r\n            var loginUrl = urlSrvc.getUrl('login');\r\n            var headers = {\r\n                authorization: \"Basic \" + btoa(credentials.username + \":\" + credentials.password)\r\n            };\r\n            return $http.get(loginUrl, { headers: headers }).then(function success(response) {\r\n                if (response.status = 200) {\r\n                    appSessionSrvc.setIsAuthenticated(true);\r\n                    appSessionSrvc.setCurrentUser(response.data);\r\n                    appSessionSrvc.setAuthenticationToken(response.data.token.value);\r\n                    appSessionSrvc.setMaxInactiveInterval(response.data.token.maxInactiveInterval);\r\n                }else{\r\n                    appSessionSrvc.empty();\r\n                }\r\n                return httpStatusSrvc.getStatus(response.status);\r\n\r\n            }, function error(response) {\r\n\r\n                appSessionSrvc.empty();\r\n                return httpStatusSrvc.getStatus(response.status);\r\n            });\r\n        };\r\n    });\r\n}\n\n//# sourceURL=webpack:///./src/services/authenticationSrvc.js?");
 
 /***/ }),
 
@@ -342,7 +408,7 @@ eval("//to be converted to factory\r\nmodule.exports = function(app){\r\n    app
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./authenticationSrvc */ \"./src/services/authenticationSrvc.js\")(app);\r\n    __webpack_require__(/*! ./urlPrvd */ \"./src/services/urlPrvd.js\")(app);\r\n    __webpack_require__(/*! ./authenticationInterceptor */ \"./src/services/authenticationInterceptor.js\")(app);\r\n    __webpack_require__(/*! ./templatePrvd */ \"./src/services/templatePrvd.js\")(app);\r\n    __webpack_require__(/*! ./appSessionSrvc */ \"./src/services/appSessionSrvc.js\")(app);\r\n    __webpack_require__(/*! ./httpStatusSrvc */ \"./src/services/httpStatusSrvc.js\")(app);\r\n    __webpack_require__(/*! ./menuItemsFcty */ \"./src/services/menuItemsFcty.js\")(app);\r\n    __webpack_require__(/*! ./appRoleFcty */ \"./src/services/appRoleFcty.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/services/index.js?");
+eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./authenticationSrvc */ \"./src/services/authenticationSrvc.js\")(app);\r\n    __webpack_require__(/*! ./urlPrvd */ \"./src/services/urlPrvd.js\")(app);\r\n    __webpack_require__(/*! ./authenticationInterceptor */ \"./src/services/authenticationInterceptor.js\")(app);\r\n    __webpack_require__(/*! ./templatePrvd */ \"./src/services/templatePrvd.js\")(app);\r\n    __webpack_require__(/*! ./appSessionSrvc */ \"./src/services/appSessionSrvc.js\")(app);\r\n    __webpack_require__(/*! ./httpStatusSrvc */ \"./src/services/httpStatusSrvc.js\")(app);\r\n    __webpack_require__(/*! ./menuItemsFcty */ \"./src/services/menuItemsFcty.js\")(app);\r\n    __webpack_require__(/*! ./appRoleFcty */ \"./src/services/appRoleFcty.js\")(app);\r\n    __webpack_require__(/*! ./organizationUnitSrvc */ \"./src/services/organizationUnitSrvc.js\")(app);\r\n};\n\n//# sourceURL=webpack:///./src/services/index.js?");
 
 /***/ }),
 
@@ -353,7 +419,18 @@ eval("module.exports = function(app){\r\n    __webpack_require__(/*! ./authentic
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function(app){\r\n    app.factory('menuItemsFcty', function($rootScope, appRoleFcty){\r\n        return {\r\n            items : [\r\n                {\r\n                    code : 'LOOKUPS',\r\n                    get title () {\r\n                        return $rootScope.messages[this.code];\r\n                    },\r\n                    route : 'lookupsSubmenu',\r\n                    classes : [\r\n                        \"glyphicon\",\r\n                        \"glyphicon-cog\"\r\n                    ],\r\n                    showFilter : function(role){\r\n                        return role === appRoleFcty.moj.code;\r\n                    },\r\n                    subItems : [\r\n                        {\r\n                            code : 'ORGANIZATION_UNITS',\r\n                            get title () {\r\n                                return $rootScope.messages[this.code];\r\n                            },\r\n                            route : '.organizationUnits',\r\n                            showFilter : function(role){\r\n                                return role === appRoleFcty.client.code;\r\n                            }\r\n                        },\r\n                        {\r\n                            code : 'ATTACHMENT_TYPES',\r\n                            get title () {\r\n                                return $rootScope.messages[this.code];\r\n                            },\r\n                            route : '#',\r\n                            showFilter : function(role){\r\n                                return true;\r\n                            }\r\n                        },\r\n                        {\r\n                            code : 'CANDIDATE_ATTACHMENT_TYPES',\r\n                            get title () {\r\n                                return $rootScope.messages[this.code];\r\n                            },\r\n                            route : '#',\r\n                            showFilter : function(role){\r\n                                return true;\r\n                            }\r\n                        },\r\n                        {\r\n                            code : 'REQUEST_ATTACHMENT_TYPES',\r\n                            get title () {\r\n                                return $rootScope.messages[this.code];\r\n                            },\r\n                            route : '#',\r\n                            showFilter : function(role){\r\n                                return true;\r\n                            }\r\n                        }          \r\n                    ]\r\n                },\r\n                {\r\n                    code : 'USERS',\r\n                    get title () {\r\n                        return $rootScope.messages[this.code];\r\n                    },\r\n                    route : '',\r\n                    showFilter : function(role){\r\n                        return role === appRoleFcty.client.code;\r\n                    }\r\n                }\r\n            ]\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/services/menuItemsFcty.js?");
+eval("module.exports = function(app){\r\n    app.factory('menuItemsFcty', function($rootScope, appRoleFcty){\r\n\r\n        function Item(){\r\n\r\n            var subItemsValue = [];\r\n\r\n            this.codeValue = function(code){\r\n                this.code = code;\r\n                this.title = $rootScope.messages[this.code];\r\n                return this;\r\n            };\r\n\r\n            this.classesValue = function(classes){\r\n                this.classes = classes;\r\n                return this;\r\n            };\r\n\r\n            this.routeValue = function(route){\r\n                this.route = route;\r\n                return this;\r\n            }\r\n\r\n            this.addSubItem = function(subItem){\r\n                subItemsValue.push(subItem);\r\n                return this;\r\n            };\r\n\r\n            this.showFilter = function(role){\r\n               \r\n\r\n                this.subItems = subItemsValue.filter(function(subItem){\r\n                    return subItem.showFilter(role);\r\n                });\r\n                \r\n                return this.subItems.length > 0 ? true : false;\r\n            };\r\n        }\r\n\r\n        function SubItem(){\r\n            \r\n            this.codeValue = function(code){\r\n                this.code = code;\r\n                this.title = $rootScope.messages[this.code];\r\n                return this;\r\n            };\r\n\r\n            this.routeValue = function(route){\r\n                this.route = route;\r\n                return this;\r\n            }\r\n\r\n            this.showFilterValue = function(showFilter){\r\n                this.showFilter = showFilter;\r\n                return this;\r\n            };\r\n        }\r\n\r\n        var lookupsItem = new Item(), usersItem = new Item();\r\n        lookupsItem.codeValue('LOOKUPS').routeValue('lookupsSubmenu').classesValue([\"glyphicon\", \"glyphicon-cog\"]);\r\n        usersItem.codeValue('USERS').routeValue('').classesValue([\"glyphicon\", \"glyphicon-cog\"]);\r\n\r\n        var organizationUnitsSubItem = new SubItem(), \r\n        attachmentTypesSubItem = new SubItem(), \r\n        candidateAttachmentTypesSubItem = new SubItem(),\r\n        requestAttachmentTypesSubItem = new SubItem();\r\n\r\n        organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')\r\n        .routeValue('.organizationUnits')\r\n        .showFilterValue(function(role){\r\n            return role === appRoleFcty.mojAdmin.code;\r\n        });\r\n\r\n        attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')\r\n        .routeValue('')\r\n        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});\r\n        \r\n        candidateAttachmentTypesSubItem.codeValue('CANDIDATE_ATTACHMENT_TYPES')\r\n        .routeValue('')\r\n        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});\r\n\r\n        requestAttachmentTypesSubItem.codeValue('REQUEST_ATTACHMENT_TYPES')\r\n        .routeValue('')\r\n        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});\r\n\r\n        lookupsItem.addSubItem(organizationUnitsSubItem);\r\n       // .addSubItem(attachmentTypesSubItem)\r\n       // .addSubItem(candidateAttachmentTypesSubItem)\r\n       // .addSubItem(requestAttachmentTypesSubItem);\r\n\r\n        var menu = [lookupsItem, usersItem];\r\n\r\n        return {\r\n            items :  menu\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/services/menuItemsFcty.js?");
+
+/***/ }),
+
+/***/ "./src/services/organizationUnitSrvc.js":
+/*!**********************************************!*\
+  !*** ./src/services/organizationUnitSrvc.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(app){\r\n    app.service('organizationUnitSrvc', function($http, urlSrvc){\r\n        var self = this;\r\n        var organizationUnitsUrl = urlSrvc.getUrl('organizationUnits');\r\n        self.save = function(organizationUnit){\r\n            \r\n        };\r\n\r\n        self.getAll = function(){\r\n            return $http.get(organizationUnitsUrl);\r\n        };\r\n\r\n        self.save = function(organizationUnit){\r\n            return $http.post(organizationUnitsUrl, organizationUnit);\r\n        };\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/services/organizationUnitSrvc.js?");
 
 /***/ }),
 
@@ -386,7 +463,7 @@ eval("module.exports = function(app){\r\n    app.provider('urlSrvc', function(){
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = function(app){\r\n    app.config(function(urlSrvcProvider){\r\n        urlSrvcProvider.addEnvironment('dev').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('test').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('staging').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('prod').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.setCurrentEnvironment('dev');\r\n        \r\n        \r\n        urlSrvcProvider.addUrl('login', '/login');\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/urlConfig.js?");
+eval("module.exports = function(app){\r\n    app.config(function(urlSrvcProvider){\r\n        urlSrvcProvider.addEnvironment('dev').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('test').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('staging').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.addEnvironment('prod').protocol('http').server('localhost').port('8081').endPointBase('/judicialwarrant/api');\r\n        urlSrvcProvider.setCurrentEnvironment('dev');\r\n        \r\n        \r\n        urlSrvcProvider.addUrl('login', '/login');\r\n        urlSrvcProvider.addUrl('organizationUnits', '/organizationUnits')\r\n    });\r\n};\n\n//# sourceURL=webpack:///./src/urlConfig.js?");
 
 /***/ }),
 
@@ -408,7 +485,7 @@ eval("var map = {\n\t\"./home.html\": \"./src/views/home.html\",\n\t\"./login.ht
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<menu></menu>\\r\\n<div id=\\\"content\\\" class=\\\"container-fluid\\\">\\r\\n    <div id=\\\"header-r\\\" class=\\\"row\\\">\\r\\n       <!-- <div id=\\\"content-c\\\" class=\\\"col-12\\\" ng-controller=\\\"menuDrtvCtrl\\\">\\r\\n            <button type=\\\"button\\\" id=\\\"sidebarCollapse\\\" class=\\\"btn btn-info navbar-btn\\\" ng-click=\\\"toggleMenu()\\\">\\r\\n                <i class=\\\"glyphicon glyphicon-align-left\\\"></i>\\r\\n            </button>\\r\\n        </div> header-c -->\\r\\n    </div><!-- header-r -->\\r\\n    <div id=\\\"bread-cumbs-r\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"bread-cumbs-c\\\" class=\\\"col-12\\\">\\r\\n            Bread cumbs\\r\\n        </div><!-- bread-cumbs-c -->\\r\\n    </div><!-- bread-cumbs-r -->\\r\\n    <div id=\\\"body-container\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"content\\\" class=\\\"col-12\\\">\\r\\n               <div ui-view>\\r\\n        </div><!-- content -->\\r\\n    </div><!-- body-container -->\\r\\n    <div id=\\\"footer-r\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"footer-c\\\" class=\\\"col-12\\\">\\r\\n            footer\\r\\n        </div><!-- footer-c -->\\r\\n    </div><!-- footer-r -->\\r\\n</div><!-- content -->\"\n\n//# sourceURL=webpack:///./src/views/home.html?");
+eval("module.exports = \"<menu></menu>\\r\\n<div id=\\\"content\\\" class=\\\"container-fluid\\\">\\r\\n    <div id=\\\"header-r\\\" class=\\\"row\\\">\\r\\n       Header\\r\\n    </div><!-- header-r -->\\r\\n    <div id=\\\"bread-cumbs-r\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"bread-cumbs-c\\\" class=\\\"col-12\\\">\\r\\n            Bread cumbs\\r\\n        </div><!-- bread-cumbs-c -->\\r\\n    </div><!-- bread-cumbs-r -->\\r\\n    <div id=\\\"body-container\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"content\\\" class=\\\"col-12\\\">\\r\\n               <div ui-view>\\r\\n        </div><!-- content -->\\r\\n    </div><!-- body-container -->\\r\\n    <div id=\\\"footer-r\\\" class=\\\"row\\\">\\r\\n        <div id=\\\"footer-c\\\" class=\\\"col-12\\\">\\r\\n            footer\\r\\n        </div><!-- footer-c -->\\r\\n    </div><!-- footer-r -->\\r\\n</div><!-- content -->\"\n\n//# sourceURL=webpack:///./src/views/home.html?");
 
 /***/ }),
 
@@ -430,7 +507,7 @@ eval("module.exports = \"<div class=\\\"container-fluid\\\">\\r\\n    <login></l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"aslkfjwoeiejlksnmxijksm\"\n\n//# sourceURL=webpack:///./src/views/organizationUnits.html?");
+eval("module.exports = \"<div>\\r\\n   <organization-unit-drtv></organization-unit-drtv>\\r\\n</div>\"\n\n//# sourceURL=webpack:///./src/views/organizationUnits.html?");
 
 /***/ })
 

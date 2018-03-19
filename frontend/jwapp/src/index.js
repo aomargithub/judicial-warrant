@@ -4,4 +4,5 @@ module.exports = function(app){
     require('./urlConfig')(app);
     require('./generalConfig')(app);
     require('./routeConfig')(app);
+    require('./models')(app);
 };
