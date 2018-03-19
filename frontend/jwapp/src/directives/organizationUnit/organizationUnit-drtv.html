@@ -1,0 +1,60 @@
+<div>
+    <div>
+        <div>
+            <label for="arabicName">{{messages.label.arabicName}}</label>
+            <input type="text" id="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" />
+        </div>
+        <div>
+            <label for="englishName">{{messages.label.englishName}}</label>
+            <input type="text" id="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" />
+        </div>
+        <div>
+            <label for="isActive">{{messages.label.isActive}}</label>
+            <input type="checkbox" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
+        </div>
+        <div>
+            <div ng-if="!organizationUnitDrtvCtrl.editMode">
+                <button ng-click="organizationUnitDrtvCtrl.add()">{{messages.label.add}}</button>
+            </div>
+            <div ng-if="organizationUnitDrtvCtrl.editMode">
+                <button ng-click="organizationUnitDrtvCtrl.update()">{{messages.label.update}}</button>
+            </div>
+            <div ng-if="organizationUnitDrtvCtrl.organizationUnit.$dirty">
+                <button ng-click="organizationUnitDrtvCtrl.reset()">{{messages.label.reset}}</button>
+            </div>
+            <div ng-if="organizationUnitDrtvCtrl.editMode">
+                <button ng-click="organizationUnitDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        {{messages.label.arabicName}}
+                    </th>
+                    <th>
+                        {{messages.label.englishName}}
+                    </th>
+                    <th>
+                        {{messages.label.isActive}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ou in organizationUnitDrtvCtrl.organizationUnits track by ou.id">
+                    <td>
+                        {{ou.arabicName}}
+                    </td>
+                    <td>
+                        {{ou.englishName}}
+                    </td>
+                    <td>
+                        {{ou.isActive}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
