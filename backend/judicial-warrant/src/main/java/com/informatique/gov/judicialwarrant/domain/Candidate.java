@@ -51,8 +51,8 @@ public class Candidate extends DomainEntity<Long> {
 	private Long civilId;
 	
 	@Version
-	@Column(name="orm_version")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@Embedded
 	private CreateLog createLog;

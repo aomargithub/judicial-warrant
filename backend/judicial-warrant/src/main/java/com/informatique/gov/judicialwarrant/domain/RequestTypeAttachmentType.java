@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Version;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -34,6 +36,10 @@ public class RequestTypeAttachmentType extends DomainEntity<Short> {
     @Column(name = "id")
     private Short id;
 	
+	@Version
+	@Column(name="VERSION")
+	private Short version;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="REQUEST_TYPE_ID")
 	private RequestType requestType;
@@ -49,6 +55,9 @@ public class RequestTypeAttachmentType extends DomainEntity<Short> {
 
 	@Embedded
 	private CreateLog createLog;
+	
+	@Embedded
+	private UpdateLog updateLog;
 	
 	@Column(name = "LIST_ORDER")
 	private Byte listOrder;

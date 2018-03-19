@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -21,4 +23,7 @@ public class OrganizationUnitDto implements UserModel<Short> {
 	private String arabicName;
 	private Boolean isActive;
 	private Short listOrder;
+	
+	@JsonIgnore
+	private Short version;
 }

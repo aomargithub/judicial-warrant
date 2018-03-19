@@ -25,8 +25,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "REQUEST")
 @Data
-@ToString(of = {"id", "number"})
-@EqualsAndHashCode(of = {"number"}, callSuper = false)
+@ToString(of = {"id", "serial"})
+@EqualsAndHashCode(of = {"serial"}, callSuper = false)
 public class Request extends DomainEntity<Integer> {
 	
 	/**
@@ -40,8 +40,8 @@ public class Request extends DomainEntity<Integer> {
     private Integer id;
 	
 	@Version
-	@Column(name="orm_version")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@NaturalId
 	@Column(name="SERIAL", updatable = false)

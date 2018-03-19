@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"arabicName", "englishName"}, callSuper = false)
-public class OrganizationUnit extends DomainEntity<Short> {
+public class OrganizationUnit extends DomainEntity<Short> implements CreationAuditable, UpdateAuditable {
 
 	/**
 	 * 
@@ -34,8 +34,8 @@ public class OrganizationUnit extends DomainEntity<Short> {
     private Short id;
 	
 	@Version
-	@Column(name="orm_version")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@Column(name = "ENGLISH_NAME")
 	private String englishName;

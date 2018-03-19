@@ -34,8 +34,8 @@ public class AttachmentType extends DomainEntity<Byte> {
     private Byte id;
 	
 	@Version
-	@Column(name="orm_version")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@Column(name = "ENGLISH_NAME")
 	private String englishName;

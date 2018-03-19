@@ -62,8 +62,8 @@ public class User extends DomainEntity<Integer> {
 	private UpdateLog updateLog;
 	
 	@Version
-	@Column(name="ORM_VERSION")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@Column(name = "IS_ACTIVE")
 	private Boolean isActive;

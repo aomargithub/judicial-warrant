@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.informatique.gov.judicialwarrant.support.security.Constants;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantAuthenticationProvider;
 import com.informatique.gov.judicialwarrant.support.security.OnlyLoginBasicAuthenticationFilter;
 import com.informatique.gov.judicialwarrant.support.security.RestAuthenticationEntryPoint;
@@ -44,9 +45,10 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class).cors()
 				.configurationSource(corsConfigurationSource()).and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutUrl("/api/logout");
+				.sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutUrl(Constants.LOGOUT_URL);
 
 	    http.addFilterBefore(onlyLoginBasicAuthenticationFilter(), RequestCacheAwareFilter.class).exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint());
+	   // http.authorizeRequests().antMatchers(Constants.API_DOCUMENTATION_URL).permitAll();
 		http.authorizeRequests().antMatchers("/api/**").authenticated();
 	}
 

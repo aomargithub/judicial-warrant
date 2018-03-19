@@ -2,13 +2,13 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.response.LoginResponse;
-import com.informatique.gov.judicialwarrant.service.SecurityService;
+import com.informatique.gov.judicialwarrant.rest.handler.LoginHandler;
 
 import lombok.AllArgsConstructor;
 
@@ -17,10 +17,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LoginController {
 	
-	private SecurityService securityService;
+	private LoginHandler loginHandler;
 	
 	@GetMapping
-	public LoginResponse login(HttpSession session) throws JudicialWarrantException {
-		return new LoginResponse(securityService.getUserDetails(session));
+	public ResponseEntity<?> login(HttpSession session) throws JudicialWarrantException {
+		return loginHandler.getUserDetails(session);
 	}
 }

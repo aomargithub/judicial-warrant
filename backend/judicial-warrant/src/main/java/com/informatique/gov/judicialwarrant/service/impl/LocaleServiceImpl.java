@@ -29,11 +29,10 @@ public class LocaleServiceImpl implements LocaleService{
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public LocaleDto getByCode(String code) throws JudicialWarrantException {
-    	Locale entity = null;
     	LocaleDto dto = null;
         try{
             notNull(code, "code must be set");
-            entity = localeRepository.findByCode(code);
+            Locale entity = localeRepository.findByCode(code);
             dto = localeMapper.toDto(entity);
         }catch(Exception e){
             throw new JudicialWarrantInternalException(e);
@@ -45,10 +44,8 @@ public class LocaleServiceImpl implements LocaleService{
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<LocaleDto> getAll() throws JudicialWarrantException {
         List<LocaleDto> dtos = null;
-        List<Locale> entities = null;
-
         try{
-            entities = localeRepository.findAll();
+        	List<Locale> entities = localeRepository.findAll();
             dtos = localeMapper.toDto(entities);
         }catch(Exception e){
             throw new JudicialWarrantInternalException(e);
@@ -61,10 +58,9 @@ public class LocaleServiceImpl implements LocaleService{
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<LocaleDto> getActive() throws JudicialWarrantException {
         List<LocaleDto> dtos = null;
-        List<Locale> entities = null;
-
+        
         try{
-            entities = localeRepository.findByIsActive(Boolean.TRUE);
+        	List<Locale> entities = localeRepository.findByIsActive(Boolean.TRUE);
             dtos = localeMapper.toDto(entities);
         }catch(Exception e){
             throw new JudicialWarrantInternalException(e);
@@ -77,10 +73,9 @@ public class LocaleServiceImpl implements LocaleService{
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<LocaleDto> getInActive() throws JudicialWarrantException {
         List<LocaleDto> dtos = null;
-        List<Locale> entities = null;
-
+        
         try{
-            entities = localeRepository.findByIsActive(Boolean.FALSE);
+        	List<Locale> entities = localeRepository.findByIsActive(Boolean.FALSE);
             dtos = localeMapper.toDto(entities);
         }catch(Exception e){
             throw new JudicialWarrantInternalException(e);

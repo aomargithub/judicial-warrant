@@ -36,8 +36,8 @@ public class RequestAttachment extends DomainEntity<Long> {
     private Long id;
 	
 	@Version
-	@Column(name="orm_version")
-	private Short ormVersion;
+	@Column(name="VERSION")
+	private Short version;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "REQUEST_ID")

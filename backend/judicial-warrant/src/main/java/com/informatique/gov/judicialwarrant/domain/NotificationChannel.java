@@ -39,7 +39,7 @@ public class NotificationChannel extends DomainEntity<Byte>{
 	private Boolean isActive;
 
 	@NaturalId
-	@Column(name = "code")
+	@Column(name = "code", insertable = false, updatable = false)
 	private String code;
 	
 	@Embedded
