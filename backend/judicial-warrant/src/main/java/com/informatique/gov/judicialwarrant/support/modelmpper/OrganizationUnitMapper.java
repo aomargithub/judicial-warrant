@@ -44,6 +44,7 @@ public class OrganizationUnitMapper extends AbstractModelMapper<OrganizationUnit
 			entity.setIsActive(dto.getIsActive());
 			entity.setArabicName(dto.getArabicName());
 			entity.setListOrder(dto.getListOrder());
+			entity.setVersion(dto.getVersion());
 		}
 		
 		return entity;

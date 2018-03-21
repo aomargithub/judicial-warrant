@@ -28,5 +28,5 @@ app:
       url: ldap://192.168.0.41:389/
     basicauthentication:
       realm-name: Oman MOJ Judicial Warrant
-    max-inactive-interval: 120
+    max-inactive-interval: 12000
 

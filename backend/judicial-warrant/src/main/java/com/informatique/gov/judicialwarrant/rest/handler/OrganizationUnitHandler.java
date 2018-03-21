@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
-import com.informatique.gov.judicialwarrant.rest.request.OrganizationUnitSaveRequest;
 
 public interface OrganizationUnitHandler extends Serializable {
 
@@ -15,7 +14,7 @@ public interface OrganizationUnitHandler extends Serializable {
 
 	ResponseEntity<OrganizationUnitDto> getById(Short id, Short etag) throws JudicialWarrantException;
 
-	ResponseEntity<OrganizationUnitDto> update(OrganizationUnitSaveRequest organizationUnitSaveRequest, Short id, Short etag)
+	ResponseEntity<OrganizationUnitDto> update(OrganizationUnitDto organizationUnitdto, Short id, Short etag)
 			throws JudicialWarrantException;
 
 	ResponseEntity<OrganizationUnitDto> save(OrganizationUnitDto organizationUnitdto) throws JudicialWarrantException;

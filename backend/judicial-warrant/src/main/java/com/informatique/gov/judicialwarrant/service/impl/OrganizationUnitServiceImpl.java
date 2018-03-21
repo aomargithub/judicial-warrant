@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
-import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
-import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
-import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
@@ -61,32 +58,6 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService, Int
 		}
 		return dto;
 	}
-
-	/*@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public OrganizationUnitDto getByIdIfModified(Short id, Short version) throws JudicialWarrantException {
-		try {
-			notNull(id, "id must be set");
-			notNull(version, "version must be set");
-
-			Short realVersion = organizationUnitRepository.findVersionById(id);
-			
-			if(realVersion == null) {
-				return null;
-			}else {
-				if(realVersion.equals(version)) {
-					throw new ResourceNotModifiedException(id, realVersion);
-				}
-			}
-			
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-
-		return getById(id);
-	}*/
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)

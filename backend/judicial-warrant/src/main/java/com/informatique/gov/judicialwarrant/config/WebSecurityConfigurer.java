@@ -98,6 +98,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		config.addAllowedHeader("Authorization");
 		config.addAllowedHeader("Content-Type");
 		config.addAllowedHeader(Constants.AUTHENTICATION_TOKEN_NAME);
+		config.addAllowedHeader("If-None-Match");
+		config.addAllowedHeader("If-Match");
+		config.addExposedHeader("ETag");
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
 		return source;

@@ -94,9 +94,12 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		config.addAllowedOrigin("*");
 		config.addAllowedHeader("Authorization");
 		config.addAllowedHeader("Content-Type");
-		config.addAllowedHeader("X-Auth-Token");
+		config.addAllowedHeader(Constants.AUTHENTICATION_TOKEN_NAME);
 		config.addAllowedHeader("xat");
 		config.addAllowedMethod("*");
+		config.addAllowedHeader("If-None-Match");
+		config.addAllowedHeader("If-Match");
+		config.addExposedHeader("ETag");
 		source.registerCorsConfiguration("/**", config);
 		return source;
 	}

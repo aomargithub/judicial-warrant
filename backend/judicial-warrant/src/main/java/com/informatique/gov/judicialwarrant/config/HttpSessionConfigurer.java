@@ -6,7 +6,7 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 
 @Configuration
-@EnableJdbcHttpSession(maxInactiveIntervalInSeconds = 120)
+@EnableJdbcHttpSession(maxInactiveIntervalInSeconds = 12000)
 public class HttpSessionConfigurer {
 
 

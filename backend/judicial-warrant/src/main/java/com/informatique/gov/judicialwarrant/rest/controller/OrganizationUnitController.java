@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.handler.OrganizationUnitHandler;
-import com.informatique.gov.judicialwarrant.rest.request.OrganizationUnitSaveRequest;
 
 import lombok.AllArgsConstructor;
 
@@ -45,8 +44,8 @@ public class OrganizationUnitController implements Serializable{/**
     }
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody OrganizationUnitSaveRequest organizationUnitSaveRequest, @PathVariable Short id, @RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
-        return organizationUnitHandler.update(organizationUnitSaveRequest, id, eTag);
+    public ResponseEntity<?> update(@RequestBody OrganizationUnitDto organizationUnit, @PathVariable Short id, @RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
+        return organizationUnitHandler.update(organizationUnit, id, eTag);
     }
 
 }

@@ -22,9 +22,9 @@ public class CreateLog implements Serializable{
 	private static final long serialVersionUID = 7243886518617254306L;
 	
 	
-	@Column(name = "create_by")
+	@Column(name = "create_by", updatable = false)
 	private String createBy;
 	
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable = false)
 	private Date createDate;
 }

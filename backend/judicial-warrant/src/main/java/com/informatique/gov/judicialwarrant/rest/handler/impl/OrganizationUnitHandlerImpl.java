@@ -15,7 +15,6 @@ import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.handler.OrganizationUnitHandler;
-import com.informatique.gov.judicialwarrant.rest.request.OrganizationUnitSaveRequest;
 import com.informatique.gov.judicialwarrant.service.OrganizationUnitService;
 
 import lombok.AllArgsConstructor;
@@ -83,12 +82,12 @@ public class OrganizationUnitHandlerImpl implements OrganizationUnitHandler {
 	}
 	
 	@Override
-	public ResponseEntity<OrganizationUnitDto> update(OrganizationUnitSaveRequest organizationUnitSaveRequest, Short id, Short etag) throws JudicialWarrantException{
+	public ResponseEntity<OrganizationUnitDto> update(OrganizationUnitDto organizationUnitDto, Short id, Short etag) throws JudicialWarrantException{
 		ResponseEntity<OrganizationUnitDto> response = null;
 		try {
-			notNull(organizationUnitSaveRequest, "organizationUnitSaveRequest must be set");
+			notNull(organizationUnitDto, "organizationUnitDto must be set");
 			notNull(id, "id must be set");
-			OrganizationUnitDto organizationUnitDto = organizationUnitSaveRequest.getOrganizationUnit();
+			
 			if(etag == null) {
 				throw new PreConditionRequiredException(id);
 			}
@@ -104,10 +103,11 @@ public class OrganizationUnitHandlerImpl implements OrganizationUnitHandler {
 			}
 			
 			organizationUnitDto.setId(id);
+			organizationUnitDto.setVersion(etag);
 			
 			OrganizationUnitDto savedDto = organizationUnitService.update(organizationUnitDto);
 			
-			response = ResponseEntity.ok(savedDto);
+			response = ResponseEntity.ok().eTag(savedDto.getVersion().toString()).body(savedDto);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -117,11 +117,11 @@ public class OrganizationUnitHandlerImpl implements OrganizationUnitHandler {
 	}
 	
 	@Override
-	public ResponseEntity<OrganizationUnitDto> save(OrganizationUnitDto organizationUnitdto) throws JudicialWarrantException{
+	public ResponseEntity<OrganizationUnitDto> save(OrganizationUnitDto organizationUnitDto) throws JudicialWarrantException{
 		ResponseEntity<OrganizationUnitDto> response = null;
 		try {
 			
-			OrganizationUnitDto savedDto = organizationUnitService.save(organizationUnitdto);
+			OrganizationUnitDto savedDto = organizationUnitService.save(organizationUnitDto);
 			
 			response = ResponseEntity.ok(savedDto);
 			
