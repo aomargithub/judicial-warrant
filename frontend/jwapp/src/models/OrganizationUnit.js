@@ -7,6 +7,7 @@ module.exports = function(app){
             self.arabicName = null;
             self.isActive = null;
             self.listOrder = null;
+            self.version = null;
         }
     });
 };

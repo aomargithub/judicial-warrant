@@ -8,4 +8,5 @@ module.exports = function(app){
     require('./menuItemsFcty')(app);
     require('./appRoleFcty')(app);
     require('./organizationUnitSrvc')(app);
+    require('./stringUtilSrvc')(app);
 };

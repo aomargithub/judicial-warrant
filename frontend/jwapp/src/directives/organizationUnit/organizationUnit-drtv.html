@@ -1,4 +1,8 @@
 <div>
+    <message-drtv message="organizationUnitDrtvCtrl.message" ng-if="organizationUnitDrtvCtrl.message" class="message-bar" >
+        <a href ng-click="organizationUnitDrtvCtrl.refetch(organizationUnitDrtvCtrl.editId)">{{messages.label.refetch}}</a>
+        <button type="button" class="close" ng-click="organizationUnitDrtvCtrl.closeMessage()"><span >&times;</span></button>
+    </message-drtv>
     <div>
         <div>
             <label for="arabicName">{{messages.label.arabicName}}</label>
@@ -13,16 +17,16 @@
             <input type="checkbox" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
         </div>
         <div>
-            <div ng-if="!organizationUnitDrtvCtrl.editMode">
+            <div ng-if="!organizationUnitDrtvCtrl.editId">
                 <button ng-click="organizationUnitDrtvCtrl.add()">{{messages.label.add}}</button>
             </div>
-            <div ng-if="organizationUnitDrtvCtrl.editMode">
+            <div ng-if="organizationUnitDrtvCtrl.editId">
                 <button ng-click="organizationUnitDrtvCtrl.update()">{{messages.label.update}}</button>
             </div>
             <div ng-if="organizationUnitDrtvCtrl.organizationUnit.$dirty">
                 <button ng-click="organizationUnitDrtvCtrl.reset()">{{messages.label.reset}}</button>
             </div>
-            <div ng-if="organizationUnitDrtvCtrl.editMode">
+            <div ng-if="organizationUnitDrtvCtrl.editId">
                 <button ng-click="organizationUnitDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
             </div>
         </div>
@@ -40,6 +44,9 @@
                     <th>
                         {{messages.label.isActive}}
                     </th>
+                    <th>
+                        {{messages.label.edit}}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +59,11 @@
                     </td>
                     <td>
                         {{ou.isActive}}
+                    </td>
+                    <td>
+                        <div>
+                            <button ng-click="organizationUnitDrtvCtrl.edit(ou.id)">{{messages.label.edit}}</button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

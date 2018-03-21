@@ -13,5 +13,13 @@ module.exports = function(app){
         self.save = function(organizationUnit){
             return $http.post(organizationUnitsUrl, organizationUnit);
         };
+
+        self.getById = function(id){
+            return $http.get(organizationUnitsUrl + id);
+        };
+
+        self.update = function(organizationUnit){
+            return $http.put(organizationUnitsUrl + organizationUnit.id, organizationUnit);
+        };
     });
 };
