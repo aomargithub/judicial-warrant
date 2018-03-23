@@ -1,6 +1,7 @@
 <div>
     <div class="message-bar-content">
-        {{message}}
-        <ng-transclude></ng-transclude>
+            {{$parent.messages.label.error}} {{messageDrtvCtrl.message}}
+        <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)">{{$parent.messages.label.refetch}}</a>
+        <button type="button" class="close" ng-click="messageDrtvCtrl.closeCallback()"><span >&times;</span></button>
     </div>
 </div>

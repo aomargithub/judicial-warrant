@@ -1,35 +1,46 @@
 <div>
-    <message-drtv message="organizationUnitDrtvCtrl.message" ng-if="organizationUnitDrtvCtrl.message" class="message-bar" >
-        <a href ng-click="organizationUnitDrtvCtrl.refetch(organizationUnitDrtvCtrl.editId)">{{messages.label.refetch}}</a>
-        <button type="button" class="close" ng-click="organizationUnitDrtvCtrl.closeMessage()"><span >&times;</span></button>
+    <message-drtv close-callback="organizationUnitDrtvCtrl.closeMessage" 
+                  refetch-callback = "organizationUnitDrtvCtrl.refetch" 
+                  message="organizationUnitDrtvCtrl.message" 
+                  ng-if="organizationUnitDrtvCtrl.message" 
+                  edit-id="organizationUnitDrtvCtrl.editOrganizationUnit.id"
+                  class="message-bar" >
     </message-drtv>
     <div>
-        <div>
-            <label for="arabicName">{{messages.label.arabicName}}</label>
-            <input type="text" id="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" />
-        </div>
-        <div>
-            <label for="englishName">{{messages.label.englishName}}</label>
-            <input type="text" id="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" />
-        </div>
-        <div>
-            <label for="isActive">{{messages.label.isActive}}</label>
-            <input type="checkbox" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
-        </div>
-        <div>
-            <div ng-if="!organizationUnitDrtvCtrl.editId">
-                <button ng-click="organizationUnitDrtvCtrl.add()">{{messages.label.add}}</button>
+        <form name="organizationUnitForm" novalidate>
+            <div>
+                <label for="arabicName">{{messages.label.arabicName}}</label>
+                <input type="text" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" required/>
+                <span ng-show="organizationUnitForm.arabicName.$touched && organizationUnitForm.arabicName.$error.required" >
+                    {{messages.label.required}}
+                </span>
             </div>
-            <div ng-if="organizationUnitDrtvCtrl.editId">
-                <button ng-click="organizationUnitDrtvCtrl.update()">{{messages.label.update}}</button>
+            <div>
+                <label for="englishName">{{messages.label.englishName}}</label>
+                <input type="text" id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" required/>
+                <span ng-show="organizationUnitForm.englishName.$touched && organizationUnitForm.englishName.$error.required" >
+                        {{messages.label.required}}
+                    </span>
             </div>
-            <div ng-if="organizationUnitDrtvCtrl.organizationUnit.$dirty">
-                <button ng-click="organizationUnitDrtvCtrl.reset()">{{messages.label.reset}}</button>
+            <div>
+                <label for="isActive">{{messages.label.isActive}}</label>
+                <input type="checkbox" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
             </div>
-            <div ng-if="organizationUnitDrtvCtrl.editId">
-                <button ng-click="organizationUnitDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
+            <div>
+                <div ng-if="!organizationUnitDrtvCtrl.editOrganizationUnit">
+                    <button ng-click="organizationUnitDrtvCtrl.add()" ng-disabled="organizationUnitForm.$invalid" type="submit">{{messages.label.add}}</button>
+                </div>
+                <div ng-if="organizationUnitDrtvCtrl.editOrganizationUnit">
+                    <button ng-click="organizationUnitDrtvCtrl.update()" ng-disabled="organizationUnitForm.$invalid" type="submit">{{messages.label.update}}</button>
+                </div>
+                <div>
+                    <button ng-click="organizationUnitDrtvCtrl.reset()">{{messages.label.reset}}</button>
+                </div>
+                <div ng-if="organizationUnitDrtvCtrl.editOrganizationUnit">
+                    <button ng-click="organizationUnitDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
     <div>
         <table class="table table-striped table-bordered table-hover">
