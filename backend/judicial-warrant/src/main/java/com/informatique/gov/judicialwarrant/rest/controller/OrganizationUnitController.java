@@ -3,6 +3,7 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 import java.io.Serializable;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,11 @@ public class OrganizationUnitController implements Serializable{/**
 	@PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody OrganizationUnitDto organizationUnit, @PathVariable Short id, @RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
         return organizationUnitHandler.update(organizationUnit, id, eTag);
+    }
+	
+	@DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Short id) throws JudicialWarrantException {
+        return organizationUnitHandler.delete(id);
     }
 
 }

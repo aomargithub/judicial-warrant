@@ -11,8 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
