@@ -58,10 +58,13 @@
                     <th>
                         {{messages.label.edit}}
                     </th>
+                    <th>
+                        {{messages.label.delete}}
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="ou in organizationUnitDrtvCtrl.organizationUnits track by ou.id">
+                <tr ng-repeat="ou in organizationUnitDrtvCtrl.organizationUnits | paginationFltr:organizationUnitDrtvCtrl.page.start:organizationUnitDrtvCtrl.page.end track by ou.id">
                     <td>
                         {{ou.arabicName}}
                     </td>
@@ -76,6 +79,16 @@
                             <button ng-click="organizationUnitDrtvCtrl.edit(ou.id)">{{messages.label.edit}}</button>
                         </div>
                     </td>
+                    <td>
+                        <div>
+                            <button ng-click="organizationUnitDrtvCtrl.delete(ou.id)">{{messages.label.delete}}</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                    <pagination-drtv items-size="organizationUnitDrtvCtrl.organizationUnits.length" page="organizationUnitDrtvCtrl.page">
+                    </pagination-drtv></td>
                 </tr>
             </tbody>
         </table>

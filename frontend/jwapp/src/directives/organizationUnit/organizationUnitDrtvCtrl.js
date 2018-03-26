@@ -5,6 +5,10 @@ module.exports = function(app){
         vm.editId = null;
         vm.editOrganizationUnit = null;
         vm.message = null;
+        vm.page = {
+            start: 0,
+            end: 0
+        }
         organizationUnitSrvc.getAll().then(function(response){
             vm.organizationUnits = response.data;
         });
@@ -49,10 +53,30 @@ module.exports = function(app){
                 var tempOrganizationUnit = response.data;
                 vm.organizationUnit = new OrganizationUnit();
                 vm.editOrganizationUnit = null;
-                $scope.organizationUnitForm.$setPristine();
                 vm.organizationUnits.forEach(function(ou, index){
                     if(ou.id === tempOrganizationUnit.id){
                         vm.organizationUnits[index] = tempOrganizationUnit;
+                    }
+                });
+
+                resetEntryForm();
+            }, function error(response){
+                
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.preconditionFailed.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
+
+                resetEntryForm();
+            });
+        };
+
+        vm.delete = function(id){
+            
+            organizationUnitSrvc.delete(id).then(function success(response){               
+                vm.organizationUnits.forEach(function(ou, index){
+                    if(ou.id === id){
+                        vm.organizationUnits.splice(index, 1);
                     }
                 });
 

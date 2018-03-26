@@ -21,5 +21,9 @@ module.exports = function(app){
         self.update = function(organizationUnit){
             return $http.put(organizationUnitsUrl + organizationUnit.id, organizationUnit);
         };
+
+        self.delete = function(id){
+            return $http.delete(organizationUnitsUrl + id);
+        };
     });
 };

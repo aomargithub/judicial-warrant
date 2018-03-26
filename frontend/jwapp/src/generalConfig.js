@@ -6,4 +6,5 @@ module.exports = function(app){
         $rootScope.messages = require('./messages.json');
     });
     app.constant('authenticationTokenName', 'x-auth-token');
+    app.constant('pageSize', 3);
 };

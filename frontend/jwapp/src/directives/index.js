@@ -3,4 +3,5 @@ module.exports = function(app){
     require('./menu')(app);
     require('./organizationUnit')(app);
     require('./message')(app);
+    require('./pagination')(app);
 };
