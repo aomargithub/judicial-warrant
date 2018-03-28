@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.CandidateAttachment;
-import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.CandidateAttachmentRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateAttachmentDto;
-import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.service.CandidateAttachmentService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
@@ -21,7 +19,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class CandidateAttachmentServiceImpl implements CandidateAttachmentService {
-	CandidateAttachmentRepository candidateAttachmentRepository;
+	private CandidateAttachmentRepository candidateAttachmentRepository;
 	private ModelMapper<CandidateAttachment, CandidateAttachmentDto, Long> candidateAttachmentMapper;
 
 
