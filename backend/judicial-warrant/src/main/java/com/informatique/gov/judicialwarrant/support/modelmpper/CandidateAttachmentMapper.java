@@ -9,6 +9,8 @@ import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateAttachmentDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Component
 public class CandidateAttachmentMapper extends AbstractModelMapper<CandidateAttachment, CandidateAttachmentDto, Long> {
 

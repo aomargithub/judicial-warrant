@@ -9,6 +9,8 @@ import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Component
 public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 

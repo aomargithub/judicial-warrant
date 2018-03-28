@@ -2,7 +2,6 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import java.io.Serializable;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/candidateAttachment")
+@RequestMapping("/candidateAttachments")
 public class CandidateAttachmentController implements Serializable {
 
 	
