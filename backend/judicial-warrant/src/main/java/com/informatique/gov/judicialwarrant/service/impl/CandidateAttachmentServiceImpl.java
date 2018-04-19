@@ -80,7 +80,7 @@ public class CandidateAttachmentServiceImpl implements CandidateAttachmentServic
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	@Transactional(rollbackFor = Exception.class)
 	public CandidateAttachmentDto update(CandidateAttachmentDto dto) throws JudicialWarrantException {
 		CandidateAttachmentDto savedDto = null;
 
@@ -114,7 +114,7 @@ public class CandidateAttachmentServiceImpl implements CandidateAttachmentServic
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(Long id) throws JudicialWarrantException {
 		try {
 			notNull(id, "id must be set");

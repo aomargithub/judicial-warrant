@@ -8,23 +8,19 @@ import lombok.Setter;
 import java.beans.ConstructorProperties;
 import java.io.Serializable;
 
+@Getter
 @JsonSerialize(using = JudicialWarrantExceptionSerializer.class)
 public class JudicialWarrantException extends Exception implements Serializable {
 
     private static final long serialVersionUID = 3429261224926462433L;
-    @Getter
+   
     private final String code;
-    @Getter
     private final String description;
-    @Getter
     private final String fixSuggestion;
-    @Getter
     @Setter
     private Long errorId;
-    @Getter
     @Setter
     private String userDomainName;
-    @Getter
     @Setter
     private Long requestId;
 

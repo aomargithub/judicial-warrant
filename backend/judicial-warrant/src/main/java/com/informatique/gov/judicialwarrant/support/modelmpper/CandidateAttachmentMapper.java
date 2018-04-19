@@ -32,9 +32,7 @@ public class CandidateAttachmentMapper extends AbstractModelMapper<CandidateAtta
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
 			dto.setCandidate(candidateMapper.toDto(entity.getCandidate()));
-
 		}
-
 		return dto;
 	}
 

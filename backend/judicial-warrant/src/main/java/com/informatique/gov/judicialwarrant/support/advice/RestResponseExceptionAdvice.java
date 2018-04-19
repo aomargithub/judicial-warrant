@@ -102,7 +102,7 @@ public class RestResponseExceptionAdvice implements Serializable {
     	
     	String exceptionClassName = judicialWarrantException.getClass().getSimpleName();
     	
-    	ExceptionClassNameEnum exceptionClassNameEnum= ExceptionClassNameEnum.valueOf(exceptionClassName);
+    	ExceptionClassNameEnum exceptionClassNameEnum = ExceptionClassNameEnum.valueOf(exceptionClassName);
     	
     	switch(exceptionClassNameEnum) {
     		case JudicialWarrantInternalException:
