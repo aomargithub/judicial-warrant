@@ -1,44 +1,29 @@
 module.exports = function(app){
-    app.service('appSessionSrvc', function(){
-        var self = this, isAuthenticated = false, currentUser, authenticationToken, maxInactiveInterval;
+    app.service('appSessionSrvc', function($cookieStore){
+        var currentSessionCookieKey = 'currentUser', self = this;
 
         self.getAuthenticationToken = function(){
-            return authenticationToken;
-        };
-
-        self.setAuthenticationToken = function(authenticationTokenValue){
-            authenticationToken = authenticationTokenValue;
+            return  $cookieStore.get(currentSessionCookieKey).token.value;
         };
 
         self.getCurrentUser = function(){
-            return currentUser;
-        };      
-
-        self.setCurrentUser = function(currentUserValue){
-            currentUser = currentUserValue;
-        };
-
-        self.setIsAuthenticated = function(isAuthenticatedValue){
-            isAuthenticated = isAuthenticatedValue;
+            return  $cookieStore.get(currentSessionCookieKey);
         };
 
         self.getIsAuthenticated = function(){
-            return isAuthenticated;
+            return !angular.isUndefined($cookieStore.get(currentSessionCookieKey));
         }; 
-
-        self.setMaxInactiveInterval = function(maxInactiveIntervalValue){
-            maxInactiveInterval = maxInactiveIntervalValue;
-        };
 
         self.getMaxInactiveInterval = function(){
-            return maxInactiveInterval;
+            return  $cookieStore.get(currentSessionCookieKey).token.maxInactiveInterval;
         }; 
 
-        self.empty = function(){
-            isAuthenticated = false;
-            currentUser = null;
-            authenticationToken = null;
-            maxInactiveInterval = null;
-        }; 
+        self.invalidateCurrentSession = function(){
+            $cookieStore.remove(currentSessionCookieKey);
+        };
+
+        self.createSession = function(currentUser){
+            $cookieStore.put(currentSessionCookieKey, currentUser);
+        };
     });
 };
