@@ -1,4 +1,6 @@
 frontend/jwapp/node_modules/
+frontend/jwapp/dist/assets/js/bundle.js
+frontend/jwapp/dist/assets/js/bundle.js.map
 backend/judicial-warrant/target
 backend/judicial-warrant/.settings
 backend/judicial-warrant/.classpath
