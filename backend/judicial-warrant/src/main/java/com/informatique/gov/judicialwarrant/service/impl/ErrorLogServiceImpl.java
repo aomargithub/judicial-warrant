@@ -27,7 +27,7 @@ public class ErrorLogServiceImpl implements InternalErrorLogService {
 
     @Override
     @Transactional(propagation= Propagation.REQUIRES_NEW)
-    public JudicialWarrantException log(JudicialWarrantException ketabException){
+    public JudicialWarrantException log(JudicialWarrantException judicialWarrantException){
         ErrorLog errorLog = null;
         Long errorId = null;
 
@@ -37,22 +37,22 @@ public class ErrorLogServiceImpl implements InternalErrorLogService {
 
             errorLog = new ErrorLog();
             errorLog.setCreateDate(new Date());
-            errorLog.setUserName(ketabException.getUserDomainName());
-            errorLog.setRequestId(ketabException.getRequestId());
-            errorLog.setStackTrace(ketabException.toString());
+            errorLog.setUserName(judicialWarrantException.getUserDomainName());
+            errorLog.setRequestId(judicialWarrantException.getRequestId());
+            errorLog.setStackTrace(judicialWarrantException.toString());
 
             errorLog = errorLogRepository.save(errorLog);
 
             errorId = errorLog.getId();
 
 
-            ketabException.setErrorId(errorId);
+            judicialWarrantException.setErrorId(errorId);
 
 
         }catch(Exception e){
             logger.error(e);
         }
 
-        return ketabException;
+        return judicialWarrantException;
     }
 }

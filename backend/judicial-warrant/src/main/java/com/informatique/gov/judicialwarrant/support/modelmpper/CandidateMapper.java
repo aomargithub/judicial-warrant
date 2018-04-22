@@ -13,6 +13,8 @@ import com.informatique.gov.judicialwarrant.rest.dto.CandidateStatusDto;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Component
 public class CandidateMapper extends AbstractModelMapper<Candidate, CandidateDto, Long> {
 

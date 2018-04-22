@@ -3,8 +3,12 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
+import com.informatique.gov.judicialwarrant.domain.Candidate;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Component
 public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, AttachmentTypeDto, Byte>{
 
