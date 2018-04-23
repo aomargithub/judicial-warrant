@@ -20,7 +20,7 @@ import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RoleController implements Serializable{
 
 	private RoleHandler roleHandler;
