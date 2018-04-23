@@ -7,10 +7,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 
 @SpringBootApplication
-<<<<<<< HEAD
-=======
-//@EnableSwagger2
->>>>>>> 1e7b74a701838d19ecc154723c867b1cf803701b
 public class JudicialWarrantApp extends SpringBootServletInitializer 
 {
 	
