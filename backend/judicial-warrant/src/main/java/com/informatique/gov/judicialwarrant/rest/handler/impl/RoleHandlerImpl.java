@@ -13,25 +13,29 @@ import com.informatique.gov.judicialwarrant.exception.PreConditionRequiredExcept
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.handler.AttachmentTypeHandler;
-import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
+import com.informatique.gov.judicialwarrant.rest.dto.CandidateAttachmentDto;
+import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
+import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
+import com.informatique.gov.judicialwarrant.service.RoleService;
+import com.informatique.gov.judicialwarrant.service.impl.RoleServiceImpl;
 
 import lombok.AllArgsConstructor;
+
 @Component
 @AllArgsConstructor
-public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
-	private AttachmentTypeService attachmentTypeService;
+public class RoleHandlerImpl implements RoleHandler{
+
+	private RoleService roleService; 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public ResponseEntity<List<AttachmentTypeDto>> getAll() throws JudicialWarrantException {
-		ResponseEntity<List<AttachmentTypeDto>> response = null;
+	public ResponseEntity<List<RoleDto>> getAll() throws JudicialWarrantException {
+		ResponseEntity<List<RoleDto>> response = null;
 		try {
-			List<AttachmentTypeDto> dtos = attachmentTypeService.getAll();
+			List<RoleDto> dtos = roleService.getAll();
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -42,25 +46,13 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 	}
 
 	@Override
-	public ResponseEntity<AttachmentTypeDto> getById(Long id, Short etag) throws JudicialWarrantException {
-		ResponseEntity<AttachmentTypeDto> response = null;
+	public ResponseEntity<RoleDto> getById(Byte id, Short etag) throws JudicialWarrantException {
+		ResponseEntity<RoleDto> response = null;
 		try {
 			notNull(id, "id must be set");
-			AttachmentTypeDto dto = null;
+			RoleDto dto = null;
 			
-			if(etag != null) {
-				Short version = attachmentTypeService.getVersionById(id);
-				
-				if(version == null) {
-					throw new ResourceNotFoundException(id);
-				}
-				
-				if(version.equals(etag)) {
-					throw new ResourceNotModifiedException(id, version);
-				}
-			}
-			
-			dto = attachmentTypeService.getById(id);
+			dto = roleService.getById(id);
 			
 			if(dto == null) {
 				throw new ResourceNotFoundException(id);
@@ -78,30 +70,16 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 	}
 
 	@Override
-	public ResponseEntity<AttachmentTypeDto> update(AttachmentTypeDto attachmentTypeDto, Long id,
-			Short etag) throws JudicialWarrantException {
-		ResponseEntity<AttachmentTypeDto> response = null;
+	public ResponseEntity<RoleDto> update(RoleDto dto, Byte id, Short etag)
+			throws JudicialWarrantException {
+		ResponseEntity<RoleDto> response = null;
 		try {
-			notNull(attachmentTypeDto, "candidateAttachmentDto must be set");
+			notNull(dto, "roledto must be set");
 			notNull(id, "id must be set");
 			
-			if(etag == null) {
-				throw new PreConditionRequiredException(id);
-			}
+			dto.setId(id);
 			
-			Short version = attachmentTypeService.getVersionById(id);
-			
-			if(version == null) {
-				throw new ResourceNotFoundException(id);
-			}
-			
-			if(!version.equals(etag)) {
-				throw new ResourceModifiedException(id, etag, version);
-			}
-			
-			attachmentTypeDto.setId(id);
-			
-			AttachmentTypeDto savedDto = attachmentTypeService.update(attachmentTypeDto);
+			RoleDto savedDto = roleService.update(dto);
 			
 			response = ResponseEntity.ok().body(savedDto);
 			
@@ -113,12 +91,11 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 	}
 
 	@Override
-	public ResponseEntity<AttachmentTypeDto> save(AttachmentTypeDto attachmentTypeDto)
-			throws JudicialWarrantException {
-		ResponseEntity<AttachmentTypeDto> response = null;
+	public ResponseEntity<RoleDto> save(RoleDto dto) throws JudicialWarrantException {
+		ResponseEntity<RoleDto> response = null;
 		try {
 			
-			AttachmentTypeDto savedDto = attachmentTypeService.save(attachmentTypeDto);
+			RoleDto savedDto = roleService.save(dto);
 			
 			response = ResponseEntity.ok(savedDto);
 			
@@ -126,15 +103,15 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
-		}return response;		
+		}return response;
 	}
 
 	@Override
-	public ResponseEntity<Void> delete(Long id) throws JudicialWarrantException {
+	public ResponseEntity<Void> delete(Byte id) throws JudicialWarrantException {
 		ResponseEntity<Void> response = null;
 		try {
 			
-			attachmentTypeService.delete(id);
+			roleService.delete(id);
 			
 			response = ResponseEntity.ok().build();
 			

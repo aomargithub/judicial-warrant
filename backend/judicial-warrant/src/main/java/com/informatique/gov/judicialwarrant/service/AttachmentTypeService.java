@@ -10,12 +10,12 @@ public interface AttachmentTypeService extends Serializable{
 
 	AttachmentTypeDto save(final AttachmentTypeDto dto) throws JudicialWarrantException;
 
-	AttachmentTypeDto getById(Byte id) throws JudicialWarrantException;
+	AttachmentTypeDto getById(Long id) throws JudicialWarrantException;
 
 	AttachmentTypeDto update(AttachmentTypeDto dto) throws JudicialWarrantException;
 
-	public Short getVersionById(Byte id) throws JudicialWarrantException;
+	public Short getVersionById(Long id) throws JudicialWarrantException;
 	
-	void delete(Byte id) throws JudicialWarrantException;
+	void delete(Long id) throws JudicialWarrantException;
 
 }

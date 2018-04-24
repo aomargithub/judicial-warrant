@@ -2,17 +2,22 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
+import com.informatique.gov.judicialwarrant.domain.CreateLog;
+import com.informatique.gov.judicialwarrant.domain.UpdateLog;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +25,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 	private AttachmentTypeRepository attachmentTypeRepository;
-	private ModelMapper<AttachmentType, AttachmentTypeDto, Byte> attachmentTypeMapper;
+	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
 
+	@Autowired
+	private SecurityService securityService;
 
 	/**
 	 * 
@@ -51,7 +58,8 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 			notNull(dto, "dto must be set");
 
 			AttachmentType entiry = attachmentTypeMapper.toNewEntity(dto);
-			
+						
+			entiry.setCreateLog(new CreateLog(securityService.getPrincipal(), new Date()));	
 			entiry = attachmentTypeRepository.save(entiry);
 			
 			savedDto = attachmentTypeMapper.toDto(entiry);
@@ -65,7 +73,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public AttachmentTypeDto getById(Byte id) throws JudicialWarrantException {
+	public AttachmentTypeDto getById(Long id) throws JudicialWarrantException {
 		AttachmentTypeDto dto = null;
 		try {
 			notNull(id, "id must be set");
@@ -88,7 +96,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 			notNull(dto, "dto must be set");			
 
 			AttachmentType entiry = attachmentTypeMapper.toEntity(dto);
-			
+			entiry.setUpdateLog(new UpdateLog(securityService.getPrincipal(), new Date()));
 			entiry = attachmentTypeRepository.save(entiry);
 			
 			savedDto = attachmentTypeMapper.toDto(entiry);
@@ -102,7 +110,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public Short getVersionById(Byte id) throws JudicialWarrantException {
+	public Short getVersionById(Long id) throws JudicialWarrantException {
 		Short version = null;
 		try {
 			notNull(id, "id must be set");
@@ -115,7 +123,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void delete(Byte id) throws JudicialWarrantException {
+	public void delete(Long id) throws JudicialWarrantException {
 		try {
 			notNull(id, "id must be set");
 			attachmentTypeRepository.deleteById(id);

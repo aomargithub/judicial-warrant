@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
 
 @Repository
-public interface AttachmentTypeRepository extends JpaRepository<AttachmentType, Byte>{
+public interface AttachmentTypeRepository extends JpaRepository<AttachmentType, Long>{
 	
 	@Query("select version from AttachmentType at where at.id = :id")
-	Short findVersionById(@Param("id") Byte id);
+	Short findVersionById(@Param("id") Long id);
 
 }

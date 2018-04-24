@@ -12,48 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.handler.AttachmentTypeHandler;
+import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
+import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
 
 import lombok.AllArgsConstructor;
-
 @AllArgsConstructor
 @RestController
-@RequestMapping("/attachmentTypes")
-public class AttachmentTypeController implements Serializable {
+@RequestMapping("/roles")
+public class RoleController implements Serializable{
 
+	private RoleHandler roleHandler;
 	
-	private AttachmentTypeHandler attachmentTypeHandler ;
-	/**
-	* 
-	*/
 	private static final long serialVersionUID = 1L;
     @GetMapping
 	public ResponseEntity<?> getAll() throws JudicialWarrantException {
-		return attachmentTypeHandler.getAll();
+		return roleHandler.getAll();
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id,
+	public ResponseEntity<?> getById(@PathVariable Byte id,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return attachmentTypeHandler.getById(id, eTag);
+		return roleHandler.getById(id, eTag);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody AttachmentTypeDto attachmentTypeDto) throws JudicialWarrantException {
-		return attachmentTypeHandler.save(attachmentTypeDto);
+	public ResponseEntity<?> save(@RequestBody RoleDto roleDto) throws JudicialWarrantException {
+		return roleHandler.save(roleDto);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody AttachmentTypeDto attachmentTypeDto, @PathVariable Long id,
+	public ResponseEntity<?> update(@RequestBody RoleDto roleDto, @PathVariable Byte id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return attachmentTypeHandler.update(attachmentTypeDto, id, eTag);
+		return roleHandler.update(roleDto, id, eTag);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) throws JudicialWarrantException {
-		return attachmentTypeHandler.delete(id);
+	public ResponseEntity<?> delete(@PathVariable Byte id) throws JudicialWarrantException {
+		return roleHandler.delete(id);
 	}
-
 }

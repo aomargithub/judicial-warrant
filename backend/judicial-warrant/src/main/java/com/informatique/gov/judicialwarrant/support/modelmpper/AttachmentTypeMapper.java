@@ -3,20 +3,21 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
-import com.informatique.gov.judicialwarrant.domain.Candidate;
+import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Component
-public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, AttachmentTypeDto, Byte>{
+public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, AttachmentTypeDto, Long>{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7965596748827389580L;
 
+	private AttachmentTypeRepository attachmentTypeRepository;
+	
 	@Override
 	public AttachmentTypeDto toDto(AttachmentType entity) {
 		AttachmentTypeDto dto = null;
@@ -39,7 +40,11 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
 		AttachmentType entity = null;
 
         if(isConvertable(dto)){
-        	entity = new AttachmentType();
+        	if(dto.getId() != null) {
+        		entity = attachmentTypeRepository.getOne(dto.getId());
+        	} else {
+        		entity = new AttachmentType();
+        	}
         	entity.setId(nullId? null : dto.getId());
         	entity.setArabicName(dto.getArabicName());
         	entity.setEnglishName(dto.getEnglishName());

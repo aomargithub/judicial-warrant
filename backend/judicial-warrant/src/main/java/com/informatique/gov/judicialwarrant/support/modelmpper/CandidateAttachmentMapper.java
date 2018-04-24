@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @Component
 public class CandidateAttachmentMapper extends AbstractModelMapper<CandidateAttachment, CandidateAttachmentDto, Long> {
 
-	private ModelMapper<AttachmentType, AttachmentTypeDto, Byte> attachmentTypeMapper;
+	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
 	private ModelMapper<Candidate, CandidateDto, Long> candidateMapper;
 
 	/**
