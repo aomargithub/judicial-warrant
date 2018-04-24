@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
-import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 
 import lombok.AllArgsConstructor;
@@ -15,8 +14,6 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
 	 * 
 	 */
 	private static final long serialVersionUID = -7965596748827389580L;
-
-	private AttachmentTypeRepository attachmentTypeRepository;
 	
 	@Override
 	public AttachmentTypeDto toDto(AttachmentType entity) {
@@ -30,6 +27,7 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
             dto.setIsCandidateAttachment(entity.getIsCandidateAttachment());
             dto.setListOrder(entity.getListOrder());
             dto.setIsActive(entity.getIsActive());
+            dto.setVersion(entity.getVersion());
         }
 
         return dto;
@@ -40,17 +38,14 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
 		AttachmentType entity = null;
 
         if(isConvertable(dto)){
-        	if(dto.getId() != null) {
-        		entity = attachmentTypeRepository.getOne(dto.getId());
-        	} else {
-        		entity = new AttachmentType();
-        	}
+        	entity = new AttachmentType();
         	entity.setId(nullId? null : dto.getId());
         	entity.setArabicName(dto.getArabicName());
         	entity.setEnglishName(dto.getEnglishName());
         	entity.setIsCandidateAttachment(dto.getIsCandidateAttachment());
         	entity.setListOrder(dto.getListOrder());
         	entity.setIsActive(dto.getIsActive());
+        	entity.setVersion(dto.getVersion());
         }
 
         return entity;

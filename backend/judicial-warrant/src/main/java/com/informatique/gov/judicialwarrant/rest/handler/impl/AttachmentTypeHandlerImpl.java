@@ -100,6 +100,7 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 			}
 			
 			attachmentTypeDto.setId(id);
+			attachmentTypeDto.setVersion(etag);
 			
 			AttachmentTypeDto savedDto = attachmentTypeService.update(attachmentTypeDto);
 			

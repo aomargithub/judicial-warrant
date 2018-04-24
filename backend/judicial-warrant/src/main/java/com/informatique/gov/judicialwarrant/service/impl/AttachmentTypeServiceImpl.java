@@ -96,6 +96,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 			notNull(dto, "dto must be set");			
 
 			AttachmentType entiry = attachmentTypeMapper.toEntity(dto);
+			// TODO, to be enhanced
 			entiry.setUpdateLog(new UpdateLog(securityService.getPrincipal(), new Date()));
 			entiry = attachmentTypeRepository.save(entiry);
 			
