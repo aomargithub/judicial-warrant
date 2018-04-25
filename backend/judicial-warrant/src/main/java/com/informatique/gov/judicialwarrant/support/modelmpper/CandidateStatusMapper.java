@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.CandidateStatus;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateStatusDto;
- 
+
 @Component
 public class CandidateStatusMapper extends AbstractModelMapper<CandidateStatus, CandidateStatusDto, Byte>{
 
