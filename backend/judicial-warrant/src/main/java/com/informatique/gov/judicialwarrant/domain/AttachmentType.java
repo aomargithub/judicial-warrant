@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"arabicName", "englishName"}, callSuper = false)
-public class AttachmentType extends DomainEntity<Byte> {
+public class AttachmentType extends DomainEntity<Long> {
 	
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class AttachmentType extends DomainEntity<Byte> {
     @SequenceGenerator(name = "AttachmentTypeSequence", sequenceName = "attachment_type_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AttachmentTypeSequence")
     @Column(name = "id")
-    private Byte id;
+    private Long id;
 	
 	@Version
 	@Column(name="VERSION")

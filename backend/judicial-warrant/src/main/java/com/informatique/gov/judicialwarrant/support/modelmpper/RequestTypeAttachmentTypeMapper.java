@@ -22,7 +22,7 @@ public class RequestTypeAttachmentTypeMapper extends AbstractModelMapper<Request
 	private ModelMapper<RequestType, RequestTypeDto, Byte> requestTypeMapper;
 	
 	@Autowired
-	private ModelMapper<AttachmentType, AttachmentTypeDto, Byte > attachmentTypeMapper;
+	private ModelMapper<AttachmentType, AttachmentTypeDto, Long > attachmentTypeMapper;
 
 	@Override
 	public RequestTypeAttachmentTypeDto toDto(RequestTypeAttachmentType entity) {

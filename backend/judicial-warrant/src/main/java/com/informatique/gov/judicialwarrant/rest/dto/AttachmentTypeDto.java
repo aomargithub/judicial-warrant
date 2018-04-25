@@ -7,14 +7,14 @@ import lombok.ToString;
 @Data
 @ToString(of = { "id", "arabicName", "englishName" })
 @EqualsAndHashCode(of = { "arabicName", "englishName" }, callSuper = false)
-public class AttachmentTypeDto implements UserModel<Byte> {
+public class AttachmentTypeDto implements UserModel<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6131509027915511341L;
 
-	private Byte id;
+	private Long id;
 	private String englishName;
 	private String arabicName;
 	private Boolean isActive;
