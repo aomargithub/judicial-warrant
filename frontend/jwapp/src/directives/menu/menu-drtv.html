@@ -1,7 +1,9 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <h3>{{messages['sidebare.header']}}</h3>
+        <button id="sidebarCollapse" class="btn btn-info navbar-btn" >
         <strong class= "glyphicon glyphicon-menu-hamburger"></strong>
+    </button>
     </div>
     <ul class="list-unstyled components">
         <li ng-repeat="item in menuDrtvCtrl.items track by item.code">
