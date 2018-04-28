@@ -4,13 +4,24 @@ module.exports = function(app){
             controllerAs : 'menuDrtvCtrl',
             controller : 'menuDrtvCtrl',
             template : require('./menu-drtv.html'),
-            link: function(scope, element){
+            link: function(scope, element, attrs, menuDrtvCtrl){
                 element.bind('click', function(e){
-                    scope.isMenuOpen = !scope.isMenuOpen;
-                    if(scope.isMenuOpen){
-                        angular.element(e.target).addClass('active');
+                    menuDrtvCtrl.toggleMenuState();
+                    var target = angular.element(e.target);
+                 
+                    if(!target.hasClass('menu-toggle')){
+                        return;
+                    }
+
+                   while(target[0].id != 'sidebar'){
+                        target = target.parent();
+                    }
+
+                    if(menuDrtvCtrl.getMenuState()){
+                        target.addClass('active');
+                        
                     }else{
-                        angular.element(e.target).removeClass('active');
+                        target.removeClass('active');
                     }
                 });
             },
