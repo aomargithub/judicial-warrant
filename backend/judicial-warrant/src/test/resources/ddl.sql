@@ -79,7 +79,8 @@ create table ATTACHMENT_TYPE
   english_name            VARCHAR2(200) not null,
   is_active               NUMBER(1) not null,
   is_candidate_attachment NUMBER(1) not null,
-  list_order              NUMBER(2)
+  list_order              NUMBER(2),
+  is_mandatory            NUMBER(1) not null
 );
 alter table ATTACHMENT_TYPE
   add constraint ATTACHMENT_TYPE_PK primary key (ID);
