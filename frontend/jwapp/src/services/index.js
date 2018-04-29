@@ -9,5 +9,6 @@ module.exports = function(app){
     require('./menuItemsFcty')(app);
     require('./appRoleFcty')(app);
     require('./organizationUnitSrvc')(app);
+    require('./attachmentTypeSrvc')(app);
     require('./stringUtilSrvc')(app);
 };

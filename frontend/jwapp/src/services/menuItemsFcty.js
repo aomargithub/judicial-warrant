@@ -72,7 +72,7 @@ module.exports = function(app){
         });
 
         attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
-        .routeValue('')
+        .routeValue('.attachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
         
         candidateAttachmentTypesSubItem.codeValue('CANDIDATE_ATTACHMENT_TYPES')
@@ -83,8 +83,8 @@ module.exports = function(app){
         .routeValue('')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
 
-        lookupsItem.addSubItem(organizationUnitsSubItem);
-       // .addSubItem(attachmentTypesSubItem)
+        lookupsItem.addSubItem(organizationUnitsSubItem)
+                   .addSubItem(attachmentTypesSubItem);
        // .addSubItem(candidateAttachmentTypesSubItem)
        // .addSubItem(requestAttachmentTypesSubItem);
 

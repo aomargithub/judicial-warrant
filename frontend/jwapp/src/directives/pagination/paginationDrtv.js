@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.directive('paginationDrtv', function(){
+    app.directive('pagination', function(){
         return {
             replace: true,
             template: require('./pagination-drtv.html'),

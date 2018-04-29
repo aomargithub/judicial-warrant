@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.directive('organizationUnitDrtv', function(){
+    app.directive('organizationUnit', function(){
         return {
             controllerAs: 'organizationUnitDrtvCtrl',
             controller: 'organizationUnitDrtvCtrl',

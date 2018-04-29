@@ -58,24 +58,19 @@ i, span {
 }
 
 #sidebar {
-    min-width: 80px;
-    max-width: 80px;
+    min-width: 250px;
+    max-width: 250px;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar.active {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 80px;
+    max-width: 80px;
     text-align: center;
 }
-#sidebar .sidebar-header h3 {
-    display: none;
-}
-#sidebar .sidebar-header button{
-    background: #6d7fcc;
-}
+
 #sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
     display: none;
 }
@@ -95,7 +90,7 @@ i, span {
 }
 
 #sidebar.active ul li a i {
-    margin-left:  0;
+    margin-right:  0;
     display: block;
     font-size: 1.8em;
     margin-bottom: 5px;
@@ -120,7 +115,7 @@ i, span {
 }
 
 #sidebar .sidebar-header strong {
-    display: block;
+    display: none;
     font-size: 1.8em;
 }
 

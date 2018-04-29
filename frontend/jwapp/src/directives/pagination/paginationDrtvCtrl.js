@@ -6,10 +6,11 @@ module.exports = function(app){
             $scope.$watch(function(){
                 return vm.itemsSize
             }, function(newValue){
-                if(!angular.isUndefined(newValue)){
+               
+                if(!angular.isUndefined(newValue) && newValue != 0){
                     numberOfPages = Math.ceil(newValue / pageSize);
                     vm.pages = Array.from({length : numberOfPages}, (x, i) => i+1);
-
+                    
                     if(vm.currentPage > numberOfPages){
                         vm.currentPage--;
                         setStartAndEnd();

@@ -1,0 +1,107 @@
+<div>
+    <message-drtv close-callback="attachmentTypeDrtvCtrl.closeMessage" 
+                  refetch-callback = "attachmentTypeDrtvCtrl.refetch" 
+                  message="attachmentTypeDrtvCtrl.message" 
+                  ng-if="attachmentTypeDrtvCtrl.message" 
+                  edit-id="attachmentTypeDrtvCtrl.editAttachmentType.id"
+                  class="message-bar" >
+    </message-drtv>
+    <div>
+        <form name="attachmentTypeForm" novalidate>
+            <div>
+                <label for="arabicName">{{messages.label.arabicName}}</label>
+                <input type="text" id="arabicName" name="arabicName" ng-model="attachmentTypeDrtvCtrl.attachmentType.arabicName" required/>
+                <span ng-show="attachmentTypeForm.arabicName.$touched && attachmentTypeForm.arabicName.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div>
+                <label for="englishName">{{messages.label.englishName}}</label>
+                <input type="text" id="englishName" name="englishName" ng-model="attachmentTypeDrtvCtrl.attachmentType.englishName" required/>
+                <span ng-show="attachmentTypeForm.englishName.$touched && attachmentTypeForm.englishName.$error.required" >
+                        {{messages.label.required}}
+                    </span>
+            </div>
+            <div>
+                <label for="isActive">{{messages.label.isActive}}</label>
+                <input type="checkbox" id="isActive" ng-model="attachmentTypeDrtvCtrl.attachmentType.isActive" />
+            </div>
+            <div>
+                <label for="isCandidateAttachment">{{messages.label.isCandidateAttachment}}</label>
+                <input type="checkbox" id="isCandidateAttachment" ng-model="attachmentTypeDrtvCtrl.attachmentType.isCandidateAttachment" />
+            </div>
+            <div>
+                <div ng-if="!attachmentTypeDrtvCtrl.editAttachmentType">
+                    <button ng-click="attachmentTypeDrtvCtrl.add()" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.add}}</button>
+                </div>
+                <div ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
+                    <button ng-click="attachmentTypeDrtvCtrl.update()" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.update}}</button>
+                </div>
+                <div>
+                    <button ng-click="attachmentTypeDrtvCtrl.reset()">{{messages.label.reset}}</button>
+                </div>
+                <div ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
+                    <button ng-click="attachmentTypeDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        {{messages.label.arabicName}}
+                    </th>
+                    <th>
+                        {{messages.label.englishName}}
+                    </th>
+                    <th>
+                        {{messages.label.isActive}}
+                    </th>
+                    <th>
+                        {{messages.label.edit}}
+                    </th>
+                    <th>
+                        {{messages.label.delete}}
+                    </th>
+                    <th>
+                        {{messages.label.isCandidateAttachment}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="at in attachmentTypeDrtvCtrl.attachmentTypes | paginationFltr:attachmentTypeDrtvCtrl.page.start:attachmentTypeDrtvCtrl.page.end track by at.id">
+                    <td>
+                        {{at.arabicName}}
+                    </td>
+                    <td>
+                        {{at.englishName}}
+                    </td>
+                    <td>
+                        {{at.isActive}}
+                    </td>
+                    <td>
+                        {{at.isCandidateAttachment}}
+                    </td>
+                    <td>
+                        <div>
+                            <button ng-click="attachmentTypeDrtvCtrl.edit(at.id)">{{messages.label.edit}}</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button ng-click="attachmentTypeDrtvCtrl.delete(at.id)">{{messages.label.delete}}</button>
+                        </div>
+                    </td>
+                </tr>
+                {{attachmentTypeDrtvCtrl.attachmentTypes.length}}
+                <tr>
+                    <td colspan="6">
+                    <pagination items-size="attachmentTypeDrtvCtrl.attachmentTypes.length" page="attachmentTypeDrtvCtrl.page">
+                    </pagination></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

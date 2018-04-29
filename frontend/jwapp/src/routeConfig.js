@@ -12,6 +12,9 @@ module.exports = function(app){
             }).state('home.organizationUnits', {
                 url : '/organizationUnits',
                 template : templateSrvcProvider.getTemplate('organizationUnits')
+            }).state('home.attachmentTypes', {
+                url : '/attachmentTypes',
+                template : templateSrvcProvider.getTemplate('attachmentTypes')
             })
     });
 };

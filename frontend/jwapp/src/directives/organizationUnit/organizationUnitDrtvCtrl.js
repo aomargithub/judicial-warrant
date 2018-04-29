@@ -5,6 +5,7 @@ module.exports = function(app){
         vm.editId = null;
         vm.editOrganizationUnit = null;
         vm.message = null;
+        vm.organizationUnits = [];
         vm.page = {
             start: 0,
             end: 0
@@ -36,7 +37,6 @@ module.exports = function(app){
         };
 
         vm.refetch = function(id){
-            console.log('refetch',$scope.organizationUnitForm);
             organizationUnitSrvc.getById(id).then(function(response){
                 vm.editOrganizationUnit = response.data;
                 vm.editOrganizationUnit.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
@@ -100,7 +100,6 @@ module.exports = function(app){
         };
 
         vm.reset = function(){
-            console.log('reset', $scope.organizationUnitForm);
             if(vm.editOrganizationUnit){
                 vm.organizationUnit = angular.copy(vm.editOrganizationUnit);
             }else{
