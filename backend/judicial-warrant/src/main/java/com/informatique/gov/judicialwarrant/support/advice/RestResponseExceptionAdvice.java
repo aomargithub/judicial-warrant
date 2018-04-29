@@ -2,21 +2,29 @@ package com.informatique.gov.judicialwarrant.support.advice;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
-import com.informatique.gov.judicialwarrant.exception.PreConditionRequiredException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
-import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
+import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
+import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 import com.informatique.gov.judicialwarrant.service.InternalErrorLogService;
 import com.informatique.gov.judicialwarrant.support.dataenum.ExceptionClassNameEnum;
 
@@ -38,61 +46,61 @@ public class RestResponseExceptionAdvice implements Serializable {
     private InternalErrorLogService errorLogService;
 
 
-    /*@ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public @ResponseBody RestResponse handleValidationExcption(MethodArgumentNotValidException exception) {
 
         BindingResult bindingResult = exception.getBindingResult();
-        List<SakError> sakErrors = null;
+        List<JudicialwarrantError> exceptionErrors = null;
         Object errorArgument = null;
-        SakErrorEnum sakErrorEnum = null;
-        SakError SakError = null;
+        JudicialWarrantExceptionEnum judicialWarrantExceptionEnum = null;
+        JudicialwarrantError judicialwarrantError = null;
 
         if (bindingResult.hasErrors()) {
 
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             List<ObjectError> objectErrors = bindingResult.getGlobalErrors();
-            sakErrors = new ArrayList<SakError>();
+            exceptionErrors = new ArrayList<JudicialwarrantError>();
 
 
             for (FieldError fieldError : fieldErrors) {
 
-                sakErrorEnum = SakErrorEnum.getByErrorCode(fieldError.getCode());
+            	judicialWarrantExceptionEnum = JudicialWarrantExceptionEnum.getByCode(fieldError.getCode());
 
                 errorArgument = fieldError.getArguments() != null && fieldError.getArguments().length > 0
                         ? fieldError.getArguments()[0] : null;
 
-                if(sakErrorEnum.equals(SakErrorEnum.EXCEPTION_IN_VALIDATION)){
-                    SakException sakException = (SakException) errorArgument;
-                    sakException = errorLogService.log(sakException);
+                if(judicialWarrantExceptionEnum.equals(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION)){
+                	JudicialWarrantException judicialWarrantException = (JudicialWarrantException) errorArgument;
+                	judicialWarrantException = errorLogService.log(judicialWarrantException);
                     logger.error(errorArgument);
                 }
 
 
-                SakError = new SakError(fieldError.getRejectedValue(), sakErrorEnum, errorArgument);
-                sakErrors.add(SakError);
+                judicialwarrantError = new JudicialwarrantError(fieldError.getRejectedValue(), judicialWarrantExceptionEnum, errorArgument);
+                exceptionErrors.add(judicialwarrantError);
 
             }
 
             for(ObjectError objectError : objectErrors){
-                sakErrorEnum = SakErrorEnum.getByErrorCode(objectError.getCode());
+            	judicialWarrantExceptionEnum = JudicialWarrantExceptionEnum.getByCode(objectError.getCode());
 
                 errorArgument = objectError.getArguments() != null && objectError.getArguments().length > 0
                         ? objectError.getArguments()[0] : null;
 
-                if(sakErrorEnum.equals(SakErrorEnum.EXCEPTION_IN_VALIDATION)){
-                    SakException sakException = (SakException) errorArgument;
-                    sakException = errorLogService.log(sakException);
+                if(judicialWarrantExceptionEnum.equals(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION)){
+                	JudicialWarrantException judicialWarrantException = (JudicialWarrantException) errorArgument;
+                	judicialWarrantException = errorLogService.log(judicialWarrantException);
                     logger.error(errorArgument);
                 }
 
-                SakError = new SakError(objectError.getObjectName(), sakErrorEnum, errorArgument);
-                sakErrors.add(SakError);
+                judicialwarrantError = new JudicialwarrantError(objectError.getObjectName(), judicialWarrantExceptionEnum, errorArgument);
+                exceptionErrors.add(judicialwarrantError);
             }
         }
 
-        return new RestResponse(sakErrors);
-    }*/
+        return new RestResponse(exceptionErrors);
+    }
     
 
     @ExceptionHandler(JudicialWarrantException.class)

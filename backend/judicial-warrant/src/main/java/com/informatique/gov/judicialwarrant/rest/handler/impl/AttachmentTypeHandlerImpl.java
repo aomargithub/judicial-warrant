@@ -66,7 +66,7 @@ public class AttachmentTypeHandlerImpl implements AttachmentTypeHandler {
 				throw new ResourceNotFoundException(id);
 			}
 			
-			response = ResponseEntity.ok().body(dto);
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
