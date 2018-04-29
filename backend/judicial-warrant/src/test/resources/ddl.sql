@@ -367,6 +367,27 @@ alter table SPRING_SESSION_ATTRIBUTES
   add constraint SPRING_SESSION_ATTRIBUTES_FK foreign key (SESSION_ID)
   references SPRING_SESSION (SESSION_ID) on delete cascade;
 
+  
+  CREATE TABLE NATIONALITY 
+(
+  ID NUMBER(4) NOT NULL 
+, ARABIC_NAME VARCHAR2(20) NOT NULL 
+, ENGLISH_NAME VARCHAR2(20) NOT NULL 
+, CODE VARCHAR2(3) NOT NULL 
+, ISO NUMBER(3, 0) NOT NULL
+, CONSTRAINT NATIONALITY_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+alter table NATIONALITY
+  add constraint NATIONALITY_ID primary key (ID);
+alter table NATIONALITY
+  add constraint NATIONALITY_CODE unique (CODE);
+alter table NATIONALITY
+  add constraint NATIONALITY_ISO unique (ISO);
 
 create sequence APP_USER_SEQ
 minvalue 1
