@@ -20,5 +20,18 @@ module.exports = function (app) {
                 return httpStatusSrvc.getStatus(response.status);
             });
         };
+
+        self.logout = function(){
+            var logoutUrl = urlSrvc.getUrl('logout');
+            return $http.get(logoutUrl).then(function success(response) {
+                if (response.status = 200) {
+                    appSessionSrvc.invalidateCurrentSession();
+                }
+                return httpStatusSrvc.getStatus(response.status);
+
+            }, function error(response) {
+                return httpStatusSrvc.getStatus(response.status);
+            });
+        };
     });
 }
