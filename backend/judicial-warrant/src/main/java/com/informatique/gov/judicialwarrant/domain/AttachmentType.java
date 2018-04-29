@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"arabicName", "englishName"}, callSuper = false)
-public class AttachmentType extends DomainEntity<Long> {
+public class AttachmentType extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 	
 	/**
 	 * 
@@ -48,6 +48,9 @@ public class AttachmentType extends DomainEntity<Long> {
 	
 	@Column(name = "IS_CANDIDATE_ATTACHMENT")
 	private Boolean isCandidateAttachment;
+	
+	@Column(name = "IS_MANDATORY")
+	private Boolean isMandatory;
 	
 	@Embedded
 	private CreateLog createLog;

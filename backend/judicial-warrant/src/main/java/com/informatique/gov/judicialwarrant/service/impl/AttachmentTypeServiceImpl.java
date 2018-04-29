@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
-import com.informatique.gov.judicialwarrant.domain.CreateLog;
 import com.informatique.gov.judicialwarrant.domain.UpdateLog;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
@@ -57,9 +56,8 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 		try {
 			notNull(dto, "dto must be set");
 
-			AttachmentType entiry = attachmentTypeMapper.toNewEntity(dto);
-						
-			entiry.setCreateLog(new CreateLog(securityService.getPrincipal(), new Date()));	
+			AttachmentType entiry = attachmentTypeMapper.toNewEntity(dto);						
+			
 			entiry = attachmentTypeRepository.save(entiry);
 			
 			savedDto = attachmentTypeMapper.toDto(entiry);
