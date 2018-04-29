@@ -49,6 +49,9 @@ public class AttachmentType extends DomainEntity<Long> implements CreationAudita
 	@Column(name = "IS_CANDIDATE_ATTACHMENT")
 	private Boolean isCandidateAttachment;
 	
+	@Column(name = "IS_MANDATORY")
+	private Boolean isMandatory;
+	
 	@Embedded
 	private CreateLog createLog;
 	

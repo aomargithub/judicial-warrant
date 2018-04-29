@@ -28,6 +28,7 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
             dto.setListOrder(entity.getListOrder());
             dto.setIsActive(entity.getIsActive());
             dto.setVersion(entity.getVersion());
+            dto.setIsMandatory(entity.getIsMandatory());
         }
 
         return dto;
@@ -46,6 +47,7 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
         	entity.setListOrder(dto.getListOrder());
         	entity.setIsActive(dto.getIsActive());
         	entity.setVersion(dto.getVersion());
+        	entity.setIsMandatory(dto.getIsMandatory());
         }
 
         return entity;
