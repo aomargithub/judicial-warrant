@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"arabicName", "englishName"}, callSuper = false)
-public class AttachmentType extends DomainEntity<Long> {
+public class AttachmentType extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 	
 	/**
 	 * 

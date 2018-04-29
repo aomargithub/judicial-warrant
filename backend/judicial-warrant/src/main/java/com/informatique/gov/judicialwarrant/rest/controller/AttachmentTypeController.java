@@ -2,6 +2,8 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +25,14 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/attachmentTypes")
 public class AttachmentTypeController implements Serializable {
 
-	
-	private AttachmentTypeHandler attachmentTypeHandler ;
 	/**
-	* 
-	*/
-	private static final long serialVersionUID = 1L;
+	 * 
+	 */
+	private static final long serialVersionUID = 8218542953772806708L;
+
+	private AttachmentTypeHandler attachmentTypeHandler;
+
+	
     @GetMapping
 	public ResponseEntity<?> getAll() throws JudicialWarrantException {
 		return attachmentTypeHandler.getAll();
@@ -41,12 +45,12 @@ public class AttachmentTypeController implements Serializable {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody AttachmentTypeDto attachmentTypeDto) throws JudicialWarrantException {
+	public ResponseEntity<?> save(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto) throws JudicialWarrantException {
 		return attachmentTypeHandler.save(attachmentTypeDto);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody AttachmentTypeDto attachmentTypeDto, @PathVariable Long id,
+	public ResponseEntity<?> update(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return attachmentTypeHandler.update(attachmentTypeDto, id, eTag);
 	}

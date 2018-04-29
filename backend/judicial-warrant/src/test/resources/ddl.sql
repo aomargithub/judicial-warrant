@@ -69,7 +69,7 @@ alter table APP_USER
 
 create table ATTACHMENT_TYPE
 (
-  id                      NUMBER(2) not null,
+  id                      NUMBER not null,
   version                 NUMBER(3) not null,
   create_by               VARCHAR2(200) not null,
   create_date             TIMESTAMP(6) not null,

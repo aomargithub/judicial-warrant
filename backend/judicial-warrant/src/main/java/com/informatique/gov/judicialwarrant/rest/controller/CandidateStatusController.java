@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/candidateStatus")
+@RequestMapping("/candidateStatuses")
 public class CandidateStatusController implements Serializable {
 
 	
