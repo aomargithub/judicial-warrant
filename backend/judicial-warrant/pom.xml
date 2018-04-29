@@ -96,19 +96,6 @@
 		    <version>5.2.4.Final</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator-annotation-processor</artifactId>
-		    <version>5.2.1.Final</version>
-		</dependency>
-		
-		<!-- @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-		
 	</dependencies>
 	<build>
 		<plugins>
