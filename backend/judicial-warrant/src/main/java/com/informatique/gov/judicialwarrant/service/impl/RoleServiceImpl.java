@@ -34,6 +34,7 @@ public class RoleServiceImpl implements RoleService{
 		try {
 			List<Role> entities = roleRepository.findAll();
 			dtos = roleMapper.toDto(entities);
+			
 		}
 		catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -41,27 +42,7 @@ public class RoleServiceImpl implements RoleService{
 		return dtos;
 	}
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public RoleDto save(RoleDto dto) throws JudicialWarrantException {
-		RoleDto savedDto = null;
-
-		try {
-			notNull(dto, "dto must be set");
-
-			Role entiry = roleMapper.toNewEntity(dto);
-			
-			entiry = roleRepository.save(entiry);
-			
-			savedDto = roleMapper.toDto(entiry);
-
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-
-		return savedDto;	
-	}
-
+	
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public RoleDto getById(Byte id) throws JudicialWarrantException {
@@ -78,38 +59,8 @@ public class RoleServiceImpl implements RoleService{
 		return dto;
 	}
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public RoleDto update(RoleDto dto) throws JudicialWarrantException {
-		RoleDto savedDto = null;
+	
 
-		try {
-			notNull(dto, "dto must be set");			
-
-			Role entiry = roleMapper.toEntity(dto);
-			
-			entiry = roleRepository.save(entiry);
-			
-			savedDto = roleMapper.toDto(entiry);
-
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-
-		return savedDto;
-	}
-
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void delete(Byte id) throws JudicialWarrantException {
-		try {
-			notNull(id, "id must be set");
-			roleRepository.deleteById(id);
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		
-	}
+	
 
 }
-
