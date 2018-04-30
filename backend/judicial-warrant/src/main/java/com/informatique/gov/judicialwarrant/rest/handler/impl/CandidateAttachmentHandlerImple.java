@@ -14,7 +14,6 @@ import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateAttachmentDto;
-import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.handler.CandidateAttachmentHandler;
 import com.informatique.gov.judicialwarrant.service.CandidateAttachmentService;
 
