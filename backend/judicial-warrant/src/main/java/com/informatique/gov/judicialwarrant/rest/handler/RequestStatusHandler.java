@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 
 public interface RequestStatusHandler {
 	ResponseEntity<List<RequestStatusDto>> getAll() throws JudicialWarrantException;

@@ -11,7 +11,6 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateStatusDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
 import com.informatique.gov.judicialwarrant.rest.handler.CandidateStatusHandler;
 import com.informatique.gov.judicialwarrant.service.CandidateStatusService;
 
