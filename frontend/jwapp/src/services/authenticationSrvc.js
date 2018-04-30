@@ -9,18 +9,14 @@ module.exports = function (app) {
             };
             return $http.get(loginUrl, { headers: headers }).then(function success(response) {
                 if (response.status = 200) {
-                    appSessionSrvc.setIsAuthenticated(true);
-                    appSessionSrvc.setCurrentUser(response.data);
-                    appSessionSrvc.setAuthenticationToken(response.data.token.value);
-                    appSessionSrvc.setMaxInactiveInterval(response.data.token.maxInactiveInterval);
+                    appSessionSrvc.createSession(response.data);
                 }else{
-                    appSessionSrvc.empty();
+                    appSessionSrvc.invalidateCurrentSession();
                 }
                 return httpStatusSrvc.getStatus(response.status);
 
             }, function error(response) {
-
-                appSessionSrvc.empty();
+                appSessionSrvc.invalidateCurrentSession();
                 return httpStatusSrvc.getStatus(response.status);
             });
         };

@@ -4,4 +4,5 @@ module.exports = function(app){
     require('./organizationUnit')(app);
     require('./message')(app);
     require('./pagination')(app);
+    require('./logout')(app);
 };

@@ -43,7 +43,7 @@ public class PersistenceContextConfigurer {
 		jpaProperties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("spring.jpa.hibernate.ddl-auto"));
 		jpaProperties.put("hibernate.show_sql", environment.getRequiredProperty("spring.jpa.show-sql"));
 		jpaProperties.put("hibernate.jdbc.batch_size", environment.getRequiredProperty("spring.jpa.properties.hibernate.jdbc.batch-size"));
-		jpaProperties.put("hibernate.ejb.interceptor", hibernateInterceptor());
+		jpaProperties.put("hibernate.session_factory.interceptor", hibernateInterceptor());
 
 		
 

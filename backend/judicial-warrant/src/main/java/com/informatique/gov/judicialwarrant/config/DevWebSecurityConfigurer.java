@@ -43,12 +43,13 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class).cors()
-				.configurationSource(corsConfigurationSource()).and().csrf().disable().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutUrl(Constants.LOGOUT_URL);
+		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class).
+		     cors().configurationSource(corsConfigurationSource()).and().
+		     csrf().disable().
+		     sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and().
+		     logout().logoutUrl(Constants.LOGOUT_URL);
 
 	    http.addFilterBefore(onlyLoginBasicAuthenticationFilter(), RequestCacheAwareFilter.class).exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint());
-	   // http.authorizeRequests().antMatchers(Constants.API_DOCUMENTATION_URL).permitAll();
 		http.authorizeRequests().antMatchers("/api/**").authenticated();
 	}
 

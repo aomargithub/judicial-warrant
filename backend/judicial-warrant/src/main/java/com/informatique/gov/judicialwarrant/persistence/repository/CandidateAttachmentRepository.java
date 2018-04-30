@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.informatique.gov.judicialwarrant.domain.CandidateAttachment;
 @Repository
 public interface CandidateAttachmentRepository extends JpaRepository<CandidateAttachment, Long>{
+	
 	@Query("select version from CandidateAttachment ca where ca.id = :id")
 	Short findVersionById(@Param("id") Long id);
 	@EntityGraph(value = "CandidateAttachment.fat", type = EntityGraphType.FETCH)

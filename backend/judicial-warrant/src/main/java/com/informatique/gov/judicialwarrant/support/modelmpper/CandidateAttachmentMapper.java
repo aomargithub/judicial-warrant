@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 @Component
 public class CandidateAttachmentMapper extends AbstractModelMapper<CandidateAttachment, CandidateAttachmentDto, Long> {
 
-	private ModelMapper<AttachmentType, AttachmentTypeDto, Byte> attachmentTypeMapper;
+	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
 	private ModelMapper<Candidate, CandidateDto, Long> candidateMapper;
 
 	/**
@@ -32,9 +32,7 @@ public class CandidateAttachmentMapper extends AbstractModelMapper<CandidateAtta
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
 			dto.setCandidate(candidateMapper.toDto(entity.getCandidate()));
-
 		}
-
 		return dto;
 	}
 
