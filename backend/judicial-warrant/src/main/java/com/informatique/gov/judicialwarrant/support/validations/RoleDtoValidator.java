@@ -31,15 +31,15 @@ public class RoleDtoValidator implements Validator,Serializable {
 		// TODO Auto-generated method stub
 		RoleDto roleDto=(RoleDto) target;
 		
-		if(roleDto==null) {
-			errors.rejectValue("RoleDto Nullability", "RoleDto Nullability", null, null);
-			return;
-		}
-		
-		else if(roleDto.getArabicName().length()>5) {
-			errors.rejectValue("arabicName", "should be 5 chars or less", null, null);
-			return;
-		}
+//		if(roleDto==null) {
+//			errors.rejectValue("RoleDto Nullability", "RoleDto Nullability", null, null);
+//			return;
+//		}
+//		
+//		else if(roleDto.getArabicName().length()>5) {
+//			errors.rejectValue("arabicName", "should be 5 chars or less", null, null);
+//			return;
+//		}
 		
 		
 	}

@@ -38,6 +38,7 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 			dto.setMobileNumber2(entity.getMobileNumber2());
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setRole(roleMapper.toDto(entity.getRole()));
+			entity.setVersion(dto.getVersion());
 		}
 		return dto;
 	}
@@ -58,6 +59,7 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 			entity.setMobileNumber2(dto.getMobileNumber2());
 			entity.setOrganizationUnit(organizationUnitMapper.toEntity(dto.getOrganizationUnit()));
 			entity.setRole(roleMapper.toEntity(dto.getRole()));
+			entity.setVersion(dto.getVersion());
 		}
 		return entity;
 	}
