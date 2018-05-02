@@ -3,13 +3,16 @@ package com.informatique.gov.judicialwarrant.service.impl;
 import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.UserService;
@@ -26,6 +29,7 @@ public class UserServiceDtoImpl implements UserService {
 	private static final long serialVersionUID = 249744152632344882L;
 	private UserRepository userRepository;
 	private UserMapper userMapper;
+	private OrganizationUnitRepository organizationUnitRepository;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -51,7 +55,8 @@ public class UserServiceDtoImpl implements UserService {
 			notNull(dto, "dto must be set");
 
 			User entiry = userMapper.toNewEntity(dto);	
-			entiry.getOrganizationUnit().setVersion((short) 1);
+			Optional<OrganizationUnit> organizationUnit= organizationUnitRepository.findById(dto.getOrganizationUnit().getId());
+			entiry.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
 			
 			entiry = userRepository.save(entiry);
 			
@@ -89,8 +94,8 @@ public class UserServiceDtoImpl implements UserService {
 			notNull(dto, "dto must be set");			
 
 			User entiry = userMapper.toEntity(dto);
-			entiry.getOrganizationUnit().setVersion((short) 1);
-			
+			Optional<OrganizationUnit> organizationUnit= organizationUnitRepository.findById(dto.getOrganizationUnit().getId());
+			entiry.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
 			entiry = userRepository.save(entiry);
 			
 			savedDto = userMapper.toDto(entiry);
