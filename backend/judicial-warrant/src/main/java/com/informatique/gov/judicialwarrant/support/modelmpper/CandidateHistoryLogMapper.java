@@ -2,18 +2,14 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 
 import org.springframework.stereotype.Component;
 
-import com.informatique.gov.judicialwarrant.domain.AttachmentType;
 import com.informatique.gov.judicialwarrant.domain.Candidate;
 import com.informatique.gov.judicialwarrant.domain.CandidateHistoryLog;
 import com.informatique.gov.judicialwarrant.domain.CandidateStatus;
 import com.informatique.gov.judicialwarrant.domain.User;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateHistoryLogDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateStatusDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
-
-import lombok.AllArgsConstructor;
 
 @Component
 public class CandidateHistoryLogMapper extends AbstractModelMapper<CandidateHistoryLog, CandidateHistoryLogDto, Long> {

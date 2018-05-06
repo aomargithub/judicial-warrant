@@ -11,6 +11,7 @@ public enum JudicialWarrantExceptionEnum {
   RESOURCE_MODIFIED_EXCEPTION("RESOURCE_MODIFIED_EXCEPTION", "", ""),
   RESOURCE_NOT_FOUND_EXCEPTION("RESOURCE_NOT_FOUND_EXCEPTION", "", ""),
   PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "", ""),
+  INVALID_WORKFLOW_EXCEPTION("INVALID_WORKFLOW_EXCEPTION", "", ""),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description

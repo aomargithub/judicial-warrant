@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 public class CandidateMapper extends AbstractModelMapper<Candidate, CandidateDto, Long> {
 
 	private ModelMapper<CandidateStatus, CandidateStatusDto, Byte> candidateStatusMapper;
-	private ModelMapper<Request, RequestDto, Integer> requestMapper;
+	private ModelMapper<Request, RequestDto, Long> requestMapper;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<CandidateHistoryLog, CandidateHistoryLogDto, Long> candidateHistoryLogMapper;
 

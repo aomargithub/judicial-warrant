@@ -12,11 +12,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table(name = "REQUEST_STATUS")
+@Table(name = "REQUEST_INTERNAL_STATUS")
 @Data
 @ToString(of = {"id", "code", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"code"}, callSuper = false)
-public class RequestStatus extends DomainEntity<Byte> {
+public class RequestInternalStatus extends DomainEntity<Byte> {
 	
 	
 	

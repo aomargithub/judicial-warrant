@@ -1,9 +1,13 @@
 package com.informatique.gov.judicialwarrant.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
@@ -44,6 +48,9 @@ public class RequestType extends DomainEntity<Byte> {
 	@Embedded
 	private CreateLog createLog;
 	
-	@Column(name = "REQUEST_NUMBER_PREFIX")
-	private String requestNumberPrefix;
+	@Column(name = "REQUEST_SERIAL_PREFIX")
+	private String requestSerialPrefix;
+	
+	@OneToMany(mappedBy = "requestType", fetch = FetchType.LAZY)
+	private List<RequestSerial> requestSerials;
 }

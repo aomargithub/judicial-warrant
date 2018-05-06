@@ -2,11 +2,12 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 
 import org.springframework.stereotype.Component;
 
-import com.informatique.gov.judicialwarrant.domain.RequestStatus;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
+import com.informatique.gov.judicialwarrant.domain.RequestInternalStatus;
+import com.informatique.gov.judicialwarrant.rest.dto.RequestInternalStatusDto;
+
 
 @Component
-public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, RequestStatusDto, Byte>{
+public class RequestInternalStatusMapper extends AbstractModelMapper<RequestInternalStatus, RequestInternalStatusDto, Byte> {
 
 	/**
 	 * 
@@ -14,11 +15,11 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 	private static final long serialVersionUID = -7555189809233676907L;
 
 	@Override
-	public RequestStatusDto toDto(RequestStatus entity) {
-		RequestStatusDto dto = null;
+	public RequestInternalStatusDto toDto(RequestInternalStatus entity) {
+		RequestInternalStatusDto dto = null;
 		
 		if(isConvertable(entity)) {
-			dto = new RequestStatusDto();
+			dto = new RequestInternalStatusDto();
 			dto.setArabicName(entity.getArabicName());
 			dto.setCode(entity.getEnglishName());
 			dto.setEnglishName(entity.getEnglishName());
@@ -29,11 +30,11 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 	}
 
 	@Override
-	protected RequestStatus toEntity(RequestStatusDto dto, boolean nullId) {
-		RequestStatus entity = null;
+	protected RequestInternalStatus toEntity(RequestInternalStatusDto dto, boolean nullId) {
+		RequestInternalStatus entity = null;
 		
 		if(isConvertable(dto)) {
-			entity = new RequestStatus();
+			entity = new RequestInternalStatus();
 			entity.setArabicName(dto.getArabicName());
 			entity.setCode(dto.getEnglishName());
 			entity.setEnglishName(dto.getEnglishName());

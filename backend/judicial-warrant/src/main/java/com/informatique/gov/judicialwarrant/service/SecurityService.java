@@ -13,5 +13,7 @@ public interface SecurityService extends Serializable{
 	UserDetailsDto getUserDetails(HttpSession session) throws JudicialWarrantException;
 
 	String getPrincipal() throws JudicialWarrantInternalException;
+	
+	HttpSession session() throws JudicialWarrantInternalException;
 
 }

@@ -103,8 +103,6 @@ alter table CANDIDATE_STATUS
 create table REQUEST_STATUS
 (
   code         VARCHAR2(50) not null,
-  create_by    VARCHAR2(200) not null,
-  create_date  TIMESTAMP(6) not null,
   english_name VARCHAR2(100) not null,
   arabic_name  VARCHAR2(100) not null,
   id           NUMBER(2) not null
@@ -115,6 +113,28 @@ alter table REQUEST_STATUS
   add constraint REQUEST_STATUS_CODE_UN unique (CODE);
 
 
+  CREATE TABLE REQUEST_INTERNAL_STATUS 
+(
+  ID NUMBER(2, 0) NOT NULL 
+, CODE VARCHAR2(50 BYTE) NOT NULL 
+, ARABIC_NAME VARCHAR2(100 BYTE) NOT NULL 
+, ENGLISH_NAME VARCHAR2(100 BYTE) NOT NULL 
+, CONSTRAINT REQUEST_INTERNAL_STATUS_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE REQUEST_INTERNAL_STATUS
+ADD CONSTRAINT REQUEST_INTERNAL_STATUS_UK1 UNIQUE 
+(
+  CODE 
+)
+ENABLE;
+
+  
+  
 create table REQUEST_TYPE
 (
   create_by             VARCHAR2(200) not null,
@@ -125,7 +145,7 @@ create table REQUEST_TYPE
   list_order            NUMBER(2) not null,
   arabic_name           VARCHAR2(200) not null,
   id                    NUMBER(2) not null,
-  request_number_prefix VARCHAR2(100) not null
+  request_serial_prefix VARCHAR2(100) not null
 );
 alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_PK primary key (ID);
@@ -133,6 +153,9 @@ alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_CODE_UN unique (CODE);
 alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_DSPLY_ORDR_UN unique (LIST_ORDER);
+  
+
+
 
 
 create table REQUEST
@@ -144,9 +167,11 @@ create table REQUEST
   version              NUMBER(3) not null,
   id                   NUMBER not null,
   current_status_id    NUMBER(2) not null,
+  CURRENT_INTERNAL_STATUS_ID NUMBER(2),
   type_id              NUMBER(2) not null,
   organization_unit_id NUMBER(4) not null,
-  serial               VARCHAR2(200)
+  serial               VARCHAR2(200),
+  JWCD_REQUEST_ID NUMBER
 );
 alter table REQUEST
   add constraint REQUEST_PK primary key (ID);
@@ -161,6 +186,30 @@ alter table REQUEST
 alter table REQUEST
   add constraint REQUEST_REQUEST_TYPE_FK foreign key (TYPE_ID)
   references REQUEST_TYPE (ID);
+  
+  ALTER TABLE REQUEST
+ADD CONSTRAINT JWCD_REQUEST_FK1 FOREIGN KEY
+(
+  JWCD_REQUEST_ID 
+)
+REFERENCES JWCD_REQUEST
+(
+  ID 
+)
+ENABLE;
+
+ALTER TABLE REQUEST
+ADD CONSTRAINT REQUEST_INTERNAL_STATUS_FK1 FOREIGN KEY
+(
+  CURRENT_INTERNAL_STATUS_ID 
+)
+REFERENCES REQUEST_INTERNAL_STATUS
+(
+  ID 
+)
+ENABLE;
+
+
 
 create table CANDIDATE
 (
@@ -301,6 +350,7 @@ create table REQUEST_HISTORY_LOG
   id                NUMBER not null,
   request_id        NUMBER not null,
   request_status_id NUMBER(2) not null,
+  INTERNAL_STATUS_ID NUMBER(2) NOT NULL,
   create_by         NUMBER not null,
   create_date       TIMESTAMP(6) not null,
   note              VARCHAR2(500)
@@ -317,6 +367,17 @@ alter table REQUEST_HISTORY_LOG
   add constraint RQST_HSTRY_RQST_STS_FK foreign key (REQUEST_STATUS_ID)
   references REQUEST_STATUS (ID);
 
+  ALTER TABLE REQUEST_HISTORY_LOG
+ADD CONSTRAINT RQST_HSTRY_RQST_INT_STS_FK FOREIGN KEY
+(
+  INTERNAL_STATUS_ID 
+)
+REFERENCES REQUEST_INTERNAL_STATUS
+(
+  ID 
+)
+ENABLE;
+  
 create table REQUEST_TYPE_ATTACHMENT_TYPE
 (
   id                 NUMBER(4) not null,
@@ -383,12 +444,62 @@ alter table SPRING_SESSION_ATTRIBUTES
 );
 
 alter table NATIONALITY
-  add constraint NATIONALITY_ID primary key (ID);
-alter table NATIONALITY
   add constraint NATIONALITY_CODE unique (CODE);
 alter table NATIONALITY
   add constraint NATIONALITY_ISO unique (ISO);
 
+  
+CREATE TABLE JWCD_REQUEST 
+(
+  ID NUMBER NOT NULL 
+, JOB_TITLE VARCHAR2(20) NOT NULL 
+, REQUEST_ID NUMBER
+, CONSTRAINT JOB_TITLE_REQUEST_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE JWCD_REQUEST
+ADD CONSTRAINT JWCD_REQUEST_REQUEST_FK1 FOREIGN KEY
+(
+  REQUEST_ID 
+)
+REFERENCES REQUEST
+(
+  ID 
+)
+ENABLE;
+
+  
+
+CREATE TABLE REQUEST_SERIAL 
+(
+  ID NUMBER NOT NULL 
+, LAST_NUMBER NUMBER NOT NULL 
+, YEAR NUMBER NOT NULL 
+, VERSION NUMBER NOT NULL 
+, REQUEST_TYPE_ID NUMBER(2, 0) NOT NULL
+, CONSTRAINT REQUEST_SERIAL_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE REQUEST_SERIAL
+ADD CONSTRAINT REQUEST_TYPE_FK1 FOREIGN KEY
+(
+  REQUEST_TYPE_ID 
+)
+REFERENCES REQUEST_TYPE
+(
+  ID 
+)
+ENABLE;
+
+  
 create sequence APP_USER_SEQ
 minvalue 1
 maxvalue 9999999999999999999999999999
@@ -466,3 +577,11 @@ maxvalue 9999999999999999999999999999
 start with 1
 increment by 1
 cache 20;
+
+CREATE SEQUENCE REQUEST_SERIAL_SEQ INCREMENT BY 1 start with 1 MAXVALUE 99999999999999999999 MINVALUE 1 CACHE 20;
+
+CREATE SEQUENCE JWCD_REQUEST_SEQ INCREMENT BY 1 START WITH 1 MAXVALUE 9999999999999999999 MINVALUE 1 CACHE 20;
+
+
+
+
