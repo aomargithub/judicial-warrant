@@ -24,7 +24,6 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEn
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 import com.informatique.gov.judicialwarrant.service.InternalErrorLogService;
 import com.informatique.gov.judicialwarrant.support.dataenum.ExceptionClassNameEnum;
 
@@ -48,9 +47,10 @@ public class RestResponseExceptionAdvice implements Serializable {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody RestResponse handleValidationExcption(MethodArgumentNotValidException exception) {
+    public @ResponseBody ResponseEntity<List<JudicialwarrantError>> handleValidationExcption(MethodArgumentNotValidException exception) {
 
         BindingResult bindingResult = exception.getBindingResult();
+        ResponseEntity<List<JudicialwarrantError>> response = null;
         List<JudicialwarrantError> exceptionErrors = null;
         Object errorArgument = null;
         JudicialWarrantExceptionEnum judicialWarrantExceptionEnum = null;
@@ -98,8 +98,8 @@ public class RestResponseExceptionAdvice implements Serializable {
                 exceptionErrors.add(judicialwarrantError);
             }
         }
-
-        return new RestResponse(exceptionErrors);
+        response = ResponseEntity.ok(exceptionErrors);
+        return response;
     }
     
 

@@ -1,10 +1,13 @@
 package com.informatique.gov.judicialwarrant.config;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -42,9 +46,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		
-		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class).cors()
-		.configurationSource(corsConfigurationSource()).and().csrf().csrfTokenRepository(csrfTokenRepository()).and().sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.NEVER).and().logout().logoutUrl("/api/logout");
+		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class)
+		.cors().configurationSource(corsConfigurationSource()).and()
+		.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
+		.logout().logoutUrl(Constants.LOGOUT_URL).logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK));
 
 		http.addFilterBefore(onlyLoginBasicAuthenticationFilter(), RequestCacheAwareFilter.class).exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint());
 		http.authorizeRequests().antMatchers("/api/**").authenticated();

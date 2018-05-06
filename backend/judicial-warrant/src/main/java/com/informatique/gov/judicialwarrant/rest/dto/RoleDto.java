@@ -1,12 +1,13 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
 @ToString(of = {"id", "code", "arabicName", "englishName"})
-@EqualsAndHashCode(of = {"code"}, callSuper = false)
+@EqualsAndHashCode(of = {"code", "arabicName", "englishName"}, callSuper = false)
 public class RoleDto implements UserModel<Byte> {
 	
 	/**

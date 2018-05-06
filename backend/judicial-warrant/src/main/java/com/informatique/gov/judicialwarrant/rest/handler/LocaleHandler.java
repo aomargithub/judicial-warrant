@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.LocaleDto;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 
 public interface LocaleHandler extends Serializable {
 

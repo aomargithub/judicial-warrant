@@ -1,7 +1,6 @@
 module.exports = function(app){
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider, templateSrvcProvider){
         $urlRouterProvider.otherwise('/login');
-       // $locationProvider.hashPrefix('');
         $stateProvider
             .state('login', {
                 url : '/login',
