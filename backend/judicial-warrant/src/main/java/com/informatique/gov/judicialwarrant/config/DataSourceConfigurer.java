@@ -3,8 +3,6 @@ package com.informatique.gov.judicialwarrant.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,18 +16,19 @@ public class DataSourceConfigurer {
 	@Autowired
 	private Environment environment;
 	
-	@Bean(name = "dataSource")
+	
+	/*
+	 * We added destroyMethod = "" intentionally as if destroyMethod is not specified it, spring will try to find it,
+	 * and apparently when that happens, the datasource to be closed and the JNDI key to be removed from weblogic JNDI tree.
+	 * Changing it to "" forces it to not look for a destroyMethod.
+	 * 
+	 *https://stackoverflow.com/questions/19158837/weblogic-datasource-disappears-from-jndi-tree
+	 *
+	 */
+	@Bean(name = "dataSource", destroyMethod = "")
 	@Profile({ "test", "staging", "prod"})
 	public DataSource dataSourceLookup() throws Exception {
 	    JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
 	    return dataSourceLookup.getDataSource(environment.getRequiredProperty("app.datasource.name"));
 	}
-	
-	@Bean(name = "dataSource")
-	@Profile({ "dev"})
-	@ConfigurationProperties("app.datasource")
-	public org.apache.tomcat.jdbc.pool.DataSource dataSourceCreator() {
-	    return (org.apache.tomcat.jdbc.pool.DataSource)DataSourceBuilder.create().type(org.apache.tomcat.jdbc.pool.DataSource.class).build();
-	}
-
 }

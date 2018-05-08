@@ -1,7 +1,5 @@
 package com.informatique.gov.judicialwarrant.config;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +46,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		
 		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class)
 		.cors().configurationSource(corsConfigurationSource()).and()
-		.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		//.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		.csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
 		.logout().logoutUrl(Constants.LOGOUT_URL).logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK));
 

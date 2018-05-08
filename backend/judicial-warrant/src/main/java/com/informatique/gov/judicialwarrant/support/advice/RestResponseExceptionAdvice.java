@@ -16,14 +16,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
+import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
-import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
 import com.informatique.gov.judicialwarrant.service.InternalErrorLogService;
 import com.informatique.gov.judicialwarrant.support.dataenum.ExceptionClassNameEnum;
 
@@ -47,10 +46,9 @@ public class RestResponseExceptionAdvice implements Serializable {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ResponseEntity<List<JudicialwarrantError>> handleValidationExcption(MethodArgumentNotValidException exception) {
+    public ResponseEntity<List<JudicialwarrantError>> handleValidationExcption(MethodArgumentNotValidException exception) {
 
         BindingResult bindingResult = exception.getBindingResult();
-        ResponseEntity<List<JudicialwarrantError>> response = null;
         List<JudicialwarrantError> exceptionErrors = null;
         Object errorArgument = null;
         JudicialWarrantExceptionEnum judicialWarrantExceptionEnum = null;
@@ -98,8 +96,8 @@ public class RestResponseExceptionAdvice implements Serializable {
                 exceptionErrors.add(judicialwarrantError);
             }
         }
-        response = ResponseEntity.ok(exceptionErrors);
-        return response;
+       
+        return ResponseEntity.ok(exceptionErrors);
     }
     
 
