@@ -2,7 +2,6 @@ package com.informatique.gov.judicialwarrant.domain;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -72,7 +71,7 @@ public class Request extends DomainEntity<Long> implements CreationAuditable, Up
 	@JoinColumn(name = "CURRENT_STATUS_ID")
 	private RequestStatus currentStatus;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORGANIZATION_UNIT_ID")
 	private OrganizationUnit organizationUnit;
 	

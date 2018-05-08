@@ -131,6 +131,9 @@ public class RestResponseExceptionAdvice implements Serializable {
     		case PreConditionRequiredException:
     			bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED);
     			break;
+    		case InINVALID_REQUEST_STATUS_EXCEPTION:
+    			bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED);
+    			break;
     		default:
     			bodyBuilder = ResponseEntity.badRequest();
     			break;

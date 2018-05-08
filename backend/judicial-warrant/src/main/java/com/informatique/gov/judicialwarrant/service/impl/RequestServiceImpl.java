@@ -5,12 +5,12 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.domain.RequestHistoryLog;
 import com.informatique.gov.judicialwarrant.domain.RequestType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestHistoryLogRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestInternalStatusRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
@@ -26,7 +26,6 @@ import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
-import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -41,7 +40,7 @@ public class RequestServiceImpl implements InternalRequestService {
 	private RequestInternalStatusRepository requestInternalStatusRepository;
 	private RequestSerialService requestSerialService;
 	private RequestHistoryLogRepository requestHistoryLogRepository;
-	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
+	private OrganizationUnitRepository organizationUnitRepository;
 
 	/**
 	 * 
@@ -57,7 +56,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			request = new Request();
 			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session())
 					.getOrganizationUnit();
-			request.setOrganizationUnit(organizationUnitMapper.toEntity(organizationUnitDto));
+			request.setOrganizationUnit(organizationUnitRepository.findById(organizationUnitDto.getId()).get());
 			request.setCurrentStatus(requestStatusRepository.findByCode(jwcdRequestStatusEnum.getCode()));
 			RequestType requestType = requestTypeRepository.findByCode(requestTypeEnum.getCode());
 			request.setType(requestType);

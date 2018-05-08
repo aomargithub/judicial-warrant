@@ -2,18 +2,20 @@ package com.informatique.gov.judicialwarrant.support.validator;
 
 import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
 import com.informatique.gov.judicialwarrant.exception.InvalidRequestStatusException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 
 public class JwcdWorkflowValidator {
 
 	public static void validate(JwcdRequest jwcdRequest, RequestInternalStatusEnum requiredInternalStatusEnum)
-			throws InvalidRequestStatusException {
+			throws  InvalidRequestStatusException , JudicialWarrantInternalException{
+		try {
+			String serial = jwcdRequest.getRequest().getSerial();
 		if (jwcdRequest.getRequest().getCurrentInternalStatus() == null) {
 			if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
-				throw new InvalidRequestStatusException(
-						"you can't change status until submit request and become recieve",
-						"you can't change status until submit request and become recieve");
+				throw new InvalidRequestStatusException(serial, RequestInternalStatusEnum.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode()));
 			}
 			else {
 				return;
@@ -25,60 +27,59 @@ public class JwcdWorkflowValidator {
 		case RECIEVED:
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.INCOMPLETE) && !requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)
 					&& !requiredInternalStatus.equals(RequestInternalStatusEnum.INPROGRESS)) {
-				throw new InvalidRequestStatusException("you only can change status to Incomplete or rejected or Inprogress",
-						"you only can change status to Incomplete or rejected or Inprogress");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case INCOMPLETE:
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.RECIEVED)) {
-				throw new InvalidRequestStatusException("you only can change status to RECIEVED",
-						"you only can change status to RECIEVED");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case REJECTED:
-			throw new InvalidRequestStatusException("You can't do any thing after Reject Request",
-					"You can't do any thing after Reject Request");
+			throw new InvalidRequestStatusException(serial, currentInternalStatus);
 		case INPROGRESS:
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW)) {
-				throw new InvalidRequestStatusException("you can only send request to law affairs review",
-						"you can only send request to law affairs review");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case JWCD_LAW_AFFAIRS_REVIEW:
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REJECTED)
 					&& !requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_ACCEPTED)) {
-				throw new InvalidRequestStatusException("you can only make Request law Affairs accept or reject",
-						"you can only make Request law Affairs accept or reject");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case JWCD_LAW_AFFAIRS_ACCEPTED:
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.ISSUED)) {
-				throw new InvalidRequestStatusException(
-						"you can only Issued rhe request as the request is law affairs accept",
-						"you can only Issued rhe request as the request is law affairs accept");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case JWCD_LAW_AFFAIRS_REJECTED:
 			// TODO are here can return again to JWCD_LAW_AFFAIRS_REVIEW?
 			if (!requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)) {
-				throw new InvalidRequestStatusException("you can only reject request as it is law affairs reject",
-						"you can only reject request as it is law affairs reject");
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			}
 			break;
 		case ISSUED:
-			throw new InvalidRequestStatusException("you can't do any thing after request is issued",
-					"you can't do any thing after request is issued");
+			throw new InvalidRequestStatusException(serial, currentInternalStatus);
 		default:
 			break;
 		}
+		} 
+		catch (JudicialWarrantException e) {
+			throw e;
+		}
 	}
 
-	public static void validateForUpdate(JwcdRequest jwcdRequest) throws InvalidRequestStatusException {
-		RequestStatusEnum currentStatus = RequestStatusEnum.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode());
-		if (!currentStatus.equals(RequestStatusEnum.DRAFT) || !currentStatus.equals(RequestStatusEnum.INCOMPLETE)) {
-			throw new InvalidRequestStatusException("you can update request only if is draft or return incomplete",
-					"you can update request only if is draft or return incomplete");
-		} else {
+	public static void validateForUpdate(JwcdRequest jwcdRequest) throws InvalidRequestStatusException, JudicialWarrantInternalException {
+		try {
+			RequestStatusEnum currentStatus = RequestStatusEnum.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode());
+			if (!currentStatus.equals(RequestStatusEnum.DRAFT) || !currentStatus.equals(RequestStatusEnum.INCOMPLETE)) {
+				String serial = jwcdRequest.getRequest().getSerial();
+				throw new InvalidRequestStatusException(serial, currentStatus);
+			}
+		} 
+		catch (JudicialWarrantException e) {
+			throw e;
 		}
 	}
 }
