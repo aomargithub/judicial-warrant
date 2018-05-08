@@ -16,7 +16,6 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -79,10 +78,6 @@ public class Request extends DomainEntity<Long> implements CreationAuditable, Up
 	
 	@OneToMany(mappedBy = "request", fetch = FetchType.LAZY)
 	private List<RequestHistoryLog> histortyLogs;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "JWCD_REQUEST_ID")
-	private JwcdRequest jwcdRequest;
 	
 	@Embedded
 	private CreateLog createLog;
