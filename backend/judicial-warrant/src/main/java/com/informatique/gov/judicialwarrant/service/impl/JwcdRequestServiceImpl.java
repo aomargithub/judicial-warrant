@@ -89,7 +89,8 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 		
 		try {
 			JwcdRequest jwcdRequest = new JwcdRequest();
-			Request request = requestService.create(RequestTypeEnum.JWCD);
+			Request request = requestService.create(RequestTypeEnum.JWCD, jwcdRequestData);
+			jwcdRequest.setId(request.getId());
 			jwcdRequest.setJobTitle(jwcdRequestData.getJobTitle());
 			jwcdRequest.setRequest(request);
 			jwcdRequestRepository.save(jwcdRequest);

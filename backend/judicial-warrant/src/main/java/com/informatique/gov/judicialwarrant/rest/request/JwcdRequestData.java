@@ -2,10 +2,10 @@ package com.informatique.gov.judicialwarrant.rest.request;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -21,5 +21,10 @@ public class JwcdRequestData implements Serializable{
 	@NotBlank
 	@NotNull
 	private String jobTitle;
+	
+	@NotEmpty
+	@NotBlank
+	@NotNull
+	private String notes;
 
 }

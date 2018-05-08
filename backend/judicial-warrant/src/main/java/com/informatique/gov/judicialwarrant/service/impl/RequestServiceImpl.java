@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.service.impl;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +17,10 @@ import com.informatique.gov.judicialwarrant.persistence.repository.RequestReposi
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestStatusRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
+import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestData;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestNotesData;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
+import com.informatique.gov.judicialwarrant.service.InternalUserService;
 import com.informatique.gov.judicialwarrant.service.RequestSerialService;
 import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
@@ -31,6 +35,7 @@ import lombok.AllArgsConstructor;
 public class RequestServiceImpl implements InternalRequestService {
 	private RequestRepository requestRepository;
 	private SecurityService securityService;
+	private InternalUserService internalUserService;
 	private RequestTypeRepository requestTypeRepository;
 	private RequestStatusRepository requestStatusRepository;
 	private RequestInternalStatusRepository requestInternalStatusRepository;
@@ -70,14 +75,17 @@ public class RequestServiceImpl implements InternalRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Request create(RequestTypeEnum requestTypeEnum) throws JudicialWarrantException {
+	public Request create(RequestTypeEnum requestTypeEnum, JwcdRequestData jwcdRequestData) throws JudicialWarrantException {
 		Request request = null;
 		try {
 			request = create(requestTypeEnum, RequestStatusEnum.DRAFT);
 			RequestHistoryLog requestHistoryLog = new RequestHistoryLog();
 			requestHistoryLog.setRequest(request);
+			requestHistoryLog.setCreateBy(internalUserService.getByLoginName(securityService.getPrincipal()));
+			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());
+			requestHistoryLog.setNote(jwcdRequestData.getNotes());
 			requestHistoryLogRepository.save(requestHistoryLog);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -109,6 +117,8 @@ public class RequestServiceImpl implements InternalRequestService {
 			request = requestRepository.save(request);
 			RequestHistoryLog requestHistoryLog = new RequestHistoryLog();
 			requestHistoryLog.setRequest(request);
+			requestHistoryLog.setCreateBy(internalUserService.getByLoginName(securityService.getPrincipal()));
+			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());
 			requestHistoryLog.setNote(jwcdRequestNotesData.getNotes());

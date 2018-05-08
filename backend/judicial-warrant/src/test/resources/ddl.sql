@@ -338,7 +338,7 @@ create table REQUEST_HISTORY_LOG
   id                NUMBER not null,
   request_id        NUMBER not null,
   request_status_id NUMBER(2) not null,
-  INTERNAL_STATUS_ID NUMBER(2) NOT NULL,
+  INTERNAL_STATUS_ID NUMBER(2) ,
   create_by         NUMBER not null,
   create_date       TIMESTAMP(6) not null,
   note              VARCHAR2(500)
@@ -449,7 +449,6 @@ ADD CONSTRAINT JWCD_REQUEST_PK PRIMARY KEY
   ID 
 )
 ENABLE;
-
 
 ALTER TABLE JWCD_REQUEST
 ADD CONSTRAINT JWCD_REQUEST_REQUEST_FK1 FOREIGN KEY
