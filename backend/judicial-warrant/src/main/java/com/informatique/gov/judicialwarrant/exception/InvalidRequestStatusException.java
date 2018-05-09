@@ -10,26 +10,18 @@ public class InvalidRequestStatusException extends JudicialWarrantException {
 
 	private static final long serialVersionUID = 6920349127579296927L;
 	
-	private final String requestSerial;
-	private final RequestStatusEnum requestStatusEnum;
-	private final RequestInternalStatusEnum requestInternalStatusEnum;
+	
 
 	public InvalidRequestStatusException(String requestSerial, RequestStatusEnum requestStatusEnum) {
 		super(JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getCode(),
-				JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getDescription(),
+				String.format(JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getDescription(), requestStatusEnum.getCode(), requestSerial),
 				JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getFixSuggestion());
-		this.requestSerial = requestSerial;
-		this.requestStatusEnum = requestStatusEnum;
-		this.requestInternalStatusEnum = null;
 	}
 
 	public InvalidRequestStatusException(String requestSerial, RequestInternalStatusEnum requestInternalStatusEnum) {
 		super(JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getCode(),
-				JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getDescription(),
+				String.format(JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getDescription(), requestInternalStatusEnum.getCode(), requestSerial),
 				JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getFixSuggestion());
-		this.requestSerial = requestSerial;
-		this.requestStatusEnum = null;
-		this.requestInternalStatusEnum = requestInternalStatusEnum;
 	}
 	
 }

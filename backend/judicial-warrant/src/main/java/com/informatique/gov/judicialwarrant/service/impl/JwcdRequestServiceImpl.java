@@ -52,7 +52,7 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 		}
 		return dtos;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public Short getVersionBySerial(String serial) throws JudicialWarrantException {
@@ -63,7 +63,7 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return version;		
+		return version;
 	}
 
 	@Override
@@ -75,6 +75,8 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 			notNull(serial, "code must be set");
 			entity = jwcdRequestRepository.findByRequestSerial(serial);
 			dto = jwcdRequestmapper.toDto(entity);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -84,9 +86,9 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public JwcdRequestDto createRequest(JwcdRequestData jwcdRequestData) throws JudicialWarrantException {
-		
+
 		JwcdRequestDto jwcdRequestDto = null;
-		
+
 		try {
 			JwcdRequest jwcdRequest = new JwcdRequest();
 			Request request = requestService.create(RequestTypeEnum.JWCD, jwcdRequestData);
@@ -99,7 +101,7 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
-		} 
+		}
 		return jwcdRequestDto;
 	}
 
@@ -114,6 +116,8 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 			jwcdRequest.setJobTitle(jobNameRequestData.getJobTitle());
 			jwcdRequest = jwcdRequestRepository.save(jwcdRequest);
 			jwcdRequestDto = jwcdRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -122,134 +126,162 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestDto submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestDto submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestDto jwcdRequestDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.RECIEVED);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.RECIEVED, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.RECIEVED,
+					jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestDto = jwcdRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestDto;
 	}
-	
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestForInternalDto incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.INCOMPLETE);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.INCOMPLETE, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(),
+					RequestInternalStatusEnum.INCOMPLETE, jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return jwcdRequestForInternalDto;
-	}
-	
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
-		try {
-			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
-			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.REJECTED);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.REJECTED, jwcdRequestNotesData);
-			jwcdRequest.setRequest(request);
-			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return jwcdRequestForInternalDto;
-	}
-	
-	
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
-		try {
-			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
-			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.INPROGRESS);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.INPROGRESS, jwcdRequestNotesData);
-			jwcdRequest.setRequest(request);
-			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestForInternalDto;
 	}
 
-	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestForInternalDto rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
+		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
+		try {
+			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
+			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.REJECTED);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.REJECTED,
+					jwcdRequestNotesData);
+			jwcdRequest.setRequest(request);
+			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return jwcdRequestForInternalDto;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public JwcdRequestForInternalDto inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
+		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
+		try {
+			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
+			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.INPROGRESS);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(),
+					RequestInternalStatusEnum.INPROGRESS, jwcdRequestNotesData);
+			jwcdRequest.setRequest(request);
+			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return jwcdRequestForInternalDto;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public JwcdRequestForInternalDto lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(),
+					RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW, jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestForInternalDto;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestForInternalDto lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_ACCEPTED);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_ACCEPTED, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(),
+					RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_ACCEPTED, jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestForInternalDto;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestForInternalDto lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REJECTED);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REJECTED, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(),
+					RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REJECTED, jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestForInternalDto;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public JwcdRequestForInternalDto issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+	public JwcdRequestForInternalDto issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+			throws JudicialWarrantException {
 		JwcdRequestForInternalDto jwcdRequestForInternalDto = null;
 		try {
 			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(serial);
 			JwcdWorkflowValidator.validate(jwcdRequest, RequestInternalStatusEnum.ISSUED);
-			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.ISSUED, jwcdRequestNotesData);
+			Request request = requestService.changeStatus(jwcdRequest.getRequest(), RequestInternalStatusEnum.ISSUED,
+					jwcdRequestNotesData);
 			jwcdRequest.setRequest(request);
 			jwcdRequestForInternalDto = jobTitleInternalRequestmapper.toDto(jwcdRequest);
+		} catch (JudicialWarrantException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return jwcdRequestForInternalDto;
 	}
-	
 
 }

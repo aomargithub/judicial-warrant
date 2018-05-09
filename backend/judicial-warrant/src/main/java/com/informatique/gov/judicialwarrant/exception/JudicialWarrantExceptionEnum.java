@@ -11,7 +11,7 @@ public enum JudicialWarrantExceptionEnum {
   RESOURCE_MODIFIED_EXCEPTION("RESOURCE_MODIFIED_EXCEPTION", "", ""),
   RESOURCE_NOT_FOUND_EXCEPTION("RESOURCE_NOT_FOUND_EXCEPTION", "", ""),
   PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "", ""),
-  INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status is invalid", "double check data provided"),
+  INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description
