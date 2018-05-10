@@ -4,7 +4,8 @@
         ngCookies = require('angular-cookies'),
         ngAnimate = require('angular-animate'),
         ngbreadcrumbs = require('angular-breadcrumbs'),
-        jwApp = angular.module('jwApp', [uiRouter, ngCookies, ngAnimate,ngbreadcrumbs,ui-router-breadcrumbs]);
+        angularuirouterbreadcrumbs = require('ui-router-breadcrumbs'),
+        jwApp = angular.module('jwApp', [uiRouter, ngCookies, ngAnimate,ngbreadcrumbs,angularuirouterbreadcrumbs]);
     
     require('./index')(jwApp);
 })();

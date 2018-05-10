@@ -3,10 +3,19 @@
 */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-
+@font-face{
+    font-family: sultan;
+    src: url(../fonts/hinted-sultan_mudaimeditmezajeey.woff);
+    
+}
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    font-family: sultan !important;
+    font-size: 12px;
+    font-weight: 10px;
+    background-color:#cfd3d4;
+	background-image: url(../imgs/wall.png);
+    background-repeat:repeat;
+    
 }
 
 p {
@@ -49,34 +58,62 @@ i, span {
     display: inline-block;
 }
 
+table{
+    margin: 50px 0px 0px 0px;
+    text-align: center;
+    background-color: #c0b283; 
+    border-radius: 20px;
+    
+}
+table thead{
+    background-color: #373737;
+    color: #faefd7; 
+    
+}
+
+table th{
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    height: 50px;
+    vertical-align: middle !important;
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
 .wrapper {
     display: flex;
     align-items: stretch;
+    height: fit-content;
 }
 
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
-    color: #fff;
+    background: #373737;
+    color: #faefd7;
     transition: all 0.3s;
+    position: fixed;
+    height: 100%;
+    z-index: 99;
 }
 
 #sidebar.active {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
+    position: fixed;
 }
 
 #sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
     display: none;
+    text-align: center;
 }
 
 #sidebar.active .sidebar-header strong {
     display: block;
+    
 }
 
 #sidebar ul li a {
@@ -111,7 +148,7 @@ i, span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #373737;
 }
 
 #sidebar .sidebar-header strong {
@@ -129,7 +166,7 @@ i, span {
     display: block;
 }
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #373737;
     background: #fff;
 }
 #sidebar ul li a i {
@@ -138,7 +175,7 @@ i, span {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #373737;
 }
 
 .list-unstyled {
@@ -165,7 +202,7 @@ a[aria-expanded="true"]::before {
 ul ul a {
     font-size: 0.9em !important;
     padding-right: 35px !important;
-    background: #6d7fcc;
+    background: #373737;
 }
 
 ul.CTAs {
@@ -196,12 +233,82 @@ a.article, a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
+    bottom: 0px;
     padding: 20px;
-    min-height: 100vh;
+    margin: 20px 60px 0px 0px;
     transition: all 0.3s;
+    position: relative;
+}
+
+.btn-group .form-check div {
+    margin: 0px 20px;
 }
 
 
+/* ---------------------------------------------------
+    logout
+----------------------------------------------------- */
+#content header button {
+position: fixed;
+margin: 10px ;
+left: 0;
+top: 0;
+}
+/* ---------------------------------------------------
+    login-form STYLE
+----------------------------------------------------- */
+.login-dev #login-form fieldset h4{
+    font-family:sultan;   
+    font-weight: normal;
+}
+.login-dev input{
+ background-color: #fff ;   
+}
+#login-form .avatar {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: -50px;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    z-index: 9;
+    background: #e7e3e0;
+    padding: 15px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+ img {
+    max-width:100%;
+    max-height:100%;
+    display: block;
+    border-image: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.login-dev {
+    width: 350px;
+    margin: 0 auto;
+    padding: 100px 0 30px;
+    		
+}
+.login-dev form {
+    color: rgb(255, 255, 255) !important;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    background: #373737 !important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;	
+    position: relative;	
+}
+.login-dev button{
+    
+    height: 50px;
+    text-align: center;
+    margin: 0px auto;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
