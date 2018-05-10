@@ -6,45 +6,59 @@
                   edit-id="organizationUnitDrtvCtrl.editOrganizationUnit.id"
                   class="message-bar" >
     </message-drtv>
-    <div>
+    <div class="btn-group btn-group-justified">
         <form name="organizationUnitForm" novalidate>
-            <div>
+            <div  class="form-group col-md-6" >
                 <label for="arabicName">{{messages.label.arabicName}}</label>
-                <input type="text" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" required/>
+                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" required/>
                 <span ng-show="organizationUnitForm.arabicName.$touched && organizationUnitForm.arabicName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
-            <div>
+            <div class="form-group col-md-6">
                 <label for="englishName">{{messages.label.englishName}}</label>
-                <input type="text" id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" required/>
+                <input type="text" class="form-control " id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" required/>
                 <span ng-show="organizationUnitForm.englishName.$touched && organizationUnitForm.englishName.$error.required" >
                         {{messages.label.required}}
-                    </span>
+                </span>
             </div>
-            <div>
-                <label for="isActive">{{messages.label.isActive}}</label>
-                <input type="checkbox" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
-            </div>
-            <div>
-                <div ng-if="!organizationUnitDrtvCtrl.editOrganizationUnit">
-                    <button ng-click="organizationUnitDrtvCtrl.add()" ng-disabled="organizationUnitForm.$invalid" type="submit">{{messages.label.add}}</button>
+            <div class="form-check">
+                    <div  class="form-check form-check-inline">
+                        <label for="isActive"  class="form-check-label">{{messages.label.isActive}}</label>
+                        <input type="checkbox" class="form-check-input" id="isActive" ng-model="organizationUnitDrtvCtrl.organizationUnit.isActive" />
+                    </div>
                 </div>
-                <div ng-if="organizationUnitDrtvCtrl.editOrganizationUnit">
-                    <button ng-click="organizationUnitDrtvCtrl.update()" ng-disabled="organizationUnitForm.$invalid" type="submit">{{messages.label.update}}</button>
-                </div>
-                <div>
-                    <button ng-click="organizationUnitDrtvCtrl.reset()">{{messages.label.reset}}</button>
-                </div>
-                <div ng-if="organizationUnitDrtvCtrl.editOrganizationUnit">
-                    <button ng-click="organizationUnitDrtvCtrl.cancel()">{{messages.label.cancel}}</button>
+           
+            <div class="btn-group" >
+                   
+                <div  class="btn-group row" ng-if="!organizationUnitDrtvCtrl.editOrganizationUnit">
+                        <div class="col-sm-10">
+                    <button ng-click="organizationUnitDrtvCtrl.add()" ng-disabled="organizationUnitForm.$invalid" type="submit" class="btn btn-default">{{messages.label.add}}</button>
                 </div>
             </div>
+                <div class="btn-group row" ng-if="organizationUnitDrtvCtrl.editOrganizationUnit">
+                        <div class="col-sm-10">
+                    <button ng-click="organizationUnitDrtvCtrl.update()" ng-disabled="organizationUnitForm.$invalid" type="submit" class="btn btn-default">{{messages.label.update}}</button>
+                </div>
+            </div>
+                <div class="btn-group row">
+                        <div class="col-sm-10">
+                    <button ng-click="organizationUnitDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
+                </div>
+            </div>
+                <div ng-if="organizationUnitDrtvCtrl.editOrganizationUnit" class="btn-group row">
+                        <div class="col-sm-10">
+                    <button ng-click="organizationUnitDrtvCtrl.cancel()" class="btn btn-default">{{messages.label.cancel}}</button>
+                </div>
+            </div>
+            </div>
+             
         </form>
     </div>
-    <div>
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
+
+     <div class="table-responsive">
+        <table class="table table-striped table-bordered  table-hover">
+            <thead >
                 <tr>
                     <th>
                         {{messages.label.arabicName}}
@@ -76,21 +90,20 @@
                     </td>
                     <td>
                         <div>
-                            <button ng-click="organizationUnitDrtvCtrl.edit(ou.id)">{{messages.label.edit}}</button>
+                            <button class="btn btn-default" ng-click="organizationUnitDrtvCtrl.edit(ou.id)"><span class="glyphicon glyphicon-pencil"></span></button>
                         </div>
                     </td>
                     <td>
                         <div>
-                            <button ng-click="organizationUnitDrtvCtrl.delete(ou.id)">{{messages.label.delete}}</button>
+                            <button class="btn btn-default" ng-click="organizationUnitDrtvCtrl.delete(ou.id)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="5">
-                    <pagination items-size="organizationUnitDrtvCtrl.organizationUnits.length" page="organizationUnitDrtvCtrl.page">
-                    </pagination></td>
-                </tr>
+               
             </tbody>
         </table>
+        <td colspan="5">
+                <pagination items-size="organizationUnitDrtvCtrl.organizationUnits.length" page="organizationUnitDrtvCtrl.page">
+                </pagination></td>
     </div>
 </div>

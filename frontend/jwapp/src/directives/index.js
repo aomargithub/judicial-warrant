@@ -7,4 +7,5 @@ module.exports = function(app){
     require('./pagination')(app);
     require('./logout')(app);
     require('./header')(app);
+    require('./breadcrumbs')(app);
 };
