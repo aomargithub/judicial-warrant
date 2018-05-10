@@ -11,6 +11,7 @@ public enum JudicialWarrantExceptionEnum {
   RESOURCE_MODIFIED_EXCEPTION("RESOURCE_MODIFIED_EXCEPTION", "", ""),
   RESOURCE_NOT_FOUND_EXCEPTION("RESOURCE_NOT_FOUND_EXCEPTION", "", ""),
   PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "", ""),
+  INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description
@@ -35,7 +36,21 @@ public enum JudicialWarrantExceptionEnum {
   POSITIVE("Positive", "Target value is not Positive", "check logs for the exception"),
   NEGATIVE("Negative", "Target value is not Negative", "check logs for the exception"),
   PATTERN("Pattern", "Target value is not match Pattern", "check logs for the exception"),
-  NULL("Null", "Target value is not null", "check logs for the exception");
+  NULL("Null", "Target value is not null", "check logs for the exception"),
+  
+  
+  
+  
+  
+  //============user errors
+  	USER_NULL ("USER_NULL", "Target value is null", "Double check data"),
+  	USER_EMAIL_ADDRESS_ALEARDY_EXISTS ("USER_EMAIL_ADDRESS_ALEARDY_EXISTS", "Target value is aleardy exists", "Double check data"),
+    USER_CIVIL_ID_EXIST(" USER_CIVIL_ID_EXIST", "Target value is aleardy exists", "Double check data"),
+  	USER_ORGANIZATION_UNIT_ID_NULL("USER_ORGANIZATION_UNIT_ID_NULL", "Target value is null", "Double check data"),
+  	USER_ROLE_ID_NULL("USER_ROLE_ID_NULL", "Target value is null", "Double check data"),
+    USER_LOGIN_NAME_EXISTS("USER_LOGIN_NAME_EXISTS", "Target value is aleardy exists", "Double check data"),
+	MOBILE_NUMBER1_EXIST("MOBILE_NUMBER1_EXIST", "Target value is aleardy exists", "Double check data");
+	//==========end of user errors
 
     @Getter
     private String code;

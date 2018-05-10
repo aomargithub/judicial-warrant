@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import com.informatique.gov.judicialwarrant.domain.RequestStatus;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
 @Component
 public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, RequestStatusDto, Byte>{
 

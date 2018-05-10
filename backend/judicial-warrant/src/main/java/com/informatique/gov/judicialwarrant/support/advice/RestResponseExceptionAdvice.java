@@ -16,15 +16,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
+import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
-import com.informatique.gov.judicialwarrant.exception.JudicialwarrantError;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 import com.informatique.gov.judicialwarrant.service.InternalErrorLogService;
 import com.informatique.gov.judicialwarrant.support.dataenum.ExceptionClassNameEnum;
 
@@ -48,7 +46,7 @@ public class RestResponseExceptionAdvice implements Serializable {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody RestResponse handleValidationExcption(MethodArgumentNotValidException exception) {
+    public ResponseEntity<List<JudicialwarrantError>> handleValidationExcption(MethodArgumentNotValidException exception) {
 
         BindingResult bindingResult = exception.getBindingResult();
         List<JudicialwarrantError> exceptionErrors = null;
@@ -98,8 +96,8 @@ public class RestResponseExceptionAdvice implements Serializable {
                 exceptionErrors.add(judicialwarrantError);
             }
         }
-
-        return new RestResponse(exceptionErrors);
+       
+        return ResponseEntity.ok(exceptionErrors);
     }
     
 

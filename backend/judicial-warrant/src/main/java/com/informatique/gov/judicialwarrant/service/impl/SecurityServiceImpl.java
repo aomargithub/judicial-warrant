@@ -10,6 +10,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -63,6 +65,12 @@ public class SecurityServiceImpl implements SecurityService{
 		return username;
 	}
 	
+	@Override
+	public  HttpSession session() throws JudicialWarrantInternalException {
+	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+	    return attr.getRequest().getSession(false);
+	}
+	
 	private UserDetailsDto toUserDetailsDto(JudicialWarrantUserDetails userDetails) {
 		
 		notNull(userDetails, "userDetails must be set");
@@ -88,6 +96,8 @@ public class SecurityServiceImpl implements SecurityService{
 			dto.setArabicName(entity.getArabicName());
 			dto.setEnglishName(entity.getEnglishName());
 			dto.setId(entity.getId());
+			dto.setIsActive(entity.getIsActive());
+			dto.setListOrder(entity.getListOrder());
 		}
 		
 		return dto;

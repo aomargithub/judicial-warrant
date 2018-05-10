@@ -1,7 +1,6 @@
 package com.informatique.gov.judicialwarrant.domain;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -40,6 +39,4 @@ public class RequestStatus extends DomainEntity<Byte> {
 	@Column(name = "ARABIC_NAME")
 	private String arabicName;
 	
-	@Embedded
-	private CreateLog createLog;
 }

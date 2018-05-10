@@ -14,9 +14,10 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
-import org.springframework.data.annotation.Version;
+
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,7 +36,7 @@ import lombok.ToString;
 							  @NamedAttributeNode(value = "role")
 					  })
 })
-public class User extends DomainEntity<Integer> {
+public class User extends DomainEntity<Integer> implements CreationAuditable{
 	
 	
 	/**

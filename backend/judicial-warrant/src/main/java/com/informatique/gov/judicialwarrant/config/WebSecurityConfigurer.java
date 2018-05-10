@@ -1,7 +1,5 @@
 package com.informatique.gov.judicialwarrant.config;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -33,6 +32,7 @@ import com.informatique.gov.judicialwarrant.support.security.RestAuthenticationE
 
 @Profile("!dev")
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 @Configuration
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
@@ -48,7 +48,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		
 		http.addFilterBefore(sessionRepositoryFilter, SecurityContextPersistenceFilter.class)
 		.cors().configurationSource(corsConfigurationSource()).and()
-		.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		//.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		.csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
 		.logout().logoutUrl(Constants.LOGOUT_URL).logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK));
 

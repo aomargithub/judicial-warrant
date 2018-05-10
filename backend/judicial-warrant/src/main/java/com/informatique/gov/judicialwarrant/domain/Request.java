@@ -11,12 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
-import org.springframework.data.annotation.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +30,16 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "serial"})
 @EqualsAndHashCode(of = {"serial"}, callSuper = false)
-public class Request extends DomainEntity<Integer> {
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "Request.req",
+					  attributeNodes = {
+							  @NamedAttributeNode(value = "type"),
+							  @NamedAttributeNode(value = "currentInternalStatus"),
+							  @NamedAttributeNode(value = "currentStatus"),
+							  @NamedAttributeNode(value = "organizationUnit")
+					  })
+})
+public class Request extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable{
 	
 	/**
 	 * 
@@ -37,7 +49,7 @@ public class Request extends DomainEntity<Integer> {
     @SequenceGenerator(name = "RequestSequence", sequenceName = "request_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RequestSequence")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 	
 	@Version
 	@Column(name="VERSION")
@@ -50,6 +62,10 @@ public class Request extends DomainEntity<Integer> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TYPE_ID")
 	private RequestType type;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CURRENT_INTERNAL_STATUS_ID")
+	private RequestInternalStatus currentInternalStatus;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CURRENT_STATUS_ID")

@@ -19,5 +19,5 @@ public class RequestTypeDto implements UserModel<Byte> {
 	private String arabicName;
 	private Boolean isActive;
 	private String code;
-	private String requestNumberPrefix;
+	private String requestSerialPrefix;
 }
