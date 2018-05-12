@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class UserHandlerImpl implements UserHandler {
 
 	private UserService userService;
+
 	/**
 	 * 
 	 */
@@ -43,12 +44,28 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<UserDto> save(UserDto dto) throws JudicialWarrantException {
+	public ResponseEntity<UserDto> saveInternal(UserDto dto) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
+           
+			UserDto savedDto = userService.saveInternal(dto);
+							
+			response = ResponseEntity.ok(savedDto);
 			
-			UserDto savedDto = userService.save(dto);
-			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;	
+	}
+	
+	@Override
+	public ResponseEntity<UserDto> saveExternal(UserDto dto) throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+           
+			UserDto savedDto = userService.saveExternal(dto);
+							
 			response = ResponseEntity.ok(savedDto);
 			
 		} catch (JudicialWarrantException e) {

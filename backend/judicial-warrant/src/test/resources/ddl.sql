@@ -382,6 +382,18 @@ alter table SPRING_SESSION_ATTRIBUTES
   ENABLE 
 );
 
+
+  CREATE TABLE "JUDICIALWARRANT"."APP_USER_CREDENTIALS" 
+   (	"PASSWORD" VARCHAR2(50 BYTE), 
+	"ID" NUMBER(20,0) NOT NULL ENABLE, 
+	 CONSTRAINT "APP_USER_CREDENTIALS_PK" PRIMARY KEY ("ID")
+   );
+   
+   alter table APP_USER
+add constraint USER_CREDTENIALS_FK foreign key (PASSWORD_ID)
+  references APP_USER_CREDENTIALS (ID) on delete cascade;
+   
+
 alter table NATIONALITY
   add constraint NATIONALITY_ID primary key (ID);
 alter table NATIONALITY
@@ -461,6 +473,13 @@ increment by 1
 cache 20;
 
 create sequence RQUST_TYPE_ATTACHMENT_TYPE_SEQ
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
+
+create sequence APP_USER_CREDS_SEQ
 minvalue 1
 maxvalue 9999999999999999999999999999
 start with 1
