@@ -44,4 +44,7 @@ public class UserDto implements UserModel<Integer> {
 	private String loginName;
 	@JsonIgnore
 	private Short version;
+	@NotNull
+	private String userType;
+	
 }

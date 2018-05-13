@@ -29,4 +29,26 @@ app:
     basicauthentication:
       realm-name: Oman MOJ Judicial Warrant
     max-inactive-interval: 12000
+    
+spring.mail:
+ host: smtp.gmail.com
+ port: 587
+ username: attiaelsady@gmail.com
+ password: attia123/
+ properties:
+  mail:
+   smtp:
+    auth: true
+  starttls:
+   enable: true
+   required: true
+  scheduler:
+   priorityLevels: 10
+   
+   spring:
+    ldap:
+     urls: ldap://192.168.0.41:389/
+     base: ou=jw,dc=oman,dc=local
+     username: cn=jwadmin,ou=JW,dc=oman,dc=local
+     password: P@ssw0rd@
 
