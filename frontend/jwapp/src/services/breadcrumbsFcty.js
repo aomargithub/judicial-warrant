@@ -15,8 +15,8 @@ module.exports = function (app) {
             // get parent state details
             for (i in stateArray) {
                 if (stateArray[i] !== '') {
-                    if ($state.get(stateArray[i]).parent.self.name !== '') {
-                        parentStates.push($state.get(stateArray[i]).parent.self);
+                    if ($state.get(stateArray[i]).parent && $state.get(stateArray[i]).parent.name !== '') {
+                        parentStates.push($state.get(stateArray[i]).parent);
                     }
                 }
             }
