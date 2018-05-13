@@ -438,9 +438,7 @@ alter table SPRING_SESSION_ATTRIBUTES
 	 CONSTRAINT APP_USER_CREDENTIALS_PK PRIMARY KEY (ID)
    );
    
-   alter table APP_USER
-add constraint USER_CREDTENIALS_FK foreign key (PASSWORD_ID)
-  references APP_USER_CREDENTIALS (ID) on delete cascade;
+
    
 
 alter table NATIONALITY
