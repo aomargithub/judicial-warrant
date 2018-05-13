@@ -4,7 +4,7 @@ module.exports=function(app){
         vm.doLogin = function(){
             authenticationSrvc.login(vm.credentials).then(function(status){
                 if(status.code === 200){
-                    $state.go('home');
+                    $state.go('root');
                 }else{
                     vm.statusText = status.text;
                 }

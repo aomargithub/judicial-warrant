@@ -62,8 +62,9 @@ table{
     margin: 50px 0px 0px 0px;
     text-align: center;
     background-color: #c0b283; 
-    border-radius: 20px;
-    
+    border-radius: 7px;
+    overflow: hidden;
+    border-collapse: collapse;
 }
 table thead{
     background-color: #373737;
