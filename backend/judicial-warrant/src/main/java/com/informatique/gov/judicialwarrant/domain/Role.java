@@ -46,4 +46,7 @@ public class Role extends DomainEntity<Byte> {
 	
 	@Column(name = "LIST_ORDER")
 	private Byte listOrder;
+	
+	@Column(name = "LDAP_SECURITY_GROUP")
+	private String ldapSecurityGroup;
 }
