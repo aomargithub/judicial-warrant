@@ -10,7 +10,7 @@ module.exports = function(app){
                     var target = angular.element(e.target);
                  
                     if(!target.hasClass('menu-toggle')){
-                        return;
+                        return; 
                     }
 
                    while(target[0].id != 'sidebar'){
@@ -19,9 +19,10 @@ module.exports = function(app){
 
                     if(menuDrtvCtrl.getMenuState()){
                         target.addClass('active');
-                        
+                        $('.overlay').fadeOut();
                     }else{
                         target.removeClass('active');
+                        $('.overlay').fadeIn();
                     }
                 });
             },
