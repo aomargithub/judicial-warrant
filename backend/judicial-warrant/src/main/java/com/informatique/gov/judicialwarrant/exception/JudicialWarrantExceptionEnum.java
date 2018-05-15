@@ -49,6 +49,7 @@ public enum JudicialWarrantExceptionEnum {
   	USER_ORGANIZATION_UNIT_ID_NULL("USER_ORGANIZATION_UNIT_ID_NULL", "Target value is null", "Double check data"),
   	USER_ROLE_ID_NULL("USER_ROLE_ID_NULL", "Target value is null", "Double check data"),
     USER_LOGIN_NAME_EXISTS("USER_LOGIN_NAME_EXISTS", "Target value is aleardy exists", "Double check data"),
+    USER_LOGIN_NAME_NOT_FOUND_LDAP("USER_LOGIN_NAME_NOT_FOUND_LDAP", "Target value is not exists ldap", "Double check data"),
 	MOBILE_NUMBER1_EXIST("MOBILE_NUMBER1_EXIST", "Target value is aleardy exists", "Double check data");
 	//==========end of user errors
 

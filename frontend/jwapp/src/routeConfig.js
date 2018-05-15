@@ -5,21 +5,42 @@ module.exports = function(app){
             .state('login', {
                 url : '/login',
                 template : templateSrvcProvider.getTemplate('login')
-            }).state('home', {
-                breadcrumb: 'home',
+            }).state('root', {
+                parent: '',
+                data: {
+                    label : 'home'
+                },
                 url : '/home',
-                template : templateSrvcProvider.getTemplate('home')
-            }).state('home.organizationUnits', {
-                breadcrumb: {
-                    class: 'highlight',
-                    text: 'organizationUnits',
-                    stateName: 'home.organizationUnits'
-                  },
+                views : {
+                    '' : {
+                        template : templateSrvcProvider.getTemplate('layout')
+                    },
+                    'content@root' : {
+                        template : templateSrvcProvider.getTemplate('home')
+                    }
+                }
+            }).state('root.organizationUnits', {
+                parent: 'root',
+                data: {
+                    label : 'organizationUnits'
+                },
                 url : '/organizationUnits',
-                template : templateSrvcProvider.getTemplate('organizationUnits')
-            }).state('home.attachmentTypes', {
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('organizationUnits')
+                    }
+                }
+            }).state('root.attachmentTypes', {
+                parent: 'root',
+                data: {
+                    label : 'attachmentTypes'
+                },
                 url : '/attachmentTypes',
-                template : templateSrvcProvider.getTemplate('attachmentTypes')
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('attachmentTypes')
+                    }
+                }
             })
     });
 };

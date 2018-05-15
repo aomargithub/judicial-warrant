@@ -8,4 +8,5 @@ module.exports = function(app){
     require('./logout')(app);
     require('./header')(app);
     require('./breadcrumbs')(app);
+    require('./requestTypesMenu')(app);
 };

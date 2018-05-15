@@ -15,13 +15,11 @@
   "dependencies": {
     "angular": "^1.6.9",
     "angular-animate": "^1.6.9",
-    "angular-breadcrumbs": "^0.5.3",
     "angular-cookies": "^1.6.9",
     "angular-ui-router": "^0.4.2",
-    "angular-ui-router-breadcrumbs": "0.0.2",
     "ng-annotate": "^1.2.2",
-    "ng-breadcrumbs": "0.0.1",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "ui-router-breadcrumbs": "^1.2.0"
   },
   "devDependencies": {
     "ng-annotate-webpack-plugin": "^0.2.1-pre",

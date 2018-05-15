@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import java.io.Serializable;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.handler.RequestTypeHandler;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 
 import lombok.AllArgsConstructor;
 
@@ -24,17 +24,17 @@ public class RequestTypeController implements Serializable{/**
 	private RequestTypeHandler requestTypeHandler;
 	
 	@GetMapping
-    public RestResponse getAll() throws JudicialWarrantException {
+    public ResponseEntity<?> getAll() throws JudicialWarrantException {
         return requestTypeHandler.getAll();
     }
 
     @GetMapping("/{code}")
-    public RestResponse getByCode(@PathVariable String code) throws JudicialWarrantException {
+    public ResponseEntity<?> getByCode(@PathVariable String code) throws JudicialWarrantException {
         return requestTypeHandler.getByCode(code);
     }
     
     @GetMapping(params = {"isActive"})
-    public RestResponse getByIsActive(@RequestParam Boolean isActive) throws JudicialWarrantException {
+    public ResponseEntity<?> getByIsActive(@RequestParam Boolean isActive) throws JudicialWarrantException {
     	return requestTypeHandler.getByIsActive(isActive);
     }
 }

@@ -11,6 +11,8 @@ import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
+import com.informatique.gov.judicialwarrant.service.UserLdapService;
+
 import lombok.AllArgsConstructor;
 
 @Component
@@ -22,6 +24,7 @@ public class UserDtoValidator implements Validator, Serializable {
 	 */
 	private static final long serialVersionUID = 8664319447831307551L;
 	private UserRepository userRepository;
+	private UserLdapService ldapService;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -56,6 +59,13 @@ public class UserDtoValidator implements Validator, Serializable {
 			return;
 
 		}
+		
+		if(userDto.getUserType().equalsIgnoreCase("internal") &&
+		   !ldapService.checkUserExists(userDto.getLoginName())) {
+			errors.rejectValue("loginName",JudicialWarrantExceptionEnum.USER_LOGIN_NAME_NOT_FOUND_LDAP.getCode() , null, null);
+			return;
+		}
+		
 		userExistEntity = userRepository.findByCivilId(userDto.getCivilId(),userDto.getId());
 
 		if (userExistEntity != null) {

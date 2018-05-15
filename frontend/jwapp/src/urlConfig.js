@@ -11,5 +11,6 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('logout', '/logout');
         urlSrvcProvider.addUrl('organizationUnits', '/organizationUnits/')
         urlSrvcProvider.addUrl('attachmentTypes', '/attachmentTypes/')
+        urlSrvcProvider.addUrl('requestTypes', '/requestTypes/')
     });
 };
