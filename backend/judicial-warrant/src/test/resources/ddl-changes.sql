@@ -102,6 +102,41 @@ ENABLE;
 ALTER TABLE APP_ROLE
   ADD LDAP_SECURITY_GROUP varchar2(50);
   
-  alter table APP_USER
+  
+   CREATE TABLE APP_USER_CREDENTIALS 
+   (	PASSWORD VARCHAR2(50 BYTE), 
+	ID NUMBER(20,0) NOT NULL ENABLE, 
+	 CONSTRAINT APP_USER_CREDENTIALS_PK PRIMARY KEY (ID)
+   );
+   
+  alter table APP_USER_CREDENTIALS
   add constraint USER_credientials_FK foreign key (ID)
-  references APP_USER_CREDENTIALS (ID);
+  references APP_USER (ID);
+  
+  
+  
+  create table APP_USER_Type
+(
+  ID           NUMBER(2) not null,
+  USER_TYPE         VARCHAR2(50) not null
+ 
+);
+
+alter table APP_USER_Type
+  add constraint APP_USER_Type_PK primary key (ID);
+  
+create sequence APP_USER_CREDS_SEQ
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
+
+ALTER TABLE APP_USER 
+ADD (USER_TYPE_ID NUMBER(2) );
+
+ALTER TABLE APP_ROLE
+  ADD LDAP_SECURITY_GROUP varchar2(50);
+
+
+  

@@ -21,8 +21,8 @@ public class UserCredentials  extends DomainEntity<Integer> implements CreationA
 	 */
 	private static final long serialVersionUID = -3300648653855789902L;
 	@Id
-	@SequenceGenerator(name = "User_Creds_Sequence", sequenceName = "app_user_creds_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "User_Creds_Sequence")
+//	@SequenceGenerator(name = "User_Creds_Sequence", sequenceName = "app_user_creds_seq", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "User_Creds_Sequence")
 	@Column(name="id")
 	private Integer id;
 	@Column(name="PASSWORD")

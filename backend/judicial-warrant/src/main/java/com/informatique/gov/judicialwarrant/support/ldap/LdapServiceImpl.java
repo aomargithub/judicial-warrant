@@ -1,4 +1,4 @@
-package com.informatique.gov.judicialwarrant.service.impl;
+package com.informatique.gov.judicialwarrant.support.ldap;
 
 import java.util.List;
 
@@ -12,13 +12,11 @@ import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.ldap.filter.WhitespaceWildcardsFilter;
 import org.springframework.stereotype.Service;
 
-import com.informatique.gov.judicialwarrant.service.UserLdapService;
-
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserLdapServiceImpl implements UserLdapService {
+public class LdapServiceImpl implements LdapService {
 
 	/**
 	 * 
@@ -30,6 +28,7 @@ public class UserLdapServiceImpl implements UserLdapService {
 	@Override
 	public boolean checkUserExists(String cn) {
 		// TODO Auto-generated method stub
+		
 		AndFilter filter = new AndFilter();
 		filter.and(new EqualsFilter("objectclass", "person"));
 		filter.and(new WhitespaceWildcardsFilter("cn", cn));
@@ -39,7 +38,9 @@ public class UserLdapServiceImpl implements UserLdapService {
 			}
 		});
 		String user = null;
+		if(!users.isEmpty()) {
 		user = (String) users.get(0);
+		}
 		if (user != null) {
 			return true;
 		}

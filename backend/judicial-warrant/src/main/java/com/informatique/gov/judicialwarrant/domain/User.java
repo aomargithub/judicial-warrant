@@ -13,6 +13,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -94,8 +95,13 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@Column(name = "LOGIN_NAME")
 	private String loginName;
 	@OneToOne
-	@JoinColumn(name="ID")
+//	@JoinColumn(name="ID")
+	@PrimaryKeyJoinColumn
 	private UserCredentials userCredentials;
+	@OneToOne
+	@JoinColumn(name="USER_TYPE_ID")
+	private UserType userType;
+	
 	
 
 }
