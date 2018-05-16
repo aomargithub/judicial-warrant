@@ -14,11 +14,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.rest.dto.AuthenticationTokenDto;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDetailsDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserTypeDto;
 import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.security.AuthenticationToken;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantUserDetails;
@@ -84,6 +86,7 @@ public class SecurityServiceImpl implements SecurityService{
 		userDetailsDto.setMobileNumber2(userDetails.getMobileNumber2());
 		userDetailsDto.setOrganizationUnit(toDto(userDetails.getOrganizationUnit()));
 		userDetailsDto.setRole(userDetails.getAuthorities().iterator().next().getAuthority());
+		userDetailsDto.setUserType(toDto(userDetails.getUserType()));
 		userDetailsDto.setToken(new AuthenticationTokenDto(userDetails.getToken().getValue(), userDetails.getToken().getMaxInactiveInterval()));
 		return userDetailsDto;
 	}
@@ -100,6 +103,17 @@ public class SecurityServiceImpl implements SecurityService{
 			dto.setListOrder(entity.getListOrder());
 		}
 		
+		return dto;
+	}
+	
+	private UserTypeDto toDto(UserType entity) {
+		// TODO Auto-generated method stub
+		UserTypeDto dto=null;
+		if(entity!=null) {
+			dto=new UserTypeDto();
+			dto.setId(entity.getId());
+			dto.setCode(entity.getCode());
+		}
 		return dto;
 	}
 

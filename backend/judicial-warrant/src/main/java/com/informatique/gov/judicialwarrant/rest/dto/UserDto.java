@@ -1,10 +1,11 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,7 +45,6 @@ public class UserDto implements UserModel<Integer> {
 	private String loginName;
 	@JsonIgnore
 	private Short version;
-	@NotNull
-	private String userType;
+	private UserTypeDto userType;
 	
 }

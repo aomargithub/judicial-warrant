@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.User;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 
 import lombok.AllArgsConstructor;
 
@@ -32,7 +34,7 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		
 		JudicialWarrantUserDetails userDetails = null;
 		User user = null;
-		try {
+	 	try {
 			notNull(username, "username must be set");
 			user = userService.getByLoginName(username);
 			
@@ -68,6 +70,11 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setMobileNumber2(user.getMobileNumber2());
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
+		userDetails.setUserType(user.getUserType());
+		if(user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
+		userDetails.setPassword(user.getUserCredentials().getPassword());
+		}
+		userDetails.setUserType(user.getUserType());
 		// token to be set later in more convenient place where we can get the session id easily.
 		return userDetails;
 	}

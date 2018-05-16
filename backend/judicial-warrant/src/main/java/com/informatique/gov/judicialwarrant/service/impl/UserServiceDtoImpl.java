@@ -5,21 +5,26 @@ import static org.springframework.util.Assert.notNull;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
+import com.informatique.gov.judicialwarrant.domain.Role;
 import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.domain.UserCredentials;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.RoleRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.UserCredientialRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.UserTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.UserPasswordService;
 import com.informatique.gov.judicialwarrant.service.UserService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.UserMapper;
-import com.informatique.gov.judicialwarrant.utils.HashingPasswordUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -32,9 +37,13 @@ public class UserServiceDtoImpl implements UserService {
 	 */
 	private static final long serialVersionUID = 249744152632344882L;
 	private UserRepository userRepository;
+	private UserCredientialRepository credientialRepository;
+	private UserTypeRepository typeRepository;
+	private RoleRepository roleRepository;
 	private UserMapper userMapper;
 	private OrganizationUnitRepository organizationUnitRepository;
 	private UserPasswordService passwordService;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -58,24 +67,35 @@ public class UserServiceDtoImpl implements UserService {
 		try {
 			notNull(dto, "dto must be set");
 			String password = passwordService.generateRandomUserPassword();
-			String passwordHashing = HashingPasswordUtil.hash(password);
-			String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
-			String subject = "User Password";
-			UserCredentials credentials = new UserCredentials();
-			credentials.setPassword(passwordHashing);
+			// String passwordHashing = HashingPasswordUtil.hash(password);
+
+			String passwordHashing = passwordEncoder.encode(password);
+			// String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
+			// String subject = "User Password";
+			
 
 			User entiry = userMapper.toNewEntity(dto);
-			entiry.setUserCredentials(credentials);
-
+		//	entiry.setUserCredentials(credentials);
 			Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 					.findById(dto.getOrganizationUnit().getId());
-			entiry.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
+			
+			entiry.setOrganizationUnit(organizationUnit.get());
+			
+			Optional<Role> role=roleRepository.findById(dto.getRole().getId());
+			entiry.setRole(role.get());
+			Optional<UserType> userType=typeRepository.findById(new Integer(1));
+			entiry.setUserType(userType.get());
 
 			entiry = userRepository.save(entiry);
+			UserCredentials credentials = new UserCredentials();
+			credentials.setId(entiry.getId());
+			credentials.setPassword(passwordHashing);
+			credientialRepository.save(credentials);
 
 			savedDto = userMapper.toDto(entiry);
 
-			passwordService.sendUserPasswordToEmail(message, dto.getEmailAddress(), subject);
+			// passwordService.sendUserPasswordToEmail(message, dto.getEmailAddress(),
+			// subject);
 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -93,10 +113,15 @@ public class UserServiceDtoImpl implements UserService {
 			notNull(dto, "dto must be set");
 
 			User entiry = userMapper.toNewEntity(dto);
-
+			
 			Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 					.findById(dto.getOrganizationUnit().getId());
-			entiry.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
+			
+			entiry.setOrganizationUnit(organizationUnit.get());
+			Optional<Role> role=roleRepository.findById(dto.getRole().getId());
+			entiry.setRole(role.get());
+			Optional<UserType> userType=typeRepository.findById(new Integer(2));
+			entiry.setUserType(userType.get());
 
 			entiry = userRepository.save(entiry);
 
@@ -137,7 +162,14 @@ public class UserServiceDtoImpl implements UserService {
 			Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 					.findById(dto.getOrganizationUnit().getId());
 			entiry.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
+			entiry.setOrganizationUnit(organizationUnit.get());
+			Optional<Role> role=roleRepository.findById(dto.getRole().getId());
+			entiry.setRole(role.get());
+			Optional<UserType> userType=typeRepository.findById(new Integer(2));
+			entiry.setUserType(userType.get());
+			
 			entiry = userRepository.save(entiry);
+			
 
 			savedDto = userMapper.toDto(entiry);
 
