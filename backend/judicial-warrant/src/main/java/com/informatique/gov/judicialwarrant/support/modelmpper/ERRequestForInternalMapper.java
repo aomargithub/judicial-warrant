@@ -2,9 +2,11 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 
 import org.springframework.stereotype.Component;
 
+import com.informatique.gov.judicialwarrant.domain.ERRequest;
 import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
+import com.informatique.gov.judicialwarrant.rest.response.ERRequestForInternalResponse;
 import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalResponse;
 
 import lombok.AllArgsConstructor;
@@ -12,39 +14,40 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class JwcdRequestForInternalMapper extends AbstractModelMapper<JwcdRequest, JwcdRequestForInternalResponse, Long>{
+public class ERRequestForInternalMapper extends AbstractModelMapper<ERRequest, ERRequestForInternalResponse, Long>{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6598101623050234667L;
 	private ModelMapper<Request, RequestDto, Long> requestMapper;
+	private ModelMapper<JwcdRequest, JwcdRequestForInternalResponse, Long> jwcdRequestForInternalMapper;
 
 	@Override
-	public JwcdRequestForInternalResponse toDto(JwcdRequest entity) {
-		JwcdRequestForInternalResponse dto = null;
+	public ERRequestForInternalResponse toDto(ERRequest entity) {
+		ERRequestForInternalResponse dto = null;
 		
 		if(isConvertable(entity)) {
-			dto = new JwcdRequestForInternalResponse();
+			dto = new ERRequestForInternalResponse();
 			dto.setId(entity.getId());
 			dto.setSerial(entity.getRequest().getSerial());
-			dto.setJobTitleName(entity.getJobTitle());
 			RequestDto requestDto = requestMapper.toDto(entity.getRequest());
 			dto.setCurrentInternalStatus(requestDto.getCurrentInternalStatus());
 			dto.setOrganizationUnit(requestDto.getOrganizationUnit());
 			dto.setType(requestDto.getType());
+			JwcdRequestForInternalResponse jwcdRequestForInternalDto = jwcdRequestForInternalMapper.toDto(entity.getJwcdRequest());
+			dto.setJwcdRequestForInternalDto(jwcdRequestForInternalDto);
 		}
 		return dto;
 	}
 
 	@Override
-	protected JwcdRequest toEntity(JwcdRequestForInternalResponse dto, boolean nullId) {
-		JwcdRequest entity = null;
+	protected ERRequest toEntity(ERRequestForInternalResponse dto, boolean nullId) {
+		ERRequest entity = null;
 		
 		if(isConvertable(dto)) {
-			entity = new JwcdRequest();
+			entity = new ERRequest();
 			entity.setId(nullId ? null : dto.getId());
-			entity.setJobTitle(dto.getJobTitleName());
 		}
 		return entity;
 	}

@@ -125,4 +125,10 @@ public class CandidateAttachmentServiceImpl implements CandidateAttachmentServic
 
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteCandidateAttachmentsByRequestId(Long id) throws JudicialWarrantException {
+		candidateAttachmentRepository.deleteByCandidateRequestId(id);
+	}
+
 }

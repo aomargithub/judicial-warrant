@@ -17,8 +17,6 @@ import com.informatique.gov.judicialwarrant.persistence.repository.RequestReposi
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestStatusRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
-import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestData;
-import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestNotesData;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
 import com.informatique.gov.judicialwarrant.service.RequestSerialService;
@@ -74,7 +72,7 @@ public class RequestServiceImpl implements InternalRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Request create(RequestTypeEnum requestTypeEnum, JwcdRequestData jwcdRequestData) throws JudicialWarrantException {
+	public Request create(RequestTypeEnum requestTypeEnum, String notes) throws JudicialWarrantException {
 		Request request = null;
 		try {
 			request = create(requestTypeEnum, RequestStatusEnum.DRAFT);
@@ -84,7 +82,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());
-			requestHistoryLog.setNote(jwcdRequestData.getNotes());
+			requestHistoryLog.setNote(notes);
 			requestHistoryLogRepository.save(requestHistoryLog);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -106,7 +104,7 @@ public class RequestServiceImpl implements InternalRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Request changeStatus(Request request, RequestInternalStatusEnum requestInternalStatusEnum, JwcdRequestNotesData jwcdRequestNotesData)
+	public Request changeStatus(Request request, RequestInternalStatusEnum requestInternalStatusEnum, String notes)
 			throws JudicialWarrantException {
 		try {
 			request.setCurrentInternalStatus(
@@ -120,7 +118,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());
-			requestHistoryLog.setNote(jwcdRequestNotesData.getNotes());
+			requestHistoryLog.setNote(notes);
 			requestHistoryLogRepository.save(requestHistoryLog);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

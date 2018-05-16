@@ -18,5 +18,7 @@ public interface CandidateAttachmentService extends Serializable{
 	public Short getVersionById(Long id) throws JudicialWarrantException;
 	
 	void delete(Long id) throws JudicialWarrantException;
+	
+	void deleteCandidateAttachmentsByRequestId(Long id) throws JudicialWarrantException;
 
 }

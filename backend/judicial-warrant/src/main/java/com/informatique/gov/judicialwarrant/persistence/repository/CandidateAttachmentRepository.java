@@ -15,7 +15,10 @@ public interface CandidateAttachmentRepository extends JpaRepository<CandidateAt
 	
 	@Query("select version from CandidateAttachment ca where ca.id = :id")
 	Short findVersionById(@Param("id") Long id);
+	
 	@EntityGraph(value = "CandidateAttachment.fat", type = EntityGraphType.FETCH)
 	Optional<CandidateAttachment> findById(Long id);
+	
+	void deleteByCandidateRequestId(@Param("id") Long id);
 
 }

@@ -215,7 +215,7 @@ create table CANDIDATE
   mobile_number2       VARCHAR2(15) not null,
   email_address        VARCHAR2(100) not null,
   request_id           NUMBER not null,
-  current_status_id    NUMBER(1) not null
+  current_status_id    NUMBER(1) 
 );
 alter table CANDIDATE
   add constraint CANDIDATE_PK primary key (ID);
@@ -254,7 +254,7 @@ create table CANDIDATE_HISTORY_LOG
 (
   id                  NUMBER not null,
   candidate_id        NUMBER not null,
-  candidate_status_id NUMBER(1) not null,
+  candidate_status_id NUMBER(1) null,
   create_by           NUMBER not null,
   create_date         TIMESTAMP(6) not null,
   note                VARCHAR2(500)
@@ -493,6 +493,40 @@ ADD CONSTRAINT REQUEST_TYPE_FK1 FOREIGN KEY
   REQUEST_TYPE_ID 
 )
 REFERENCES REQUEST_TYPE
+(
+  ID 
+)
+ENABLE;
+
+
+CREATE TABLE ER_REQUEST 
+(
+  ID NUMBER NOT NULL 
+, JWCD_REQUEST_ID NUMBER NOT NULL 
+, CONSTRAINT ER_REQUEST_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE ER_REQUEST
+ADD CONSTRAINT ER_REQUEST_JWCD_REQUEST_FK1 FOREIGN KEY
+(
+  JWCD_REQUEST_ID 
+)
+REFERENCES JWCD_REQUEST
+(
+  ID 
+)
+ENABLE;
+
+ALTER TABLE ER_REQUEST
+ADD CONSTRAINT ER_REQUEST_REQUEST_FK1 FOREIGN KEY
+(
+  ID 
+)
+REFERENCES REQUEST
 (
   ID 
 )

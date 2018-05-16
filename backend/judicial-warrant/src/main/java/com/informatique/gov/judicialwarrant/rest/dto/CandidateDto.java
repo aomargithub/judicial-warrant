@@ -25,5 +25,6 @@ public class CandidateDto implements UserModel<Long> {
 	private OrganizationUnitDto organizationUnit;
 	private CandidateStatusDto currentStatus;
 	private RequestDto request;
+	
 	private List<CandidateHistoryLogDto> histortyLogs;
 }
