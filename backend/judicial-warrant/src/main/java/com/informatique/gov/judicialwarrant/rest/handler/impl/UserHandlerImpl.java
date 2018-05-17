@@ -44,11 +44,11 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<UserDto> saveInternal(UserDto dto) throws JudicialWarrantException {
+	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.saveInternal(dto);
+			UserDto savedDto = userService.createUserInternal(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			
@@ -60,11 +60,11 @@ public class UserHandlerImpl implements UserHandler {
 	}
 	
 	@Override
-	public ResponseEntity<UserDto> saveExternal(UserDto dto) throws JudicialWarrantException {
+	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.saveExternal(dto);
+			UserDto savedDto = userService.createUserExternal(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			

@@ -6,4 +6,5 @@ import com.informatique.gov.judicialwarrant.domain.UserType;
 
 public interface UserTypeRepository extends JpaRepository<UserType, Integer>{
 
+	UserType findByCode(String code);
 }

@@ -31,19 +31,19 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		JudicialWarrantUserDetails userDetails = null;
 		User user = null;
-	 	try {
+		try {
 			notNull(username, "username must be set");
 			user = userService.getByLoginName(username);
-			
-			if(user == null) {
+
+			if (user == null) {
 				throw new UsernameNotFoundException(username);
 			}
-			
+
 			userDetails = toUserDetails(user);
-			
+
 		} catch (JudicialWarrantInternalException e) {
 			throw new UsernameNotFoundException(username, e);
 		} catch (UsernameNotFoundException e) {
@@ -55,11 +55,11 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 	}
 
 	private JudicialWarrantUserDetails toUserDetails(User user) {
-		
+
 		notNull(user, "user must be set");
-		
+
 		JudicialWarrantUserDetails userDetails = new JudicialWarrantUserDetails();
-		
+
 		userDetails.setArabicName(user.getArabicName());
 		userDetails.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole().getCode())));
 		userDetails.setCivilId(user.getCivilId());
@@ -71,11 +71,12 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
 		userDetails.setUserType(user.getUserType());
-		if(user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
-		userDetails.setPassword(user.getUserCredentials().getPassword());
-		}
+//		if (user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
+//			userDetails.setPassword(user.getUserCredentials().getPassword());
+//		}
 		userDetails.setUserType(user.getUserType());
-		// token to be set later in more convenient place where we can get the session id easily.
+		// token to be set later in more convenient place where we can get the session
+		// id easily.
 		return userDetails;
 	}
 }

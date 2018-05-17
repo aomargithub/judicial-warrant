@@ -1,4 +1,4 @@
-package com.informatique.gov.judicialwarrant.utils;
+package com.informatique.gov.judicialwarrant.support.utils;
 
 public class RandomPasswordUtil {
 

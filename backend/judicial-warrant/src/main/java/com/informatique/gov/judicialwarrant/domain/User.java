@@ -13,13 +13,11 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
-
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -94,10 +92,10 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@NaturalId
 	@Column(name = "LOGIN_NAME")
 	private String loginName;
-	@OneToOne
+//	@OneToOne
 //	@JoinColumn(name="ID")
-	@PrimaryKeyJoinColumn
-	private UserCredentials userCredentials;
+//	@PrimaryKeyJoinColumn
+//	private UserCredentials userCredentials;
 	@OneToOne
 	@JoinColumn(name="USER_TYPE_ID")
 	private UserType userType;

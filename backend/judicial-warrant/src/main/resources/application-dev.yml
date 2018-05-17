@@ -3,6 +3,7 @@
 #regarding the 'off' issue of spring.main.banner-mode please have a look at https://github.com/spring-projects/spring-boot/commit/43b8e65eee7c23a7f7c3b61f8a436dc9cbfe5b96
 
 app:
+  defaultpasswordlength: 3 
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:orcl
     username: judicialwarrant
@@ -10,6 +11,7 @@ app:
     pool-properties:
       initial-size: 30
       max-active: 10
+        
   security:
     activedirectory:
       domain: ou=jw,dc=oman,dc=local
@@ -19,7 +21,7 @@ app:
     basicauthentication:
       realm-name: Oman MOJ Judicial Warrant
     max-inactive-interval: 12000    
-      
+   
       
 server: 
   port: 8081

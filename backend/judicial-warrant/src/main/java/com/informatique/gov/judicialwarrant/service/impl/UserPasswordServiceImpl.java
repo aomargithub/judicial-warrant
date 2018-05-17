@@ -3,8 +3,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.informatique.gov.judicialwarrant.service.UserPasswordService;
-import com.informatique.gov.judicialwarrant.utils.MailUtil;
-import com.informatique.gov.judicialwarrant.utils.RandomPasswordUtil;
+import com.informatique.gov.judicialwarrant.support.utils.RandomPasswordUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -16,7 +15,7 @@ public class UserPasswordServiceImpl implements UserPasswordService {
 	 * 
 	 */
 	private static final long serialVersionUID = -8025857261443977389L;
-	private MailUtil mail;
+//	private MailUtil mail;
 	  
 
 
@@ -30,12 +29,12 @@ public class UserPasswordServiceImpl implements UserPasswordService {
 	@Override
 	public void sendUserPasswordToEmail(String messagePassword,String emailRecipient,String subject) {
 		// TODO Auto-generated method stub
-		try {
-			mail.sendEmail(messagePassword, emailRecipient, subject);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			mail.sendEmail(messagePassword, emailRecipient, subject);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 

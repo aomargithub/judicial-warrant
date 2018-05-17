@@ -34,7 +34,7 @@ import lombok.AllArgsConstructor;
 public class RequestServiceImpl implements InternalRequestService {
 	private RequestRepository requestRepository;
 	private SecurityService securityService;
-	private InternalUserService internalUserService;
+	private InternalUserService userService;
 	private RequestTypeRepository requestTypeRepository;
 	private RequestStatusRepository requestStatusRepository;
 	private RequestInternalStatusRepository requestInternalStatusRepository;
@@ -80,7 +80,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			request = create(requestTypeEnum, RequestStatusEnum.DRAFT);
 			RequestHistoryLog requestHistoryLog = new RequestHistoryLog();
 			requestHistoryLog.setRequest(request);
-			requestHistoryLog.setCreateBy(internalUserService.getByLoginName(securityService.getPrincipal()));
+			requestHistoryLog.setCreateBy(userService.getByLoginName(securityService.getPrincipal()));
 			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());
@@ -116,7 +116,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			request = requestRepository.save(request);
 			RequestHistoryLog requestHistoryLog = new RequestHistoryLog();
 			requestHistoryLog.setRequest(request);
-			requestHistoryLog.setCreateBy(internalUserService.getByLoginName(securityService.getPrincipal()));
+			requestHistoryLog.setCreateBy(userService.getByLoginName(securityService.getPrincipal()));
 			requestHistoryLog.setCreateDate(new Date());
 			requestHistoryLog.setInternalStatus(request.getCurrentInternalStatus());
 			requestHistoryLog.setStatus(request.getCurrentStatus());

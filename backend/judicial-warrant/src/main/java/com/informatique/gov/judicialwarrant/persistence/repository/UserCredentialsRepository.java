@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.informatique.gov.judicialwarrant.domain.UserCredentials;
 
 @Repository
-public interface UserCredientialRepository extends JpaRepository<UserCredentials, Integer>{
+public interface UserCredentialsRepository extends JpaRepository<UserCredentials, Integer>{
 
 }

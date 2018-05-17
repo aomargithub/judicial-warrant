@@ -30,7 +30,7 @@ public class JudicialWarrantAuthenticationProvider implements AuthenticationProv
 
 	private UserDetailsService userDetailsService;
 	private ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider;
-	
+
 	private PasswordEncoder passwordEncoder;
 
 	@Override
@@ -39,8 +39,8 @@ public class JudicialWarrantAuthenticationProvider implements AuthenticationProv
 		Object principal = authentication.getPrincipal();
 		UserDetails userDetails = null;
 		JudicialWarrantUserDetails judicialWarrantUserDetails = null;
-		Authentication adlapAuthentication=null;
-		Collection<? extends GrantedAuthority> authorities=null;
+		Authentication adlapAuthentication = null;
+		Collection<? extends GrantedAuthority> authorities = null;
 
 		userDetails = userDetailsService.loadUserByUsername(principal.toString().trim());
 
@@ -51,31 +51,33 @@ public class JudicialWarrantAuthenticationProvider implements AuthenticationProv
 			judicialWarrantUserDetails = (JudicialWarrantUserDetails) userDetails;
 
 			if (judicialWarrantUserDetails.getUserType().getCode().equalsIgnoreCase(UserTypeEnum.INTERNAL.getCode())) {
-				
-				adlapAuthentication = activeDirectoryLdapAuthenticationProvider
-						.authenticate(authentication);
+
+				adlapAuthentication = activeDirectoryLdapAuthenticationProvider.authenticate(authentication);
 				if (adlapAuthentication == null || !adlapAuthentication.isAuthenticated()) {
 					return null;
 				}
-				authorities= compareRoles(adlapAuthentication.getAuthorities()
-						,userDetails.getAuthorities());
+				authorities = findMutualRoles(userDetails.getAuthorities(), adlapAuthentication.getAuthorities());
 				
+
 			}
 
-			else if (judicialWarrantUserDetails.getUserType().getCode().equalsIgnoreCase(UserTypeEnum.EXTERNAL.getCode())) {
-				String password =
-						authentication.getCredentials().toString().trim();
+			else if (judicialWarrantUserDetails.getUserType().getCode()
+					.equalsIgnoreCase(UserTypeEnum.EXTERNAL.getCode())) {
+				String password = authentication.getCredentials().toString().trim();
 				if (!passwordEncoder.matches(password, userDetails.getPassword().trim())) {
 					return null;
 				}
-				authorities=userDetails.getAuthorities();
+				authorities = userDetails.getAuthorities();
+				
 			}
 
 		}
 
-		
+		if(authorities==null) {
+			return null;
+		}
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-				userDetails.getUsername(), authentication.getCredentials(),authorities);
+				userDetails.getUsername(), authentication.getCredentials(), authorities);
 		usernamePasswordAuthenticationToken.setDetails(userDetails);
 
 		return usernamePasswordAuthenticationToken;
@@ -85,22 +87,22 @@ public class JudicialWarrantAuthenticationProvider implements AuthenticationProv
 	public boolean supports(Class<?> authenticationClazz) {
 		return authenticationClazz.equals(UsernamePasswordAuthenticationToken.class);
 	}
-	
-	
-	private Collection<? extends GrantedAuthority> compareRoles(Collection<? extends GrantedAuthority> ldapAuthorites
-			,Collection<? extends GrantedAuthority> databaseAuthorites){
-				
-		Collection<GrantedAuthority> intersectAuthorities = new ArrayList<>();
-		  Iterator<? extends GrantedAuthority> ldapIterator =  ldapAuthorites.iterator();
-		  for (GrantedAuthority authority:databaseAuthorites) {
-		    if (authority.equals(ldapIterator.next())) {
-		    	intersectAuthorities.add(authority);
-		    }
-		  }
-		  
-		return intersectAuthorities;
-		
-		
+
+	private Collection<? extends GrantedAuthority> findMutualRoles(Collection<? extends GrantedAuthority> judicialWarrantGrantedAuthorities,
+			Collection<? extends GrantedAuthority> authorites2) {
+		Collection<GrantedAuthority> mutualRoles = new ArrayList<>();
+
+		for (GrantedAuthority authority1 : judicialWarrantGrantedAuthorities) {
+			JudicialWarrantGrantedAuthority jwtGrantedAuthority = (JudicialWarrantGrantedAuthority) authority1;
+			for (GrantedAuthority authority2 : authorites2) {
+				if (jwtGrantedAuthority.getLdapSecurityGroup().equals(authority2.getAuthority())) {
+					mutualRoles.add(jwtGrantedAuthority);
+				}
+			}
+		}
+
+		return mutualRoles.isEmpty()?null:mutualRoles;
+
 	}
 
 }
