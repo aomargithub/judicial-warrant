@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -59,5 +60,12 @@ public class AttachmentType extends DomainEntity<Long> implements CreationAudita
 	private UpdateLog updateLog;
 	
 	@Column(name = "LIST_ORDER")
-	private Byte listOrder;
+	private Long listOrder;
+	
+	@PostPersist
+	private void setListOrder() {
+	    this.listOrder = id;
+	}
+
+	
 }

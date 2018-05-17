@@ -34,8 +34,7 @@ public class AttachmentTypeDto implements UserModel<Long> {
 	private Boolean isMandatory;
 	
 	@Min(0)
-	@NotNull
-	private Byte listOrder;
+	private Long listOrder;
 	
 	@JsonIgnore
 	private Short version;

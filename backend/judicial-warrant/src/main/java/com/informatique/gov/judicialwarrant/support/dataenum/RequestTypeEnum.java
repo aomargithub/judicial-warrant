@@ -5,7 +5,8 @@ import lombok.Getter;
 
 public enum RequestTypeEnum {
 	
-	JWCD("JT", "");
+	JWCD("JT", ""),
+	ER("ER", "");
 	
 	@Getter
     private String code;

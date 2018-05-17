@@ -14,8 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +25,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "civilId", "request", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"civilId", "request"}, callSuper = false)
-public class Candidate extends DomainEntity<Long> {
+public class Candidate extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 
 	
 	/**
