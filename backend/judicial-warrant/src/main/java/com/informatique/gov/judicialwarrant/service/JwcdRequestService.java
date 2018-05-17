@@ -10,11 +10,15 @@ import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternal
 import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
 
 public interface JwcdRequestService extends Serializable {
-	List<JwcdRequestResponse> getAll() throws JudicialWarrantException;
+	List<JwcdRequestForInternalResponse> getAll() throws JudicialWarrantException;
+	
+	List<JwcdRequestResponse> getAllByOrganizationUnit() throws JudicialWarrantException;
 
 	Short getVersionBySerial(String serial) throws JudicialWarrantException;
 	
-	JwcdRequestResponse getBySerial(String serial) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse getBySerial(String serial) throws JudicialWarrantException;
+	
+	JwcdRequestResponse getBySerialByOrganizationUnit(String serial) throws JudicialWarrantException;
 	
 	JwcdRequestResponse createRequest(JwcdRequestData jobNameRequestData) throws JudicialWarrantException;
 	

@@ -13,12 +13,14 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.JwcdRequestRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
+import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestData;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestNotesData;
 import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalResponse;
 import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
 import com.informatique.gov.judicialwarrant.service.JwcdRequestService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
@@ -34,6 +36,7 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 	private ModelMapper<JwcdRequest, JwcdRequestForInternalResponse, Long> jwcdInternalRequestmapper;
 	private JwcdRequestRepository jwcdRequestRepository;
 	private RequestRepository requestRepository;
+	private SecurityService securityService;
 
 	/**
 	 * 
@@ -42,10 +45,24 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public List<JwcdRequestResponse> getAll() throws JudicialWarrantException {
-		List<JwcdRequestResponse> dtos = null;
+	public List<JwcdRequestForInternalResponse> getAll() throws JudicialWarrantException {
+		List<JwcdRequestForInternalResponse> dtos = null;
 		try {
 			List<JwcdRequest> entities = jwcdRequestRepository.findAll();
+			dtos = jwcdInternalRequestmapper.toDto(entities);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<JwcdRequestResponse> getAllByOrganizationUnit() throws JudicialWarrantException {
+		List<JwcdRequestResponse> dtos = null;
+		try {
+			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
+			List<JwcdRequest> entities = jwcdRequestRepository.findAllByRequestOrganizationUnitId(organizationUnitDto.getId());
 			dtos = jwcdRequestmapper.toDto(entities);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -68,13 +85,13 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public JwcdRequestResponse getBySerial(String serial) throws JudicialWarrantException {
+	public JwcdRequestForInternalResponse getBySerial(String serial) throws JudicialWarrantException {
 		JwcdRequest entity = null;
-		JwcdRequestResponse dto = null;
+		JwcdRequestForInternalResponse dto = null;
 		try {
 			notNull(serial, "code must be set");
 			entity = jwcdRequestRepository.findByRequestSerial(serial);
-			dto = jwcdRequestmapper.toDto(entity);
+			dto = jwcdInternalRequestmapper.toDto(entity);
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
@@ -83,6 +100,24 @@ public class JwcdRequestServiceImpl implements JwcdRequestService {
 		return dto;
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public JwcdRequestResponse getBySerialByOrganizationUnit(String serial) throws JudicialWarrantException {
+		JwcdRequest entity = null;
+		JwcdRequestResponse dto = null;
+		try {
+			notNull(serial, "code must be set");
+			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
+			entity = jwcdRequestRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitDto.getId());
+			dto = jwcdRequestmapper.toDto(entity);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dto;
+	}
+	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public JwcdRequestResponse createRequest(JwcdRequestData jwcdRequestData) throws JudicialWarrantException {

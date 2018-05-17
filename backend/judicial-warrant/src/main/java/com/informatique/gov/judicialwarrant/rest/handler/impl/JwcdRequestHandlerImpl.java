@@ -28,10 +28,24 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	private JwcdRequestService requestService;
 
 	@Override
-	public ResponseEntity<List<JwcdRequestResponse>> getAll() throws JudicialWarrantException {
+	public ResponseEntity<List<JwcdRequestForInternalResponse>> getAll() throws JudicialWarrantException {
+		ResponseEntity<List<JwcdRequestForInternalResponse>> response = null;
+		try {
+			List<JwcdRequestForInternalResponse> dtos = requestService.getAll();
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<List<JwcdRequestResponse>> getAllByOrganizationUnit() throws JudicialWarrantException {
 		ResponseEntity<List<JwcdRequestResponse>> response = null;
 		try {
-			List<JwcdRequestResponse> dtos = requestService.getAll();
+			List<JwcdRequestResponse> dtos = requestService.getAllByOrganizationUnit();
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -42,10 +56,10 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestResponse> getBySerial(String serial) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestResponse> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> getBySerial(String serial) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
-			JwcdRequestResponse dto = requestService.getBySerial(serial);
+			JwcdRequestForInternalResponse dto = requestService.getBySerial(serial);
 			if (dto == null) {
 				throw new ResourceNotFoundException(serial);
 			}
@@ -59,6 +73,25 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 		return response;
 	}
 
+	@Override
+	public ResponseEntity<JwcdRequestResponse> getBySerialAndOrganizationUnit(String serial) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestResponse> response = null;
+		try {
+			JwcdRequestResponse dto = requestService.getBySerialByOrganizationUnit(serial);
+			if (dto == null) {
+				throw new ResourceNotFoundException(serial);
+			}
+			response = ResponseEntity.ok().body(dto);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+
+	
 	@Override
 	public ResponseEntity<JwcdRequestResponse> createRequest(JwcdRequestData jwcdRequestData)
 			throws JudicialWarrantException {
