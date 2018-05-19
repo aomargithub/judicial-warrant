@@ -5,9 +5,11 @@ import org.springframework.stereotype.Component;
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Role;
 import com.informatique.gov.judicialwarrant.domain.User;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserTypeDto;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
@@ -16,6 +18,8 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<Role, RoleDto, Byte> roleMapper;
+	private ModelMapper<UserType, UserTypeDto, Integer> userTypeMapper;
+	
 	
 
 	/**
@@ -39,6 +43,7 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 			dto.setMobileNumber2(entity.getMobileNumber2());
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setRole(roleMapper.toDto(entity.getRole()));
+			dto.setUserType(userTypeMapper.toDto(entity.getUserType()));
 		
 			entity.setVersion(dto.getVersion());
 		}
@@ -61,6 +66,7 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 			entity.setMobileNumber2(dto.getMobileNumber2());
 			entity.setOrganizationUnit(organizationUnitMapper.toEntity(dto.getOrganizationUnit()));
 			entity.setRole(roleMapper.toEntity(dto.getRole()));
+			entity.setUserType(userTypeMapper.toEntity(dto.getUserType()));
 			
 			entity.setVersion(dto.getVersion());
 		}

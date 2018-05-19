@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestDto;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
 
 import lombok.AllArgsConstructor;
 
 
 @Component
 @AllArgsConstructor
-public class JwcdRequestMapper extends AbstractModelMapper<JwcdRequest, JwcdRequestDto, Long>{
+public class JwcdRequestMapper extends AbstractModelMapper<JwcdRequest, JwcdRequestResponse, Long>{
 
 	/**
 	 * 
@@ -21,11 +21,11 @@ public class JwcdRequestMapper extends AbstractModelMapper<JwcdRequest, JwcdRequ
 	private ModelMapper<Request, RequestDto, Long> requestMapper;
 
 	@Override
-	public JwcdRequestDto toDto(JwcdRequest entity) {
-		JwcdRequestDto dto = null;
+	public JwcdRequestResponse toDto(JwcdRequest entity) {
+		JwcdRequestResponse dto = null;
 		
 		if(isConvertable(entity)) {
-			dto = new JwcdRequestDto();
+			dto = new JwcdRequestResponse();
 			dto.setId(entity.getId());
 			dto.setSerial(entity.getRequest().getSerial());
 			dto.setJobTitleName(entity.getJobTitle());
@@ -38,7 +38,7 @@ public class JwcdRequestMapper extends AbstractModelMapper<JwcdRequest, JwcdRequ
 	}
 
 	@Override
-	protected JwcdRequest toEntity(JwcdRequestDto dto, boolean nullId) {
+	protected JwcdRequest toEntity(JwcdRequestResponse dto, boolean nullId) {
 		JwcdRequest entity = null;
 		
 		if(isConvertable(dto)) {

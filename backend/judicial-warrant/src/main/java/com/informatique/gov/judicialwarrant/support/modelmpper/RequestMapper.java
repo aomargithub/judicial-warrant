@@ -41,6 +41,7 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 			dto.setCurrentInternalStatus(requestInternalStatusMapper.toDto(entity.getCurrentInternalStatus()));
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setType(requestTypeMapper.toDto(entity.getType()));
+			dto.setVersion(entity.getVersion());
 		}
 		return dto;
 	}
@@ -56,6 +57,7 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 			entity.setCurrentStatus(requestStatusMapper.toEntity(dto.getCurrentStatus()));
 			entity.setOrganizationUnit(organizationUnitMapper.toEntity(dto.getOrganizationUnit()));
 			entity.setType(requestTypeMapper.toEntity(dto.getType()));
+			entity.setVersion(dto.getVersion());
 		}
 		return entity;
 	}

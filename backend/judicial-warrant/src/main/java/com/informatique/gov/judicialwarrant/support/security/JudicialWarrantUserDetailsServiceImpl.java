@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.User;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 
 import lombok.AllArgsConstructor;
 
@@ -29,19 +31,19 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		JudicialWarrantUserDetails userDetails = null;
 		User user = null;
 		try {
 			notNull(username, "username must be set");
 			user = userService.getByLoginName(username);
-			
-			if(user == null) {
+
+			if (user == null) {
 				throw new UsernameNotFoundException(username);
 			}
-			
+
 			userDetails = toUserDetails(user);
-			
+
 		} catch (JudicialWarrantInternalException e) {
 			throw new UsernameNotFoundException(username, e);
 		} catch (UsernameNotFoundException e) {
@@ -53,11 +55,11 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 	}
 
 	private JudicialWarrantUserDetails toUserDetails(User user) {
-		
+
 		notNull(user, "user must be set");
-		
+
 		JudicialWarrantUserDetails userDetails = new JudicialWarrantUserDetails();
-		
+
 		userDetails.setArabicName(user.getArabicName());
 		userDetails.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole().getCode())));
 		userDetails.setCivilId(user.getCivilId());
@@ -68,7 +70,13 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setMobileNumber2(user.getMobileNumber2());
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
-		// token to be set later in more convenient place where we can get the session id easily.
+		userDetails.setUserType(user.getUserType());
+//		if (user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
+//			userDetails.setPassword(user.getUserCredentials().getPassword());
+//		}
+		userDetails.setUserType(user.getUserType());
+		// token to be set later in more convenient place where we can get the session
+		// id easily.
 		return userDetails;
 	}
 }

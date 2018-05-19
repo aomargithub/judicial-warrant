@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class JudicialWarrantUserDetails implements UserDetails{
 	private String emailAddress;
 	private OrganizationUnit organizationUnit;
 	private Long civilId;
+	private UserType userType;
 	private AuthenticationToken token;
 
 }

@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalDto;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalResponse;
 
 import lombok.AllArgsConstructor;
 
 
 @Component
 @AllArgsConstructor
-public class JwcdRequestForInternalMapper extends AbstractModelMapper<JwcdRequest, JwcdRequestForInternalDto, Long>{
+public class JwcdRequestForInternalMapper extends AbstractModelMapper<JwcdRequest, JwcdRequestForInternalResponse, Long>{
 
 	/**
 	 * 
@@ -21,11 +21,11 @@ public class JwcdRequestForInternalMapper extends AbstractModelMapper<JwcdReques
 	private ModelMapper<Request, RequestDto, Long> requestMapper;
 
 	@Override
-	public JwcdRequestForInternalDto toDto(JwcdRequest entity) {
-		JwcdRequestForInternalDto dto = null;
+	public JwcdRequestForInternalResponse toDto(JwcdRequest entity) {
+		JwcdRequestForInternalResponse dto = null;
 		
 		if(isConvertable(entity)) {
-			dto = new JwcdRequestForInternalDto();
+			dto = new JwcdRequestForInternalResponse();
 			dto.setId(entity.getId());
 			dto.setSerial(entity.getRequest().getSerial());
 			dto.setJobTitleName(entity.getJobTitle());
@@ -38,7 +38,7 @@ public class JwcdRequestForInternalMapper extends AbstractModelMapper<JwcdReques
 	}
 
 	@Override
-	protected JwcdRequest toEntity(JwcdRequestForInternalDto dto, boolean nullId) {
+	protected JwcdRequest toEntity(JwcdRequestForInternalResponse dto, boolean nullId) {
 		JwcdRequest entity = null;
 		
 		if(isConvertable(dto)) {

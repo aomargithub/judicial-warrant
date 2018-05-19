@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -27,6 +31,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.informatique.gov.judicialwarrant.support.security.Constants;
+import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantAuthenticationProvider;
 import com.informatique.gov.judicialwarrant.support.security.OnlyLoginBasicAuthenticationFilter;
 import com.informatique.gov.judicialwarrant.support.security.RestAuthenticationEntryPoint;
 
@@ -41,6 +46,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private SessionRepositoryFilter<?> sessionRepositoryFilter;
+	@Autowired
+	private JudicialWarrantAuthenticationProvider authenticationProvider;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -64,7 +71,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		AuthenticationEntryPoint authenticationEntryPoint = new RestAuthenticationEntryPoint();
 		return authenticationEntryPoint;
 	}
-
+//
 	@Bean
 	public OnlyLoginBasicAuthenticationFilter onlyLoginBasicAuthenticationFilter() throws Exception {
 		OnlyLoginBasicAuthenticationFilter onlyLoginBasicAuthenticationFilter = new OnlyLoginBasicAuthenticationFilter(
@@ -81,9 +88,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
+		auth.authenticationProvider(authenticationProvider);
 	}
 
+	@Bean
 	private ActiveDirectoryLdapAuthenticationProvider authenticationProvider() {
 		return new ActiveDirectoryLdapAuthenticationProvider(
 				environment.getRequiredProperty("app.security.activedirectory.domain"),
@@ -111,5 +119,30 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
 		return source;
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public LdapContextSource contextSource() {
+	    LdapContextSource contextSource = new LdapContextSource();
+	     
+	    contextSource.setUrl(environment.getRequiredProperty("ldap.urls"));
+	    contextSource.setBase(
+	    		environment.getRequiredProperty("ldap.base"));
+	    contextSource.setUserDn(
+	    		environment.getRequiredProperty("ldap.username"));
+	    contextSource.setPassword(
+	    		environment.getRequiredProperty("ldap.password"));
+	     
+	    return contextSource;
+	}
+	
+	@Bean
+	public LdapTemplate ldapTemplate() {
+	    return new LdapTemplate(contextSource());
 	}
 }

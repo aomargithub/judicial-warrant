@@ -4,6 +4,8 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,15 +33,21 @@ public class JwcdRequestController {
 	*/
 
 	@GetMapping
-	@PreAuthorize("hasRole('ROLE_USER', 'ROLE_ADMIN')")
-	public ResponseEntity<?> getAll() throws JudicialWarrantException {
-		return  requestHandler.getAll();
+	public ResponseEntity<?> getAll(Authentication authentication) throws JudicialWarrantException {
+		if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			return  requestHandler.getAll();
+		} else {
+			return requestHandler.getAllByOrganizationUnit();
+		}
 	}
 
 	@GetMapping("/serial={serial}")
-	@PreAuthorize("hasRole('ROLE_USER', 'ROLE_ADMIN')")
-	public ResponseEntity<?> getBySerial(@PathVariable String serial) throws JudicialWarrantException {
-		return requestHandler.getBySerial(serial);
+	public ResponseEntity<?> getBySerial(@PathVariable String serial, Authentication authentication) throws JudicialWarrantException {
+		if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			return requestHandler.getBySerial(serial);
+		} else {
+			return requestHandler.getBySerialAndOrganizationUnit(serial);
+		}
 	}
 	
 	@PostMapping

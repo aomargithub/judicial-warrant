@@ -6,34 +6,38 @@ import java.util.List;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestData;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestNotesData;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalDto;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestDto;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalResponse;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
 
 public interface JwcdRequestService extends Serializable {
-	List<JwcdRequestDto> getAll() throws JudicialWarrantException;
+	List<JwcdRequestForInternalResponse> getAll() throws JudicialWarrantException;
+	
+	List<JwcdRequestResponse> getAllByOrganizationUnit() throws JudicialWarrantException;
 
 	Short getVersionBySerial(String serial) throws JudicialWarrantException;
 	
-	JwcdRequestDto getBySerial(String serial) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse getBySerial(String serial) throws JudicialWarrantException;
 	
-	JwcdRequestDto createRequest(JwcdRequestData jobNameRequestData) throws JudicialWarrantException;
+	JwcdRequestResponse getBySerialByOrganizationUnit(String serial) throws JudicialWarrantException;
 	
-	JwcdRequestDto updateRequest(String serial, JwcdRequestData jobNameRequestData) throws JudicialWarrantException;
+	JwcdRequestResponse createRequest(JwcdRequestData jobNameRequestData) throws JudicialWarrantException;
 	
-	JwcdRequestDto submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestResponse updateRequest(String serial, JwcdRequestData jobNameRequestData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestResponse submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
-	JwcdRequestForInternalDto issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	JwcdRequestForInternalResponse lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
+	
+	JwcdRequestForInternalResponse issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException;
 	
 }

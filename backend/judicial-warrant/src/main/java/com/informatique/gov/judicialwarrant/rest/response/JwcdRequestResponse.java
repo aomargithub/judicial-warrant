@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "serial"})
 @EqualsAndHashCode(of = {"serial"}, callSuper = false)
-public class JwcdRequestDto implements UserModel<Long> {
+public class JwcdRequestResponse implements UserModel<Long> {
 	
 	/**
 	 * 

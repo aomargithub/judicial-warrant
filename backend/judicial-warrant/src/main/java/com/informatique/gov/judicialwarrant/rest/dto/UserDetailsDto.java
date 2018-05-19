@@ -20,5 +20,6 @@ public class UserDetailsDto implements Serializable{
 	private String emailAddress;
 	private Long civilId;
 	private OrganizationUnitDto organizationUnit;
+	private UserTypeDto userType;
 	private AuthenticationTokenDto token;
 }

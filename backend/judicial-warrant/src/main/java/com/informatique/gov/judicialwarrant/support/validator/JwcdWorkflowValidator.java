@@ -78,7 +78,7 @@ public class JwcdWorkflowValidator {
 		try {
 			RequestStatusEnum currentStatus = RequestStatusEnum
 					.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode());
-			if (!currentStatus.equals(RequestStatusEnum.DRAFT) || !currentStatus.equals(RequestStatusEnum.INCOMPLETE)) {
+			if (!currentStatus.equals(RequestStatusEnum.DRAFT) && !currentStatus.equals(RequestStatusEnum.INCOMPLETE)) {
 				String serial = jwcdRequest.getRequest().getSerial();
 				throw new InvalidRequestStatusException(serial, currentStatus);
 			}

@@ -1,6 +1,10 @@
 package com.informatique.gov.judicialwarrant.rest.response;
 
 
+
+import java.util.Set;
+
+import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestInternalStatusDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
@@ -13,7 +17,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "serial"})
 @EqualsAndHashCode(of = {"serial"}, callSuper = false)
-public class JwcdRequestForInternalDto implements UserModel<Long> {
+public class ERRequestForInternalResponse implements UserModel<Long> {
 	
 	/**
 	 * 
@@ -22,8 +26,9 @@ public class JwcdRequestForInternalDto implements UserModel<Long> {
 	private Long id;
 	private String serial;
 	private RequestTypeDto type;
-	private RequestInternalStatusDto currentInternalStatus;
 	private OrganizationUnitDto organizationUnit;
-	private String jobTitleName;
+	private RequestInternalStatusDto currentInternalStatus;
+	private JwcdRequestForInternalResponse jwcdRequestForInternalDto;
+	private Set<CandidateDto> candidates;
 	
 }

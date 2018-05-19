@@ -16,8 +16,8 @@ import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.rest.handler.JwcdRequestHandler;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestData;
 import com.informatique.gov.judicialwarrant.rest.request.JwcdRequestNotesData;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalDto;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestDto;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestForInternalResponse;
+import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
 import com.informatique.gov.judicialwarrant.service.JwcdRequestService;
 
 import lombok.AllArgsConstructor;
@@ -28,10 +28,24 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	private JwcdRequestService requestService;
 
 	@Override
-	public ResponseEntity<List<JwcdRequestDto>> getAll() throws JudicialWarrantException {
-		ResponseEntity<List<JwcdRequestDto>> response = null;
+	public ResponseEntity<List<JwcdRequestForInternalResponse>> getAll() throws JudicialWarrantException {
+		ResponseEntity<List<JwcdRequestForInternalResponse>> response = null;
 		try {
-			List<JwcdRequestDto> dtos = requestService.getAll();
+			List<JwcdRequestForInternalResponse> dtos = requestService.getAll();
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<List<JwcdRequestResponse>> getAllByOrganizationUnit() throws JudicialWarrantException {
+		ResponseEntity<List<JwcdRequestResponse>> response = null;
+		try {
+			List<JwcdRequestResponse> dtos = requestService.getAllByOrganizationUnit();
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -42,10 +56,10 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestDto> getBySerial(String serial) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestDto> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> getBySerial(String serial) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
-			JwcdRequestDto dto = requestService.getBySerial(serial);
+			JwcdRequestForInternalResponse dto = requestService.getBySerial(serial);
 			if (dto == null) {
 				throw new ResourceNotFoundException(serial);
 			}
@@ -60,12 +74,31 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestDto> createRequest(JwcdRequestData jwcdRequestData)
+	public ResponseEntity<JwcdRequestResponse> getBySerialAndOrganizationUnit(String serial) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestResponse> response = null;
+		try {
+			JwcdRequestResponse dto = requestService.getBySerialByOrganizationUnit(serial);
+			if (dto == null) {
+				throw new ResourceNotFoundException(serial);
+			}
+			response = ResponseEntity.ok().body(dto);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+
+	
+	@Override
+	public ResponseEntity<JwcdRequestResponse> createRequest(JwcdRequestData jwcdRequestData)
 			throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestDto> response = null;
+		ResponseEntity<JwcdRequestResponse> response = null;
 		try {
 
-			JwcdRequestDto savedDto = requestService.createRequest(jwcdRequestData);
+			JwcdRequestResponse savedDto = requestService.createRequest(jwcdRequestData);
 
 			response = ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
 
@@ -78,9 +111,9 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestDto> updateRequest(String serial, JwcdRequestData jobNameRequestData, Short etag)
+	public ResponseEntity<JwcdRequestResponse> updateRequest(String serial, JwcdRequestData jobNameRequestData, Short etag)
 			throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestDto> response = null;
+		ResponseEntity<JwcdRequestResponse> response = null;
 		try {
 
 			notNull(jobNameRequestData.getJobTitle(), "JobTitle must be set");
@@ -99,7 +132,7 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 				throw new ResourceModifiedException(serial, etag, version);
 			}
 
-			JwcdRequestDto dto = requestService.updateRequest(serial, jobNameRequestData);
+			JwcdRequestResponse dto = requestService.updateRequest(serial, jobNameRequestData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -112,11 +145,11 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestDto> submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestDto> response = null;
+	public ResponseEntity<JwcdRequestResponse> submitRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestResponse> response = null;
 		try {
 
-			JwcdRequestDto dto = requestService.submitRequest(serial, jwcdRequestNotesData);
+			JwcdRequestResponse dto = requestService.submitRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -129,11 +162,11 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> incompleteRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.incompleteRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.incompleteRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -146,11 +179,11 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 	
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> rejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.rejectRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.rejectRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -163,11 +196,11 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> inprogressRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.inprogressRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.inprogressRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -180,12 +213,12 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+	public ResponseEntity<JwcdRequestForInternalResponse> lawAffairsReviewRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
 			throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.lawAffairsReviewRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.lawAffairsReviewRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -198,12 +231,12 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+	public ResponseEntity<JwcdRequestForInternalResponse> lawAffairsAcceptRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
 			throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.lawAffairsAcceptRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.lawAffairsAcceptRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -216,12 +249,12 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
+	public ResponseEntity<JwcdRequestForInternalResponse> lawAffairsRejectRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData)
 			throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.lawAffairsRejectRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.lawAffairsRejectRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 
@@ -234,11 +267,11 @@ public class JwcdRequestHandlerImpl implements JwcdRequestHandler {
 	}
 
 	@Override
-	public ResponseEntity<JwcdRequestForInternalDto> issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<JwcdRequestForInternalDto> response = null;
+	public ResponseEntity<JwcdRequestForInternalResponse> issuedRequest(String serial, JwcdRequestNotesData jwcdRequestNotesData) throws JudicialWarrantException {
+		ResponseEntity<JwcdRequestForInternalResponse> response = null;
 		try {
 
-			JwcdRequestForInternalDto dto = requestService.issuedRequest(serial, jwcdRequestNotesData);
+			JwcdRequestForInternalResponse dto = requestService.issuedRequest(serial, jwcdRequestNotesData);
 
 			response = ResponseEntity.ok(dto);
 

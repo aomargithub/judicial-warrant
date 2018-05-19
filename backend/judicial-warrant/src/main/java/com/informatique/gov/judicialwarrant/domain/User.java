@@ -19,7 +19,6 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
 
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -93,9 +92,14 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@NaturalId
 	@Column(name = "LOGIN_NAME")
 	private String loginName;
+//	@OneToOne
+//	@JoinColumn(name="ID")
+//	@PrimaryKeyJoinColumn
+//	private UserCredentials userCredentials;
 	@OneToOne
-	@JoinColumn(name="ID")
-	private UserCredentials userCredentials;
+	@JoinColumn(name="USER_TYPE_ID")
+	private UserType userType;
+	
 	
 
 }

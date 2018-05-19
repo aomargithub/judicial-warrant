@@ -7,5 +7,6 @@ import com.informatique.gov.judicialwarrant.domain.Role;
 
 
 public interface RoleRepository  extends JpaRepository<Role, Byte>{
-	
+	Role findByCode(String code);
+	Role findByLdapSecurityGroup(String ldapSecurityGroup);
 }
