@@ -42,12 +42,12 @@ public class ErWorkflowValidator {
 				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			case INPROGRESS:
 				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)
-						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.ISSUED)
+						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED)
 						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.INPROGRESS)) {
 					throw new InvalidRequestStatusException(serial, currentInternalStatus);
 				}
 				break;
-			case ISSUED:
+			case CAPACITY_DELEGATION_ISSUED:
 				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			default:
 				throw new InvalidRequestStatusException(serial, currentInternalStatus);

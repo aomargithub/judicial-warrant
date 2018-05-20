@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
@@ -17,17 +18,17 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table(name = "JWCD_REQUEST")
+@Table(name = "CAPACITY_DELEGATION")
 @Data
 @ToString(of = {"id", "jobTitle"})
 @EqualsAndHashCode(of = {"request"}, callSuper = false)
 @NamedEntityGraphs({
-	@NamedEntityGraph(name = "JwcdRequest.withRequest",
+	@NamedEntityGraph(name = "CapacityDelegation.withRequest",
 					  attributeNodes = {
-							  @NamedAttributeNode(value = "request", subgraph = "JwcdRequest.request.fat")
+							  @NamedAttributeNode(value = "request", subgraph = "CapacityDelegation.request.fat")
 					  }, 
 					  subgraphs = {
-							  @NamedSubgraph(name = "JwcdRequest.request.fat", 
+							  @NamedSubgraph(name = "CapacityDelegation.request.fat", 
 							  attributeNodes = {
 									  @NamedAttributeNode("type"),
 									  @NamedAttributeNode("currentInternalStatus"),
@@ -38,7 +39,7 @@ import lombok.ToString;
 					  }
 			)
 })
-public class JwcdRequest extends DomainEntity<Long> {
+public class CapacityDelegation extends DomainEntity<Long> {
 	
 	/**
 	 * 
@@ -51,6 +52,7 @@ public class JwcdRequest extends DomainEntity<Long> {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID")
+	@MapsId
 	private Request request;
 	
 	@Column(name="JOB_TITLE")

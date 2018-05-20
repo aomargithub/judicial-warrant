@@ -1,15 +1,15 @@
 package com.informatique.gov.judicialwarrant.support.validator;
 
-import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
+import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
 import com.informatique.gov.judicialwarrant.exception.InvalidRequestStatusException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 
-public class JwcdWorkflowValidator {
+public class CapacityDelegationValidator {
 
-	public static void validate(JwcdRequest jwcdRequest, RequestInternalStatusEnum requiredInternalStatusEnum)
+	public static void validate(CapacityDelegation jwcdRequest, RequestInternalStatusEnum requiredInternalStatusEnum)
 			throws JudicialWarrantException {
 		try {
 			String serial = jwcdRequest.getRequest().getSerial();
@@ -41,27 +41,27 @@ public class JwcdWorkflowValidator {
 			case REJECTED:
 				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			case INPROGRESS:
-				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW)) {
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW)) {
 					throw new InvalidRequestStatusException(serial, currentInternalStatus);
 				}
 				break;
-			case JWCD_LAW_AFFAIRS_REVIEW:
-				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REJECTED)
-						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_ACCEPTED)) {
+			case CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REJECTED)
+						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_ACCEPTED)) {
 					throw new InvalidRequestStatusException(serial, currentInternalStatus);
 				}
 				break;
-			case JWCD_LAW_AFFAIRS_ACCEPTED:
-				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.ISSUED)) {
+			case CAPACITY_DELEGATION_LAW_AFFAIRS_ACCEPTED:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED)) {
 					throw new InvalidRequestStatusException(serial, currentInternalStatus);
 				}
 				break;
-			case JWCD_LAW_AFFAIRS_REJECTED:
-				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED) && !requiredInternalStatus.equals(RequestInternalStatusEnum.JWCD_LAW_AFFAIRS_REVIEW)) {
+			case CAPACITY_DELEGATION_LAW_AFFAIRS_REJECTED:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED) && !requiredInternalStatus.equals(RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW)) {
 					throw new InvalidRequestStatusException(serial, currentInternalStatus);
 				}
 				break;
-			case ISSUED:
+			case CAPACITY_DELEGATION_ISSUED:
 				throw new InvalidRequestStatusException(serial, currentInternalStatus);
 			default:
 				break;
@@ -73,7 +73,7 @@ public class JwcdWorkflowValidator {
 		}
 	}
 
-	public static void validateForUpdate(JwcdRequest jwcdRequest)
+	public static void validateForUpdate(CapacityDelegation jwcdRequest)
 			throws JudicialWarrantException {
 		try {
 			RequestStatusEnum currentStatus = RequestStatusEnum

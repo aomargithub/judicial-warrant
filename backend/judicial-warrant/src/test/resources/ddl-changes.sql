@@ -218,4 +218,14 @@ ALTER TABLE APP_USER_Type
 rename USER_TYPE  to CODE ;
 
 
+ALTER TABLE JWCD_REQUEST
+  RENAME TO CAPACITY_DELEGATION;
+  
+  -- Rename indexes 
+alter index JWCD_REQUEST_PK rename to CAPACITY_DELEGATION_PK;
+-- Rename primary, unique and foreign key constraints 
+alter table CAPACITY_DELEGATION
+ rename constraint JWCD_REQUEST_PK to CAPACITY_DELEGATION_PK;
+alter table CAPACITY_DELEGATION
+ rename constraint JWCD_REQUEST_REQUEST_FK to CAPACITY_DELEGATION_REQUEST_FK;
   

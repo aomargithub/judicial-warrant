@@ -5,17 +5,16 @@ import static org.springframework.util.Assert.notNull;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.ERRequest;
-import com.informatique.gov.judicialwarrant.domain.JwcdRequest;
+import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.ERRequestRepository;
-import com.informatique.gov.judicialwarrant.persistence.repository.JwcdRequestRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.CapacityDelegationRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
@@ -45,7 +44,7 @@ public class ERRequestServiceImpl implements ERRequestService {
 	private ModelMapper<ERRequest, ERRequestForInternalResponse, Long> erRequestForInternalMapper;
 	private ERRequestRepository erRequestRepository;
 	private CandidateService candidateService;
-	private JwcdRequestRepository jwcdRequestRepository;
+	private CapacityDelegationRepository jwcdRequestRepository;
 	private RequestRepository requestRepository;
 	private SecurityService securityService;
 
@@ -136,10 +135,10 @@ public class ERRequestServiceImpl implements ERRequestService {
 		ERRequestResponse erRequestResponse = null;
 		try {
 			ERRequest erRequest = new ERRequest();
-			Request request = requestService.create(RequestTypeEnum.ER, Strings.EMPTY);
+			Request request = requestService.create(RequestTypeEnum.ER);
 			erRequest.setId(request.getId());
 			erRequest.setRequest(request);
-			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
+			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
 			erRequest.setJwcdRequest(jwcdRequest);
 			erRequest = erRequestRepository.save(erRequest);
 			Set<CandidateDto> candidateDtos = candidateService.save(erRequestRequest.getCandidates(), requestMapper.toDto(erRequest.getRequest()));
@@ -164,7 +163,7 @@ public class ERRequestServiceImpl implements ERRequestService {
 			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
 			ERRequest erRequest = erRequestRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitDto.getId());
 			ErWorkflowValidator.validateForUpdate(erRequest);
-			JwcdRequest jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
+			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
 			erRequest.setJwcdRequest(jwcdRequest);
 			erRequest = erRequestRepository.save(erRequest);
 			// delete all previous candidate and insert it again to avoid compare candidate collections
@@ -339,7 +338,7 @@ public class ERRequestServiceImpl implements ERRequestService {
 		ERRequestForInternalResponse erRequestForInternalResponse = null;
 		try {
 			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.ISSUED, erRequestNotesData.getNotes());
+			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED, erRequestNotesData.getNotes());
 			erRequest.setRequest(request);
 			Set<CandidateDto> candidates = candidateService.getCandidatesByRequest(request);
 			candidates = candidateService.changeStatus(candidates, CandidateStatusEnum.CARD_RECIEVED);

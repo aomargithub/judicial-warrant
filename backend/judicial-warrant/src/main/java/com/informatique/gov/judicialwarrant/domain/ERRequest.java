@@ -57,6 +57,6 @@ public class ERRequest extends DomainEntity<Long> {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "JWCD_REQUEST_ID")
-	private JwcdRequest jwcdRequest;
+	private CapacityDelegation jwcdRequest;
 
 }

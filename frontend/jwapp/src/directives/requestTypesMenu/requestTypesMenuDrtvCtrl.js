@@ -4,7 +4,6 @@ module.exports = function(app){
 
         requestTypeSrvc.getAll().then(function(response){
             vm.items = response.data;
-            console.log(vm.items);
         });
     });
 };

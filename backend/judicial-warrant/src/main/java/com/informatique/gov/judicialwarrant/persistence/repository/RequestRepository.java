@@ -15,7 +15,8 @@ import com.informatique.gov.judicialwarrant.domain.RequestType;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer>{
-	@EntityGraph(value = "Request.req", type = EntityGraphType.FETCH)
+	
+	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
 	Request findBySerial(String serial);
 	
 	List<Request> findByType(RequestType requestType);
