@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 
 import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
 @Component
-public class RoleDtoValidator implements Validator,Serializable {
+public class RoleValidator implements Validator,Serializable {
 
 	/**
 	 * 
