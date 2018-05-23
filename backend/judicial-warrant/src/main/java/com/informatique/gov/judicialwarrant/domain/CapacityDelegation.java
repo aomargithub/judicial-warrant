@@ -12,6 +12,7 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,6 +50,10 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	@Id
     @Column(name = "ID")
     private Long id;
+	
+	@Version
+	@Column(name="VERSION")
+	private Short version;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID")

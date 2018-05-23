@@ -9,7 +9,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 
 import lombok.AllArgsConstructor;
 
-@Component
+@Component("capacityDelegationForInternalMapper")
 @AllArgsConstructor
 public class CapacityDelegationForInternalMapper extends AbstractModelMapper<CapacityDelegation, CapacityDelegationDto, Long>{
 	

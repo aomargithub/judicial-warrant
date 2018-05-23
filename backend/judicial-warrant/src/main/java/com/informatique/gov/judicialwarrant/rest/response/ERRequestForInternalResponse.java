@@ -5,9 +5,8 @@ package com.informatique.gov.judicialwarrant.rest.response;
 import java.util.Set;
 
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
-import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestInternalStatusDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
+import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserModel;
 
 import lombok.Data;
@@ -25,10 +24,8 @@ public class ERRequestForInternalResponse implements UserModel<Long> {
 	private static final long serialVersionUID = -5046915499323327588L;
 	private Long id;
 	private String serial;
-	private RequestTypeDto type;
-	private OrganizationUnitDto organizationUnit;
-	private RequestInternalStatusDto currentInternalStatus;
-	private JwcdRequestForInternalResponse jwcdRequestForInternalDto;
+	private RequestDto requestDto;
+	private CapacityDelegationDto capacityDelegationDto;
 	private Set<CandidateDto> candidates;
 	
 }

@@ -5,6 +5,7 @@ import static org.springframework.util.Assert.notNull;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,10 @@ import com.informatique.gov.judicialwarrant.support.validator.ErWorkflowValidato
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ERRequestServiceImpl implements ERRequestService {
 	private InternalRequestService requestService;
+	@Qualifier("requestMapper")
 	private ModelMapper<Request, RequestDto, Long> requestMapper;
 	private ModelMapper<ERRequest, ERRequestResponse, Long> erRequestMapper;
 	private ModelMapper<ERRequest, ERRequestForInternalResponse, Long> erRequestForInternalMapper;
@@ -138,7 +140,7 @@ public class ERRequestServiceImpl implements ERRequestService {
 			Request request = requestService.create(RequestTypeEnum.ER);
 			erRequest.setId(request.getId());
 			erRequest.setRequest(request);
-			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
+			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getRequest().getSerial());
 			erRequest.setJwcdRequest(jwcdRequest);
 			erRequest = erRequestRepository.save(erRequest);
 			Set<CandidateDto> candidateDtos = candidateService.save(erRequestRequest.getCandidates(), requestMapper.toDto(erRequest.getRequest()));
@@ -163,7 +165,7 @@ public class ERRequestServiceImpl implements ERRequestService {
 			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
 			ERRequest erRequest = erRequestRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitDto.getId());
 			ErWorkflowValidator.validateForUpdate(erRequest);
-			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getSerial());
+			CapacityDelegation jwcdRequest = jwcdRequestRepository.findByRequestSerial(erRequestRequest.getJwcdRequestDto().getRequest().getSerial());
 			erRequest.setJwcdRequest(jwcdRequest);
 			erRequest = erRequestRepository.save(erRequest);
 			// delete all previous candidate and insert it again to avoid compare candidate collections

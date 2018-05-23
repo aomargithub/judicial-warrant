@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import com.informatique.gov.judicialwarrant.rest.dto.CandidateDto;
-import com.informatique.gov.judicialwarrant.rest.response.JwcdRequestResponse;
+import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class ERRequestRequest implements Serializable {
 	private static final long serialVersionUID = -5046915499323327588L;
 	private Long id;
 	private String serial;
-	private JwcdRequestResponse jwcdRequestDto;
+	private CapacityDelegationDto jwcdRequestDto;
 	private Set<CandidateDto> candidates;
 	
 	

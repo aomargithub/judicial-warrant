@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
@@ -111,14 +112,47 @@ public class CandidateAttachmentHandlerImple implements CandidateAttachmentHandl
 			throw new JudicialWarrantInternalException(e);
 		}return response;
 	}
+	
+	@Override
+	public ResponseEntity<CandidateAttachmentDto> uploadFile(MultipartFile file, Long id,
+			Short etag) throws JudicialWarrantException {
+		ResponseEntity<CandidateAttachmentDto> response = null;
+		try {
+			notNull(file, "file must be set");
+			notNull(id, "id must be set");
+			
+			if(etag == null) {
+				throw new PreConditionRequiredException(id);
+			}
+			
+			Short version = candidateAttachmentService.getVersionById(id);
+			
+			if(version == null) {
+				throw new ResourceNotFoundException(id);
+			}
+			
+			if(!version.equals(etag)) {
+				throw new ResourceModifiedException(id, etag, version);
+			}
+						
+			CandidateAttachmentDto savedDto = candidateAttachmentService.uploadFile(file, id);
+			
+			response = ResponseEntity.ok().body(savedDto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;
+	}
 
 	@Override
-	public ResponseEntity<CandidateAttachmentDto> save(CandidateAttachmentDto candidateAttachmentDto)
+	public ResponseEntity<CandidateAttachmentDto> save(MultipartFile file, CandidateAttachmentDto candidateAttachmentDto)
 			throws JudicialWarrantException {
 		ResponseEntity<CandidateAttachmentDto> response = null;
 		try {
 			
-			CandidateAttachmentDto savedDto = candidateAttachmentService.save(candidateAttachmentDto);
+			CandidateAttachmentDto savedDto = candidateAttachmentService.save(file, candidateAttachmentDto);
 			
 			response = ResponseEntity.ok(savedDto);
 			
