@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		Role role = null;
 		if (dto.getRole().getLdapSecurityGroup() != null) {
 			role = roleRepository.findByLdapSecurityGroup(dto.getRole().getLdapSecurityGroup());
-			ldapService.addMemberToGroup(role.getLdapSecurityGroup(), dto);
+			ldapService.addMemberToGroup(role.getLdapSecurityGroup(), dto.getLoginName());
 		} else {
 			role = roleRepository.findByCode(dto.getRole().getCode());
 
