@@ -20,4 +20,5 @@ public class RoleDto implements UserModel<Byte> {
 	private String arabicName;
 	private Boolean isActive;
 	private Byte listOrder;
+	private String ldapSecurityGroup;
 }

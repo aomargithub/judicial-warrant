@@ -61,7 +61,7 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		JudicialWarrantUserDetails userDetails = new JudicialWarrantUserDetails();
 
 		userDetails.setArabicName(user.getArabicName());
-		userDetails.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole().getCode())));
+		userDetails.setAuthorities(Arrays.asList(new JudicialWarrantGrantedAuthority(user.getRole().getCode(),user.getRole().getLdapSecurityGroup())));
 		userDetails.setCivilId(user.getCivilId());
 		userDetails.setEmailAddress(user.getEmailAddress());
 		userDetails.setEnabled(user.getIsActive());

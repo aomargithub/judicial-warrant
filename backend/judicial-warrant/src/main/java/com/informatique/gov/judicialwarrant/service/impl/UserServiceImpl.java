@@ -5,7 +5,6 @@ import static org.springframework.util.Assert.notNull;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
 import com.informatique.gov.judicialwarrant.service.UserService;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
+import com.informatique.gov.judicialwarrant.support.ldap.LdapService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.UserMapper;
 import com.informatique.gov.judicialwarrant.support.utils.RandomPasswordUtil;
 
@@ -48,19 +48,20 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	private OrganizationUnitRepository organizationUnitRepository;
 	private PasswordEncoder passwordEncoder;
 	private Environment environment;
-	
+	private LdapService ldapService;
+
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public User getByLoginName(String loginName) throws JudicialWarrantException {
 		User user = null;
 		try {
-			
+
 			user = userRepository.findByLoginNameIgnoreCase(loginName);
-			
-		}catch(Exception e){
-            throw new JudicialWarrantInternalException(e);
-        }
-		return user;		
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return user;
 	}
 
 	@Override
@@ -76,8 +77,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 		return dtos;
 	}
-	
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto createUserExternal(UserDto dto) throws JudicialWarrantException {
@@ -85,16 +85,16 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 		try {
 			notNull(dto, "dto must be set");
-			String password = RandomPasswordUtil.generate(new Integer(environment.getRequiredProperty("app.defaultpasswordlength")));
+			String password = RandomPasswordUtil
+					.generate(new Integer(environment.getRequiredProperty("app.defaultpasswordlength")));
 			// String passwordHashing = HashingPasswordUtil.hash(password);
 
 			String hashedPassword = passwordEncoder.encode(password);
 			// String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
 			// String subject = "User Password";
-			
 
 			User user = prepareUser(dto);
-			UserType userType=userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
+			UserType userType = userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
 			user.setUserType(userType);
 
 			user = userRepository.save(user);
@@ -123,12 +123,17 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		User user = userMapper.toNewEntity(dto);
 		Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 				.findById(dto.getOrganizationUnit().getId());
-		
+
 		user.setOrganizationUnit(organizationUnit.get());
-		
-		Role role=roleRepository.findByCode(dto.getRole().getCode());
+		Role role = null;
+		if (dto.getRole().getLdapSecurityGroup() != null) {
+			role = roleRepository.findByLdapSecurityGroup(dto.getRole().getLdapSecurityGroup());
+			ldapService.addMemberToGroup(role.getLdapSecurityGroup(), dto.getLoginName());
+		} else {
+			role = roleRepository.findByCode(dto.getRole().getCode());
+
+		}
 		user.setRole(role);
-		
 		return user;
 	}
 
@@ -141,7 +146,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			notNull(dto, "dto must be set");
 
 			User user = prepareUser(dto);
-			UserType userType=userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
+			UserType userType = userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
 			user.setUserType(userType);
 
 			user = userRepository.save(user);
@@ -154,8 +159,6 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 		return savedUserDto;
 	}
-	
-	
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -186,13 +189,12 @@ public class UserServiceImpl implements UserService, InternalUserService {
 					.findById(dto.getOrganizationUnit().getId());
 			user.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
 			user.setOrganizationUnit(organizationUnit.get());
-			Optional<Role> role=roleRepository.findById(dto.getRole().getId());
+			Optional<Role> role = roleRepository.findById(dto.getRole().getId());
 			user.setRole(role.get());
-			Optional<UserType> userType=userTypeRepository.findById(new Integer(2));
+			Optional<UserType> userType = userTypeRepository.findById(new Integer(2));
 			user.setUserType(userType.get());
-			
+
 			user = userRepository.save(user);
-			
 
 			savedUserDto = userMapper.toDto(user);
 

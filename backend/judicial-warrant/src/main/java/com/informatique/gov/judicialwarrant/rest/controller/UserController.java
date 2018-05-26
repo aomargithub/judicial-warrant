@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.UserHandler;
-import com.informatique.gov.judicialwarrant.support.validations.UserDtoValidator;
+import com.informatique.gov.judicialwarrant.support.validations.UserValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -35,7 +35,7 @@ public class UserController implements Serializable{
 	private static final long serialVersionUID = -7427269755961905168L;
 	
     private UserHandler userHandler;
-    private UserDtoValidator userValidator;
+    private UserValidator userValidator;
 
     @InitBinder("userDto")
 	private void roleInitBinder(WebDataBinder binder) {

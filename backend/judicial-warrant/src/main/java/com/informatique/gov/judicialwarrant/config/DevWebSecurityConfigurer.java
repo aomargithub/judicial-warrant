@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.core.support.BaseLdapPathBeanPostProcessor;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -132,7 +133,7 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	    		environment.getRequiredProperty("app.security.activedirectory.username"));
 	    contextSource.setPassword(
 	    		environment.getRequiredProperty("app.security.activedirectory.password"));
-	     
+	    
 	    return contextSource;
 	}
 	
@@ -142,7 +143,10 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	private static String formatDomain(String domain) {
+	
+	
+	
+	private  String formatDomain(String domain) {
 		String domainStr=domain.substring(domain.indexOf("dc="), domain.length());
 		String ds[]=domainStr.split(",");
 		List<String> d=new ArrayList<>();
