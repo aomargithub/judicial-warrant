@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.support.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
 import org.springframework.stereotype.Component;
+
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
+
 import lombok.AllArgsConstructor;
 
 @Component

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
-import com.informatique.gov.judicialwarrant.support.validations.RoleDtoValidator;
+import com.informatique.gov.judicialwarrant.support.validations.RoleValidator;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class RoleController implements Serializable{
 
 	private RoleHandler roleHandler;
 	
-	private RoleDtoValidator roleDtoValidator;
+	private RoleValidator roleDtoValidator;
 	
 	private static final long serialVersionUID = 1L;
 	

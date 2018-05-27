@@ -16,8 +16,8 @@ app:
     activedirectory:
       domain: ou=jw,dc=oman,dc=local
       url: ldap://192.168.0.41:389/
-      username: cn=jwadmin,ou=JW,dc=oman,dc=local
-      password: P@ssw0rd@@
+      username: cn=administrator,cn=users,dc=oman,dc=local
+      password: P@ssw0rd@
     basicauthentication:
       realm-name: Oman MOJ Judicial Warrant
     max-inactive-interval: 12000    

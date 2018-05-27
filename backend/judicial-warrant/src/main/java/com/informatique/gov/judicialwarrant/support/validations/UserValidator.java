@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class UserDtoValidator implements Validator, Serializable {
+public class UserValidator implements Validator, Serializable {
 
 	/**
 	 * 
