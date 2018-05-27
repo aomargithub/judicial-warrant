@@ -216,39 +216,70 @@ public class UcmContentManagerImpl implements ContentManager {
 	}
 
 	@Override
-	public Map<String, String> getAttachmentProperties(String attachmentType, String requestSerial) throws Exception {
+	public Map<String, String> getAttachmentProperties(String folder, String attachmentType, String requestSerial) throws Exception {
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("xmodule_code", "");
 		properties.put("xservice_code", "");
 		properties.put("xdoc_upload_source", "");
 		properties.put("xattachment_type", attachmentType);
 		properties.put("xrequest_serial", requestSerial);
-		properties.put("xCollectionID", getFolderIdFromPath(username, "/newFolder1/"));
+		properties.put("xCollectionID", getFolderIdFromPath(username, "/" + folder + "/"));
 		return properties;
 	}
 
-	//Returns Folder ID
-    public String getFolderIdFromPath(String username, String path) throws Exception {
-        String folderId=null;
-        
-        try {
-            IdcClient<?, ?, ?> client = getIdcClient(ip, port);
-            DataBinder dataBinder = client.createBinder();
-            dataBinder.putLocal("IdcService", "COLLECTION_INFO");
-            dataBinder.putLocal("hasCollectionPath", "true");
-            dataBinder.putLocal("dCollectionPath", path);
+	// Returns Folder ID
+	public String getFolderIdFromPath(String username, String path) throws Exception {
+		String folderId = null;
 
-            ServiceResponse response = client.sendRequest(new IdcContext(username), dataBinder);
-            DataBinder serverBinder = response.getResponseAsBinder();
-            DataResultSet resultSet = serverBinder.getResultSet("PATH");
-            DataObject dataObject = resultSet.getRows().get(resultSet.getRows().size() - 1);
-            folderId = dataObject.get("dCollectionID");   
-                                
-        } catch(Exception ex) {
-        	throw ex;
-        } 
-        
-        return folderId;
-    }
-	
+		try {
+			IdcClient<?, ?, ?> client = getIdcClient(ip, port);
+			DataBinder dataBinder = client.createBinder();
+			dataBinder.putLocal("IdcService", "COLLECTION_INFO");
+			dataBinder.putLocal("hasCollectionPath", "true");
+			dataBinder.putLocal("dCollectionPath", path);
+
+			ServiceResponse response = client.sendRequest(new IdcContext(username), dataBinder);
+			DataBinder serverBinder = response.getResponseAsBinder();
+			DataResultSet resultSet = serverBinder.getResultSet("PATH");
+			DataObject dataObject = resultSet.getRows().get(resultSet.getRows().size() - 1);
+			folderId = dataObject.get("dCollectionID");
+
+		} catch (Exception ex) {
+			throw ex;
+		}
+
+		return folderId;
+	}
+
+	public String createFolder(String folderName, Boolean Has_Parent, String ParentCollectionID) throws Exception {
+		ServiceResponse severiceResponse = null;
+		String folderId = null;
+		try {
+			System.out.println("Creating Folder: " + folderName);
+
+			IdcClient<?, ?, ?> client = getIdcClient(ip, port);
+			DataBinder dataBinderReq = client.createBinder();
+			dataBinderReq.putLocal("IdcService", "COLLECTION_ADD");
+			dataBinderReq.putLocal("dCollectionName", folderName);
+			dataBinderReq.putLocal("hasParentCollectionID", Has_Parent.toString());
+			dataBinderReq.putLocal("dParentCollectionID", ParentCollectionID);
+			dataBinderReq.putLocal("dCollectionOwner", username);
+			dataBinderReq.putLocal("dSecurityGroup", SECURITY_GROUP);
+
+			severiceResponse = client.sendRequest(new IdcContext(username), dataBinderReq);
+			DataBinder dataBinderResp = severiceResponse.getResponseAsBinder();
+			DataResultSet resultSet = dataBinderResp.getResultSet("PATH");
+			DataObject dataObject = resultSet.getRows().get(resultSet.getRows().size() - 1);
+			folderId = dataObject.get("dCollectionID");
+
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if (severiceResponse != null) {
+				severiceResponse.close();
+			}
+		}
+		return folderId;
+	}
+
 }

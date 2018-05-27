@@ -57,7 +57,7 @@ public class CandidateAttachmentServiceImpl implements CandidateAttachmentServic
 
 			entiry = candidateAttachmentRepository.save(entiry);
 
-			Map<String, String> properties = contentManager.getAttachmentProperties(
+			Map<String, String> properties = contentManager.getAttachmentProperties(entiry.getCandidate().getRequest().getSerial(),
 					entiry.getAttachmentType().getEnglishName(), entiry.getCandidate().getRequest().getSerial());
 			String ucmId = contentManager.checkin(properties, file);
 
@@ -120,7 +120,7 @@ public class CandidateAttachmentServiceImpl implements CandidateAttachmentServic
 			notNull(file, "file must be set");
 
 			CandidateAttachment entiry = candidateAttachmentRepository.getOne(id);
-			Map<String, String> properties = contentManager.getAttachmentProperties(
+			Map<String, String> properties = contentManager.getAttachmentProperties(entiry.getCandidate().getRequest().getSerial(), 
 					entiry.getAttachmentType().getEnglishName(), entiry.getCandidate().getRequest().getSerial());
 			String ucmId = contentManager.checkin(properties, file);
 

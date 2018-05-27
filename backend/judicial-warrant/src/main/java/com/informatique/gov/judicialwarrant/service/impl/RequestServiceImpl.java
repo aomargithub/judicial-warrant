@@ -22,6 +22,7 @@ import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
+import com.informatique.gov.judicialwarrant.support.integration.contentmanger.ContentManager;
 
 import lombok.AllArgsConstructor;
 
@@ -37,6 +38,7 @@ public class RequestServiceImpl implements InternalRequestService {
 	private OrganizationUnitRepository organizationUnitRepository;
 	private InternalRequestHistoryLogService requestHistoryLogService;
 	private SecurityService securityService;
+	private ContentManager contentManager;
 
 	/**
 	 * 
@@ -60,6 +62,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			String serial = requestSerialService.getRequestSerial(requestType);
 			request.setSerial(serial);
 			request = requestRepository.save(request);
+			contentManager.createFolder(request.getSerial(), false, null);
 			requestHistoryLogService.create(request);
 		} catch (JudicialWarrantException e) {
 			throw e;
