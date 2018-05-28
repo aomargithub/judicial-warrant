@@ -24,13 +24,17 @@
             </div>
 
             <div class="form-check">
-              <div class="form-check form-check-inline" >
+                <div class="form-check form-check-inline" >
                     <label for="isActive" class="form-check-label">{{messages.label.isActive}}</label>
                     <input type="checkbox" class="form-check-input" id="isActive" ng-model="attachmentTypeDrtvCtrl.attachmentType.isActive" />
                 </div>
-                    <div class="form-check form-check-inline" >
-                    <label for="isCandidateAttachment" class="form-check-label" >{{messages.label.isCandidateAttachment}}</label>
-                    <input type="checkbox" class="form-check-input" id="isCandidateAttachment" ng-model="attachmentTypeDrtvCtrl.attachmentType.isCandidateAttachment" />
+                <div class="form-check form-check-inline" >
+                    <label for="isMandatory" class="form-check-label">{{messages.label.isMandatory}}</label>
+                    <input type="checkbox" class="form-check-input" id="isMandatory" ng-model="attachmentTypeDrtvCtrl.attachmentType.isMandatory" />
+                </div>
+                <div class="form-check form-check-inline" >
+                    <label for="isEntitledAttachment" class="form-check-label" >{{messages.label.isEntitledAttachment}}</label>
+                    <input type="checkbox" class="form-check-input" id="isEntitledAttachment" ng-model="attachmentTypeDrtvCtrl.attachmentType.isEntitledAttachment" />
                 </div>
                 </div>
 
@@ -72,14 +76,16 @@
                         {{messages.label.isActive}}
                     </th>
                     <th>
-                            {{messages.label.isCandidateAttachment}}
-                        
+                        {{messages.label.isMandatory}}
                     </th>
                     <th>
-                            {{messages.label.edit}}
+                        {{messages.label.isEntitledAttachment}}
                     </th>
                     <th>
-                            {{messages.label.delete}}
+                        {{messages.label.edit}}
+                    </th>
+                    <th>
+                        {{messages.label.delete}}
                     </th>
                 </tr>
             </thead>
@@ -95,7 +101,10 @@
                         {{at.isActive}}
                     </td>
                     <td>
-                        {{at.isCandidateAttachment}}
+                        {{at.isMandatory}}
+                    </td>
+                    <td>
+                        {{at.isEntitledAttachment}}
                     </td>
                     <td>
                         <div>
@@ -111,7 +120,7 @@
                 
             </tbody> 
         </table>
-        <td colspan="6">
+        <td colspan="7">
                 <pagination items-size="attachmentTypeDrtvCtrl.attachmentTypes.length" page="attachmentTypeDrtvCtrl.page">
                 </pagination></td>
     </div>

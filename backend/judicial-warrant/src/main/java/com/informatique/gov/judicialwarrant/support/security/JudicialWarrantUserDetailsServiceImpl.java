@@ -71,12 +71,6 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
 		userDetails.setUserType(user.getUserType());
-//		if (user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
-//			userDetails.setPassword(user.getUserCredentials().getPassword());
-//		}
-		userDetails.setUserType(user.getUserType());
-		// token to be set later in more convenient place where we can get the session
-		// id easily.
 		return userDetails;
 	}
 }

@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, messageBarModeSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;
@@ -20,10 +20,15 @@ module.exports = function(app){
         }
 
         vm.add = function(){
-            attachmentTypeSrvc.save(vm.attachmentType).then(function(response){
+            attachmentTypeSrvc.save(vm.attachmentType).then(function success(response){
                 vm.attachmentTypes.push(response.data);
                 vm.attachmentType = new AttachmentType();
                 resetEntryForm();
+            }, function error(response){
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.badRequest.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
             });
         };
 

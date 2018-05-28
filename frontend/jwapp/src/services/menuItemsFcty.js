@@ -61,9 +61,7 @@ module.exports = function(app){
         usersItem.codeValue('USERS').routeValue('').classesValue(["glyphicon", "glyphicon-cog"]);
 
         var organizationUnitsSubItem = new SubItem(), 
-        attachmentTypesSubItem = new SubItem(), 
-        candidateAttachmentTypesSubItem = new SubItem(),
-        requestAttachmentTypesSubItem = new SubItem();
+        attachmentTypesSubItem = new SubItem();
 
         organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
         .routeValue('.organizationUnits')
@@ -75,18 +73,10 @@ module.exports = function(app){
         .routeValue('.attachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
         
-        candidateAttachmentTypesSubItem.codeValue('CANDIDATE_ATTACHMENT_TYPES')
-        .routeValue('')
-        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
-
-        requestAttachmentTypesSubItem.codeValue('REQUEST_ATTACHMENT_TYPES')
-        .routeValue('')
-        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
+        
 
         lookupsItem.addSubItem(organizationUnitsSubItem)
                    .addSubItem(attachmentTypesSubItem);
-       // .addSubItem(candidateAttachmentTypesSubItem)
-       // .addSubItem(requestAttachmentTypesSubItem);
 
         var menu = [lookupsItem, usersItem];
 

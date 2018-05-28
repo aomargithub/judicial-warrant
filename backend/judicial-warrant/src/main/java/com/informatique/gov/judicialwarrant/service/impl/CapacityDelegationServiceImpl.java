@@ -11,22 +11,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
+import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.persistence.repository.CapacityDelegationRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
-import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.CapacityDelegationService;
+import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
-import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
-import com.informatique.gov.judicialwarrant.support.validator.CapacityDelegationValidator;
+import com.informatique.gov.judicialwarrant.support.validator.CapacityDelegationWorkflowValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -39,14 +40,12 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 	 */
 	private static final long serialVersionUID = 1L;
 	private InternalRequestService requestService;
+	private InternalOrganizationUnitService organizationunitService;
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationMapper;
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationForInternalMapper;
 	private CapacityDelegationRepository capacityDelegationRepository;
-	private SecurityService securityService;
 	
-	List<JudicialWarrantGrantedAuthority> authorities = Collections.unmodifiableList(Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.ADMIN), 
-																						           new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER), 
-																						           new JudicialWarrantGrantedAuthority(UserRoleEnum.MINISTER)));
+	List<JudicialWarrantGrantedAuthority> authorities;
 
 
 	@Override
@@ -60,8 +59,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 				entities = capacityDelegationRepository.findAll();
 				dtos = capacityDelegationForInternalMapper.toDto(entities);
 			}else {
-				OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
-				entities = capacityDelegationRepository.findByRequestOrganizationUnitId(organizationUnitDto.getId());
+				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
+				entities = capacityDelegationRepository.findByRequestOrganizationUnitId(organizationUnit.getId());
 				dtos = capacityDelegationMapper.toDto(entities);
 			}
 		} catch (Exception e) {
@@ -76,7 +75,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 		Short version = null;
 		try {
 			notNull(serial, "serial must be set");
-			version = capacityDelegationRepository.findVersionBySerial(serial);
+			version = capacityDelegationRepository.findVersionByRequestSerial(serial);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -95,8 +94,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 				entity = capacityDelegationRepository.findByRequestSerial(serial);
 				dto = capacityDelegationForInternalMapper.toDto(entity);
 			}else {
-				OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session()).getOrganizationUnit();
-				entity = capacityDelegationRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitDto.getId());
+				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
+				entity = capacityDelegationRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnit.getId());
 				dto = capacityDelegationMapper.toDto(entity);
 			}
 		} catch (Exception e) {
@@ -134,8 +133,12 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validateForUpdate(capacityDelegation);
+			
+			notNull(capacityDelegationDto, "capacityDelegationDto must be set");
+			
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			
+			CapacityDelegationWorkflowValidator.validateForUpdate(capacityDelegation);
 			capacityDelegation.setJobTitle(capacityDelegationDto.getJobTitle());
 			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);
 			savedCapacityDelegationDto = capacityDelegationMapper.toDto(savedCapacityDelegation);
@@ -146,6 +149,19 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 		}
 		return savedCapacityDelegationDto;
 	}
+	
+	private CapacityDelegation getIfValid(String serial) throws JudicialWarrantException {
+		
+		OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
+		Short organizationUnitId = organizationUnit.getId();
+		CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitId);
+		
+		if(capacityDelegation == null) {
+			throw new ResourceNotFoundException(serial);
+		}
+		
+		return capacityDelegation;
+	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -153,9 +169,10 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
 			
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.RECIEVED);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.RECIEVED);
 			
 			capacityDelegation.setJobTitle(capacityDelegationChangeStatusRequest.getCapacityDelegation().getJobTitle());
 			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);
@@ -182,8 +199,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 		
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.INCOMPLETE);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.INCOMPLETE);
 			
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
 					RequestInternalStatusEnum.INCOMPLETE, capacityDelegationChangeStatusRequest.getNote());
@@ -204,8 +221,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.REJECTED);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.REJECTED);
 			
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(), RequestInternalStatusEnum.REJECTED,
 					capacityDelegationChangeStatusRequest.getNote());
@@ -226,8 +243,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.INPROGRESS);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.INPROGRESS);
 			
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
 					RequestInternalStatusEnum.INPROGRESS, capacityDelegationChangeStatusRequest.getNote());
@@ -248,8 +265,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW);
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
 					RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REVIEW, capacityDelegationChangeStatusRequest.getNote());
 			
@@ -269,8 +286,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_ACCEPTED);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_ACCEPTED);
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
 					RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_ACCEPTED, capacityDelegationChangeStatusRequest.getNote());
 			
@@ -290,8 +307,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REJECTED);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REJECTED);
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
 					RequestInternalStatusEnum.CAPACITY_DELEGATION_LAW_AFFAIRS_REJECTED, capacityDelegationChangeStatusRequest.getNote());
 			capacityDelegation.setRequest(request);
@@ -310,8 +327,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 			throws JudicialWarrantException {
 		CapacityDelegationDto savedCapacityDelegationDto = null;
 		try {
-			CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(serial);
-			CapacityDelegationValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED);
+			CapacityDelegation capacityDelegation = getIfValid(serial);
+			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED);
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(), RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED,
 					capacityDelegationChangeStatusRequest.getNote());
 			capacityDelegation.setRequest(request);

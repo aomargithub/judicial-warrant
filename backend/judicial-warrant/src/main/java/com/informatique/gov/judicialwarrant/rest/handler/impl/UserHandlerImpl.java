@@ -48,7 +48,7 @@ public class UserHandlerImpl implements UserHandler {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.createUserInternal(dto);
+			UserDto savedDto = userService.createInternal(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			
@@ -64,7 +64,7 @@ public class UserHandlerImpl implements UserHandler {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.createUserExternal(dto);
+			UserDto savedDto = userService.createExternal(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			

@@ -3,8 +3,8 @@ package com.informatique.gov.judicialwarrant.support.dataenum;
 import lombok.Getter;
 
 public enum UserTypeEnum {
-EXTERNAL("external"),
-INTERNAL("internal");
+EXTERNAL("EXTERNAL"),
+INTERNAL("INTERNAL");
 	
 	@Getter
     private String code;

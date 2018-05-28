@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.handler.CandidateStatusHandler;
+import com.informatique.gov.judicialwarrant.rest.handler.EntitledStatusHandler;
 
 import lombok.AllArgsConstructor;
 
@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 public class CandidateStatusController implements Serializable {
 
 	
-	private CandidateStatusHandler candidateStatusHandler ;
+	private EntitledStatusHandler candidateStatusHandler ;
 	/**
 	* 
 	*/

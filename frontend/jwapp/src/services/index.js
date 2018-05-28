@@ -14,4 +14,5 @@ module.exports = function(app){
     require('./breadcrumbsFcty')(app);
     require('./breadcrumbsPrvd')(app);
     require('./requestTypeSrvc')(app);
+    require('./messageBarModeSrvc')(app);
 };

@@ -50,7 +50,7 @@ public class RequestServiceImpl implements InternalRequestService {
 		Request request = null;
 		try {
 			request = new Request();
-			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails(securityService.session())
+			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails()
 					.getOrganizationUnit();
 			request.setOrganizationUnit(organizationUnitRepository.findById(organizationUnitDto.getId()).get());
 			request.setCurrentStatus(requestStatusRepository.findByCode(RequestStatusEnum.DRAFT.getCode()));

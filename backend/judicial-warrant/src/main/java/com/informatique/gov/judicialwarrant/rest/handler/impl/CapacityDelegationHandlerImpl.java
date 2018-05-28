@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 @Component
 @AllArgsConstructor
 public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler {
+	
 	private CapacityDelegationService capacityDelegationService;
 
 	@Override

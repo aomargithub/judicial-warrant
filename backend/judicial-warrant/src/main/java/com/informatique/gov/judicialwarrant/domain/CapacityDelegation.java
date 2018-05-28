@@ -12,6 +12,7 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,12 +24,12 @@ import lombok.ToString;
 @ToString(of = {"id", "jobTitle"})
 @EqualsAndHashCode(of = {"request"}, callSuper = false)
 @NamedEntityGraphs({
-	@NamedEntityGraph(name = "CapacityDelegation.withRequest",
+	@NamedEntityGraph(name = "CapacityDelegation.fat",
 					  attributeNodes = {
-							  @NamedAttributeNode(value = "request", subgraph = "CapacityDelegation.request.fat")
+							  @NamedAttributeNode(value = "request", subgraph = "Request.fat")
 					  }, 
 					  subgraphs = {
-							  @NamedSubgraph(name = "CapacityDelegation.request.fat", 
+							  @NamedSubgraph(name = "Request.fat", 
 							  attributeNodes = {
 									  @NamedAttributeNode("type"),
 									  @NamedAttributeNode("currentInternalStatus"),
@@ -57,5 +58,9 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	
 	@Column(name="JOB_TITLE")
 	private String jobTitle;
+	
+	@Version
+	@Column(name="VERSION")
+	private Short version;
 
 }

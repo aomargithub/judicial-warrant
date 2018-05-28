@@ -22,8 +22,10 @@ import com.informatique.gov.judicialwarrant.persistence.repository.RoleRepositor
 import com.informatique.gov.judicialwarrant.persistence.repository.UserCredentialsRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserTypeRepository;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDetailsDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.service.UserService;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 import com.informatique.gov.judicialwarrant.support.ldap.LdapService;
@@ -40,6 +42,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	 * 
 	 */
 	private static final long serialVersionUID = 249744152632344882L;
+
+	private SecurityService securityService;
 	private UserRepository userRepository;
 	private UserCredentialsRepository userCredentialsRepository;
 	private UserTypeRepository userTypeRepository;
@@ -66,6 +70,21 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public User getByCurrentUser() throws JudicialWarrantException {
+		User user = null;
+		try {
+			UserDetailsDto userDetailsDto = securityService.getUserDetails();
+			user = getByLoginName(userDetailsDto.getUsername());
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return user;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public List<UserDto> getAll() throws JudicialWarrantException {
 		List<UserDto> dtos = null;
 		try {
@@ -80,7 +99,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto createUserExternal(UserDto dto) throws JudicialWarrantException {
+	public UserDto createExternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {
@@ -139,7 +158,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto createUserInternal(UserDto dto) throws JudicialWarrantException {
+	public UserDto createInternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {

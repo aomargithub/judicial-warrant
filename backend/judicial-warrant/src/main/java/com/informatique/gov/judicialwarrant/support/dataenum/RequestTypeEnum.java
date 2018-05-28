@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum RequestTypeEnum {
 	
 	CAPACITY_DELEGATION("JT", ""),
-	ER("ER", "");
+	Entitled_REGISTRATION("ER", "");
 	
 	@Getter
     private String code;

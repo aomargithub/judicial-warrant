@@ -10,7 +10,8 @@ module.exports = function(app){
                 message: '=',
                 closeCallback: '=',
                 refetchCallback : '=',
-                editId: '='
+                editId: '=',
+                mode: '='
             },
             template : require('./message-drtv.html'),
             replace: true
