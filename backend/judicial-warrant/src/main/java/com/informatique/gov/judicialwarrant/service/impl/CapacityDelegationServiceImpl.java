@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,9 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 	private static final long serialVersionUID = 1L;
 	private InternalRequestService requestService;
 	private InternalOrganizationUnitService organizationunitService;
+	@Qualifier("capacityDelegationMapper")
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationMapper;
+	@Qualifier("capacityDelegationForInternalMapper")
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationForInternalMapper;
 	private CapacityDelegationRepository capacityDelegationRepository;
 	

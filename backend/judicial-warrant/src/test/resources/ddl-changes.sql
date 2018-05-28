@@ -230,7 +230,6 @@ alter table CAPACITY_DELEGATION
  rename constraint JWCD_REQUEST_REQUEST_FK to CAPACITY_DELEGATION_REQUEST_FK;
  
  
- 
 DROP SEQUENCE candidate_attachment_seq;
 DROP SEQUENCE candidate_history_log_seq;
 DROP SEQUENCE candidate_seq;
@@ -293,4 +292,5 @@ alter table APP_USER modify type_id not null;
 
 
 alter table ATTACHMENT_TYPE rename column is_candidate_attachment to IS_ENTITLED_ATTACHMENT;
+
   

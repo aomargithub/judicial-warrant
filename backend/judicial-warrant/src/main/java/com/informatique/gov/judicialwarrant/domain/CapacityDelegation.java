@@ -51,6 +51,10 @@ public class CapacityDelegation extends DomainEntity<Long> {
     @Column(name = "ID")
     private Long id;
 	
+	@Version
+	@Column(name="VERSION")
+	private Short version;
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID")
 	@MapsId
@@ -58,9 +62,5 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	
 	@Column(name="JOB_TITLE")
 	private String jobTitle;
-	
-	@Version
-	@Column(name="VERSION")
-	private Short version;
 
 }
