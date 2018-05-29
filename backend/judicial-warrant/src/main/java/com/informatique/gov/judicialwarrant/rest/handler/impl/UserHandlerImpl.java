@@ -164,4 +164,21 @@ public class UserHandlerImpl implements UserHandler {
 		}return response;
 	}
 
+	@Override
+	public ResponseEntity<Void> changePassword(Integer id, String oldPass, String newPass)
+			throws JudicialWarrantException {
+		ResponseEntity<Void> response = null;
+		try {
+			
+			userService.changePassword(id, oldPass, newPass);
+			
+			response = ResponseEntity.ok().build();
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;
+	}
+
 }

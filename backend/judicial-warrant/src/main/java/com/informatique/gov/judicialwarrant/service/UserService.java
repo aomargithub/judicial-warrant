@@ -19,5 +19,7 @@ public interface UserService extends Serializable{
 	
 	public Short getVersionById(Integer id) throws JudicialWarrantException;
 
+	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException;
+	
 	void delete(Integer id) throws JudicialWarrantException;
 }

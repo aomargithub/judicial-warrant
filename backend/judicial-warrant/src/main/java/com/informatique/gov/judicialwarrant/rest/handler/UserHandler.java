@@ -19,4 +19,6 @@ public interface UserHandler extends Serializable{
 	ResponseEntity<UserDto> update(UserDto dto, Integer id, Short etag) throws JudicialWarrantException;
 
 	ResponseEntity<Void>  delete(Integer id) throws JudicialWarrantException;
+	
+	ResponseEntity<Void>  changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException;
 }
