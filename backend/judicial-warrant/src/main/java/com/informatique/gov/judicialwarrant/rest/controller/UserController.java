@@ -54,14 +54,9 @@ public class UserController implements Serializable{
 		return userHandler.getById(id,eTag);
 	}
 
-	@PostMapping("/internal")
-	public ResponseEntity<?> saveInternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
-		return userHandler.createUserInternal(dto);
-	}
-	
-	@PostMapping("/external")
-	public ResponseEntity<?> saveExternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
-		return userHandler.createUserExternal(dto);
+	@PostMapping
+	public ResponseEntity<?> save(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
+		return userHandler.createUser(dto);
 	}
 
 	@PutMapping("/{id}")

@@ -45,6 +45,9 @@ public class OrganizationUnit extends DomainEntity<Short> implements CreationAud
 	@Column(name = "is_active")
 	private Boolean isActive;
 	
+	@Column(name = "is_internal")
+	private Boolean isInternal;
+	
 	@Embedded
 	private CreateLog createLog;
 	

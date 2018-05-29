@@ -11,8 +11,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 public interface UserHandler extends Serializable{
 	ResponseEntity<List<UserDto>> getAll() throws JudicialWarrantException;
 
-	ResponseEntity<UserDto> createUserInternal(final UserDto dto) throws JudicialWarrantException;
-	ResponseEntity<UserDto> createUserExternal(final UserDto dto) throws JudicialWarrantException;
+	ResponseEntity<UserDto> createUser(final UserDto dto) throws JudicialWarrantException;
 
 	ResponseEntity<UserDto> getById(Integer id, Short etag) throws JudicialWarrantException;
 

@@ -25,7 +25,8 @@ create table ORGANIZATION_UNIT
   update_by    VARCHAR2(200),
   update_date  TIMESTAMP(6),
   is_active    NUMBER(1) not null,
-  list_order   NUMBER(4)
+  list_order   NUMBER(4),
+  IS_INTERNAL  NUMBER(1) not null
 );
 alter table ORGANIZATION_UNIT
   add constraint ORGANIZATION_UNIT_PK primary key (ID);

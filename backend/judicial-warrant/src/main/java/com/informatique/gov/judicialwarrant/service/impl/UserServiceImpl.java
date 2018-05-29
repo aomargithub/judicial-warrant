@@ -97,8 +97,17 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 		return dtos;
 	}
-
+	
 	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public UserDto create(UserDto dto) throws JudicialWarrantException {
+		if(dto.getOrganizationUnit().getIsInternal()) {
+			return createInternal(dto);
+		} else {
+			return createExternal(dto);
+		}
+	}
+
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto createExternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
@@ -157,7 +166,6 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		return user;
 	}
 
-	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto createInternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
