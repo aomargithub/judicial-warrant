@@ -263,9 +263,9 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException {
 		try {
 			UserCredentials userCredentials = userCredentialsRepository.getOne(id);
-			passwordEncoder.encode(oldPass);
 			if(passwordEncoder.matches(oldPass, userCredentials.getPassword().trim())) {
 				userCredentials.setPassword(passwordEncoder.encode(newPass));
+				userCredentialsRepository.save(userCredentials);
 			} else {
 				throw new JudicialWarrantException(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode(), "old password is wrong", "enter right password");
 			}
