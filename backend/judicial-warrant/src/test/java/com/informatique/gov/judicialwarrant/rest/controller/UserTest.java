@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.google.gson.reflect.TypeToken;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.UserService;
 
@@ -126,10 +125,9 @@ public class UserTest {
 		verify(userService).getAll();
 
 		// get the List<Employee> from the Json response
-		TypeToken<List<UserDto>> token = new TypeToken<List<UserDto>>() {
-		};
+		
 		@SuppressWarnings("unchecked")
-		List<UserDto> userListResult = TestUtils.jsonToList(result.getResponse().getContentAsString(), token);
+		List<UserDto> userListResult = TestUtils.jsonToList(result.getResponse().getContentAsString());
 
 		assertNotNull("Users not found", userListResult);
 		assertEquals("Incorrect User List", userList.size(), userListResult.size());

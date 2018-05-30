@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.core.support.BaseLdapPathBeanPostProcessor;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
