@@ -13,6 +13,8 @@ public interface UserService extends Serializable{
 	List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException;
 
 	UserDto create(final UserDto dto) throws JudicialWarrantException;
+	public UserDto createInternal(UserDto dto) throws JudicialWarrantException ;
+	public UserDto createExternal(UserDto dto) throws JudicialWarrantException;
 
 	UserDto getById(Integer id) throws JudicialWarrantException;
 

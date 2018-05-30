@@ -180,4 +180,36 @@ public class UserHandlerImpl implements UserHandler {
 		return response;	
 	}
 
+	@Override
+	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+           
+			UserDto savedDto = userService.createInternal(dto);
+							
+			response = ResponseEntity.ok(savedDto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;	
+	}
+
+	@Override
+	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+           
+			UserDto savedDto = userService.createExternal(dto);
+							
+			response = ResponseEntity.ok(savedDto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;	
+	}
+
 }
