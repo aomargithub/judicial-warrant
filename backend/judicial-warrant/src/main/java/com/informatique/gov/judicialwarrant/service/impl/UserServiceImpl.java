@@ -277,4 +277,17 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 	}
 
+	@Override
+	public List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findByUserTypeCode(userTypeCode);
+			dtos = userMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+
 }
