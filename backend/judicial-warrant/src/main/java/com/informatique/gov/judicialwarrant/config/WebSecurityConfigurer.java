@@ -1,5 +1,9 @@
 package com.informatique.gov.judicialwarrant.config;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +34,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.security.Constants;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantAuthenticationProvider;
+import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
 import com.informatique.gov.judicialwarrant.support.security.OnlyLoginBasicAuthenticationFilter;
 import com.informatique.gov.judicialwarrant.support.security.RestAuthenticationEntryPoint;
 
@@ -144,5 +150,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Bean
 	public LdapTemplate ldapTemplate() {
 	    return new LdapTemplate(contextSource());
+	}
+	
+	@Bean
+	public List<JudicialWarrantGrantedAuthority> authorities(){
+		return Collections.unmodifiableList(Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.ADMIN), 
+		           new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER), 
+		           new JudicialWarrantGrantedAuthority(UserRoleEnum.MINISTER)));
 	}
 }

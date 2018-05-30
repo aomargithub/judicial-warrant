@@ -9,4 +9,6 @@ public interface InternalUserService extends Serializable{
 
 	User getByLoginName(String loginName) throws JudicialWarrantException;
 
+	User getByCurrentUser() throws JudicialWarrantException;
+
 }

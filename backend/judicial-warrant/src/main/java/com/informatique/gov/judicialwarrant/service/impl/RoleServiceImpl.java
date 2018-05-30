@@ -58,9 +58,20 @@ public class RoleServiceImpl implements RoleService{
 		}
 		return dto;
 	}
-
 	
-
-	
-
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<RoleDto> getByIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		List<RoleDto> dtos = null;
+		try {
+			notNull(isInternal, "isInternal must be set");
+			
+			List<Role> entities = roleRepository.findByIsInternal(isInternal);
+			dtos = roleMapper.toDto(entities);
+			
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
 }

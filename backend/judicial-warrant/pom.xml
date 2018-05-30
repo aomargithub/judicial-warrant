@@ -104,14 +104,19 @@
 		<dependency>
 			<groupId>com.oracle.ucm</groupId>
 			<artifactId>ridc</artifactId>
-			<version>[11.1.1,12.0.0.0)</version>
+			<version>12.2.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
-		</dependency>
+		</dependency>	
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>	
 	</dependencies>
 	<build>
 		<resources>
@@ -124,6 +129,42 @@
 		</resources>
 	</build>
 	<profiles>
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<delete file="${project.build.outputDirectory}/application.yml" />
+										<copy file="src/main/resources/env/application.dev.yml"
+											  tofile="${project.build.outputDirectory}/application.yml" />
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>test</id>
 			<build>

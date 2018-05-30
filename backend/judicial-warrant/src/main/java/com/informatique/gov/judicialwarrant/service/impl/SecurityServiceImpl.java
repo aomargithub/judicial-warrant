@@ -54,6 +54,21 @@ public class SecurityServiceImpl implements SecurityService{
 	}
 	
 	@Override
+	public UserDetailsDto getUserDetails() throws JudicialWarrantException {
+		UserDetailsDto userDetailsDto = null;
+		try {
+			Principal principal = SecurityContextHolder.getContext().getAuthentication();
+			UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken)principal;
+			JudicialWarrantUserDetails userDetails = (JudicialWarrantUserDetails)authenticationToken.getDetails();
+			userDetailsDto = toUserDetailsDto(userDetails);
+		}catch(Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		
+		return userDetailsDto;
+	}
+	
+	@Override
 	public String getPrincipal() throws JudicialWarrantInternalException {
 		String username = null;
 		try {
@@ -65,12 +80,6 @@ public class SecurityServiceImpl implements SecurityService{
 		}
 		
 		return username;
-	}
-	
-	@Override
-	public  HttpSession session() throws JudicialWarrantInternalException {
-	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-	    return attr.getRequest().getSession(false);
 	}
 	
 	private UserDetailsDto toUserDetailsDto(JudicialWarrantUserDetails userDetails) {

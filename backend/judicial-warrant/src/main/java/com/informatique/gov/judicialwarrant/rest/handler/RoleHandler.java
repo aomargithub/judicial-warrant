@@ -13,5 +13,7 @@ public interface RoleHandler extends Serializable{
 
 	ResponseEntity<RoleDto> getById(Byte id) throws JudicialWarrantException;
 
+	ResponseEntity<List<RoleDto>> getByIsInternal(Boolean isInternal) throws JudicialWarrantException;
+
 	
 }

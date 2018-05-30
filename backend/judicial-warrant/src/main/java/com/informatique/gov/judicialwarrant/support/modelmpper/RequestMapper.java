@@ -4,12 +4,10 @@ import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Request;
-import com.informatique.gov.judicialwarrant.domain.RequestInternalStatus;
 import com.informatique.gov.judicialwarrant.domain.RequestStatus;
 import com.informatique.gov.judicialwarrant.domain.RequestType;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestInternalStatusDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 
@@ -25,7 +23,6 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 	 */
 	private static final long serialVersionUID = -6598101623050234667L;
 	private ModelMapper<RequestStatus, RequestStatusDto, Byte> requestStatusMapper;
-	private ModelMapper<RequestInternalStatus, RequestInternalStatusDto, Byte> requestInternalStatusMapper;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<RequestType, RequestTypeDto, Byte> requestTypeMapper;
 
@@ -38,7 +35,6 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 			dto.setId(entity.getId());
 			dto.setSerial(entity.getSerial());
 			dto.setCurrentStatus(requestStatusMapper.toDto(entity.getCurrentStatus()));
-			dto.setCurrentInternalStatus(requestInternalStatusMapper.toDto(entity.getCurrentInternalStatus()));
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setType(requestTypeMapper.toDto(entity.getType()));
 			dto.setVersion(entity.getVersion());

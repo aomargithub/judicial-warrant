@@ -18,7 +18,7 @@ public class DataSourceConfigurer {
 	
 	
 	/*
-	 * We added destroyMethod = "" intentionally as if destroyMethod is not specified it, spring will try to find it,
+	 * We added destroyMethod = "" intentionally as if destroyMethod is not specified, spring will try to find it,
 	 * and apparently when that happens, the datasource to be closed and the JNDI key to be removed from weblogic JNDI tree.
 	 * Changing it to "" forces it to not look for a destroyMethod.
 	 * 

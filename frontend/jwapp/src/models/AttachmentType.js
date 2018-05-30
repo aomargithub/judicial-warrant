@@ -8,7 +8,8 @@ module.exports = function(app){
             self.isActive = false;
             self.listOrder = null;
             self.version = null;
-            self.isCandidateAttachment = null;
+            self.isMandatory = false;
+            self.isEntitledAttachment = false;
         }
     });
 };

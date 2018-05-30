@@ -1,16 +1,19 @@
 package com.informatique.gov.judicialwarrant.rest.handler;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
+import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 
 public interface RequestTypeHandler extends Serializable{
 
-	RestResponse getByCode(String code) throws JudicialWarrantException;
+	ResponseEntity<RequestTypeDto> getByCode(String code) throws JudicialWarrantException;
 
-	RestResponse getAll() throws JudicialWarrantException;
+	ResponseEntity<List<RequestTypeDto>> getAll() throws JudicialWarrantException;
 
-	RestResponse getByIsActive(Boolean isActive) throws JudicialWarrantException;
+	ResponseEntity<List<RequestTypeDto>> getByIsActive(Boolean isActive) throws JudicialWarrantException;
 
 }

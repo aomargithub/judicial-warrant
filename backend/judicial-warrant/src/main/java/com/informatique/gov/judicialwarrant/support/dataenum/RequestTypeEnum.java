@@ -5,8 +5,8 @@ import lombok.Getter;
 
 public enum RequestTypeEnum {
 	
-	JWCD("JT", ""),
-	ER("ER", "");
+	CAPACITY_DELEGATION("JT", ""),
+	Entitled_REGISTRATION("ER", "");
 	
 	@Getter
     private String code;

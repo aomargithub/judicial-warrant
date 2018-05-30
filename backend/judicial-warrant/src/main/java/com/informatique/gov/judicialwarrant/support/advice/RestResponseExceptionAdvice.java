@@ -97,7 +97,7 @@ public class RestResponseExceptionAdvice implements Serializable {
             }
         }
        
-        return ResponseEntity.ok(exceptionErrors);
+        return ResponseEntity.badRequest().body(exceptionErrors);
     }
     
 
@@ -125,10 +125,19 @@ public class RestResponseExceptionAdvice implements Serializable {
     			ResourceModifiedException entityModifiedException = (ResourceModifiedException)judicialWarrantException;
         		bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).eTag(entityModifiedException.getRealVersion().toString());
     			break;
+    		case SingleResourceModifiedException:
+        		bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED);
+    			break;
     		case ResourceNotFoundException:
     			bodyBuilder = ResponseEntity.status(HttpStatus.NOT_FOUND);
     			break;
+    		case SingleResourceNotFoundException:
+    			bodyBuilder = ResponseEntity.status(HttpStatus.NOT_FOUND);
+    			break;
     		case PreConditionRequiredException:
+    			bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED);
+    			break;
+    		case SingleResourceVersionNotProvidedException:
     			bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED);
     			break;
     		default:

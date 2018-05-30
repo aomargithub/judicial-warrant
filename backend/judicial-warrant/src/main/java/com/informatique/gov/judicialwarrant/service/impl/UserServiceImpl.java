@@ -16,14 +16,17 @@ import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.domain.UserCredentials;
 import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RoleRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserCredentialsRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserTypeRepository;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDetailsDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.service.UserService;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 import com.informatique.gov.judicialwarrant.support.ldap.LdapService;
@@ -40,6 +43,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	 * 
 	 */
 	private static final long serialVersionUID = 249744152632344882L;
+
+	private SecurityService securityService;
 	private UserRepository userRepository;
 	private UserCredentialsRepository userCredentialsRepository;
 	private UserTypeRepository userTypeRepository;
@@ -66,6 +71,21 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public User getByCurrentUser() throws JudicialWarrantException {
+		User user = null;
+		try {
+			UserDetailsDto userDetailsDto = securityService.getUserDetails();
+			user = getByLoginName(userDetailsDto.getUsername());
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return user;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public List<UserDto> getAll() throws JudicialWarrantException {
 		List<UserDto> dtos = null;
 		try {
@@ -77,10 +97,19 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 		return dtos;
 	}
-
+	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto createUserExternal(UserDto dto) throws JudicialWarrantException {
+	public UserDto create(UserDto dto) throws JudicialWarrantException {
+		if(dto.getOrganizationUnit().getIsInternal()) {
+			return createInternal(dto);
+		} else {
+			return createExternal(dto);
+		}
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public UserDto createExternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {
@@ -137,9 +166,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		return user;
 	}
 
-	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto createUserInternal(UserDto dto) throws JudicialWarrantException {
+	public UserDto createInternal(UserDto dto) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {
@@ -228,6 +256,25 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return version;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException {
+		try {
+			UserCredentials userCredentials = userCredentialsRepository.getOne(id);
+			if(passwordEncoder.matches(oldPass, userCredentials.getPassword().trim())) {
+				userCredentials.setPassword(passwordEncoder.encode(newPass));
+				userCredentialsRepository.save(userCredentials);
+			} else {
+				throw new JudicialWarrantException(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode(), "old password is wrong", "enter right password");
+			}
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} 
+		catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
 	}
 
 }

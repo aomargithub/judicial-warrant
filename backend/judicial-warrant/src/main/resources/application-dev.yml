@@ -57,6 +57,12 @@ spring:
      required: true
     scheduler:
      priorityLevels: 10
+     
+ucm:
+  ip: 192.168.0.44
+  port: 4444
+  username: weblogic
+  password: welcome1     
 
    
 

@@ -24,7 +24,7 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
             dto.setId(entity.getId());
             dto.setArabicName(entity.getArabicName());
             dto.setEnglishName(entity.getEnglishName());
-            dto.setIsCandidateAttachment(entity.getIsCandidateAttachment());
+            dto.setIsEntitledAttachment(entity.getIsEntitledAttachment());
             dto.setListOrder(entity.getListOrder());
             dto.setIsActive(entity.getIsActive());
             dto.setVersion(entity.getVersion());
@@ -43,7 +43,7 @@ public class AttachmentTypeMapper extends AbstractModelMapper<AttachmentType, At
         	entity.setId(nullId? null : dto.getId());
         	entity.setArabicName(dto.getArabicName());
         	entity.setEnglishName(dto.getEnglishName());
-        	entity.setIsCandidateAttachment(dto.getIsCandidateAttachment());
+        	entity.setIsEntitledAttachment(dto.getIsEntitledAttachment());
         	entity.setListOrder(dto.getListOrder());
         	entity.setIsActive(dto.getIsActive());
         	entity.setVersion(dto.getVersion());

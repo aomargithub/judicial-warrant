@@ -218,4 +218,85 @@ ALTER TABLE APP_USER_Type
 rename USER_TYPE  to CODE ;
 
 
+ALTER TABLE JWCD_REQUEST
+  RENAME TO CAPACITY_DELEGATION;
   
+  -- Rename indexes 
+alter index JWCD_REQUEST_PK rename to CAPACITY_DELEGATION_PK;
+-- Rename primary, unique and foreign key constraints 
+alter table CAPACITY_DELEGATION
+ rename constraint JWCD_REQUEST_PK to CAPACITY_DELEGATION_PK;
+alter table CAPACITY_DELEGATION
+ rename constraint JWCD_REQUEST_REQUEST_FK to CAPACITY_DELEGATION_REQUEST_FK;
+ 
+ 
+DROP SEQUENCE candidate_attachment_seq;
+DROP SEQUENCE candidate_history_log_seq;
+DROP SEQUENCE candidate_seq;
+
+create sequence ENTITLED_HISTORY_LOG_SEQ;
+create sequence ENTITLED_ATTACHMENT_SEQ;
+create sequence ENTITLED_SEQ;
+
+alter table candidate rename to entitled;
+alter table CANDIDATE_ATTACHMENT rename to entitled_ATTACHMENT;
+alter table CANDIDATE_HISTORY_LOG rename to entitled_HISTORY_LOG;
+alter table CANDIDATE_STATUS rename to entitled_STATUS;
+alter table ER_REQUEST rename to entitled_registration;
+
+
+-- Add/modify columns 
+alter table ENTITLED_ATTACHMENT rename column candidate_id to ENTITLED_ID;
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ENTITLED_ATTACHMENT
+  drop constraint CAND_CANDIDATE_ATTACHMENT_FK;
+alter table ENTITLED_ATTACHMENT
+  add constraint ENT_ENT_ATTACh_FK foreign key (ENTITLED_ID)
+  references ENTITLED (ID);
+  
+-- Add/modify columns 
+alter table ENTITLED_HISTORY_LOG rename column candidate_id to ENTITLED_ID;
+alter table ENTITLED_HISTORY_LOG rename column candidate_status_id to ENTITLED_STATUS_ID;
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ENTITLED_HISTORY_LOG
+  drop constraint CAN_CANDIDATE_HISTORY_FK;
+alter table ENTITLED_HISTORY_LOG
+  add constraint ENT_ENT_HISTORY_FK foreign key (ENTITLED_ID)
+  references ENTITLED (ID);
+alter table ENTITLED_HISTORY_LOG
+  drop constraint CAN_STS_CANDIDATE_HISTORY_FK;
+alter table ENTITLED_HISTORY_LOG
+  add constraint ENT_STS_ENT_HISTORY_FK foreign key (ENTITLED_STATUS_ID)
+  references ENTITLED_STATUS (ID);
+
+  
+  -- Drop columns 
+alter table ENTITLED drop column request_id;
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ENTITLED
+  drop constraint RQST_CAN_FK;
+alter table ENTITLED
+  add constraint RQST_CAN_FK foreign key ()
+  references REQUEST (ID);
+
+  
+alter table ENTITLED add entitled_registration_id number not null;
+alter table ENTITLED
+  add constraint ENT_REG_ENT foreign key (ENTITLED_REGISTRATION_ID)
+  references entitled_registration (ID);
+
+alter table APP_USER rename column user_type_id to TYPE_ID;
+
+alter table CAPACITY_DELEGATION add version NUMBER(3) not null;
+alter table APP_USER modify type_id not null;
+
+
+alter table ATTACHMENT_TYPE rename column is_candidate_attachment to IS_ENTITLED_ATTACHMENT;
+
+
+
+ALTER TABLE ORGANIZATION_UNIT 
+ADD (IS_INTERNAL NUMBER(1, 0) NOT NULL);
+
+
+alter table APP_ROLE add is_internal number(1) not null;

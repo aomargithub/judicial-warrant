@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.UserHandler;
+import com.informatique.gov.judicialwarrant.rest.request.ChangePassword;
 import com.informatique.gov.judicialwarrant.support.validations.UserValidator;
 
 import lombok.AllArgsConstructor;
@@ -53,14 +54,9 @@ public class UserController implements Serializable{
 		return userHandler.getById(id,eTag);
 	}
 
-	@PostMapping("/internal")
-	public ResponseEntity<?> saveInternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
-		return userHandler.createUserInternal(dto);
-	}
-	
-	@PostMapping("/external")
-	public ResponseEntity<?> saveExternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
-		return userHandler.createUserExternal(dto);
+	@PostMapping
+	public ResponseEntity<?> save(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
+		return userHandler.createUser(dto);
 	}
 
 	@PutMapping("/{id}")
@@ -68,6 +64,12 @@ public class UserController implements Serializable{
 			@RequestHeader(name = "If-Match", required = false) Short eTag
 			) throws JudicialWarrantException {
 		return userHandler.update(dto,id,eTag);
+	}
+	
+	@PutMapping("/{id}/changingPassword")
+	public ResponseEntity<?> changingPassword(@RequestBody ChangePassword changePassword, @PathVariable Integer id
+			) throws JudicialWarrantException {
+		return userHandler.changePassword(id, changePassword.getOldPassword(), changePassword.getNewPassword());
 	}
 
 	@DeleteMapping("/{id}")

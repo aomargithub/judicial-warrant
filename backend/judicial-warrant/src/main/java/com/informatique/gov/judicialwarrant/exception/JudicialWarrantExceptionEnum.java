@@ -8,9 +8,12 @@ public enum JudicialWarrantExceptionEnum {
 
   INTERNAL_EXCEPTION("INTERNAL_EXCEPTION", "", ""),
   RESOURCE_NOT_MODIFIED_EXCEPTION("RESOURCE_NOT_MODIFIED_EXCEPTION", "", ""),
-  RESOURCE_MODIFIED_EXCEPTION("RESOURCE_MODIFIED_EXCEPTION", "", ""),
-  RESOURCE_NOT_FOUND_EXCEPTION("RESOURCE_NOT_FOUND_EXCEPTION", "", ""),
-  PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "", ""),
+  RESOURCE_MODIFIED_EXCEPTION("RESOURCE_MODIFIED_EXCEPTION", "The resource you are trying to update is already updated in another context", "refetch the data"),
+  SINGLE_RESOURCE_MODIFIED_EXCEPTION("SINGLE_RESOURCE_MODIFIED_EXCEPTION", "The resource you are trying to update: %s with id : %s is already updated in another context real version is %s but expected is %s", "refetch the data"),
+  RESOURCE_NOT_FOUND_EXCEPTION("RESOURCE_NOT_FOUND_EXCEPTION", "The resource you are trying to update is not found", "double check data provided"),
+  SINGLE_RESOURCE_NOT_FOUND_EXCEPTION("SINGLE_RESOURCE_NOT_FOUND_EXCEPTION", "The resource you are trying to update :%s with id %s is not found", "double check data provided"),
+  PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "The etag header must have a the value of version of the targeted resource", "double check data provided"),
+  SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION("SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION", "The version of %s with id %s must be provided", "double check data provided"),
   INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
   
   // Validation for custom Validation and validation annotation

@@ -10,18 +10,15 @@ module.exports = function(app){
                     var target = angular.element(e.target);
                  
                     if(!target.hasClass('menu-toggle')){
-                        return;
-                    }
-
-                   while(target[0].id != 'sidebar'){
-                        target = target.parent();
+                        return; 
                     }
 
                     if(menuDrtvCtrl.getMenuState()){
-                        target.addClass('active');
-                        
+                        $('#sidebar').addClass('active');
+                        $('.overlay').fadeOut();
                     }else{
-                        target.removeClass('active');
+                        $('#sidebar').removeClass('active');
+                        $('.overlay').fadeIn();
                     }
                 });
             },

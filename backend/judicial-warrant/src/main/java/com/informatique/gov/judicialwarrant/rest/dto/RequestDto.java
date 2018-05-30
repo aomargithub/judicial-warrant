@@ -23,7 +23,6 @@ public class RequestDto implements UserModel<Long> {
 	private Short version;
 	private RequestTypeDto type;
 	private RequestStatusDto currentStatus;
-	private RequestInternalStatusDto currentInternalStatus;
 	private OrganizationUnitDto organizationUnit;
 	private List<RequestHistoryLogDto> histortyLogs;
 	

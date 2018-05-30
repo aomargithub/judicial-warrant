@@ -33,7 +33,8 @@ import lombok.ToString;
 	@NamedEntityGraph(name = "User.fat",
 					  attributeNodes = {
 							  @NamedAttributeNode(value = "organizationUnit"),
-							  @NamedAttributeNode(value = "role")
+							  @NamedAttributeNode(value = "role"),
+							  @NamedAttributeNode(value = "userType")
 					  })
 })
 public class User extends DomainEntity<Integer> implements CreationAuditable{
@@ -78,6 +79,17 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@Column(name="EMAIL_ADDRESS")
 	private String emailAddress;
 	
+	@Column(name = "CIVIL_ID")
+	private Long civilId;
+	
+	@NaturalId
+	@Column(name = "LOGIN_NAME")
+	private String loginName;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="TYPE_ID")
+	private UserType userType;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "ORGANIZATION_UNIT_ID")
 	private OrganizationUnit organizationUnit;
@@ -85,21 +97,4 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "ROLE_ID")
 	private Role role;
-	
-	@Column(name = "CIVIL_ID")
-	private Long civilId;
-	
-	@NaturalId
-	@Column(name = "LOGIN_NAME")
-	private String loginName;
-//	@OneToOne
-//	@JoinColumn(name="ID")
-//	@PrimaryKeyJoinColumn
-//	private UserCredentials userCredentials;
-	@OneToOne
-	@JoinColumn(name="USER_TYPE_ID")
-	private UserType userType;
-	
-	
-
 }

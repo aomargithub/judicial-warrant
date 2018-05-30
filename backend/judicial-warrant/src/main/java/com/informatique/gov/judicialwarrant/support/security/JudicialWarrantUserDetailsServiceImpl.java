@@ -5,15 +5,14 @@ import static org.springframework.util.Assert.notNull;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.User;
-import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.persistence.repository.UserCredentialsRepository;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 
@@ -28,6 +27,7 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 	 */
 	private static final long serialVersionUID = -2167322879669809169L;
 	private InternalUserService userService;
+	private UserCredentialsRepository userCredentialsRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -71,12 +71,10 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
 		userDetails.setUserType(user.getUserType());
-//		if (user.getUserType().getCode().equals(UserTypeEnum.EXTERNAL.getCode())) {
-//			userDetails.setPassword(user.getUserCredentials().getPassword());
-//		}
-		userDetails.setUserType(user.getUserType());
-		// token to be set later in more convenient place where we can get the session
-		// id easily.
+		if(user.getUserType().getCode().equalsIgnoreCase(UserTypeEnum.EXTERNAL.getCode())) {
+			String password = userCredentialsRepository.findById(user.getId()).get().getPassword();
+			userDetails.setPassword(password);
+		}
 		return userDetails;
 	}
 }

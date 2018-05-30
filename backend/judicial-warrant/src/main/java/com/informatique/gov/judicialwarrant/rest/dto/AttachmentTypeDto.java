@@ -29,7 +29,7 @@ public class AttachmentTypeDto implements UserModel<Long> {
 	@NotNull
 	private Boolean isActive;
 	@NotNull
-	private Boolean isCandidateAttachment;
+	private Boolean isEntitledAttachment;
 	@NotNull
 	private Boolean isMandatory;
 	

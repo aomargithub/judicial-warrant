@@ -11,4 +11,10 @@ module.exports = function(app){
     require('./organizationUnitSrvc')(app);
     require('./attachmentTypeSrvc')(app);
     require('./stringUtilSrvc')(app);
+    require('./breadcrumbsFcty')(app);
+    require('./breadcrumbsPrvd')(app);
+    require('./requestTypeSrvc')(app);
+    require('./messageBarModeSrvc')(app);
+    require('./internalUserSrvc')(app);
+    require('./roleSrvc')(app);
 };

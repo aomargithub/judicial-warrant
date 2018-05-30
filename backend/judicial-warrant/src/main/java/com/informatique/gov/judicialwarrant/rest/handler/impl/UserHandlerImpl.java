@@ -44,11 +44,11 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
+	public ResponseEntity<UserDto> createUser(UserDto dto) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.createUserInternal(dto);
+			UserDto savedDto = userService.create(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			
@@ -59,22 +59,6 @@ public class UserHandlerImpl implements UserHandler {
 		}return response;	
 	}
 	
-	@Override
-	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
-		ResponseEntity<UserDto> response = null;
-		try {
-           
-			UserDto savedDto = userService.createUserExternal(dto);
-							
-			response = ResponseEntity.ok(savedDto);
-			
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}return response;	
-	}
-
 	@Override
 	public ResponseEntity<UserDto> getById(Integer id,Short etag) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
@@ -154,6 +138,23 @@ public class UserHandlerImpl implements UserHandler {
 		try {
 			
 			userService.delete(id);
+			
+			response = ResponseEntity.ok().build();
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;
+	}
+
+	@Override
+	public ResponseEntity<Void> changePassword(Integer id, String oldPass, String newPass)
+			throws JudicialWarrantException {
+		ResponseEntity<Void> response = null;
+		try {
+			
+			userService.changePassword(id, oldPass, newPass);
 			
 			response = ResponseEntity.ok().build();
 			

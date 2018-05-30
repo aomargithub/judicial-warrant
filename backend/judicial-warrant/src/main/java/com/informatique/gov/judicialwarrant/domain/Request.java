@@ -31,12 +31,13 @@ import lombok.ToString;
 @ToString(of = {"id", "serial"})
 @EqualsAndHashCode(of = {"serial"}, callSuper = false)
 @NamedEntityGraphs({
-	@NamedEntityGraph(name = "Request.req",
+	@NamedEntityGraph(name = "Request.fat",
 					  attributeNodes = {
 							  @NamedAttributeNode(value = "type"),
 							  @NamedAttributeNode(value = "currentInternalStatus"),
 							  @NamedAttributeNode(value = "currentStatus"),
-							  @NamedAttributeNode(value = "organizationUnit")
+							  @NamedAttributeNode(value = "organizationUnit"),
+							  @NamedAttributeNode(value = "histortyLogs")
 					  })
 })
 public class Request extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable{

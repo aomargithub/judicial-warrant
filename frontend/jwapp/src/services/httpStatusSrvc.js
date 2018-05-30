@@ -5,13 +5,14 @@ module.exports = function(app){
 
         self.sameOriginPolicyViolation = {code : -1, text : 'SAME_ORIGIN_POLICY_VIOLATION'};
         self.preconditionFailed =  {code : 412, text : 'PRECONDITION_FAILED'};
+        self.badRequest =  {code : 400, text : 'BAD_REQUEST'};
         function init(){
             statuses = new Map();
             statuses.set(-1, self.sameOriginPolicyViolation);
             statuses.set(200, {code : 200, text : 'OK'});
             statuses.set(201, {code : 201, text : 'CREATED'});
             statuses.set(304, {code : 304, text : 'NOT_MODIFIED'});
-            statuses.set(400, {code : 400, text : 'BAD_REQUEST'});
+            statuses.set(400, self.badRequest);
             statuses.set(401, {code : 401, text : 'UNAUTHORIZED'});
             statuses.set(403, {code : 403, text : 'FORBIDDEN'});
             statuses.set(404, {code : 404, text : 'NOT_FOUND'});

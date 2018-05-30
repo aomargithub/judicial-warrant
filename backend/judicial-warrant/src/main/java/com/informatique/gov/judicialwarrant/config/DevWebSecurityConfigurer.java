@@ -1,6 +1,8 @@
 package com.informatique.gov.judicialwarrant.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.security.Constants;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantAuthenticationProvider;
+import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
 import com.informatique.gov.judicialwarrant.support.security.OnlyLoginBasicAuthenticationFilter;
 import com.informatique.gov.judicialwarrant.support.security.RestAuthenticationEntryPoint;
 
@@ -129,9 +133,9 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	    contextSource.setBase(
 	    		environment.getRequiredProperty("app.security.activedirectory.domain"));
 	    contextSource.setUserDn(
-	    		environment.getRequiredProperty("app.security.activedirectory.username"));
+	    		environment.getRequiredProperty("app.security.activedirectory.admin.username"));
 	    contextSource.setPassword(
-	    		environment.getRequiredProperty("app.security.activedirectory.password"));
+	    		environment.getRequiredProperty("app.security.activedirectory.admin.password"));
 	    
 	    return contextSource;
 	}
@@ -161,6 +165,11 @@ public class DevWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		return output;
 	}	
 	
-	
+	@Bean
+	public List<JudicialWarrantGrantedAuthority> authorities(){
+		return Collections.unmodifiableList(Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.ADMIN), 
+		           new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER), 
+		           new JudicialWarrantGrantedAuthority(UserRoleEnum.MINISTER)));
+	}
 	
 }

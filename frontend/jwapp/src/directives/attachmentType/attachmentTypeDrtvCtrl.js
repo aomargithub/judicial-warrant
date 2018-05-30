@@ -20,10 +20,15 @@ module.exports = function(app){
         }
 
         vm.add = function(){
-            attachmentTypeSrvc.save(vm.attachmentType).then(function(response){
+            attachmentTypeSrvc.save(vm.attachmentType).then(function success(response){
                 vm.attachmentTypes.push(response.data);
                 vm.attachmentType = new AttachmentType();
                 resetEntryForm();
+            }, function error(response){
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.badRequest.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
             });
         };
 

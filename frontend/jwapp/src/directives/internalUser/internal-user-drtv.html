@@ -1,0 +1,84 @@
+<div>
+    <div class="btn-group btn-group-justified">
+        <form name="userForm" novalidate>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.arabicName}}</label>
+                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="internalUserDrtvCtrl.user.arabicName" required/>
+                <span ng-show="userForm.arabicName.$touched && userForm.arabicName.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.englishName}}</label>
+                <input type="text" class="form-control" id="englishName" name="englishName" ng-model="internalUserDrtvCtrl.user.englishName" required/>
+                <span ng-show="userForm.englishName.$touched && userForm.englishName.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.mobileNumber1}}</label>
+                <input type="text" class="form-control" id="mobileNumber1" name="mobileNumber1" ng-model="internalUserDrtvCtrl.user.mobileNumber1" required/>
+                <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.mobileNumber2}}</label>
+                <input type="text" class="form-control" id="mobileNumber2" name="mobileNumber2" ng-model="internalUserDrtvCtrl.user.mobileNumber2" required/>
+                <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.emailAddress}}</label>
+                <input type="text" class="form-control" id="emailAddress" name="emailAddress" ng-model="internalUserDrtvCtrl.user.emailAddress" required/>
+                <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.civilId}}</label>
+                <input type="text" class="form-control" id="civilId" name="civilId" ng-model="internalUserDrtvCtrl.user.civilId" required/>
+                <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.loginName}}</label>
+                <input type="text" class="form-control" id="loginName" name="loginName" ng-model="internalUserDrtvCtrl.user.loginName" required/>
+                <span ng-show="userForm.loginName.$touched && userForm.loginName.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="arabicName">{{messages.label.role}}</label>
+                <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.user.role"></select>
+                <span ng-show="userForm.role.$touched && userForm.role.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+            <div class="btn-group" >
+                <div class="btn-group row" ng-if="!attachmentTypeDrtvCtrl.editAttachmentType">
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.add()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.add}}</button>
+                    </div>
+                </div>
+                <div class="btn-group row" ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.update()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.update}}</button>
+                    </div>
+                </div>
+                <div class="btn-group row">
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
+                    </div>
+                </div>
+                <div class="btn-group row" ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
+                    <div class="col-sm-10">
+                            <button ng-click="attachmentTypeDrtvCtrl.cancel()" class="btn btn-default">{{messages.label.cancel}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

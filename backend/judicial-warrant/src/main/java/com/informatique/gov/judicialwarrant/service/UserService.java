@@ -10,8 +10,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 public interface UserService extends Serializable{
 	List<UserDto> getAll() throws JudicialWarrantException;
 
-	UserDto createUserInternal(final UserDto dto) throws JudicialWarrantException;
-	UserDto createUserExternal(final UserDto dto) throws JudicialWarrantException;
+	UserDto create(final UserDto dto) throws JudicialWarrantException;
 
 	UserDto getById(Integer id) throws JudicialWarrantException;
 
@@ -19,5 +18,7 @@ public interface UserService extends Serializable{
 	
 	public Short getVersionById(Integer id) throws JudicialWarrantException;
 
+	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException;
+	
 	void delete(Integer id) throws JudicialWarrantException;
 }
