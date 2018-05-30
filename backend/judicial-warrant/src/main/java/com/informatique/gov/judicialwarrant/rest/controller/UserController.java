@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -76,5 +77,10 @@ public class UserController implements Serializable{
 	public ResponseEntity<?> delete(@PathVariable Integer id) throws JudicialWarrantException {
 		return userHandler.delete(id);
 	}
+	
+	 @GetMapping(params= {"userTypeCode"})
+	 public ResponseEntity<?> getByUserType(@RequestParam String userTypeCode) throws JudicialWarrantException {
+			return userHandler.getByUserTypeCode(userTypeCode);
+		}
 
 }

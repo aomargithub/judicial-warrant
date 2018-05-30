@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.repository.query.Param;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.informatique.gov.judicialwarrant.domain.User;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
@@ -37,5 +40,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	Integer findIdByCivilId(@Param("civilId")Long civilId);
 	@Query("select id from User u where u.emailAddress=:emailAddress")
 	Integer findIdByEmailAddress(@Param("emailAddress")String emailAddress);
+    List<User> findByUserTypeCode(String userTypeCode);
 	 
 }

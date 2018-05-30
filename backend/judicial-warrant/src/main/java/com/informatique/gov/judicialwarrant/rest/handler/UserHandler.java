@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
 public interface UserHandler extends Serializable{
 	ResponseEntity<List<UserDto>> getAll() throws JudicialWarrantException;
+	ResponseEntity<List<UserDto>> getByUserTypeCode(String  userTypeCode) throws JudicialWarrantException;
 
 	ResponseEntity<UserDto> createUser(final UserDto dto) throws JudicialWarrantException;
 

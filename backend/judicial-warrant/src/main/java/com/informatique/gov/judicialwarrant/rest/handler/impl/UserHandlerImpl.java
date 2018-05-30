@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.exception.PreConditionRequiredException;
@@ -163,6 +164,20 @@ public class UserHandlerImpl implements UserHandler {
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}return response;
+	}
+
+	@Override
+	public ResponseEntity<List<UserDto>> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException {
+		ResponseEntity<List<UserDto>> response = null;
+		try {
+			List<UserDto> dtos = userService.getByUserTypeCode(userTypeCode);
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;	
 	}
 
 }
