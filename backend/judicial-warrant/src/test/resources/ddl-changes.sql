@@ -297,3 +297,6 @@ alter table ATTACHMENT_TYPE rename column is_candidate_attachment to IS_ENTITLED
 
 ALTER TABLE ORGANIZATION_UNIT 
 ADD (IS_INTERNAL NUMBER(1, 0) NOT NULL);
+
+
+alter table APP_ROLE add is_internal number(1) not null;

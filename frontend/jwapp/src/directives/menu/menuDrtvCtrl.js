@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('menuDrtvCtrl', function ($scope, menuItemsFcty, appSessionSrvc) {
+    app.controller('menuDrtvCtrl', function (menuItemsFcty, appSessionSrvc) {
         var vm = this;
 
         vm.isMenuOpen = true;
@@ -9,6 +9,13 @@ module.exports = function (app) {
         vm.toggleMenuState = function(){
             vm.isMenuOpen = !vm.isMenuOpen;
         };
+
+        vm.closeMenu = function(){
+            vm.isMenuOpen = false;
+            $('#sidebar').addClass('active');
+            $('.overlay').fadeOut();
+        };
+        
         vm.getMenuState = function(){
             return vm.isMenuOpen;
         };

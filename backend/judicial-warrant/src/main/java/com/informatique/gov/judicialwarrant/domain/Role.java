@@ -38,6 +38,9 @@ public class Role extends DomainEntity<Byte> {
 	@Column(name = "ARABIC_NAME")
 	private String arabicName;
 	
+	@Column(name = "is_internal")
+	private Boolean isInternal;
+	
 	@Embedded
 	private CreateLog createLog;
 	

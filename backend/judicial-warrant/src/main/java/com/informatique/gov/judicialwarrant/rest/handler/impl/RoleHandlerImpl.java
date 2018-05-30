@@ -63,6 +63,25 @@ public class RoleHandlerImpl implements RoleHandler{
 
 		return response;
 	}
+	
+	@Override
+	public ResponseEntity<List<RoleDto>> getByIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		ResponseEntity<List<RoleDto>> response = null;
+		try {
+			notNull(isInternal, "isInternal must be set");
+			List<RoleDto> dtos = roleService.getByIsInternal(isInternal);
+			
+			
+			response = ResponseEntity.ok().body(dtos);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
 
 	
 	

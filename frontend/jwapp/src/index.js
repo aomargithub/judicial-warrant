@@ -5,4 +5,5 @@ module.exports = function(app){
     require('./generalConfig')(app);
     require('./routeConfig')(app);
     require('./models')(app);
+    require('./filters')(app);
 };

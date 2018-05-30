@@ -12,7 +12,7 @@
             </a>
             <ul class="collapse list-unstyled" id="{{item.route}}">
                 <li ng-repeat="subItem in item.subItems">
-                    <a href="" ui-sref="{{subItem.route}}">{{subItem.title}}</a>
+                    <a href="" ui-sref="{{subItem.route}}" ng-click="menuDrtvCtrl.closeMenu()">{{subItem.title}}</a>
                 </li>
             </ul>
         </li>

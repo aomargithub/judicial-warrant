@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.config(function($stateProvider, $urlRouterProvider, $locationProvider, templateSrvcProvider,){
+    app.config(function($stateProvider, $urlRouterProvider, $locationProvider, templateSrvcProvider){
         $urlRouterProvider.otherwise('/login');
         $stateProvider
             .state('login', {
@@ -41,6 +41,17 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('attachmentTypes')
                     }
                 }
-            })
+            }).state('root.internalUsers', {
+                parent: 'root',
+                data: {
+                    label : 'internalUsers'
+                },
+                url : '/internalUsers',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('internalUsers')
+                    }
+                }
+            });
     });
 };

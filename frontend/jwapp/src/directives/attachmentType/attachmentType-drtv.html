@@ -19,8 +19,8 @@
                 <label for="englishName">{{messages.label.englishName}}</label>
                 <input type="text" class="form-control" id="englishName" name="englishName" ng-model="attachmentTypeDrtvCtrl.attachmentType.englishName" required/>
                 <span ng-show="attachmentTypeForm.englishName.$touched && attachmentTypeForm.englishName.$error.required" >
-                        {{messages.label.required}}
-                    </span>
+                    {{messages.label.required}}
+                </span>
             </div>
 
             <div class="form-check">
@@ -36,30 +36,30 @@
                     <label for="isEntitledAttachment" class="form-check-label" >{{messages.label.isEntitledAttachment}}</label>
                     <input type="checkbox" class="form-check-input" id="isEntitledAttachment" ng-model="attachmentTypeDrtvCtrl.attachmentType.isEntitledAttachment" />
                 </div>
-                </div>
+            </div>
 
             <div class="btn-group" >
                 <div class="btn-group row" ng-if="!attachmentTypeDrtvCtrl.editAttachmentType">
-                        <div class="col-sm-10">
-                    <button ng-click="attachmentTypeDrtvCtrl.add()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.add}}</button>
-                </div>
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.add()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.add}}</button>
+                    </div>
                 </div>
                 <div class="btn-group row" ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
-                        <div class="col-sm-10">
-                    <button ng-click="attachmentTypeDrtvCtrl.update()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.update}}</button>
-                </div>
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.update()" class="btn btn-default" ng-disabled="attachmentTypeForm.$invalid" type="submit">{{messages.label.update}}</button>
+                    </div>
                 </div>
                 <div class="btn-group row">
-                        <div class="col-sm-10">
-                    <button ng-click="attachmentTypeDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
-                </div>
+                    <div class="col-sm-10">
+                        <button ng-click="attachmentTypeDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
+                    </div>
                 </div>
                 <div class="btn-group row" ng-if="attachmentTypeDrtvCtrl.editAttachmentType">
-                        <div class="col-sm-10">
-                    <button ng-click="attachmentTypeDrtvCtrl.cancel()" class="btn btn-default">{{messages.label.cancel}}</button>
+                    <div class="col-sm-10">
+                         <button ng-click="attachmentTypeDrtvCtrl.cancel()" class="btn btn-default">{{messages.label.cancel}}</button>
+                    </div>
                 </div>
             </div>
-    </div>
         </form>
     </div>
     <div class="table-responsive">
@@ -116,12 +116,12 @@
                             <button class="btn btn-default" ng-click="attachmentTypeDrtvCtrl.delete(at.id)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </td>
-                </tr>
-                
+                </tr> 
             </tbody> 
         </table>
         <td colspan="7">
-                <pagination items-size="attachmentTypeDrtvCtrl.attachmentTypes.length" page="attachmentTypeDrtvCtrl.page">
-                </pagination></td>
+            <pagination items-size="attachmentTypeDrtvCtrl.attachmentTypes.length" page="attachmentTypeDrtvCtrl.page">
+            </pagination>
+        </td>
     </div>
 </div>

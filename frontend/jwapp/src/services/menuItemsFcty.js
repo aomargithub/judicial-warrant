@@ -56,9 +56,8 @@ module.exports = function(app){
             };
         }
 
-        var lookupsItem = new Item(), usersItem = new Item();
+        var lookupsItem = new Item();
         lookupsItem.codeValue('LOOKUPS').routeValue('lookupsSubmenu').classesValue(["glyphicon", "glyphicon-cog"]);
-        usersItem.codeValue('USERS').routeValue('').classesValue(["glyphicon", "glyphicon-cog"]);
 
         var organizationUnitsSubItem = new SubItem(), 
         attachmentTypesSubItem = new SubItem();
@@ -72,11 +71,30 @@ module.exports = function(app){
         attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
         .routeValue('.attachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
+
+
         
         
 
         lookupsItem.addSubItem(organizationUnitsSubItem)
                    .addSubItem(attachmentTypesSubItem);
+
+        
+        
+         //===================================
+        var usersItem = new Item()
+        usersItem.codeValue('USERS').routeValue('usersSubmenu').classesValue(["glyphicon", "glyphicon-user"]);
+        var internalUsersSubItem = new SubItem();
+
+
+        internalUsersSubItem.codeValue('INTERNAL_USERS')
+        .routeValue('.internalUsers')
+        .showFilterValue(function(role){
+            return role === appRoleFcty.mojAdmin.code;
+        });
+
+
+        usersItem.addSubItem(internalUsersSubItem);
 
         var menu = [lookupsItem, usersItem];
 

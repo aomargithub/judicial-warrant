@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, messageBarModeSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;

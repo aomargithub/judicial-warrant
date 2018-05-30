@@ -9,5 +9,6 @@ import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
 public interface RoleService extends Serializable{
 	List<RoleDto> getAll() throws JudicialWarrantException;
 	RoleDto getById(Byte id) throws JudicialWarrantException;
+	List<RoleDto> getByIsInternal(Boolean isInternal) throws JudicialWarrantException;
 
 }

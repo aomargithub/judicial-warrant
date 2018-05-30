@@ -13,15 +13,11 @@ module.exports = function(app){
                         return; 
                     }
 
-                   while(target[0].id != 'sidebar'){
-                        target = target.parent();
-                    }
-
                     if(menuDrtvCtrl.getMenuState()){
-                        target.addClass('active');
+                        $('#sidebar').addClass('active');
                         $('.overlay').fadeOut();
                     }else{
-                        target.removeClass('active');
+                        $('#sidebar').removeClass('active');
                         $('.overlay').fadeIn();
                     }
                 });

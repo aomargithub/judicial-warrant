@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -42,6 +43,11 @@ public class RoleController implements Serializable{
 	public ResponseEntity<?> getById(@PathVariable Byte id
 			) throws JudicialWarrantException {
 		return roleHandler.getById(id);
+	}
+	
+	@GetMapping(params = {"isInternal"})
+	public ResponseEntity<?> getByIsInternal(@RequestParam Boolean isInternal) throws JudicialWarrantException {
+		return roleHandler.getByIsInternal(isInternal);
 	}
 
 

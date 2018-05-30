@@ -15,4 +15,6 @@ module.exports = function(app){
     require('./breadcrumbsPrvd')(app);
     require('./requestTypeSrvc')(app);
     require('./messageBarModeSrvc')(app);
+    require('./internalUserSrvc')(app);
+    require('./roleSrvc')(app);
 };
