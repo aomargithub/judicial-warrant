@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc){
+    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,organizationUnitSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
@@ -7,6 +7,8 @@ module.exports = function(app){
         vm.editUser = null;
         vm.users = [];
         vm.roles = [];
+        vm.organizations = [];
+       
 
         vm.page = {
             start: 0,
@@ -21,9 +23,113 @@ module.exports = function(app){
             vm.roles = response.data;
         });
 
+        organizationUnitSrvc.getAll().then(function(response){
+            vm.organizations = response.data;
+        });
+
         var resetEntryForm = function(){
             $scope.userForm.$setPristine();
-            $scope.userForm.$setUntouched();
+            $scope.userForm.$setUntouched(); 
+        }
+
+        vm.add = function(){
+            internalUserSrvc.save(vm.user).then(function success(response){
+                
+                vm.users.push(response.data);
+                vm.user = new User();
+                resetEntryForm();
+            }, function error(response){
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.badRequest.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
+        };
+
+        vm.edit = function(id){
+            internalUserSrvc.getById(id).then(function(response){
+                vm.editUser = response.data;
+                vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+                vm.user = angular.copy(vm.editUser);
+                resetEntryForm();
+            });
+        };
+
+        vm.refetch = function(id){
+            internalUserSrvc.getById(id).then(function(response){
+                vm.editUser = response.data;
+                vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+                vm.user = angular.copy(vm.editUser);
+                vm.message = null;
+                resetEntryForm(); 
+            });
+        };
+
+        vm.update = function(){
+            
+            internalUserSrvc.update(vm.user).then(function success(response){
+               
+                var tempUser = response.data;
+                vm.user = new User();
+                vm.editUser = null;
+                vm.users.forEach(function(ou, index){
+                    if(ou.id === tempUser.id){
+                        vm.users[index] = tempUser;
+                    }
+                });
+
+                resetEntryForm();
+            }, function error(response){
+                
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.preconditionFailed.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
+
+                resetEntryForm();
+            });
+        };
+
+        vm.delete = function(id){
+            
+            internalUserSrvc.delete(id).then(function success(response){               
+                vm.users.forEach(function(ou, index){
+                    if(ou.id === id){
+                        vm.users.splice(index, 1);
+                    }
+                });
+
+                resetEntryForm();
+            }, function error(response){
+                
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.preconditionFailed.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
+
+                resetEntryForm();
+            }); 
+        };
+
+        vm.cancel = function(){
+            vm.user = new User();
+            vm.editUser = null;
+            vm.message = null;
+            resetEntryForm();
+        };
+
+
+        vm.reset = function(){
+            if(vm.editUser){
+                vm.user = angular.copy(vm.editUser);
+            }else{
+                vm.user = new User();
+            }
+            resetEntryForm();
+        };
+
+        vm.closeMessage = function(){
+            vm.message = null;
         };
 
     });
