@@ -45,7 +45,7 @@ public class UserMapper extends AbstractModelMapper<User, UserDto, Integer> {
 			dto.setRole(roleMapper.toDto(entity.getRole()));
 			dto.setUserType(userTypeMapper.toDto(entity.getUserType()));
 		
-			entity.setVersion(dto.getVersion());
+			dto.setVersion(entity.getVersion());
 		}
 		return dto;
 	}

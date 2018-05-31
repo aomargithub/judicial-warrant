@@ -221,8 +221,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			user.setOrganizationUnit(organizationUnit.get());
 			Optional<Role> role = roleRepository.findById(dto.getRole().getId());
 			user.setRole(role.get());
-			Optional<UserType> userType = userTypeRepository.findById(new Integer(2));
-			user.setUserType(userType.get());
+			UserType userType = userTypeRepository.findByCode(dto.getUserType().getCode());
+			user.setUserType(userType);
 
 			user = userRepository.save(user);
 

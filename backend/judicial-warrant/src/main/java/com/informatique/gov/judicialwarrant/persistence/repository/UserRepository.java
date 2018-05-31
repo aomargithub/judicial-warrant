@@ -1,6 +1,7 @@
 package com.informatique.gov.judicialwarrant.persistence.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
@@ -44,6 +45,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     List<User> findByUserTypeCode(String userTypeCode);
     @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     List<User> findAll();
+    @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
+    Optional<User> findById(Integer id) ;
     	
     
 	 
