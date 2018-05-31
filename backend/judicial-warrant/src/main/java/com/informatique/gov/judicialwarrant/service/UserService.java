@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 

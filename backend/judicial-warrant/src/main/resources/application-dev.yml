@@ -48,15 +48,18 @@ spring:
    port: 587
    username: attiaelsady@gmail.com
    password: attia123/
+   protocol: smtp
+   tls: true
+   test-connection: false
    properties:
-    mail:
-     smtp:
-      auth: true
-    starttls:
-     enable: true
-     required: true
-    scheduler:
-     priorityLevels: 10
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl.trust: smtp.gmail.com
+    
+    
      
 ucm:
   ip: 192.168.0.44

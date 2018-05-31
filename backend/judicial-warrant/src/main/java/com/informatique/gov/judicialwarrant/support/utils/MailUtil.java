@@ -1,7 +1,7 @@
 package com.informatique.gov.judicialwarrant.support.utils;
 
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 public class MailUtil {
 
 
-	private JavaMailSender sender;
+	private MailSender  sender;
 	//Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public  void send(String body,String recipient,String subject) throws Exception{
