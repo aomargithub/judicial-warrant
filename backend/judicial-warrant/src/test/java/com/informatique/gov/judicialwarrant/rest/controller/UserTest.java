@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.UserService;
+import com.informatique.gov.judicialwarrant.rest.controller.TestUtils;;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -41,7 +42,7 @@ public class UserTest {
 
 		// prepare data and mock's behaviour
 		UserDto userStub = new UserDto();
-		when(userService.createUserInternal(any(UserDto.class))).thenReturn(userStub);
+		when(userService.createInternal(any(UserDto.class))).thenReturn(userStub);
 
 		// execute
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL).contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -52,7 +53,7 @@ public class UserTest {
 		assertEquals("Incorrect Response Status", HttpStatus.CREATED.value(), status);
 
 		// verify that service method was called once
-		verify(userService).createUserInternal(any(UserDto.class));
+		verify(userService).createInternal(any(UserDto.class));
 
 		UserDto resultUser = TestUtils.jsonToObject(result.getResponse().getContentAsString(), UserDto.class);
 		assertNotNull(resultUser);
@@ -125,7 +126,7 @@ public class UserTest {
 		verify(userService).getAll();
 
 		// get the List<Employee> from the Json response
-		
+
 		@SuppressWarnings("unchecked")
 		List<UserDto> userListResult = TestUtils.jsonToList(result.getResponse().getContentAsString());
 
