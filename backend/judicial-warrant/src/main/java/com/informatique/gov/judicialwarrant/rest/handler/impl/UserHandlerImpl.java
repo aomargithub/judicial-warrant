@@ -84,7 +84,7 @@ public class UserHandlerImpl implements UserHandler {
 				throw new ResourceNotFoundException(id);
 			}
 			
-			response = ResponseEntity.ok().body(dto);
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
