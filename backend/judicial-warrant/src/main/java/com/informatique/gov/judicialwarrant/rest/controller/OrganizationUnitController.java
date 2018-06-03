@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -52,6 +53,11 @@ public class OrganizationUnitController implements Serializable{/**
 	@DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Short id) throws JudicialWarrantException {
         return organizationUnitHandler.delete(id);
+    }
+	
+	@GetMapping(params = {"isInternal"})
+    public ResponseEntity<?> getById(@RequestParam Boolean isInternal) throws JudicialWarrantException {
+        return organizationUnitHandler.getExternalOrInternal(isInternal);
     }
 
 }
