@@ -16,7 +16,7 @@ public class MailUtil {
 	public  void send(String body,String recipient,String subject) throws Exception{
 		
 		        SimpleMailMessage mail = new SimpleMailMessage();
-		        mail.setFrom("attiaelsady@gmail.com");
+		        mail.setFrom("attabdullah@informatique-eg.com");
 				mail.setTo(recipient);
 				mail.setSubject(subject);
 				mail.setText(body);
