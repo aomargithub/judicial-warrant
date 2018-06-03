@@ -1,14 +1,14 @@
 module.exports = function(app){
     app.service('internalUserSrvc', function($http, urlSrvc){
         var self = this;
-        var usersUrl = urlSrvc.getUrl('internalUsers');
+        var usersUrl = urlSrvc.getUrl('users');
 
         self.getAll = function(){
             return $http.get(usersUrl);
         };
 
-        self.save = function(user){
-            return $http.post(usersUrl, attachmentType);
+        self.save = function(user){ 
+            return $http.post(usersUrl, user);
         };
 
         self.getById = function(id){

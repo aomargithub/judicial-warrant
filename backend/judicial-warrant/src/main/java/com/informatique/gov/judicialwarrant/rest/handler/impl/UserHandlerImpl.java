@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.exception.PreConditionRequiredException;
@@ -85,7 +84,7 @@ public class UserHandlerImpl implements UserHandler {
 				throw new ResourceNotFoundException(id);
 			}
 			
-			response = ResponseEntity.ok().body(dto);
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -178,6 +177,38 @@ public class UserHandlerImpl implements UserHandler {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return response;	
+	}
+
+	@Override
+	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+           
+			UserDto savedDto = userService.createInternal(dto);
+							
+			response = ResponseEntity.ok(savedDto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;	
+	}
+
+	@Override
+	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+           
+			UserDto savedDto = userService.createExternal(dto);
+							
+			response = ResponseEntity.ok(savedDto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}return response;	
 	}
 
 }

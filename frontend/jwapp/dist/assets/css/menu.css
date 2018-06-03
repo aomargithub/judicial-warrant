@@ -62,15 +62,9 @@ table{
     margin: 50px 0px 0px 0px;
     text-align: center;
     background-color: #c0b283; 
-<<<<<<< HEAD
     border-collapse: collapse;
     border-radius: 7px;
     overflow: hidden;
-=======
-    border-radius: 7px;
-    overflow: hidden;
-    border-collapse: collapse;
->>>>>>> refs/remotes/origin/develop
 }
 table thead{
     background-color: #373737;
@@ -85,6 +79,20 @@ table th{
     height: 50px;
     vertical-align: middle !important;
 }
+ol{
+    float: left;
+}
+
+.required:after { 
+    content:"*";
+    color:red;
+    font-size: 20px;
+ }
+ .ou{
+     float: right;
+
+ }
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

@@ -1,66 +1,86 @@
 <div>
+        <message-drtv close-callback="internalUserDrtvCtrl.closeMessage" 
+        refetch-callback = "internalUserDrtvCtrl.refetch" 
+        message="internalUserDrtvCtrl.message" 
+        ng-if="internalUserDrtvCtrl.message" 
+        edit-id="internalUserDrtvCtrl.editUser.id"
+        class="message-bar" >
+</message-drtv>
     <div class="btn-group btn-group-justified">
-        <form name="userForm" novalidate>
+        <form name="userForm"  novalidate>
+            <div class="form-group">
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.arabicName}}</label>
+                <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
                 <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="internalUserDrtvCtrl.user.arabicName" required/>
                 <span ng-show="userForm.arabicName.$touched && userForm.arabicName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.englishName}}</label>
+                <label for="englishName" class="required">{{messages.label.englishName}}</label>
                 <input type="text" class="form-control" id="englishName" name="englishName" ng-model="internalUserDrtvCtrl.user.englishName" required/>
                 <span ng-show="userForm.englishName.$touched && userForm.englishName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.mobileNumber1}}</label>
+                <label for="mobileNumber1" class="required">{{messages.label.mobileNumber1}}</label>
                 <input type="text" class="form-control" id="mobileNumber1" name="mobileNumber1" ng-model="internalUserDrtvCtrl.user.mobileNumber1" required/>
                 <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.mobileNumber2}}</label>
+                <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
                 <input type="text" class="form-control" id="mobileNumber2" name="mobileNumber2" ng-model="internalUserDrtvCtrl.user.mobileNumber2" required/>
                 <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.emailAddress}}</label>
+                <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
                 <input type="text" class="form-control" id="emailAddress" name="emailAddress" ng-model="internalUserDrtvCtrl.user.emailAddress" required/>
                 <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.civilId}}</label>
+                <label for="civilId" class="required">{{messages.label.civilId}}</label>
                 <input type="text" class="form-control" id="civilId" name="civilId" ng-model="internalUserDrtvCtrl.user.civilId" required/>
                 <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.loginName}}</label>
+                <label for="loginName" class="required">{{messages.label.loginName}}</label>
                 <input type="text" class="form-control" id="loginName" name="loginName" ng-model="internalUserDrtvCtrl.user.loginName" required/>
                 <span ng-show="userForm.loginName.$touched && userForm.loginName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
+            
             <div class="form-group col-md-6">
-                <label for="arabicName">{{messages.label.role}}</label>
+                <label for="role" class="required">{{messages.label.role}}</label>
                 <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.user.role"></select>
                 <span ng-show="userForm.role.$touched && userForm.role.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
+
+            <div class="form-group col-md-6 ou">
+                <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
+                <select class="form-control ou choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in internalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="internalUserDrtvCtrl.user.organizationUnit"></select>
+                <span ng-show="userForm.organizationUnit.$touched && userForm.organizationUnit.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
+        </div>
+        <div class="form-check ">
             <div class="form-check form-check-inline" >
                 <label for="isActive" class="form-check-label" >{{messages.label.isActive}}</label>
                 <input type="checkbox" class="form-check-input" id="isActive" ng-model="internalUserDrtvCtrl.user.isActive" />
             </div>
+        </div>
             <div class="btn-group" >
                 <div class="btn-group row" ng-if="!internalUserDrtvCtrl.editUser">
                     <div class="col-sm-10">
@@ -86,7 +106,7 @@
         </form>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover text-center">
+        <table class="table table-striped table-bordered table-hover text-center"> 
             <thead>
                 <tr>
                     <th>
@@ -115,14 +135,67 @@
                     </th>
                     <th>
                         {{messages.label.role}}
+                    </th> 
+                    <th>
+                        {{messages.label.organizationUnit}}
+                    </th> 
+                    <th>
+                        {{messages.label.edit}}
+                    </th>
+                    <th>
+                        {{messages.label.delete}}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="u in internalUserDrtvCtrl.users | paginationFltr:internalUserDrtvCtrl.page.start:internalUserDrtvCtrl.page.end track by u.id">
+                <tr ng-repeat="u in internalUserDrtvCtrl.users |paginationFltr:internalUserDrtvCtrl.page.start:internalUserDrtvCtrl.page.end track by u.id">
+                    <td>
+                        {{u.arabicName}}
+                    </td>
+                    <td>
+                        {{u.englishName}}
+                    </td>
+                    <td>
+                        {{u.isActive}}
+                    </td>
+                    <td>
+                        {{u.mobileNumber1}}
+                    </td>
+                    <td>
+                        {{u.mobileNumber2}}
+                    </td>
+                    <td>
+                        {{u.emailAddress}}
+                    </td>
+                    <td>
+                        {{u.civilId}}
+                    </td>
+                    <td>
+                        {{u.loginName}}
+                    </td>
+                    <td>
+                        {{u.role.arabicName}}
+                    </td>
 
+                    <td>
+                        {{u.organizationUnit.arabicName}}
+                    </td>
+                    <td>
+                        <div>
+                            <button class="btn btn-default" ng-click="internalUserDrtvCtrl.edit(u.id)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="btn btn-default" ng-click="internalUserDrtvCtrl.delete(u.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <td colspan="7">
+            <pagination items-size="internalUserDrtvCtrl.users.length" page="internalUserDrtvCtrl.page">
+            </pagination>
+        </td>
     </div>
 </div>

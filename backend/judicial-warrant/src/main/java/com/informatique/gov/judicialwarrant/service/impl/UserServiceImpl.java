@@ -31,6 +31,7 @@ import com.informatique.gov.judicialwarrant.service.UserService;
 import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 import com.informatique.gov.judicialwarrant.support.ldap.LdapService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.UserMapper;
+import com.informatique.gov.judicialwarrant.support.utils.MailUtil;
 import com.informatique.gov.judicialwarrant.support.utils.RandomPasswordUtil;
 
 import lombok.AllArgsConstructor;
@@ -54,6 +55,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	private PasswordEncoder passwordEncoder;
 	private Environment environment;
 	private LdapService ldapService;
+	private MailUtil mailUtil;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -119,8 +121,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			// String passwordHashing = HashingPasswordUtil.hash(password);
 
 			String hashedPassword = passwordEncoder.encode(password);
-			// String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
-			// String subject = "User Password";
+			 String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
+			 String subject = "User Password";
 
 			User user = prepareUser(dto);
 			UserType userType = userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
@@ -128,15 +130,15 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 			user = userRepository.save(user);
 			UserCredentials credentials = new UserCredentials();
+			credentials.setId(user.getId());
 			credentials.setUser(user);
 			credentials.setPassword(hashedPassword);
 			userCredentialsRepository.save(credentials);
 
 			savedUserDto = userMapper.toDto(user);
 
-			// passwordService.sendUserPasswordToEmail(message, dto.getEmailAddress(),
-			// subject);
-
+			mailUtil.send(message, dto.getEmailAddress(), subject);
+			 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -219,8 +221,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			user.setOrganizationUnit(organizationUnit.get());
 			Optional<Role> role = roleRepository.findById(dto.getRole().getId());
 			user.setRole(role.get());
-			Optional<UserType> userType = userTypeRepository.findById(new Integer(2));
-			user.setUserType(userType.get());
+			UserType userType = userTypeRepository.findByCode(dto.getUserType().getCode());
+			user.setUserType(userType);
 
 			user = userRepository.save(user);
 

@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
@@ -13,6 +12,8 @@ public interface UserService extends Serializable{
 	List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException;
 
 	UserDto create(final UserDto dto) throws JudicialWarrantException;
+	public UserDto createInternal(UserDto dto) throws JudicialWarrantException ;
+	public UserDto createExternal(UserDto dto) throws JudicialWarrantException;
 
 	UserDto getById(Integer id) throws JudicialWarrantException;
 

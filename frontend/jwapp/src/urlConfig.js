@@ -12,7 +12,7 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('organizationUnits', '/organizationUnits/');
         urlSrvcProvider.addUrl('attachmentTypes', '/attachmentTypes/');
         urlSrvcProvider.addUrl('requestTypes', '/requestTypes/');
-        urlSrvcProvider.addUrl('internalUsers', '/internalUsers/');
+        urlSrvcProvider.addUrl('users', '/users/');
         urlSrvcProvider.addUrl('roles', '/roles/');
     });
 };
