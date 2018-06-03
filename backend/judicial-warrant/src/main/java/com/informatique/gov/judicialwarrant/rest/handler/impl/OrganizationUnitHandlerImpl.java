@@ -149,11 +149,11 @@ public class OrganizationUnitHandlerImpl implements OrganizationUnitHandler {
 	}
 
 	@Override
-	public ResponseEntity<List<OrganizationUnitDto>> getExternalOrInternal(Boolean isInternal)
+	public ResponseEntity<List<OrganizationUnitDto>> getByIsInternal(Boolean isInternal)
 			throws JudicialWarrantException {
 		ResponseEntity<List<OrganizationUnitDto>> response = null;
 		try {
-			List<OrganizationUnitDto> dtos = organizationUnitService.getExternalOrInternal(isInternal);
+			List<OrganizationUnitDto> dtos = organizationUnitService.getByIsInternal(isInternal);
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;

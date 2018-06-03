@@ -20,6 +20,6 @@ public interface OrganizationUnitHandler extends Serializable {
 	ResponseEntity<OrganizationUnitDto> save(OrganizationUnitDto organizationUnitdto) throws JudicialWarrantException;
 
 	ResponseEntity<Void> delete(Short id) throws JudicialWarrantException;
-	ResponseEntity<List<OrganizationUnitDto>> getExternalOrInternal(Boolean isInternal)throws JudicialWarrantException;
+	ResponseEntity<List<OrganizationUnitDto>> getByIsInternal(Boolean isInternal)throws JudicialWarrantException;
 
 }

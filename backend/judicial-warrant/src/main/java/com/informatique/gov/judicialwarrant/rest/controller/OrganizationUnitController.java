@@ -56,8 +56,8 @@ public class OrganizationUnitController implements Serializable{/**
     }
 	
 	@GetMapping(params = {"isInternal"})
-    public ResponseEntity<?> getById(@RequestParam Boolean isInternal) throws JudicialWarrantException {
-        return organizationUnitHandler.getExternalOrInternal(isInternal);
+    public ResponseEntity<?> getByIsInternal(@RequestParam Boolean isInternal) throws JudicialWarrantException {
+        return organizationUnitHandler.getByIsInternal(isInternal);
     }
 
 }

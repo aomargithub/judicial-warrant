@@ -24,6 +24,6 @@ public interface OrganizationUnitService extends Serializable{
 
 	void delete(Short id) throws JudicialWarrantException;
 	
-	List<OrganizationUnitDto> getExternalOrInternal(Boolean isInternal)throws JudicialWarrantException;
+	List<OrganizationUnitDto> getByIsInternal(Boolean isInternal)throws JudicialWarrantException;
 
 }

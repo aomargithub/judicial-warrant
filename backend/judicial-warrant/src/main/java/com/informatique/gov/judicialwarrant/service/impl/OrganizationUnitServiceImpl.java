@@ -146,7 +146,7 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService, Int
 	}
 
 	@Override
-	public List<OrganizationUnitDto> getExternalOrInternal(Boolean isInternal) throws JudicialWarrantException {
+	public List<OrganizationUnitDto> getByIsInternal(Boolean isInternal) throws JudicialWarrantException {
 		List<OrganizationUnitDto> dtos = null;
 		try {
 			List<OrganizationUnit> entities = organizationUnitRepository.findByIsInternal(isInternal);
