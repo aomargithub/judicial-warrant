@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,17 +46,20 @@ public class AttachmentTypeController implements Serializable {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
 	public ResponseEntity<?> save(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto) throws JudicialWarrantException {
 		return attachmentTypeHandler.save(attachmentTypeDto);
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
 	public ResponseEntity<?> update(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return attachmentTypeHandler.update(attachmentTypeDto, id, eTag);
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
 	public ResponseEntity<?> delete(@PathVariable Long id) throws JudicialWarrantException {
 		return attachmentTypeHandler.delete(id);
 	}
