@@ -118,11 +118,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			notNull(dto, "dto must be set");
 			String password = RandomPasswordUtil
 					.generate(new Integer(environment.getRequiredProperty("app.defaultpasswordlength")));
-			// String passwordHashing = HashingPasswordUtil.hash(password);
-
 			String hashedPassword = passwordEncoder.encode(password);
-			 String message = "Hi " + dto.getLoginName() + "\n Password : " + password;
-			 String subject = "User Password";
+			
 
 			User user = prepareUser(dto);
 			UserType userType = userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
@@ -137,7 +134,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 			savedUserDto = userMapper.toDto(user);
 
-			mailUtil.send(message, dto.getEmailAddress(), subject);
+			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress());
 			 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -214,7 +211,6 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			User user = userMapper.toEntity(dto);
 			Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 					.findById(dto.getOrganizationUnit().getId());
-			user.getOrganizationUnit().setVersion(organizationUnit.get().getVersion());
 			user.setOrganizationUnit(organizationUnit.get());
 			Optional<Role> role = roleRepository.findById(dto.getRole().getId());
 			user.setRole(role.get());
@@ -237,6 +233,10 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	public void delete(Integer id) throws JudicialWarrantException {
 		try {
 			notNull(id, "id must be set");
+			Optional<UserCredentials> credentials = userCredentialsRepository.findById(id);
+			if(credentials.isPresent()) {
+			userCredentialsRepository.delete(credentials.get());
+			}
 			userRepository.deleteById(id);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

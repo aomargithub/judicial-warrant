@@ -23,18 +23,4 @@ public interface CapacityDelegationService extends Serializable {
 	
 	CapacityDelegationDto submit(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
 	
-	CapacityDelegationDto incomplete(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto reject(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto accept(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto lawAffairsReview(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto lawAffairsAccept(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto lawAffairsReject(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	CapacityDelegationDto issue(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
 }

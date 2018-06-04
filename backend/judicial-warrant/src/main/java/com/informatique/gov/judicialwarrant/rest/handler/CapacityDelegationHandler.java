@@ -21,18 +21,4 @@ public interface CapacityDelegationHandler {
 	
 	ResponseEntity<CapacityDelegationDto> submit(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
 	
-	ResponseEntity<CapacityDelegationDto> incomplete(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> reject(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> accept(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> lawAffairsReview(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> lawAffairsAccept(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> lawAffairsReject(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
-	ResponseEntity<CapacityDelegationDto> issue(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException;
-	
 }
