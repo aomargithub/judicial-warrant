@@ -6,9 +6,9 @@
         edit-id="internalUserDrtvCtrl.editUser.id"
         class="message-bar" >
 </message-drtv>
-    <div class="btn-group btn-group-justified">
+    <div class="btn-group btn-group-justified ">
         <form name="userForm"  novalidate>
-           
+            <div class="row">
             <div class="form-group col-md-6">
                 <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
                 <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="internalUserDrtvCtrl.user.arabicName" required/>
@@ -23,34 +23,40 @@
                     {{messages.label.required}}
                 </span>
             </div>
+        </div>
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="mobileNumber1" class="required">{{messages.label.mobileNumber1}}</label>
-                <input type="text" class="form-control" id="mobileNumber1" name="mobileNumber1" ng-model="internalUserDrtvCtrl.user.mobileNumber1" required/>
-                <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required" >
+                <input type="number" class="form-control" id="mobileNumber1" name="mobileNumber1" ng-model="internalUserDrtvCtrl.user.mobileNumber1" required/>
+                <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required && !userForm.mobileNumber1.$pristine" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
                 <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
-                <input type="text" class="form-control" id="mobileNumber2" name="mobileNumber2" ng-model="internalUserDrtvCtrl.user.mobileNumber2" required/>
-                <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
+                <input type="number" class="form-control" id="mobileNumber2" name="mobileNumber2" ng-model="internalUserDrtvCtrl.user.mobileNumber2" required/>
+                <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required && !userForm.mobileNumber2.$pristine" >
                     {{messages.label.required}}
                 </span>
             </div>
+        </div>
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
-                <input type="text" class="form-control" id="emailAddress" name="emailAddress" ng-model="internalUserDrtvCtrl.user.emailAddress" required/>
-                <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required" >
+                <input type="email" class="form-control" id="emailAddress" name="emailAddress" ng-model="internalUserDrtvCtrl.user.emailAddress" required/>
+                <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required && !userForm.emailAddress.$pristine" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
                 <label for="civilId" class="required">{{messages.label.civilId}}</label>
-                <input type="text" class="form-control" id="civilId" name="civilId" ng-model="internalUserDrtvCtrl.user.civilId" required/>
-                <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required" >
+                <input type="number" class="form-control" id="civilId" name="civilId" ng-model="internalUserDrtvCtrl.user.civilId" required/>
+                <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required && !userForm.civilId.$pristine" >
                     {{messages.label.required}}
                 </span>
             </div>
+        </div>
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="loginName" class="required">{{messages.label.loginName}}</label>
                 <input type="text" class="form-control" id="loginName" name="loginName" ng-model="internalUserDrtvCtrl.user.loginName" required/>
@@ -58,7 +64,6 @@
                     {{messages.label.required}}
                 </span>
             </div>
-            
             <div class="form-group col-md-6">
                 <label for="role" class="required">{{messages.label.role}}</label>
                 <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.user.role"></select>
@@ -66,22 +71,24 @@
                     {{messages.label.required}}
                 </span>
             </div>
-
-            <div class="form-group col-md-6 ou">
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
                 <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
-                <select class="form-control ou choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in internalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="internalUserDrtvCtrl.user.organizationUnit"></select>
+                <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in internalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="internalUserDrtvCtrl.user.organizationUnit"></select>
                 <span ng-show="userForm.organizationUnit.$touched && userForm.organizationUnit.$error.required" >
                     {{messages.label.required}}
-                </span>
+                </span> 
             </div>
-       
-            
-        <div class="form-check ">
+        </div>
+        
+     <div class="form-check">
             <div class="form-check form-check-inline" >
                 <label for="isActive" class="form-check-label" >{{messages.label.isActive}}</label>
                 <input type="checkbox" class="form-check-input" id="isActive" ng-model="internalUserDrtvCtrl.user.isActive" />
             </div>
         </div>
+   
             <div class="btn-group" >
                 <div class="btn-group row" ng-if="!internalUserDrtvCtrl.editUser">
                     <div class="col-sm-10">
@@ -175,7 +182,7 @@
                         {{u.loginName}}
                     </td>
                     <td>
-                        {{u.role.arabicName}}
+                        {{u.role.code}}
                     </td>
 
                     <td>

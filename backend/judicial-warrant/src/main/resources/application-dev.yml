@@ -44,20 +44,20 @@ spring:
   profiles:
     active: dev
   mail:
-   host: smtp.gmail.com
-   port: 587
-   username: attiaelsady@gmail.com
-   password: attia123/
+   host: mail.informatique-eg.com
+   port: 25
+   username: attabdullah@informatique-eg.com
+   password: "#$AaPw57"
    protocol: smtp
-   tls: true
+#   tls: true
    test-connection: false
    properties:
       mail:
         smtp:
           auth: true
-          starttls:
-            enable: true
-          ssl.trust: smtp.gmail.com
+#          starttls:
+#            enable: true
+#          ssl.trust: secure134.inmotionhosting.com
     
     
      
