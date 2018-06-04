@@ -33,6 +33,7 @@ public class RequestTypeAttachmentTypeMapper extends AbstractModelMapper<Request
 			dto.setId(entity.getId());
 			dto.setIsActive(entity.getIsActive());
 			dto.setListOrder(entity.getListOrder());
+			dto.setVersion(entity.getVersion());
 			dto.setRequestType(requestTypeMapper.toDto(entity.getRequestType()));
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
 		}
@@ -50,6 +51,7 @@ public class RequestTypeAttachmentTypeMapper extends AbstractModelMapper<Request
 			entity.setId(nullId ? null : dto.getId());
 			entity.setIsActive(dto.getIsActive());
 			entity.setListOrder(dto.getListOrder());
+			entity.setVersion(dto.getVersion());
 			entity.setRequestType(requestTypeMapper.toEntity(dto.getRequestType()));
 			entity.setAttachmentType(attachmentTypeMapper.toEntity(dto.getAttachmentType()));
 		}
