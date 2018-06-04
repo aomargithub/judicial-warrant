@@ -26,11 +26,11 @@ public class MailUtil {
 
 	}
 
-	public void sendAccountCreation(String loginName, String password, String recipient) throws Exception{
+	public void sendAccountCreation(String loginName, String password, String recipient,String clientNameEn,String clientNameAr) throws Exception{
 		String body = "<table style=\"width:100%\">\r\n" + "<caption><h2>" + loginName + "</h2></caption>\r\n"
-				+ "  <tr>\r\n" + "    <th>Dear Client ,<br/>\r\n" + "    We create account in judicial Warrant<br/>\r\n"
+				+ "  <tr>\r\n" + "    <th>Dear "+clientNameEn+" ,<br/>\r\n" + "    We create account in judicial Warrant<br/>\r\n"
 				+ "    and your password is :" + password + "\r\n" + "    </th>\r\n"
-				+ "    <th>عزيزى العميل<br/> تم انشاء حساب فى الضبطية القضائية <br/>وكلمة السر :"+password+"</th> \r\n"
+				+ "    <th>"+clientNameAr+" عزيزى <br/> تم انشاء حساب فى الضبطية القضائية <br/>وكلمة السر :"+password+"</th> \r\n"
 				+ "   \r\n" + "  </tr>\r\n" + " \r\n" + "</table>";
 		send(body, recipient, "Creation Account in judical warrant");
 

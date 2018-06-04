@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 			savedUserDto = userMapper.toDto(user);
 
-			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress());
+			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress(),dto.getEnglishName(),dto.getArabicName());
 			 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
