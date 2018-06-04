@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto create(UserDto dto) throws JudicialWarrantException {
+	public UserDto save(UserDto dto) throws JudicialWarrantException {
 		if(dto.getOrganizationUnit().getIsInternal()) {
 			return createInternal(dto);
 		} else {

@@ -12,7 +12,7 @@ public interface UserHandler extends Serializable{
 	ResponseEntity<List<UserDto>> getAll() throws JudicialWarrantException;
 	ResponseEntity<List<UserDto>> getByUserTypeCode(String  userTypeCode) throws JudicialWarrantException;
 
-	ResponseEntity<UserDto> createUser(final UserDto dto) throws JudicialWarrantException;
+	ResponseEntity<UserDto> save(final UserDto dto) throws JudicialWarrantException;
 	ResponseEntity<UserDto> createUserInternal(final UserDto dto) throws JudicialWarrantException;
 	ResponseEntity<UserDto> createUserExternal(final UserDto dto) throws JudicialWarrantException;
 
