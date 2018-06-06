@@ -62,7 +62,7 @@ public class RequestServiceImpl implements InternalRequestService {
 			String serial = requestSerialService.getRequestSerial(requestType);
 			request.setSerial(serial);
 			request = requestRepository.save(request);
-			contentManager.createFolder(request.getSerial(), false, null);
+		//	contentManager.createFolder(request.getSerial(), false, null);
 			requestHistoryLogService.create(request);
 		} catch (JudicialWarrantException e) {
 			throw e;
