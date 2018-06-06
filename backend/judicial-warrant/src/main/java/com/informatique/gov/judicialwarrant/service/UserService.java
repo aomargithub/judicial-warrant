@@ -11,7 +11,7 @@ public interface UserService extends Serializable{
 	List<UserDto> getAll() throws JudicialWarrantException;
 	List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException;
 
-	UserDto create(final UserDto dto) throws JudicialWarrantException;
+	UserDto save(final UserDto dto) throws JudicialWarrantException;
 	public UserDto createInternal(UserDto dto) throws JudicialWarrantException ;
 	public UserDto createExternal(UserDto dto) throws JudicialWarrantException;
 

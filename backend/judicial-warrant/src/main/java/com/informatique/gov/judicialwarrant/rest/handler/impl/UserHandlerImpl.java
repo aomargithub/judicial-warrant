@@ -44,11 +44,11 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<UserDto> createUser(UserDto dto) throws JudicialWarrantException {
+	public ResponseEntity<UserDto> save(UserDto dto) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
            
-			UserDto savedDto = userService.create(dto);
+			UserDto savedDto = userService.save(dto);
 							
 			response = ResponseEntity.ok(savedDto);
 			

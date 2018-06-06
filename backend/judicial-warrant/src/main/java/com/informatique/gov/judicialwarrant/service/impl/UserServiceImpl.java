@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public UserDto create(UserDto dto) throws JudicialWarrantException {
+	public UserDto save(UserDto dto) throws JudicialWarrantException {
 		if(dto.getOrganizationUnit().getIsInternal()) {
 			return createInternal(dto);
 		} else {
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 			savedUserDto = userMapper.toDto(user);
 
-			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress());
+			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress(),dto.getEnglishName(),dto.getArabicName());
 			 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
