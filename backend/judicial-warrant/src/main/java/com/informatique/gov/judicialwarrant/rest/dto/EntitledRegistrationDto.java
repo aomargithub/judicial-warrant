@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import java.util.Set;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,5 +18,6 @@ public class EntitledRegistrationDto implements UserModel<Long> {
 	private Long id;
 	private RequestDto request;
 	private CapacityDelegationDto capacityDelegation;
+	private Set<EntitledDto> entitled;
 	
 }

@@ -62,5 +62,8 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	
 	@Column(name="JOB_TITLE")
 	private String jobTitle;
+	
+	@Column(name = "LAW_NO")
+	private Long lawNo;
 
 }

@@ -1,6 +1,7 @@
 package com.informatique.gov.judicialwarrant.service;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -11,7 +12,7 @@ public interface EntitledService extends Serializable{
 
 	EntitledDto getById(Long id) throws JudicialWarrantException;
 
-	
+	List<EntitledDto> getAllByEntitledRegistrationSerial(String serial) throws JudicialWarrantException;
 
 	Integer deleteByEntitledRegistrationId(Long entitledRegistrationId) throws JudicialWarrantException;
 

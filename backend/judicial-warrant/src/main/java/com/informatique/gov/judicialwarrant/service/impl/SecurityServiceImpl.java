@@ -93,6 +93,7 @@ public class SecurityServiceImpl implements SecurityService{
 		userDetailsDto.setEnglishName(userDetails.getEnglishName());
 		userDetailsDto.setMobileNumber1(userDetails.getMobileNumber1());
 		userDetailsDto.setMobileNumber2(userDetails.getMobileNumber2());
+		userDetailsDto.setUsername(userDetails.getUsername());
 		userDetailsDto.setOrganizationUnit(toDto(userDetails.getOrganizationUnit()));
 		userDetailsDto.setRole(userDetails.getAuthorities().iterator().next().getAuthority());
 		userDetailsDto.setUserType(toDto(userDetails.getUserType()));

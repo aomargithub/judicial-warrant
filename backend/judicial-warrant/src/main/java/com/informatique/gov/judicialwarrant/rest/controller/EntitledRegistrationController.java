@@ -2,6 +2,8 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -22,7 +25,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/erRequests")
+@RequestMapping("/entitledRegistrations")
 public class EntitledRegistrationController {
 
 	private EntitledRegistrationHandler entitledRegistrationHandlerHandler;
@@ -30,6 +33,13 @@ public class EntitledRegistrationController {
 	* 
 	*/
 
+	@GetMapping("/report/serial={serial}")
+	@ResponseBody
+	public ResponseEntity<?> generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response,
+			@PathVariable String serial) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.generateEntitledRegistrationReportByRequestSerial(response, serial);
+	}
+	
 	@GetMapping
 	public ResponseEntity<?> getAll(Authentication authentication) throws JudicialWarrantException {
 		return  entitledRegistrationHandlerHandler.getAll(authentication);
