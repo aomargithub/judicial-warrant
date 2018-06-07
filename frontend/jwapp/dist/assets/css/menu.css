@@ -81,6 +81,7 @@ table th{
 }
 ol{
     float: left;
+    
 }
 
 .required:after { 
@@ -88,12 +89,12 @@ ol{
     color:red;
     font-size: 20px;
  }
- .ou{
-     float: right;
 
+ .page-header h3{
+     margin-right: 450px !important;
+     margin-top: -120!important;
+     padding-bottom: 50px;
  }
-
-
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -265,7 +266,10 @@ a.article, a.article:hover {
 }
 
 .btn-group .form-check div {
-    margin: 0px 20px;
+    margin-right:  20px;
+}
+.rigth{
+    margin-right:  -15px;
 }
 
 

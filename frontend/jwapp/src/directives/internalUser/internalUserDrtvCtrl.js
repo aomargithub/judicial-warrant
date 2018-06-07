@@ -5,9 +5,11 @@ module.exports = function(app){
         vm.editId = null;
         vm.message = null;
         vm.editUser = null;
+        vm.emailPattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
+        vm.mobilePattern="/^[0-9]{10,10}$/;"
         vm.users = [];
         vm.roles = [];
-        vm.organizations = [];
+        vm.organizations = []; 
        
 
         vm.page = {
@@ -15,7 +17,7 @@ module.exports = function(app){
             end: 0
         };
 
-        internalUserSrvc.getAll().then(function(response){
+        internalUserSrvc.getAll().then(function(response){ 
             vm.users = response.data;
         });
 
@@ -23,7 +25,7 @@ module.exports = function(app){
             vm.roles = response.data;
         });
 
-        organizationUnitSrvc.getAll().then(function(response){
+        organizationUnitSrvc.getInternal().then(function(response){
             vm.organizations = response.data;
         });
 
@@ -50,6 +52,7 @@ module.exports = function(app){
             internalUserSrvc.getById(id).then(function(response){
                 vm.editUser = response.data;
                 vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+
                 vm.user = angular.copy(vm.editUser);
                 resetEntryForm();
             });
@@ -61,7 +64,7 @@ module.exports = function(app){
                 vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.user = angular.copy(vm.editUser);
                 vm.message = null;
-                resetEntryForm(); 
+                resetEntryForm();
             });
         };
 

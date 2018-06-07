@@ -10,4 +10,5 @@ module.exports = function(app){
     require('./breadcrumbs')(app);
     require('./requestTypesMenu')(app);
     require('./internalUser')(app);
+    require('./externalUser')(app);
 };

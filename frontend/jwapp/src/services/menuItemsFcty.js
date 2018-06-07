@@ -84,7 +84,8 @@ module.exports = function(app){
          //===================================
         var usersItem = new Item()
         usersItem.codeValue('USERS').routeValue('usersSubmenu').classesValue(["glyphicon", "glyphicon-user"]);
-        var internalUsersSubItem = new SubItem();
+        var internalUsersSubItem = new SubItem(),
+        externalUsersSubItem = new SubItem();
 
 
         internalUsersSubItem.codeValue('INTERNAL_USERS')
@@ -93,8 +94,16 @@ module.exports = function(app){
             return role === appRoleFcty.mojAdmin.code;
         });
 
+        externalUsersSubItem.codeValue('EXTERNAL_USERS')
+        .routeValue('.externalUsers')
+        .showFilterValue(function(role){
+            return role === appRoleFcty.mojAdmin.code;
+        });
 
-        usersItem.addSubItem(internalUsersSubItem);
+
+        usersItem.addSubItem(internalUsersSubItem)
+
+        .addSubItem(externalUsersSubItem);
 
         var menu = [lookupsItem, usersItem];
 

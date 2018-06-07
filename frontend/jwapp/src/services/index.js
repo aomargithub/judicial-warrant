@@ -16,5 +16,6 @@ module.exports = function(app){
     require('./requestTypeSrvc')(app);
     require('./messageBarModeSrvc')(app);
     require('./internalUserSrvc')(app);
+    require('./externalUserSrvc')(app);
     require('./roleSrvc')(app);
 };

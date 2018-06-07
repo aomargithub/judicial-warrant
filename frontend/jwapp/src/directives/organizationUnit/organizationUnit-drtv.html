@@ -1,4 +1,7 @@
 <div>
+        <div class="page-header">
+                <h3>{{messages.ORGANIZATION_UNITS}}</h3> 
+              </div>
     <message-drtv close-callback="organizationUnitDrtvCtrl.closeMessage" 
                   refetch-callback = "organizationUnitDrtvCtrl.refetch" 
                   message="organizationUnitDrtvCtrl.message" 
@@ -10,14 +13,14 @@
         <form name="organizationUnitForm" novalidate>
             <div  class="form-group col-md-6" >
                 <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" required/>
+                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" placeholder={{messages.label.arabicNamePH}} required/>
                 <span ng-show="organizationUnitForm.arabicName.$touched && organizationUnitForm.arabicName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6">
                 <label for="englishName" class="required">{{messages.label.englishName}}</label>
-                <input type="text" class="form-control " id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" required/>
+                <input type="text" class="form-control " id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" placeholder={{messages.label.englishNamePH}} required/>
                 <span ng-show="organizationUnitForm.englishName.$touched && organizationUnitForm.englishName.$error.required" >
                         {{messages.label.required}}
                 </span>

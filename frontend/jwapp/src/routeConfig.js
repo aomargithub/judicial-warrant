@@ -52,6 +52,17 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('internalUsers')
                     }
                 }
+            }).state('root.externalUsers', {
+                parent: 'root',
+                data: {
+                    label : 'externalUsers'
+                },
+                url : '/externalUsers',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('externalUsers')
+                    }
+                }
             });
     });
 };
