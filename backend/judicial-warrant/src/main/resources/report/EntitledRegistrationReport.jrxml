@@ -82,7 +82,7 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="95" y="0" width="265" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+				<reportElement x="125" y="0" width="265" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -92,28 +92,40 @@
 				<text><![CDATA[Entitled Registration Report]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="136" y="56" width="100" height="30" uuid="2ea3021b-f307-4bc0-862c-fa24ab4deeef"/>
+				<reportElement x="136" y="68" width="100" height="30" uuid="2ea3021b-f307-4bc0-862c-fa24ab4deeef"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{Request_Serial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="136" y="91" width="100" height="30" uuid="f9d3b05e-39f8-4a98-a63b-cd02db4791de"/>
+				<reportElement x="136" y="103" width="100" height="30" uuid="f9d3b05e-39f8-4a98-a63b-cd02db4791de"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{CapacityDelegation_JobTitle}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="56" width="110" height="15" uuid="e5cf353c-7d0a-471d-832b-50263fec3855"/>
+				<reportElement x="0" y="68" width="130" height="15" uuid="e5cf353c-7d0a-471d-832b-50263fec3855"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[Serial / رقم التسلسل]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="99" width="110" height="15" uuid="16cf5666-be1d-4e8a-82b7-3de1daabaa83"/>
+				<reportElement x="0" y="103" width="130" height="15" uuid="16cf5666-be1d-4e8a-82b7-3de1daabaa83"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[Job Title / المسمى الوظيفى]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="30" width="265" height="25" uuid="da47cc8c-7208-4c82-8177-aa7271039ea1">
+				<reportElement x="125" y="30" width="265" height="25" uuid="da47cc8c-7208-4c82-8177-aa7271039ea1">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
-					<font size="19" isBold="true"/>
+					<font fontName="DejaVu Sans" size="19" isBold="true"/>
 				</textElement>
 				<text><![CDATA[تقرير التسجيل المعنون]]></text>
 			</staticText>
@@ -125,7 +137,7 @@
 	<columnHeader>
 		<band height="36">
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="0" y="5" width="42" height="30" backcolor="#BAB6B6" uuid="87dd3a0e-fd90-4db0-8971-429888fdb6d7">
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="1" y="5" width="42" height="30" backcolor="#BAB6B6" uuid="87dd3a0e-fd90-4db0-8971-429888fdb6d7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adadd440-3a9c-4ee8-8ca7-a012e2c520e8"/>
 				</reportElement>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
@@ -134,6 +146,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[id]]></text>
 			</staticText>
 			<staticText>
@@ -146,7 +161,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[englishName]]></text>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[English Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="123" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="12871fc9-b0a4-48a3-8e57-cd710215015c">
@@ -158,7 +176,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[arabicName]]></text>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Arabic Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="202" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="7a769cb0-f0e0-4369-bca7-1b1427531045">
@@ -170,6 +191,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[civilId]]></text>
 			</staticText>
 			<staticText>
@@ -182,7 +206,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[mobileNumber1]]></text>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Mobile Number1]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="360" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="63227592-3b2d-4ebf-ad09-b4bed530112b">
@@ -194,7 +221,10 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[mobileNumber2]]></text>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Mobile Number2]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="439" y="5" width="116" height="30" backcolor="#BAB6B6" uuid="a5729925-1b6e-48a4-99ad-460d9d50d697">
@@ -206,14 +236,17 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<text><![CDATA[emailAddress]]></text>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Email Address]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="29">
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="-1" width="42" height="30" uuid="60d8bd67-88b9-4280-952d-647248ff7db6">
+				<reportElement positionType="FixRelativeToBottom" x="1" y="-1" width="42" height="30" uuid="60d8bd67-88b9-4280-952d-647248ff7db6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adadd440-3a9c-4ee8-8ca7-a012e2c520e8"/>
 				</reportElement>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
@@ -222,6 +255,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -234,6 +270,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{englishName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -246,6 +285,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{arabicName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -258,6 +300,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{civilId}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -270,6 +315,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{mobileNumber1}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -282,6 +330,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{mobileNumber2}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -294,6 +345,9 @@
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{emailAddress}]]></textFieldExpression>
 			</textField>
 		</band>
