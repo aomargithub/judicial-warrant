@@ -14,7 +14,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 import lombok.AllArgsConstructor;
 
 
-@Component
+@Component("requestForInternalMapper")
 @AllArgsConstructor
 public class RequestForInternalMapper extends AbstractModelMapper<Request, RequestDto, Long>{
 

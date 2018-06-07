@@ -301,4 +301,5 @@ ADD (IS_INTERNAL NUMBER(1, 0) NOT NULL);
 
 alter table APP_ROLE add is_internal number(1) not null;
 
-
+ALTER TABLE CAPACITY_DELEGATION 
+ADD (LAW_NO NUMBER NOT NULL);

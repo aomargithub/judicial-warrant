@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,53 +14,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.handler.AttachmentTypeHandler;
+import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
+import com.informatique.gov.judicialwarrant.rest.handler.RequestAttachmentHandler;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/attachmentTypes")
-public class AttachmentTypeController implements Serializable {
-
+@RequestMapping("/requestAttachment")
+public class RequestAttachmentController implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8218542953772806708L;
-
-	private AttachmentTypeHandler attachmentTypeHandler;
-
 	
-    @GetMapping
+	private static final long serialVersionUID = -7714345226533571986L;
+	private RequestAttachmentHandler requestAttachmentHandler;
+
+	@GetMapping
 	public ResponseEntity<?> getAll() throws JudicialWarrantException {
-		return attachmentTypeHandler.getAll();
+		return requestAttachmentHandler.getAll();
 	}
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return attachmentTypeHandler.getById(id, eTag);
+		return requestAttachmentHandler.getById(id, eTag);
+	}
+	
+	@GetMapping(path = "/{serial}")
+	public ResponseEntity<?> getAllByRequestSerial(@PathVariable String serial,
+			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
+		return requestAttachmentHandler.getAllByRequestSerial(serial);
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
-	public ResponseEntity<?> save(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto) throws JudicialWarrantException {
-		return attachmentTypeHandler.save(attachmentTypeDto);
+	public ResponseEntity<?> create(@Valid @RequestBody RequestAttachmentDto dto) throws JudicialWarrantException {
+		return requestAttachmentHandler.create(dto);
 	}
 
 	@PutMapping("/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
-	public ResponseEntity<?> update(@Valid @RequestBody AttachmentTypeDto attachmentTypeDto, @PathVariable Long id,
+	public ResponseEntity<?> update(@Valid @RequestBody RequestAttachmentDto dto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return attachmentTypeHandler.update(attachmentTypeDto, id, eTag);
+		return requestAttachmentHandler.update(dto, id, eTag);
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICER')")
 	public ResponseEntity<?> delete(@PathVariable Long id) throws JudicialWarrantException {
-		return attachmentTypeHandler.delete(id);
+		return requestAttachmentHandler.delete(id);
 	}
 
 }

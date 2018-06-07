@@ -3,6 +3,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 import static org.springframework.util.Assert.notNull;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -66,6 +67,21 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		return dto;
 	}
 	
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<EntitledDto> getAllByEntitledRegistrationSerial(String serial) throws JudicialWarrantException {
+		List<EntitledDto> entitledDtos = null;
+		try {	
+			notNull(serial, "serial must be set");
+			List<Entitled> entitleds = entitledRepository.findByEntitledRegistrationRequestSerial(serial);
+			entitledDtos = entitledMapper.toDto(entitleds);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return entitledDtos;
+	}
+	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Set<Entitled> save(Set<Entitled> entities, EntitledRegistration entitledRegistration) throws JudicialWarrantException {
@@ -101,6 +117,7 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 			
 			entity.setOrganizationUnit(organizationUnitService.getByCurrentUser());
 			entity.setCurrentStatus(entitledStatusRepository.findByCode(EntitledStatusEnum.DRAFT.getCode()));
+			entity.setEntitledRegistration(entitledRegistration);
 			savedEntity = entitledRepository.save(entity);
 			
 			Set<EntitledAttachment> attachments = entitledAttachmentService.create(savedEntity.getAttachments(), savedEntity);
@@ -276,4 +293,5 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		}
 		return entities;
 	}
+
 }

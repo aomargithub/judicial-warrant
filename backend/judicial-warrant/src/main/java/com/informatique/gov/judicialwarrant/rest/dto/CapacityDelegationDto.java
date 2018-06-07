@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,5 +18,8 @@ public class CapacityDelegationDto implements UserModel<Long> {
 
 	private Long id;
 	private RequestDto request;
+	@NotNull
 	private String jobTitle;
+	@NotNull
+	private Long lawNo;
 }

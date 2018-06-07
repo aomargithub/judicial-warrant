@@ -4,6 +4,8 @@ import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,6 +31,22 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 	private static final long serialVersionUID = 1L;
 	private EntitledRegistrationService entitledRegistrationService;
 
+	@Override
+	public ResponseEntity<?> generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response,
+			String serial) throws JudicialWarrantException {
+		ResponseEntity<?> responseEntity = null;
+		try {	
+			entitledRegistrationService.generateEntitledRegistrationReportByRequestSerial(response, serial);
+			responseEntity = ResponseEntity.ok(response);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return responseEntity;
+	}
+	
 	@Override
 	public ResponseEntity<List<EntitledRegistrationDto>> getAll(Authentication authentication) throws JudicialWarrantException {
 		

@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.rest.request;
 import java.io.Serializable;
 
 import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
-
 import lombok.Data;
 
 @Data

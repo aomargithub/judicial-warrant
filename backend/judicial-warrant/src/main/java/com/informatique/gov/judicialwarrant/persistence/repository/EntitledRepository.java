@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.persistence.repository;
 
 
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +22,7 @@ public interface EntitledRepository extends JpaRepository<Entitled, Long>{
 	Integer deleteByEntitledRegistrationId(Long id);
 	
 	Set<Entitled> findByEntitledRegistrationId(Long id);
+	
+	List<Entitled> findByEntitledRegistrationRequestSerial(String serial);
 
 }
