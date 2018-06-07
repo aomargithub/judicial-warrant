@@ -22,7 +22,7 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.UserHandler;
 import com.informatique.gov.judicialwarrant.rest.request.ChangePassword;
-import com.informatique.gov.judicialwarrant.support.validations.UserValidator;
+import com.informatique.gov.judicialwarrant.support.validator.UserDtoValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -37,11 +37,11 @@ public class UserController implements Serializable{
 	private static final long serialVersionUID = -7427269755961905168L;
 	
     private UserHandler userHandler;
-    private UserValidator userValidator;
+    private UserDtoValidator userDtoValidator;
 
     @InitBinder("userDto")
 	private void roleInitBinder(WebDataBinder binder) {
-		binder.addValidators(userValidator);
+		binder.addValidators(userDtoValidator);
 	}
 	
     @GetMapping

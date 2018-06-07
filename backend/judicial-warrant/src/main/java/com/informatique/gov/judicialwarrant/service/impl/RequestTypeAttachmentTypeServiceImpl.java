@@ -7,12 +7,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.informatique.gov.judicialwarrant.domain.AttachmentType;
+import com.informatique.gov.judicialwarrant.domain.RequestType;
 import com.informatique.gov.judicialwarrant.domain.RequestTypeAttachmentType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeAttachmentTypeRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
+import com.informatique.gov.judicialwarrant.service.RequestTypeService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +33,8 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 	private static final long serialVersionUID = -6476773292451702937L;
 	private RequestTypeAttachmentTypeRepository requestTypeAttachmentTypeRepository;
 	private ModelMapper<RequestTypeAttachmentType, RequestTypeAttachmentTypeDto, Short> requestTypeAttachmentTypeMapper;
+	private RequestTypeRepository requestTypeRepository;
+	private AttachmentTypeRepository attachmentTypeRepository;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -79,6 +87,10 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		try {
 			notNull(requestTypeAttachmentTypeDto, "dto must be set");
 			requestTypeAttachmentType = requestTypeAttachmentTypeMapper.toEntity(requestTypeAttachmentTypeDto);
+			RequestType requestType=requestTypeRepository.findByCode(requestTypeAttachmentTypeDto.getRequestType().getCode());
+			AttachmentType attachmentType=attachmentTypeRepository.findById(requestTypeAttachmentTypeDto.getAttachmentType().getId()).get();
+			requestTypeAttachmentType.setRequestType(requestType);
+			requestTypeAttachmentType.setAttachmentType(attachmentType);
 			requestTypeAttachmentType = requestTypeAttachmentTypeRepository.save(requestTypeAttachmentType);
 			requestTypeAttachmentTypeDto = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentType);
 		} catch (Exception e) {

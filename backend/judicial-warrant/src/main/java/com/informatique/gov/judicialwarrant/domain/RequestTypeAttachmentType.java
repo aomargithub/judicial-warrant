@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,6 +26,13 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "requestType", "attachmentType"})
 @EqualsAndHashCode(of = {"requestType", "attachmentType"}, callSuper = false)
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "RequestTypeAttachmentType.fat",
+					  attributeNodes = {
+							  @NamedAttributeNode(value = "requestType"),
+							  @NamedAttributeNode(value = "attachmentType")
+					  })
+})
 public class RequestTypeAttachmentType extends DomainEntity<Short> {
 	
 	/**
