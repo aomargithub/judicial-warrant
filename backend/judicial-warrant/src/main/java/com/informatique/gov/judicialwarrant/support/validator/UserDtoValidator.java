@@ -1,4 +1,4 @@
-package com.informatique.gov.judicialwarrant.support.validations;
+package com.informatique.gov.judicialwarrant.support.validator;
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class UserValidator implements Validator, Serializable {
+public class UserDtoValidator implements Validator, Serializable {
 
 	/**
 	 * 

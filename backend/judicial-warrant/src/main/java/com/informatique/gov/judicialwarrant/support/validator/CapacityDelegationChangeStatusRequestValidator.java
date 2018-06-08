@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Component
-public class CapacityDelegationAttachmentTypeValidators implements Validator, Serializable{
+public class CapacityDelegationChangeStatusRequestValidator implements Validator, Serializable{
 
 	/**
 	 * 

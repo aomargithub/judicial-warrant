@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
-import com.informatique.gov.judicialwarrant.support.validations.RoleValidator;
+import com.informatique.gov.judicialwarrant.support.validator.RoleValidator;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor

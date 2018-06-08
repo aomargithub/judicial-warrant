@@ -1,4 +1,4 @@
-package com.informatique.gov.judicialwarrant.support.validations;
+package com.informatique.gov.judicialwarrant.support.validator;
 
 import java.io.Serializable;
 

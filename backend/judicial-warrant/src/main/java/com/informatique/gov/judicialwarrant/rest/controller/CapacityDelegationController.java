@@ -24,7 +24,7 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
 import com.informatique.gov.judicialwarrant.rest.handler.CapacityDelegationHandler;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
-import com.informatique.gov.judicialwarrant.support.validator.CapacityDelegationAttachmentTypeValidators;
+import com.informatique.gov.judicialwarrant.support.validator.CapacityDelegationChangeStatusRequestValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -43,13 +43,13 @@ public class CapacityDelegationController implements Serializable{
 	 */
 	
 	private CapacityDelegationHandler capacityDelegationHandler;
-	private CapacityDelegationAttachmentTypeValidators capacityDelegationAttachmentTypeValidators;
+	private CapacityDelegationChangeStatusRequestValidator capacityDelegationChangeStatusRequestValidator;
 	/**
 	* 
 	*/
 	@InitBinder("capacityDelegationChangeStatusRequest")
-	private void capacityDelegationInitBinder(WebDataBinder binder) {
-		binder.addValidators(capacityDelegationAttachmentTypeValidators);
+	private void setupBinder(WebDataBinder binder) {
+		binder.addValidators(capacityDelegationChangeStatusRequestValidator);
 	}
 
 	@GetMapping
