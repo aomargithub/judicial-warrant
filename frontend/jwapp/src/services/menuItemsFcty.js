@@ -60,16 +60,20 @@ module.exports = function(app){
         lookupsItem.codeValue('LOOKUPS').routeValue('lookupsSubmenu').classesValue(["glyphicon", "glyphicon-cog"]);
 
         var organizationUnitsSubItem = new SubItem(), 
-        attachmentTypesSubItem = new SubItem();
+        attachmentTypesSubItem = new SubItem(),
+        requestTypeAttachmentTypesSubItem = new SubItem();
 
         organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
         .routeValue('.organizationUnits')
         .showFilterValue(function(role){
-            return role === appRoleFcty.mojAdmin.code;
-        });
+            return role === appRoleFcty.mojAdmin.code;});
 
         attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
         .routeValue('.attachmentTypes')
+        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
+
+        requestTypeAttachmentTypesSubItem.codeValue('REQUEST-TYPE-ATTACHMENT-TYPES')
+        .routeValue('.requestTypeAttachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
 
 
@@ -77,7 +81,9 @@ module.exports = function(app){
         
 
         lookupsItem.addSubItem(organizationUnitsSubItem)
-                   .addSubItem(attachmentTypesSubItem);
+                   .addSubItem(attachmentTypesSubItem)
+                   .addSubItem(requestTypeAttachmentTypesSubItem);
+
 
         
         

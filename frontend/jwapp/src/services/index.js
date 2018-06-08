@@ -18,4 +18,5 @@ module.exports = function(app){
     require('./internalUserSrvc')(app);
     require('./externalUserSrvc')(app);
     require('./roleSrvc')(app);
+    require('./requestTypeAttachmentTypesSrvc')(app);
 };

@@ -63,6 +63,18 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('externalUsers')
                     }
                 }
+            }).state('root.requestTypeAttachmentTypes',{
+                parent: 'root',
+                data: {
+                    label :'requestTypeAttachmentTypes'
+                },
+                url: '/requestTypeAttachmentTypes',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('requestTypeAttachmentTypes')
+                    }
+                    
+                }
             });
     });
 };

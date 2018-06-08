@@ -14,5 +14,6 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('requestTypes', '/requestTypes/');
         urlSrvcProvider.addUrl('users', '/users/');
         urlSrvcProvider.addUrl('roles', '/roles/');
+        urlSrvcProvider.addUrl('requestTypeAttachmentTypes','/requestTypeAttachmentTypes/');
     });
 };

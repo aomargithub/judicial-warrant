@@ -11,4 +11,5 @@ module.exports = function(app){
     require('./requestTypesMenu')(app);
     require('./internalUser')(app);
     require('./externalUser')(app);
+    require('./requestTypeAttachmentType')(app);
 };
