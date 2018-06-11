@@ -14,6 +14,7 @@ import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.RequestTypeAttachmentTypeHandler;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
 
@@ -29,6 +30,20 @@ public class RequestTypeAttachmentTypeHandlerImpl implements RequestTypeAttachme
 	private static final long serialVersionUID = 6688098430686290417L;
 
 	private RequestTypeAttachmentTypeService requestTypeAttachmentTypeService;
+	
+	@Override
+	public ResponseEntity<List<RequestTypeAttachmentTypeDto>> getAll() throws JudicialWarrantException {
+		ResponseEntity<List<RequestTypeAttachmentTypeDto>> response = null;
+		try {
+			List<RequestTypeAttachmentTypeDto> dtos = requestTypeAttachmentTypeService.getAll();
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
 
 	@Override
 	public ResponseEntity<RequestTypeAttachmentTypeDto> getById(Short id, Short etag) throws JudicialWarrantException {
@@ -157,5 +172,7 @@ public class RequestTypeAttachmentTypeHandlerImpl implements RequestTypeAttachme
 		}
 		return response;
 	}
+
+	
 
 }

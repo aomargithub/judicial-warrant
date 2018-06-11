@@ -1,7 +1,8 @@
 module.exports = function(app){
-    app.service('requestTypeAttachmentTypes', function($http,urlSrvc){
+    app.service('requestTypeAttachmentTypeSrvc', function($http,urlSrvc,requestTypeSrvc){
         var self= this;
         var requestTypeAttachmentTypesUrl = urlSrvc.getUrl('requestTypeAttachmentTypes');
+       
         self.getAll=function(){
             return $http.get(requestTypeAttachmentTypesUrl);
         }

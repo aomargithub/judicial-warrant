@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
 import com.informatique.gov.judicialwarrant.domain.RequestType;
 import com.informatique.gov.judicialwarrant.domain.RequestTypeAttachmentType;
+import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeAttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeService;
@@ -35,6 +37,20 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 	private ModelMapper<RequestTypeAttachmentType, RequestTypeAttachmentTypeDto, Short> requestTypeAttachmentTypeMapper;
 	private RequestTypeRepository requestTypeRepository;
 	private AttachmentTypeRepository attachmentTypeRepository;
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<RequestTypeAttachmentTypeDto> getAll() throws JudicialWarrantException {
+		List<RequestTypeAttachmentTypeDto> dtos = null;
+		try {
+			List<RequestTypeAttachmentType> entities = requestTypeAttachmentTypeRepository.findAll();
+			dtos = requestTypeAttachmentTypeMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)

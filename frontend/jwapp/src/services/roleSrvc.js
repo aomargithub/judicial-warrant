@@ -6,7 +6,7 @@ module.exports = function(app){
         self.getInternal = function(){
             return $http.get(rolesUrl + "?isInternal=true");
         }
-        self.getInternalFalse = function(){
+        self.getExternal = function(){
             return $http.get(rolesUrl + "?isInternal=false");
         }
 

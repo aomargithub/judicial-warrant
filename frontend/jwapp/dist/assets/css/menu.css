@@ -81,6 +81,8 @@ table th{
 }
 ol{
     float: left;
+    margin-left: 30px;
+    margin-top: -25px;
     
 }
 
@@ -94,6 +96,12 @@ ol{
      margin-right: 450px !important;
      margin-top: -120!important;
      padding-bottom: 50px;
+ }
+
+ .left{
+     float: left !important;
+     margin-top: -20px;
+     margin-left: -30px;
  }
 /* ---------------------------------------------------
     SIDEBAR STYLE

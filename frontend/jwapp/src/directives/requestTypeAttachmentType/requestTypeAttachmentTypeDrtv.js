@@ -1,10 +1,10 @@
 module.exports = function(app){
     app.directive('requestTypeAttachmentType', function(){
-        return{
+        return {
             controllerAs: 'requestTypeAttachmentTypeDrtvCtrl',
             controller: 'requestTypeAttachmentTypeDrtvCtrl',
-            template: require('./request-type-attachment-type-drtv.html'),
-            replace: true 
+            template: require('./requestTypeAttachmentType-drtv.html'),
+            replace: true
         };
     });
-}
+};

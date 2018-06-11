@@ -1,6 +1,6 @@
 module.exports = function(app){
     app.factory('RequestTypeAttachmentType', function(){
-        return function RequestTypeAttachmentType(){
+        return function requestTypeAttachmentType(){
             var self = this;
             self.id=null;
             self.attachmentType = null;
@@ -9,5 +9,5 @@ module.exports = function(app){
             self.listOrder = null;
             self.version = null;
         }
-    })
-}
+    });
+};

@@ -1,5 +1,5 @@
-module.exports = function (app){
-    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($rootScope,$scope,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc,RequestTypeAttachmentType,requestTypeAttachmentTypesSrvc){
+module.exports = function(app){
+    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($rootScope,$scope,RequestTypeAttachmentType,requestTypeAttachmentTypeSrvc,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc){
         var vm = this;
         vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
         vm.editId = null;
@@ -18,7 +18,7 @@ module.exports = function (app){
             vm.attachments=response.data;
         });
 
-        requestTypeAttachmentTypesSrvc.getAll().then(function(response){
+        requestTypeAttachmentTypeSrvc.getAll().then(function(response){
             vm.requestTypeAttachmentTypes=response.data;
         });
 
@@ -32,7 +32,7 @@ module.exports = function (app){
         };
 
         vm.add = function(){
-            requestTypeAttachmentTypesSrvc.save(vm.requestTypeAttachmentType).then(function success(response){
+            requestTypeAttachmentTypeSrvc.save(vm.requestTypeAttachmentType).then(function success(response){
                 
                 vm.requestTypeAttachmentTypes.push(response.data);
                 vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
@@ -47,7 +47,7 @@ module.exports = function (app){
 
 
         vm.edit = function(id){
-            requestTypeAttachmentTypesSrvc.getById(id).then(function(response){
+            requestTypeAttachmentTypeSrvc.getById(id).then(function(response){
                 vm.editrequestTypeAttachmentType = response.data;
                 vm.editrequestTypeAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
 
@@ -58,7 +58,7 @@ module.exports = function (app){
 
 
         vm.refetch = function(id){
-            requestTypeAttachmentTypesSrvc.getById(id).then(function(response){
+            requestTypeAttachmentTypeSrvc.getById(id).then(function(response){
                 vm.editrequestTypeAttachmentType = response.data;
                 vm.editrequestTypeAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.requestTypeAttachmentType = angular.copy(vm.editrequestTypeAttachmentType);
@@ -70,7 +70,7 @@ module.exports = function (app){
 
         vm.update = function(){
             
-            requestTypeAttachmentTypesSrvc.update(vm.requestTypeAttachmentType).then(function success(response){
+            requestTypeAttachmentTypeSrvc.update(vm.requestTypeAttachmentType).then(function success(response){
                
                 var tempRequestAttachment = response.data;
                 vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
@@ -95,7 +95,7 @@ module.exports = function (app){
 
         vm.delete = function(id){
             
-            requestTypeAttachmentTypesSrvc.delete(id).then(function success(response){               
+            requestTypeAttachmentTypeSrvc.delete(id).then(function success(response){               
                 vm.requestTypeAttachmentTypes.forEach(function(ou, index){
                     if(ou.id === id){
                         vm.requestTypeAttachmentTypes.splice(index, 1);
@@ -133,7 +133,5 @@ module.exports = function (app){
         vm.closeMessage = function(){
             vm.message = null;
         };
-
-
     });
-};
+}

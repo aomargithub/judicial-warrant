@@ -1,5 +1,4 @@
-module.exports=function(app){
-    require('./requestTypeAttachmentTypeDrtv');
-    require('./requestTypeAttachmentTypeDrtvCtrl');
-
-};
+module.exports = function(app){
+    require('./requestTypeAttachmentTypeDrtv')(app);
+    require('./requestTypeAttachmentTypeDrtvCtrl')(app);
+}

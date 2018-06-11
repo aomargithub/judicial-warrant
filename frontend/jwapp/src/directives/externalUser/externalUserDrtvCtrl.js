@@ -25,7 +25,7 @@ module.exports = function(app){
             vm.organizations = response.data;
         });
 
-        roleSrvc.getInternalFalse().then(function(response){
+        roleSrvc.getExternal().then(function(response){
             vm.roles = response.data;
         });
 

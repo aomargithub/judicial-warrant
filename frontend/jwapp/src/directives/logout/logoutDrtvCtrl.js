@@ -1,6 +1,11 @@
 module.exports = function(app){
-    app.controller('logoutDrtvCtrl', function($state, authenticationSrvc){
+    app.controller('logoutDrtvCtrl', function($state, appSessionSrvc,authenticationSrvc){
         var vm = this;
+       vm.currentUser=[];
+      
+       vm.currentUser = appSessionSrvc.getCurrentUser();
+    
+      
 
         vm.doLogout = function(){
             authenticationSrvc.logout().then(function(status){

@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
 public interface RequestTypeAttachmentTypeService extends Serializable{
+	
+	List<RequestTypeAttachmentTypeDto> getAll() throws JudicialWarrantException;
 
 	RequestTypeAttachmentTypeDto getById(Short id) throws JudicialWarrantException;
 	

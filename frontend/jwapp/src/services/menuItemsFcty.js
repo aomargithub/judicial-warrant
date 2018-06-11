@@ -62,6 +62,7 @@ module.exports = function(app){
         var organizationUnitsSubItem = new SubItem(), 
         attachmentTypesSubItem = new SubItem(),
         requestTypeAttachmentTypesSubItem = new SubItem();
+       
 
         organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
         .routeValue('.organizationUnits')
@@ -72,20 +73,21 @@ module.exports = function(app){
         .routeValue('.attachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
 
-        requestTypeAttachmentTypesSubItem.codeValue('REQUEST-TYPE-ATTACHMENT-TYPES')
+        requestTypeAttachmentTypesSubItem.codeValue('requestTypeAttach')
         .routeValue('.requestTypeAttachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
 
 
-        
-        
 
+
+        
+        
         lookupsItem.addSubItem(organizationUnitsSubItem)
                    .addSubItem(attachmentTypesSubItem)
                    .addSubItem(requestTypeAttachmentTypesSubItem);
+                   
 
 
-        
         
          //===================================
         var usersItem = new Item()

@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
 public interface RequestTypeAttachmentTypeHandler extends Serializable{
+	
+	ResponseEntity<List<RequestTypeAttachmentTypeDto>> getAll() throws JudicialWarrantException;
 
 	ResponseEntity<RequestTypeAttachmentTypeDto> getById(Short id, Short etag) throws JudicialWarrantException;
 
