@@ -66,15 +66,15 @@ module.exports = function(app){
         organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
         .routeValue('.organizationUnits')
         .showFilterValue(function(role){
-            return role === appRoleFcty.mojAdmin.code;});
+            return role === appRoleFcty.admin.code;});
 
         attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
         .routeValue('.attachmentTypes')
-        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
+        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
 
         requestTypeAttachmentTypesSubItem.codeValue('REQUEST-TYPE-ATTACHMENT-TYPES')
         .routeValue('.requestTypeAttachmentTypes')
-        .showFilterValue(function(role){return role === appRoleFcty.mojAdmin.code;});
+        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
 
 
         
@@ -97,13 +97,13 @@ module.exports = function(app){
         internalUsersSubItem.codeValue('INTERNAL_USERS')
         .routeValue('.internalUsers')
         .showFilterValue(function(role){
-            return role === appRoleFcty.mojAdmin.code;
+            return role === appRoleFcty.admin.code;
         });
 
         externalUsersSubItem.codeValue('EXTERNAL_USERS')
         .routeValue('.externalUsers')
         .showFilterValue(function(role){
-            return role === appRoleFcty.mojAdmin.code;
+            return role === appRoleFcty.admin.code;
         });
 
 
