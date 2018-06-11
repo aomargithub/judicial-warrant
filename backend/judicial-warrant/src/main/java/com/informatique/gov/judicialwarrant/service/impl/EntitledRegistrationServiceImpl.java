@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -80,7 +81,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Request_Serial", entitledRegistrationDto.getRequest().getSerial());
 			parameters.put("CapacityDelegation_JobTitle", entitledRegistrationDto.getCapacityDelegation().getJobTitle());
-			ReportGeneration.generateReportToResponse("EntitledRegistrationReport", parameters, entitledDtos, response);
+			ReportGeneration.generateReportToResponse("EntitledRegistrationReport", parameters, entitledDtos, response, new Locale("ar"));
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}

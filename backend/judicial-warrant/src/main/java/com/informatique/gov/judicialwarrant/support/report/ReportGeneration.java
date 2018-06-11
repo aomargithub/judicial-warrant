@@ -5,11 +5,14 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -22,8 +25,8 @@ public class ReportGeneration implements Serializable {
 	private static final long serialVersionUID = -2157284910174686034L;
 
 	public static void generateReportToResponse(String reportName, Map<String, Object> parameters, List<? extends Object> reportList,
-			HttpServletResponse response) throws JRException, IOException, Exception {
-		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList);
+			HttpServletResponse response, Locale locale) throws JRException, IOException, Exception {
+		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList, locale);
 
 		response.setContentType("application/x-pdf");
 		response.setHeader("Content-disposition", "inline; filename=" + reportName + ".pdf");
@@ -32,16 +35,18 @@ public class ReportGeneration implements Serializable {
 		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 	}
 
-	public static void generateReportToFile(String reportName, Map<String, Object> parameters, List<? extends Object> reportList, String filePath)
+	public static void generateReportToFile(String reportName, Map<String, Object> parameters, List<? extends Object> reportList, String filePath, Locale locale)
 			throws JRException, Exception {
-		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList);
+		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList, locale);
 		JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
 	}
 	
-	public static JasperPrint generateReport(String reportName, Map<String, Object> parameters, List<? extends Object> reportList)
+	public static JasperPrint generateReport(String reportName, Map<String, Object> parameters, List<? extends Object> reportList, Locale locale)
 			throws JRException, Exception {
 		String reportLocation = getReportFullPath(reportName);
 		JasperReport jasperReport = JasperCompileManager.compileReport(reportLocation);
+		parameters.put(JRParameter.REPORT_LOCALE, locale);
+		parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE, loadReportBundle(locale));
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
 				new JRBeanCollectionDataSource(reportList));
 		return jasperPrint;
@@ -52,6 +57,11 @@ public class ReportGeneration implements Serializable {
 		String path = ClassLoader.getSystemClassLoader().getResource("report/" + reportName + ".jrxml").getPath();
 		fullPath = URLDecoder.decode(path, "UTF-8");
 		return fullPath;
+	}
+	
+	public static ResourceBundle loadReportBundle(Locale locale) {
+		ResourceBundle bundle = ResourceBundle.getBundle("report/report", locale);
+		return bundle;
 	}
 
 }
