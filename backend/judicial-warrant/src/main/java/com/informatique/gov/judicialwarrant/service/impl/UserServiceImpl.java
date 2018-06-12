@@ -131,10 +131,10 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto save(UserDto dto) throws JudicialWarrantException {
-		if(dto.getOrganizationUnit().getIsInternal()) {
-			return createInternal(dto);
-		} else {
+		if(dto.getOrganizationUnit() != null && !dto.getOrganizationUnit().getIsInternal()) {
 			return createExternal(dto);
+		} else {
+			return createInternal(dto);
 		}
 	}
 
@@ -201,6 +201,9 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			UserType userType = userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
 			user.setUserType(userType);
 
+			OrganizationUnit organizationUnit = organizationUnitRepository.findByIsInternal(true).get(0);
+			user.setOrganizationUnit(organizationUnit);
+			
 			user = userRepository.save(user);
 
 			savedUserDto = userMapper.toDto(user);

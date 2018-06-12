@@ -35,7 +35,6 @@ public class UserDto implements UserModel<Integer> {
 	@Email
 	@NotBlank
 	private String emailAddress;
-	@NotNull
 	private OrganizationUnitDto organizationUnit;
 	@NotNull
 	private RoleDto role;
