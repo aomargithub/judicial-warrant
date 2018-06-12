@@ -49,12 +49,12 @@ public class UserController implements Serializable {
 		return userHandler.getAll();
 	}
 
-	@GetMapping("internal")
+	@GetMapping("/internal")
 	public ResponseEntity<?> getAllInternal() throws JudicialWarrantException {
 		return userHandler.getAllInternal();
 	}
 
-	@GetMapping("external")
+	@GetMapping("/external")
 	public ResponseEntity<?> getAllExternal() throws JudicialWarrantException {
 		return userHandler.getAllExternal();
 	}
