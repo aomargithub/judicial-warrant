@@ -101,6 +101,34 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	}
 	
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<UserDto> getAllInternal() throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(true);
+			dtos = userMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<UserDto> getAllExternal() throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(false);
+			dtos = userMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+	
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto save(UserDto dto) throws JudicialWarrantException {
 		if(dto.getOrganizationUnit().getIsInternal()) {

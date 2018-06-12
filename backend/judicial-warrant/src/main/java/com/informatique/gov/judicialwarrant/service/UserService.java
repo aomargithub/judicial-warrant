@@ -9,6 +9,8 @@ import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
 public interface UserService extends Serializable{
 	List<UserDto> getAll() throws JudicialWarrantException;
+	List<UserDto> getAllInternal() throws JudicialWarrantException;
+	List<UserDto> getAllExternal() throws JudicialWarrantException;
 	List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException;
 
 	UserDto save(final UserDto dto) throws JudicialWarrantException;

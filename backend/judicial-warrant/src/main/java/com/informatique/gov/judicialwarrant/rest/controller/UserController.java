@@ -29,42 +29,52 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/users")
-public class UserController implements Serializable{
+public class UserController implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7427269755961905168L;
-	
-    private UserHandler userHandler;
-    private UserDtoValidator userDtoValidator;
 
-    @InitBinder("userDto")
+	private UserHandler userHandler;
+	private UserDtoValidator userDtoValidator;
+
+	@InitBinder("userDto")
 	private void roleInitBinder(WebDataBinder binder) {
 		binder.addValidators(userDtoValidator);
 	}
-	
-    @GetMapping
+
+	@GetMapping
 	public ResponseEntity<?> getAll() throws JudicialWarrantException {
 		return userHandler.getAll();
 	}
 
+	@GetMapping("internal")
+	public ResponseEntity<?> getAllInternal() throws JudicialWarrantException {
+		return userHandler.getAllInternal();
+	}
+
+	@GetMapping("external")
+	public ResponseEntity<?> getAllExternal() throws JudicialWarrantException {
+		return userHandler.getAllExternal();
+	}
+
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable Integer id,@RequestHeader(name = "If-None-Match", required = false) Short eTag
-			) throws JudicialWarrantException {
-		return userHandler.getById(id,eTag);
+	public ResponseEntity<?> getById(@PathVariable Integer id,
+			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
+		return userHandler.getById(id, eTag);
 	}
 
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
 		return userHandler.save(dto);
 	}
-	
+
 	@PostMapping("/internal")
 	public ResponseEntity<?> createInternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
 		return userHandler.createUserInternal(dto);
 	}
-	
+
 	@PostMapping("/external")
 	public ResponseEntity<?> createExternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
 		return userHandler.createUserExternal(dto);
@@ -72,14 +82,13 @@ public class UserController implements Serializable{
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody UserDto dto, @PathVariable Integer id,
-			@RequestHeader(name = "If-Match", required = false) Short eTag
-			) throws JudicialWarrantException {
-		return userHandler.update(dto,id,eTag);
+			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
+		return userHandler.update(dto, id, eTag);
 	}
-	
+
 	@PutMapping("/{id}/changingPassword")
-	public ResponseEntity<?> changingPassword(@RequestBody ChangePassword changePassword, @PathVariable Integer id
-			) throws JudicialWarrantException {
+	public ResponseEntity<?> changingPassword(@RequestBody ChangePassword changePassword, @PathVariable Integer id)
+			throws JudicialWarrantException {
 		return userHandler.changePassword(id, changePassword.getOldPassword(), changePassword.getNewPassword());
 	}
 
@@ -87,10 +96,10 @@ public class UserController implements Serializable{
 	public ResponseEntity<?> delete(@PathVariable Integer id) throws JudicialWarrantException {
 		return userHandler.delete(id);
 	}
-	
-	 @GetMapping(params= {"userTypeCode"})
-	 public ResponseEntity<?> getByUserType(@RequestParam String userTypeCode) throws JudicialWarrantException {
-			return userHandler.getByUserTypeCode(userTypeCode);
-		}
+
+	@GetMapping(params = { "userTypeCode" })
+	public ResponseEntity<?> getByUserType(@RequestParam String userTypeCode) throws JudicialWarrantException {
+		return userHandler.getByUserTypeCode(userTypeCode);
+	}
 
 }
