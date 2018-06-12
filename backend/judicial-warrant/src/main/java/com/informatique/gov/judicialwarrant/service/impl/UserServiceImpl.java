@@ -177,10 +177,14 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	 */
 	private User prepareUser(UserDto dto) {
 		User user = userMapper.toNewEntity(dto);
-		Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
-				.findById(dto.getOrganizationUnit().getId());
-
-		user.setOrganizationUnit(organizationUnit.get());
+		OrganizationUnit organizationUnit = null;
+		if(dto.getOrganizationUnit() != null && dto.getOrganizationUnit().getId() != null) {
+			organizationUnit = organizationUnitRepository
+					.findById(dto.getOrganizationUnit().getId()).get();
+		} else {
+			organizationUnit = organizationUnitRepository.findByIsInternal(true).get(0);
+		}
+		user.setOrganizationUnit(organizationUnit);
 		Role role = null;
 		role = roleRepository.findByCode(dto.getRole().getCode());
 		if (role.getLdapSecurityGroup() != null) {
@@ -200,9 +204,6 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			User user = prepareUser(dto);
 			UserType userType = userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
 			user.setUserType(userType);
-
-			OrganizationUnit organizationUnit = organizationUnitRepository.findByIsInternal(true).get(0);
-			user.setOrganizationUnit(organizationUnit);
 			
 			user = userRepository.save(user);
 

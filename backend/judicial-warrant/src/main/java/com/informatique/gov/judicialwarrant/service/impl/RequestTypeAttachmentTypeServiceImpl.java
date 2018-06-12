@@ -102,6 +102,7 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		RequestTypeAttachmentType requestTypeAttachmentType = null;
 		try {
 			notNull(requestTypeAttachmentTypeDto, "dto must be set");
+			requestTypeAttachmentTypeDto.setListOrder((byte) 0);
 			requestTypeAttachmentType = requestTypeAttachmentTypeMapper.toEntity(requestTypeAttachmentTypeDto);
 			RequestType requestType=requestTypeRepository.findByCode(requestTypeAttachmentTypeDto.getRequestType().getCode());
 			AttachmentType attachmentType=attachmentTypeRepository.findById(requestTypeAttachmentTypeDto.getAttachmentType().getId()).get();

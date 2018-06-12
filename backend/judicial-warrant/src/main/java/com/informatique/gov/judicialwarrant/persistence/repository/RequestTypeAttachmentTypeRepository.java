@@ -14,6 +14,9 @@ import com.informatique.gov.judicialwarrant.domain.RequestTypeAttachmentType;
 @Repository
 public interface RequestTypeAttachmentTypeRepository extends JpaRepository<RequestTypeAttachmentType, Short>{
 	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
+	List<RequestTypeAttachmentType> findAll();
+	
+	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
 	List<RequestTypeAttachmentType> findByRequestTypeId(Byte id);
 	
 	@Query("select version from RequestTypeAttachmentType rt where rt.id = :id")
