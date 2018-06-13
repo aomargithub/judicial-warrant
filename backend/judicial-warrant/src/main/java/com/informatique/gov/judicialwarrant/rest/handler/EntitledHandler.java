@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 
-public interface EntitledAttachmentHandler extends Serializable {
+public interface EntitledHandler extends Serializable {
 
 	ResponseEntity<Void> delete(Long id) throws JudicialWarrantException;
 

@@ -3,11 +3,14 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
 import com.informatique.gov.judicialwarrant.rest.handler.EntitledRegistrationHandler;
+import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
+import com.informatique.gov.judicialwarrant.support.validator.EntitledAttachmentsValidator;
+import com.informatique.gov.judicialwarrant.support.validator.EntitledRegistrationAttachmentsValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -29,10 +35,18 @@ import lombok.AllArgsConstructor;
 public class EntitledRegistrationController {
 
 	private EntitledRegistrationHandler entitledRegistrationHandlerHandler;
+	private EntitledRegistrationAttachmentsValidator entitledRegistrationAttachmentsValidator;
+	private EntitledAttachmentsValidator entitledAttachmentsValidator;
 	/**
 	* 
 	*/
 
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@InitBinder("entitledRegistrationChangeStatusRequest")
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(entitledRegistrationAttachmentsValidator, entitledAttachmentsValidator);
+	}
+	
 	@GetMapping("/report/serial={serial}")
 	@ResponseBody
 	public ResponseEntity<?> generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response,
@@ -63,13 +77,13 @@ public class EntitledRegistrationController {
 		return entitledRegistrationHandlerHandler.update(serial, entitledRegistrationDto, eTag);
 	}
 	
-	/*@PutMapping(path = "/serial={serial}/submitRequest")
+	@PutMapping(path = "/serial={serial}/submitRequest")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> submitRequest(@PathVariable String serial, @RequestBody ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.submitRequest(serial, erRequestNotesData);
+	public ResponseEntity<?> submitRequest(@PathVariable String serial, @Valid @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.submit(serial, entitledRegistrationChangeStatusRequest);
 	}
 
-	@PutMapping(path = "/serial={serial}/incompleteRequest")
+	/*@PutMapping(path = "/serial={serial}/incompleteRequest")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> incompleteRequest(@PathVariable String serial, @RequestBody ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.incompleteRequest(serial, erRequestNotesData);

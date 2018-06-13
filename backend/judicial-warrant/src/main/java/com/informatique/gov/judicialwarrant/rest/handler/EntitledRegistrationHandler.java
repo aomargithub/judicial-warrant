@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
+import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
 
 public interface EntitledRegistrationHandler extends Serializable{
 
@@ -27,5 +28,8 @@ public interface EntitledRegistrationHandler extends Serializable{
 	ResponseEntity<EntitledRegistrationDto> update(String serial, EntitledRegistrationDto entitledRegistrationDto,
 			Short etag) throws JudicialWarrantException;
 	
-	
+	ResponseEntity<EntitledRegistrationDto> submit(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
+
 }

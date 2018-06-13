@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttachment, EntitledAttachmentDto, Long> {
 
 	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
-	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
+//	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			dto.setId(entity.getId());
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
-			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
+//			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
 		}
 		return dto;
 	}
@@ -43,7 +43,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 		if (isConvertable(dto)) {
 			entity = new EntitledAttachment();
 			entity.setAttachmentType(attachmentTypeMapper.toEntity(dto.getAttachmentType()));
-			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
+//			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
 			entity.setUcmDocumentId(dto.getUcmDocumentId());
 			entity.setId(dto.getId());
 		}

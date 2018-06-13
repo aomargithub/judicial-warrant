@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.handler.EntitledAttachmentHandler;
+import com.informatique.gov.judicialwarrant.rest.handler.EntitledHandler;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/entitledAttachments")
-public class EntitledAttachmentController implements Serializable {
+@RequestMapping("/entitleds")
+public class EntitledController implements Serializable {
 
 	
-	private EntitledAttachmentHandler entitledAttachmentHandler ;
+	private EntitledHandler entitledHandler ;
 	/**
 	* 
 	*/
@@ -27,7 +27,7 @@ public class EntitledAttachmentController implements Serializable {
     
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) throws JudicialWarrantException {
-		return entitledAttachmentHandler.delete(id);
+		return entitledHandler.delete(id);
 	}
-	
+
 }

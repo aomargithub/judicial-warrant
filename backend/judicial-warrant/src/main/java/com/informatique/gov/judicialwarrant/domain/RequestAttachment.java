@@ -11,8 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +22,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "request", "attachmentType"})
 @EqualsAndHashCode(of = {"request", "attachmentType"}, callSuper = false)
-public class RequestAttachment extends DomainEntity<Long> {
+public class RequestAttachment extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 	/**
 	 * 
 	 */

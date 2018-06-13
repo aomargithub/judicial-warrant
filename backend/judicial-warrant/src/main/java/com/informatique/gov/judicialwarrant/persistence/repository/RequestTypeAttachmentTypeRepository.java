@@ -23,6 +23,12 @@ public interface RequestTypeAttachmentTypeRepository extends JpaRepository<Reque
 	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
 	List<RequestTypeAttachmentType> findByRequestTypeId(Byte id);
 	
+	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
+	List<RequestTypeAttachmentType> findByRequestTypeCode(String code);
+	
+	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
+	List<RequestTypeAttachmentType> findByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(String code, Boolean isEntitledAttachment);
+	
 	@Query("select version from RequestTypeAttachmentType rt where rt.id = :id")
 	Short getVersionById(@Param("id") Short id);
 	
