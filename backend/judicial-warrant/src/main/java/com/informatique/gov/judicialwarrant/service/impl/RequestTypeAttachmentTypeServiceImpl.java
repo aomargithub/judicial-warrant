@@ -59,7 +59,7 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		RequestTypeAttachmentTypeDto dto = null;
 		try {
 			notNull(id, "id must be set");
-			entity = requestTypeAttachmentTypeRepository.getOne(id);
+			entity = requestTypeAttachmentTypeRepository.findById(id).get();
 			dto = requestTypeAttachmentTypeMapper.toDto(entity);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -124,6 +124,8 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		try {
 			notNull(requestTypeAttachmentTypeDto, "dto must be set");
 			requestTypeAttachmentType = requestTypeAttachmentTypeMapper.toEntity(requestTypeAttachmentTypeDto);
+			AttachmentType attachmentType=attachmentTypeRepository.findById(requestTypeAttachmentTypeDto.getAttachmentType().getId()).get();
+			requestTypeAttachmentType.setAttachmentType(attachmentType);
 			requestTypeAttachmentType = requestTypeAttachmentTypeRepository.save(requestTypeAttachmentType);
 			requestTypeAttachmentTypeDto = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentType);
 		} catch (Exception e) {
