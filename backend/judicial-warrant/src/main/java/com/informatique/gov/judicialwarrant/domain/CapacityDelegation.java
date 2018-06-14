@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -63,7 +65,12 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	@Column(name="JOB_TITLE")
 	private String jobTitle;
 	
-	@Column(name = "LAW_NO")
-	private Long lawNo;
+	@Column(name = "ministerial_decree_number")
+	private String ministerialDecreeNumber;
+	
+	@Column(name = "DECREE_DATE")
+	private Date decreeDate; 
+	
+	
 
 }

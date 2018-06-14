@@ -34,3 +34,10 @@ app:
       realm-name: Oman MOJ Judicial Warrant
     max-inactive-interval: 12000
 
+
+ucm:
+  ip: 192.168.0.44
+  port: 4444
+  username: weblogic
+  password: welcome1    
+  
