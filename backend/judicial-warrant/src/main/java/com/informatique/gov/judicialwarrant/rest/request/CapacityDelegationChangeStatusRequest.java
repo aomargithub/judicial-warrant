@@ -21,7 +21,7 @@ public class CapacityDelegationChangeStatusRequest implements Serializable{
 	 * 
 	 */
 	@NotNull
-	@CapacityDelegationChangeStatusRequestV
+//	@CapacityDelegationChangeStatusRequestV
 	private CapacityDelegationDto capacityDelegation;
 	@NotNull
 	private String note;
