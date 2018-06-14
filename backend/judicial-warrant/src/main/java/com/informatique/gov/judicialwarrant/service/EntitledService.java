@@ -11,6 +11,12 @@ import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
 public interface EntitledService extends Serializable{
 
 	EntitledDto getById(Long id) throws JudicialWarrantException;
+	
+	Short getVersionById(Long id) throws JudicialWarrantException;
+	
+	EntitledDto save(EntitledDto entitledDto) throws JudicialWarrantException;
+	
+	EntitledDto update(EntitledDto entitledDto) throws JudicialWarrantException;
 
 	List<EntitledDto> getAllByEntitledRegistrationSerial(String serial) throws JudicialWarrantException;
 

@@ -67,6 +67,50 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		return dto;
 	}
 	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public Short getVersionById(Long id) throws JudicialWarrantException {
+		Short version = null;
+		try {
+			notNull(id, "id must be set");
+			version = entitledRepository.findVersionById(id);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return version;		
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public EntitledDto save(EntitledDto entitledDto) throws JudicialWarrantException {
+		EntitledDto savedDto = null;
+		try {
+			notNull(entitledDto, "entitledDto must be set");
+			Entitled entitled = entitledMapper.toNewEntity(entitledDto);
+			entitled = entitledRepository.save(entitled);
+			savedDto = entitledMapper.toDto(entitled);
+			
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return savedDto;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public EntitledDto update(EntitledDto entitledDto) throws JudicialWarrantException {
+		EntitledDto updatedDto = null;
+		try {
+			notNull(entitledDto, "entitledDto must be set");
+			Entitled entitled = entitledMapper.toEntity(entitledDto);
+			entitled = entitledRepository.save(entitled);
+			updatedDto = entitledMapper.toDto(entitled);
+			
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return updatedDto;
+	}
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
