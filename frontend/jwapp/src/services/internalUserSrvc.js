@@ -4,7 +4,7 @@ module.exports = function(app){
         var usersUrl = urlSrvc.getUrl('users');
 
         self.getAll = function(){
-            return $http.get(usersUrl + 'role?isInternal=true');
+            return $http.get(usersUrl + 'internal');
         };
 
         self.save = function(user){ 

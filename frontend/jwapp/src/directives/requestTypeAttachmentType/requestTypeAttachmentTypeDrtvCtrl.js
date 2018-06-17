@@ -27,8 +27,8 @@ module.exports = function(app){
         });
 
         var resetEntryForm = function(){
-            $scope.userForm.$setPristine();
-            $scope.userForm.$setUntouched(); 
+            $scope.requestTypeAttachmentTypeForm.$setPristine();
+            $scope.requestTypeAttachmentTypeForm.$setUntouched(); 
         };
 
         vm.add = function(){

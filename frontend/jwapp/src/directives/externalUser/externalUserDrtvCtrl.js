@@ -38,8 +38,7 @@ module.exports = function(app){
 
 
         vm.add = function(){
-            vm.user.role = ('filter')(vm.roles, { isInternal: "0" });
-            
+            vm.user.role = vm.roles.find(inInternalobj => inInternalobj.isInternal==0);
             externalUserSrvc.save(vm.user).then(function success(response){
                 vm.users.push(response.data);
                 vm.user = new User();

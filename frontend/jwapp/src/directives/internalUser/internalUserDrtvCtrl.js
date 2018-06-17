@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,organizationUnitSrvc,stringUtilSrvc){
+    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
