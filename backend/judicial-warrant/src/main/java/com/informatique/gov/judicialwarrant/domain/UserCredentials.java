@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,11 +23,13 @@ public class UserCredentials  extends DomainEntity<Integer> implements CreationA
 	@Id
 	@Column(name="ID")
 	private Integer id;
+	
 	@Column(name="PASSWORD")
 	private String password;
 	
 	@OneToOne
 	@JoinColumn(name = "ID")
+	@MapsId
 	private User  user;
 
 }

@@ -60,6 +60,20 @@ public class UserHandlerImpl implements UserHandler {
 	}
 	
 	@Override
+	public ResponseEntity<List<UserDto>> getByRoleIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		ResponseEntity<List<UserDto>> response = null;
+		try {
+			List<UserDto> dtos = userService.getByRoleIsInternal(isInternal);
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;	
+	}
+	
+	@Override
 	public ResponseEntity<UserDto> getById(Integer id,Short etag) throws JudicialWarrantException {
 		ResponseEntity<UserDto> response = null;
 		try {
@@ -179,36 +193,36 @@ public class UserHandlerImpl implements UserHandler {
 		return response;	
 	}
 
-	@Override
-	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
-		ResponseEntity<UserDto> response = null;
-		try {
-           
-			UserDto savedDto = userService.createInternal(dto);
-							
-			response = ResponseEntity.ok(savedDto);
-			
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}return response;	
-	}
+//	@Override
+//	public ResponseEntity<UserDto> createUserInternal(UserDto dto) throws JudicialWarrantException {
+//		ResponseEntity<UserDto> response = null;
+//		try {
+//           
+//			UserDto savedDto = userService.createInternal(dto);
+//							
+//			response = ResponseEntity.ok(savedDto);
+//			
+//		} catch (JudicialWarrantException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			throw new JudicialWarrantInternalException(e);
+//		}return response;	
+//	}
 
-	@Override
-	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
-		ResponseEntity<UserDto> response = null;
-		try {
-           
-			UserDto savedDto = userService.createExternal(dto);
-							
-			response = ResponseEntity.ok(savedDto);
-			
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}return response;	
-	}
+//	@Override
+//	public ResponseEntity<UserDto> createUserExternal(UserDto dto) throws JudicialWarrantException {
+//		ResponseEntity<UserDto> response = null;
+//		try {
+//           
+//			UserDto savedDto = userService.createExternal(dto);
+//							
+//			response = ResponseEntity.ok(savedDto);
+//			
+//		} catch (JudicialWarrantException e) {
+//			throw e;
+//		} catch (Exception e) {
+//			throw new JudicialWarrantInternalException(e);
+//		}return response;	
+//	}
 
 }

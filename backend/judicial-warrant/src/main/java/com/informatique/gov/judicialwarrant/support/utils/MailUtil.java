@@ -31,15 +31,14 @@ public class MailUtil {
 
 	}
 
-	public void sendAccountCreation(String loginName, String password, String recipient, String clientNameEn,
-			String clientNameAr) throws Exception {
+	public void sendAccountCreation(String loginName, String password, String recipient, String userEnglishName,
+			String userArabicName) throws Exception {
 
 		
-		String body =
-				messageSource.getMessage("message.body", null, null);
-		body=MessageFormat.format(body, loginName,clientNameEn,password,clientNameAr,password);
+		String body = messageSource.getMessage("mail.body", null, null);
+		body = MessageFormat.format(body, loginName,userEnglishName,password,userArabicName,password);
 
-		send(body, recipient, messageSource.getMessage("message.mailSubject", null, null));
+		send(body, recipient, messageSource.getMessage("mail.subject", null, null));
 
 	}
 }

@@ -32,11 +32,11 @@ public class LdapServiceImpl implements LdapService {
 		return findPerson(cn) == null? false:true;
 	}
 	
-	private Object findPerson(String cn) {
+	private Object findPerson(String sAMAccountName) {
 		String user = null;
 		AndFilter filter = new AndFilter();
 		filter.and(new EqualsFilter("objectclass", "person"));
-		filter.and(new WhitespaceWildcardsFilter("cn", cn));
+		filter.and(new WhitespaceWildcardsFilter("sAMAccountName", sAMAccountName));
 		List<Object> users = ldapTemplate.search("", filter.encode(), new AttributesMapper<Object>() {
 			public Object mapFromAttributes(Attributes attrs) throws NamingException {
 				return attrs.get("distinguishedName").get();
@@ -51,9 +51,9 @@ public class LdapServiceImpl implements LdapService {
 	
 	
 	@Override
-	 public void addMemberToGroup(String groupName, String user) {
+	 public void addMemberToGroup(String groupName, String userName) {
 		
-	        Object personDn = findPerson(user);
+	        Object personDn = findPerson(userName);
 
 	        DirContextOperations ctx = ldapTemplate.lookupContext("cn="+groupName);
 	        ctx.addAttributeValue("member", personDn.toString());

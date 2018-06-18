@@ -40,12 +40,16 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	Integer findIdByCivilId(@Param("civilId")Long civilId);
 	@Query("select id from User u where u.emailAddress=:emailAddress")
 	Integer findIdByEmailAddress(@Param("emailAddress")String emailAddress);
+	
 	@EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     List<User> findByUserTypeCode(String userTypeCode);
     @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     List<User> findAll();
     @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     Optional<User> findById(Integer id) ;
+    
+    @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
+    List<User> findByRoleIsInternal(Boolean isInternal);
     	
     
 	 

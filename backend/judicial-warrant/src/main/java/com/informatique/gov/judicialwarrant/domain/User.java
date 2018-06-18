@@ -97,4 +97,7 @@ public class User extends DomainEntity<Integer> implements CreationAuditable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "ROLE_ID")
 	private Role role;
+	
+	@OneToOne(mappedBy = "user")
+	private UserCredentials credentials;
 }

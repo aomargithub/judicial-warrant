@@ -21,8 +21,8 @@ import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Component
+
 public class CapacityDelegationChangeStatusRequestValidator implements Validator, Serializable{
 
 	/**
@@ -32,6 +32,12 @@ public class CapacityDelegationChangeStatusRequestValidator implements Validator
 	private RequestTypeAttachmentTypeService requestTypeAttachmentTypeService;
 	private RequestTypeService requestTypeService;
 	private RequestAttachmentService requestAttachmentService;
+	
+	public CapacityDelegationChangeStatusRequestValidator(RequestTypeAttachmentTypeService requestTypeAttachmentTypeService, RequestTypeService requestTypeService, RequestAttachmentService requestAttachmentService) {
+		this.requestTypeAttachmentTypeService = requestTypeAttachmentTypeService;
+		this.requestTypeService = requestTypeService;
+		this.requestAttachmentService = requestAttachmentService;
+	}
 
 	@Override
 	public boolean supports(Class<?> clazz) {

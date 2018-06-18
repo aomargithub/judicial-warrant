@@ -40,7 +40,7 @@ public class UserController implements Serializable{
     private UserDtoValidator userDtoValidator;
 
     @InitBinder("userDto")
-	private void roleInitBinder(WebDataBinder binder) {
+	private void initUserDtoBinder(WebDataBinder binder) {
 		binder.addValidators(userDtoValidator);
 	}
 	
@@ -54,13 +54,18 @@ public class UserController implements Serializable{
 			) throws JudicialWarrantException {
 		return userHandler.getById(id,eTag);
 	}
+	
+	@GetMapping(path = "/role", params = {"isInternal"})
+	public ResponseEntity<?> getByRoleIsInternal(@RequestParam Boolean isInternal)throws JudicialWarrantException {
+		return userHandler.getByRoleIsInternal(isInternal);
+	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
-		return userHandler.save(dto);
+	public ResponseEntity<?> save(@Valid @RequestBody UserDto userDto) throws JudicialWarrantException {
+		return userHandler.save(userDto);
 	}
 	
-	@PostMapping("/internal")
+	/*@PostMapping("/internal")
 	public ResponseEntity<?> createInternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
 		return userHandler.createUserInternal(dto);
 	}
@@ -68,7 +73,7 @@ public class UserController implements Serializable{
 	@PostMapping("/external")
 	public ResponseEntity<?> createExternal(@Valid @RequestBody UserDto dto) throws JudicialWarrantException {
 		return userHandler.createUserExternal(dto);
-	}
+	}*/
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody UserDto dto, @PathVariable Integer id,

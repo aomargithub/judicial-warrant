@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	private Environment environment;
 	private LdapService ldapService;
 	private MailUtil mailUtil;
+	
+
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -99,43 +101,58 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 		return dtos;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto save(UserDto dto) throws JudicialWarrantException {
-		if(dto.getOrganizationUnit().getIsInternal()) {
-			return createInternal(dto);
-		} else {
-			return createExternal(dto);
+		try {
+			Role role = roleRepository.findByCode(dto.getRole().getCode());
+			if (role.getIsInternal()) {
+				return createInternal(dto, role);
+			} else {
+				return createExternal(dto, role);
+			}
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
 		}
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public UserDto createExternal(UserDto dto) throws JudicialWarrantException {
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<UserDto> getByRoleIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findByRoleIsInternal(isInternal);
+			dtos = userMapper.toDto(entities);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+
+	private UserDto createExternal(UserDto dto, Role role) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {
 			notNull(dto, "dto must be set");
-			String password = RandomPasswordUtil
-					.generate(new Integer(environment.getRequiredProperty("app.defaultpasswordlength")));
-			String hashedPassword = passwordEncoder.encode(password);
+			
+			String password = RandomPasswordUtil.generate(new Integer(environment.getRequiredProperty("app.default-password-length")));
+			User user = prepareExternalUser(dto, role, password);
 			
 
-			User user = prepareUser(dto);
-			UserType userType = userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
-			user.setUserType(userType);
-
 			user = userRepository.save(user);
-			UserCredentials credentials = new UserCredentials();
-			credentials.setId(user.getId());
-			credentials.setUser(user);
-			credentials.setPassword(hashedPassword);
-			userCredentialsRepository.save(credentials);
+			
+			user.getCredentials().setUser(user);
+			
+			userCredentialsRepository.save(user.getCredentials());
 
 			savedUserDto = userMapper.toDto(user);
 
-			mailUtil.sendAccountCreation(dto.getLoginName() , password, dto.getEmailAddress(),dto.getEnglishName(),dto.getArabicName());
-			 
+			mailUtil.sendAccountCreation(user.getLoginName(), password, user.getEmailAddress(), user.getEnglishName(),
+					user.getArabicName());
+
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -147,34 +164,52 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	 * @param dto
 	 * @return
 	 */
-	private User prepareUser(UserDto dto) {
-		User user = userMapper.toNewEntity(dto);
+	private User prepareExternalUser(UserDto dto, Role role, String password) {
+		
 		Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
 				.findById(dto.getOrganizationUnit().getId());
-
+		
+		UserType userType = userTypeRepository.findByCode(UserTypeEnum.EXTERNAL.getCode());
+		
+		
+		String hashedPassword = passwordEncoder.encode(password);
+		
+		UserCredentials credentials = new UserCredentials();
+		credentials.setPassword(hashedPassword);
+		
+		User user = userMapper.toNewEntity(dto);
+		user.setUserType(userType);
 		user.setOrganizationUnit(organizationUnit.get());
-		Role role = null;
-		role = roleRepository.findByCode(dto.getRole().getCode());
-		if (role.getLdapSecurityGroup() != null) {
-		ldapService.addMemberToGroup(role.getLdapSecurityGroup(), dto.getLoginName());
-		} 
 		user.setRole(role);
+		user.setCredentials(credentials);
+		return user;
+	}
+	
+	private User prepareInternalUser(UserDto dto, Role role) {
+		
+		OrganizationUnit moj = organizationUnitRepository.findById(Short.parseShort(environment.getRequiredProperty("app.moj-ou-id"))).get();
+		UserType userType = userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
+		
+		
+		User user = userMapper.toNewEntity(dto);
+		user.setUserType(userType);
+		user.setOrganizationUnit(moj);
+		user.setRole(role);		
 		return user;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public UserDto createInternal(UserDto dto) throws JudicialWarrantException {
+	
+	private UserDto createInternal(UserDto dto, Role role) throws JudicialWarrantException {
 		UserDto savedUserDto = null;
 
 		try {
 			notNull(dto, "dto must be set");
 
-			User user = prepareUser(dto);
-			UserType userType = userTypeRepository.findByCode(UserTypeEnum.INTERNAL.getCode());
-			user.setUserType(userType);
+			User user = prepareInternalUser(dto, role);
+			
 
 			user = userRepository.save(user);
-
+			ldapService.addMemberToGroup(role.getLdapSecurityGroup(), dto.getLoginName());
 			savedUserDto = userMapper.toDto(user);
 
 		} catch (Exception e) {
@@ -234,8 +269,8 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		try {
 			notNull(id, "id must be set");
 			Optional<UserCredentials> credentials = userCredentialsRepository.findById(id);
-			if(credentials.isPresent()) {
-			userCredentialsRepository.delete(credentials.get());
+			if (credentials.isPresent()) {
+				userCredentialsRepository.delete(credentials.get());
 			}
 			userRepository.deleteById(id);
 		} catch (Exception e) {
@@ -262,16 +297,16 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException {
 		try {
 			UserCredentials userCredentials = userCredentialsRepository.getOne(id);
-			if(passwordEncoder.matches(oldPass, userCredentials.getPassword().trim())) {
+			if (passwordEncoder.matches(oldPass, userCredentials.getPassword().trim())) {
 				userCredentials.setPassword(passwordEncoder.encode(newPass));
 				userCredentialsRepository.save(userCredentials);
 			} else {
-				throw new JudicialWarrantException(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode(), "old password is wrong", "enter right password");
+				throw new JudicialWarrantException(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode(),
+						"old password is wrong", "enter right password");
 			}
 		} catch (JudicialWarrantException e) {
 			throw e;
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 	}

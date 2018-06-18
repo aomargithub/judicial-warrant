@@ -12,8 +12,6 @@ public interface UserService extends Serializable{
 	List<UserDto> getByUserTypeCode(String userTypeCode) throws JudicialWarrantException;
 
 	UserDto save(final UserDto dto) throws JudicialWarrantException;
-	public UserDto createInternal(UserDto dto) throws JudicialWarrantException ;
-	public UserDto createExternal(UserDto dto) throws JudicialWarrantException;
 
 	UserDto getById(Integer id) throws JudicialWarrantException;
 
@@ -24,4 +22,5 @@ public interface UserService extends Serializable{
 	public void changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException;
 	
 	void delete(Integer id) throws JudicialWarrantException;
+	List<UserDto> getByRoleIsInternal(Boolean isInternal) throws JudicialWarrantException;
 }
