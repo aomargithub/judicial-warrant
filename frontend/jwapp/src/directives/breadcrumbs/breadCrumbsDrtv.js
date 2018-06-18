@@ -4,7 +4,7 @@ module.exports = function(app){
             restrict: 'E',
             transclude: true,
             template : require('./breadcrumbs-drtv.html'),
-            link: function(scope, element, attrs) {
+            link: function(scope, attrs) {
                 var abstract, render;
                 attrs.abstract = attrs.abstract ? attrs.abstract : false;
                 abstract = JSON.parse(attrs.abstract);

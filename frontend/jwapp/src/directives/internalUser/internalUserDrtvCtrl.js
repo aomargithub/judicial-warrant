@@ -1,15 +1,15 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,organizationUnitSrvc,stringUtilSrvc){
+    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
         vm.message = null;
         vm.editUser = null;
         vm.emailPattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
-        vm.mobilePattern="/^[0-9]{10,10}$/;"
+        vm.mobilePattern="/^[0-9]{10,10}$/";
         vm.users = [];
         vm.roles = [];
-        vm.organizations = []; 
+        
        
 
         vm.page = {
@@ -25,9 +25,7 @@ module.exports = function(app){
             vm.roles = response.data;
         });
 
-        organizationUnitSrvc.getInternal().then(function(response){
-            vm.organizations = response.data;
-        });
+      
 
         var resetEntryForm = function(){
             $scope.userForm.$setPristine();

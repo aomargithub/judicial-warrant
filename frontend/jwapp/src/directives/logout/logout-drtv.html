@@ -1,3 +1,6 @@
-<button href="#" ng-click="logoutDrtvCtrl.doLogout()" class="btn btn-default">
-        <span class="glyphicon glyphicon-log-out"></span> خروج
-      </button>
+<div>
+  <a class="left" >{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }}</a>
+  <button href="#" ng-click="logoutDrtvCtrl.doLogout()" class="btn btn-default">
+  <span class="glyphicon glyphicon-log-out"></span> {{messages.label.logOut}}
+</button>
+</div>

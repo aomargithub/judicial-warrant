@@ -14,8 +14,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +32,7 @@ import lombok.ToString;
 							  @NamedAttributeNode(value = "attachmentType")
 					  })
 })
-public class RequestTypeAttachmentType extends DomainEntity<Short> {
+public class RequestTypeAttachmentType extends DomainEntity<Short> implements CreationAuditable, UpdateAuditable{
 	
 	/**
 	 * 

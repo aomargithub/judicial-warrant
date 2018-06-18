@@ -48,7 +48,7 @@ public class CapacityDelegationController implements Serializable{
 	* 
 	*/
 	@InitBinder("capacityDelegationChangeStatusRequest")
-	private void setupBinder(WebDataBinder binder) {
+	protected void setupBinder(WebDataBinder binder) {
 		binder.addValidators(capacityDelegationChangeStatusRequestValidator);
 	}
 

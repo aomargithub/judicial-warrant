@@ -1,5 +1,9 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,6 +20,9 @@ public class EntitledAttachmentDto implements UserModel<Long> {
 	
 	private Long id;
 	private EntitledDto entitled;
+	@NotNull
 	private AttachmentTypeDto attachmentType;
 	private String ucmDocumentId;
+	@JsonIgnore
+	private Short version;
 }

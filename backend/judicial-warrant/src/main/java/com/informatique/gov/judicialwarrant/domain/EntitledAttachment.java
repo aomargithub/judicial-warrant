@@ -32,7 +32,7 @@ import lombok.ToString;
 							  @NamedAttributeNode(value = "entitled")
 					  })
 })
-public class EntitledAttachment extends DomainEntity<Long> {
+public class EntitledAttachment extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 
 	/**
 	 * 

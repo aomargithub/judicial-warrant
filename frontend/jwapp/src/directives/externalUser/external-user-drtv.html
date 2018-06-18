@@ -14,14 +14,14 @@
         <div class="row">
         <div class="form-group col-md-6">
             <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-            <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="externalUserDrtvCtrl.user.arabicName" placeholder={{messages.label.arabicNamePH}} required/>
+            <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="externalUserDrtvCtrl.user.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
             <span ng-show="userForm.arabicName.$touched && userForm.arabicName.$error.required" >
                 {{messages.label.required}}
             </span>
         </div>
         <div class="form-group col-md-6">
             <label for="englishName" class="required">{{messages.label.englishName}}</label>
-            <input type="text" class="form-control" id="englishName" name="englishName" ng-model="externalUserDrtvCtrl.user.englishName" placeholder={{messages.label.englishNamePH}} required/>
+            <input type="text" class="form-control" id="englishName" name="englishName" ng-model="externalUserDrtvCtrl.user.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
             <span ng-show="userForm.englishName.$touched && userForm.englishName.$error.required" >
                 {{messages.label.required}}
             </span>
@@ -30,7 +30,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="mobileNumber1" class="required">{{messages.label.mobileNumber1}}</label>
-            <input type="text" class="form-control mobileNumber" id="mobileNumber1" name="mobileNumber1" ng-model="externalUserDrtvCtrl.user.mobileNumber1" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.label.mobileNumberPH}} required/>
+            <input type="text" class="form-control mobileNumber" id="mobileNumber1" name="mobileNumber1" ng-model="externalUserDrtvCtrl.user.mobileNumber1" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
             <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required" >
                 {{messages.label.required}}
             </span>
@@ -41,7 +41,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
-            <input type="text" class="form-control mobileNumber" id="mobileNumber2" name="mobileNumber2" ng-model="externalUserDrtvCtrl.user.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.label.mobileNumberPH}} required/>
+            <input type="text" class="form-control mobileNumber" id="mobileNumber2" name="mobileNumber2" ng-model="externalUserDrtvCtrl.user.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
             <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
                 {{messages.label.required}}
             </span>
@@ -53,7 +53,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
-            <input type="email" class="form-control" id="emailAddress" name="emailAddress" ng-model="externalUserDrtvCtrl.user.emailAddress" ng-pattern="emailPattern" placeholder={{messages.label.emailPH}} required/>
+            <input type="email" class="form-control" id="emailAddress" name="emailAddress" ng-model="externalUserDrtvCtrl.user.emailAddress" ng-pattern="emailPattern" placeholder={{messages.placeHolders.emailPH}} required/>
             <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required" >
                 {{messages.label.required}}
             </span>
@@ -63,7 +63,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="civilId" class="required">{{messages.label.civilId}}</label>
-            <input type="number" class="form-control civilID" id="civilId" name="civilId" ng-model="externalUserDrtvCtrl.user.civilId" ng-maxlength="15" placeholder={{messages.label.civilIDPH}} required/>
+            <input type="number" class="form-control civilID" id="civilId" name="civilId" ng-model="externalUserDrtvCtrl.user.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
             <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required " >
                 {{messages.label.required}}
             </span>
@@ -75,7 +75,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="loginName" class="required">{{messages.label.loginName}}</label>
-            <input type="text" class="form-control" id="loginName" name="loginName" ng-model="externalUserDrtvCtrl.user.loginName" placeholder={{messages.label.logInNamePH}} required/>
+            <input type="text" class="form-control" id="loginName" name="loginName" ng-model="externalUserDrtvCtrl.user.loginName" placeholder={{messages.placeHolders.logInNamePH}} required/>
             <span ng-show="userForm.loginName.$touched && userForm.loginName.$error.required" >
                 {{messages.label.required}}
             </span>
@@ -83,7 +83,7 @@
         <div class="form-group col-md-6">
             <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
             <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in externalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="externalUserDrtvCtrl.user.organizationUnit">
-                <option value="" disabled selected>{{messages.label.selectMessage}}</option>
+                <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
             </select>
             <span ng-show="userForm.organizationUnit.$touched && userForm.organizationUnit.$error.required" >
                 {{messages.label.required}}

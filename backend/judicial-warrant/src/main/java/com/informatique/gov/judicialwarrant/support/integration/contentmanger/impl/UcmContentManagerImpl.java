@@ -76,8 +76,10 @@ public class UcmContentManagerImpl implements ContentManager {
 			requestDataBinder.putLocal("dDocAuthor", username);
 			requestDataBinder.putLocal("dSecurityGroup", SECURITY_GROUP);
 			requestDataBinder.putLocal("dFormat", type);
-			for (Entry<String, String> pair : properties.entrySet()) {
-				requestDataBinder.putLocal(pair.getKey(), pair.getValue());
+			if(properties != null) {
+				for (Entry<String, String> pair : properties.entrySet()) {
+					requestDataBinder.putLocal(pair.getKey(), pair.getValue());
+				}
 			}
 			requestDataBinder.addFile("primaryFile", new TransferFile(is, file.getName(), file.length(), type));
 

@@ -103,8 +103,37 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<UserDto> getAllInternal() throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(true);
+			dtos = userMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<UserDto> getAllExternal() throws JudicialWarrantException {
+		List<UserDto> dtos = null;
+		try {
+			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(false);
+			dtos = userMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
+	
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserDto save(UserDto dto) throws JudicialWarrantException {
+
 		try {
 			Role role = roleRepository.findByCode(dto.getRole().getCode());
 			if (role.getIsInternal()) {
@@ -116,6 +145,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
+
 		}
 	}
 
@@ -164,6 +194,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	 * @param dto
 	 * @return
 	 */
+
 	private User prepareExternalUser(UserDto dto, Role role, String password) {
 		
 		Optional<OrganizationUnit> organizationUnit = organizationUnitRepository
@@ -180,6 +211,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		User user = userMapper.toNewEntity(dto);
 		user.setUserType(userType);
 		user.setOrganizationUnit(organizationUnit.get());
+
 		user.setRole(role);
 		user.setCredentials(credentials);
 		return user;
@@ -204,6 +236,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 
 		try {
 			notNull(dto, "dto must be set");
+
 
 			User user = prepareInternalUser(dto, role);
 			

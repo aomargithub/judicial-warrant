@@ -42,6 +42,34 @@ public class UserHandlerImpl implements UserHandler {
 		}
 		return response;	
 	}
+	
+	@Override
+	public ResponseEntity<List<UserDto>> getAllInternal() throws JudicialWarrantException {
+		ResponseEntity<List<UserDto>> response = null;
+		try {
+			List<UserDto> dtos = userService.getAllInternal();
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;	
+	}
+	
+	@Override
+	public ResponseEntity<List<UserDto>> getAllExternal() throws JudicialWarrantException {
+		ResponseEntity<List<UserDto>> response = null;
+		try {
+			List<UserDto> dtos = userService.getAllExternal();
+			response = ResponseEntity.ok(dtos);
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;	
+	}
 
 	@Override
 	public ResponseEntity<UserDto> save(UserDto dto) throws JudicialWarrantException {

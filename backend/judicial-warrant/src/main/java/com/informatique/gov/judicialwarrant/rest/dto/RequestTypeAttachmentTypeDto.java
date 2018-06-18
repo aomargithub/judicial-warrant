@@ -23,6 +23,7 @@ public class RequestTypeAttachmentTypeDto implements UserModel<Short> {
 	private RequestTypeDto requestType;
 	@NotNull
 	private AttachmentTypeDto attachmentType;
+	@NotNull
 	private Boolean isActive;
 	private Byte listOrder;
 	@JsonIgnore

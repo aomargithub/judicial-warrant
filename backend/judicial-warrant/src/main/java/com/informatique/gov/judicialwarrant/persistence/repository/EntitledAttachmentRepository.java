@@ -1,5 +1,6 @@
 package com.informatique.gov.judicialwarrant.persistence.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -18,6 +19,9 @@ public interface EntitledAttachmentRepository extends JpaRepository<EntitledAtta
 	
 	@EntityGraph(value = "EntitledAttachment.fat", type = EntityGraphType.FETCH)
 	Optional<EntitledAttachment> findById(Long id);
+	
+	@EntityGraph(value = "EntitledAttachment.fat", type = EntityGraphType.FETCH)
+	List<EntitledAttachment> findByEntitledId(Long id);
 	
 	Integer deleteByEntitledEntitledRegistrationId(Long entitledRegistrationId);
 	

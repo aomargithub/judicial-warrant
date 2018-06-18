@@ -16,9 +16,7 @@ import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTyp
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeAttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
-import com.informatique.gov.judicialwarrant.service.RequestTypeService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +33,20 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 	private ModelMapper<RequestTypeAttachmentType, RequestTypeAttachmentTypeDto, Short> requestTypeAttachmentTypeMapper;
 	private RequestTypeRepository requestTypeRepository;
 	private AttachmentTypeRepository attachmentTypeRepository;
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<RequestTypeAttachmentTypeDto> getAll() throws JudicialWarrantException {
+		List<RequestTypeAttachmentTypeDto> dtos = null;
+		try {
+			List<RequestTypeAttachmentType> entities = requestTypeAttachmentTypeRepository.findAll();
+			dtos = requestTypeAttachmentTypeMapper.toDto(entities);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dtos;
+	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -43,7 +55,7 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		RequestTypeAttachmentTypeDto dto = null;
 		try {
 			notNull(id, "id must be set");
-			entity = requestTypeAttachmentTypeRepository.getOne(id);
+			entity = requestTypeAttachmentTypeRepository.findById(id).get();
 			dto = requestTypeAttachmentTypeMapper.toDto(entity);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
@@ -80,12 +92,44 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<RequestTypeAttachmentTypeDto> getByRequestTypeCode(String code) throws JudicialWarrantException {
+		List<RequestTypeAttachmentType> requestTypeAttachmentTypes = null;
+		List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = null;
+		try {
+			notNull(code, "code must be set");
+			requestTypeAttachmentTypes = requestTypeAttachmentTypeRepository.findByRequestTypeCode(code);
+			requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentTypes);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return requestTypeAttachmentTypeDtos;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public List<RequestTypeAttachmentTypeDto> getByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(String code, Boolean isEntitledAttachment) throws JudicialWarrantException {
+		List<RequestTypeAttachmentType> requestTypeAttachmentTypes = null;
+		List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = null;
+		try {
+			notNull(code, "code must be set");
+			notNull(code, "isEntitledAttachment must be set");
+			requestTypeAttachmentTypes = requestTypeAttachmentTypeRepository.findByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(code, isEntitledAttachment);
+			requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentTypes);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return requestTypeAttachmentTypeDtos;
+	}
+	
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public RequestTypeAttachmentTypeDto save(RequestTypeAttachmentTypeDto requestTypeAttachmentTypeDto)
 			throws JudicialWarrantException {
 		RequestTypeAttachmentType requestTypeAttachmentType = null;
 		try {
 			notNull(requestTypeAttachmentTypeDto, "dto must be set");
+			requestTypeAttachmentTypeDto.setListOrder((byte) 0);
 			requestTypeAttachmentType = requestTypeAttachmentTypeMapper.toEntity(requestTypeAttachmentTypeDto);
 			RequestType requestType=requestTypeRepository.findByCode(requestTypeAttachmentTypeDto.getRequestType().getCode());
 			AttachmentType attachmentType=attachmentTypeRepository.findById(requestTypeAttachmentTypeDto.getAttachmentType().getId()).get();
@@ -107,6 +151,8 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 		try {
 			notNull(requestTypeAttachmentTypeDto, "dto must be set");
 			requestTypeAttachmentType = requestTypeAttachmentTypeMapper.toEntity(requestTypeAttachmentTypeDto);
+			AttachmentType attachmentType=attachmentTypeRepository.findById(requestTypeAttachmentTypeDto.getAttachmentType().getId()).get();
+			requestTypeAttachmentType.setAttachmentType(attachmentType);
 			requestTypeAttachmentType = requestTypeAttachmentTypeRepository.save(requestTypeAttachmentType);
 			requestTypeAttachmentTypeDto = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentType);
 		} catch (Exception e) {

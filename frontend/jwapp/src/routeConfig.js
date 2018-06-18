@@ -68,7 +68,7 @@ module.exports = function(app){
                 data: {
                     label :'requestTypeAttachmentTypes'
                 },
-                url: '/requestTypeAttachmentTypes',
+                url : '/requestTypeAttachmentTypes',
                 views : {
                     content : {
                         template : templateSrvcProvider.getTemplate('requestTypeAttachmentTypes')

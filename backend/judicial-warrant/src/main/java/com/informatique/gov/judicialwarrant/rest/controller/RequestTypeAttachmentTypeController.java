@@ -30,6 +30,11 @@ public class RequestTypeAttachmentTypeController implements Serializable {
 	*/
 	private static final long serialVersionUID = 7701627550236801076L;
 	private RequestTypeAttachmentTypeHandler requestTypeAttachmentTypeHandler;
+	
+	 @GetMapping
+		public ResponseEntity<?> getAll() throws JudicialWarrantException {
+			return requestTypeAttachmentTypeHandler.getAll();
+		}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Short id,
@@ -37,7 +42,7 @@ public class RequestTypeAttachmentTypeController implements Serializable {
 		return requestTypeAttachmentTypeHandler.getById(id, etag);
 	}
 
-	@GetMapping
+	@GetMapping(params= {"requestTypeId"})
 	public ResponseEntity<?> getByRequestTypeId(@RequestParam(name = "requestTypeId") Byte requestTypeId) throws JudicialWarrantException {
 		return requestTypeAttachmentTypeHandler.getByRequestTypeId(requestTypeId);
 	}

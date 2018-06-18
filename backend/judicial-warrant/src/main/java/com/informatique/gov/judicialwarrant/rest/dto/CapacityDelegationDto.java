@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -21,5 +23,7 @@ public class CapacityDelegationDto implements UserModel<Long> {
 	@NotNull
 	private String jobTitle;
 	@NotNull
-	private Long lawNo;
+	private String ministerialDecreeNumber;
+	@NotNull
+	private Date decreeDate;
 }

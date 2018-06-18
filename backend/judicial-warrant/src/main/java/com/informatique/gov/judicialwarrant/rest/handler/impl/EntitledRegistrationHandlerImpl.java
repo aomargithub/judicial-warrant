@@ -18,6 +18,7 @@ import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
 import com.informatique.gov.judicialwarrant.rest.handler.EntitledRegistrationHandler;
+import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.EntitledRegistrationService;
 
 import lombok.AllArgsConstructor;
@@ -133,12 +134,12 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 		return response;
 	}
 
-	/*@Override
-	public ResponseEntity<ERRequestResponse> submitRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestResponse> response = null;
+	@Override
+	public ResponseEntity<EntitledRegistrationDto> submit(String serial, EntitledRegistrationChangeStatusRequest registrationChangeStatusRequest) throws JudicialWarrantException {
+		ResponseEntity<EntitledRegistrationDto> response = null;
 		try {
 
-			ERRequestResponse dto = requestService.submitRequest(serial, erRequestNotesData);
+			EntitledRegistrationDto dto = entitledRegistrationService.submit(serial, registrationChangeStatusRequest);
 
 			response = ResponseEntity.ok(dto);
 
@@ -150,7 +151,7 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 		return response;
 	}
 
-	@Override
+	/*@Override
 	public ResponseEntity<ERRequestForInternalResponse> incompleteRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
 		ResponseEntity<ERRequestForInternalResponse> response = null;
 		try {

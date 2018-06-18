@@ -1,6 +1,9 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
 import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,11 +22,13 @@ public class EntitledDto implements UserModel<Long> {
 	private String englishName;
 	private String arabicName;
 	private Long civilId;
+	@JsonIgnore
 	private Short version;
 	private String mobileNumber1;
 	private String mobileNumber2;
 	private String emailAddress;
 	private OrganizationUnitDto organizationUnit;
 	private EntitledStatusDto currentStatus;
+	private Set<EntitledAttachmentDto> attachments;
 	private List<EntitledHistoryLogDto> histortyLogs;
 }
