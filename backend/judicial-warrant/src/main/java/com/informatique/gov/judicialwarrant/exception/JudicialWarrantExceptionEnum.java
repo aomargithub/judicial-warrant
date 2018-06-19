@@ -15,6 +15,7 @@ public enum JudicialWarrantExceptionEnum {
   PRE_CONDITION_REQUIRED("PRE_CONDITION_REQUIRED", "The etag header must have a the value of version of the targeted resource", "double check data provided"),
   SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION("SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION", "The version of %s with id %s must be provided", "double check data provided"),
   INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
+  WRONG_OLD_PASSWORD_EXCEPTION("WRONG_OLD_PASSWORD_EXCEPTION", "Old password provided is not correct", "double check data provided"),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description

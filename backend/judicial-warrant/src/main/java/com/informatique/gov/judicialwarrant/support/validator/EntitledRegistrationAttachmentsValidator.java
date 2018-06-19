@@ -43,7 +43,7 @@ public class EntitledRegistrationAttachmentsValidator implements Validator, Seri
 		try {
 			List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeService
 					.getByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(
-							RequestTypeEnum.Entitled_REGISTRATION.getCode(), false);
+							RequestTypeEnum.ENTITLED_REGISTRATION.getCode(), false);
 			List<RequestAttachmentDto> requestAttachmentDtos = requestAttachmentService
 					.getAllByRequestSerial(entitledRegistrationDto.getRequest().getSerial());
 			if (requestTypeAttachmentTypeDtos != null) {

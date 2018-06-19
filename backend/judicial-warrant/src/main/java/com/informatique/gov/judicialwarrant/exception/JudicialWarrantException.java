@@ -23,6 +23,12 @@ public class JudicialWarrantException extends Exception implements Serializable 
     private String userDomainName;
     @Setter
     private Long requestId;
+    
+    public JudicialWarrantException(JudicialWarrantExceptionEnum judicialWarrantExceptionEnum) {
+        this.code = judicialWarrantExceptionEnum.getCode();
+        this.description = judicialWarrantExceptionEnum.getDescription();
+        this.fixSuggestion = judicialWarrantExceptionEnum.getFixSuggestion();
+    }
 
     @ConstructorProperties({"code", "description", "fixSuggestion"})
     public JudicialWarrantException(String code, String description, String fixSuggestion) {

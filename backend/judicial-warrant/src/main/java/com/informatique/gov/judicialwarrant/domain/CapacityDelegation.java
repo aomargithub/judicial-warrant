@@ -65,11 +65,11 @@ public class CapacityDelegation extends DomainEntity<Long> {
 	@Column(name="JOB_TITLE")
 	private String jobTitle;
 	
-	@Column(name = "ministerial_decree_number")
+	@Column(name = "MINISTERIAL_DECREE_NUMBER")
 	private String ministerialDecreeNumber;
 	
-	@Column(name = "DECREE_DATE")
-	private Date decreeDate; 
+	@Column(name = "MINISTERIAL_DECREE_DATE")
+	private Date ministerialDecreeDate; 
 	
 	
 

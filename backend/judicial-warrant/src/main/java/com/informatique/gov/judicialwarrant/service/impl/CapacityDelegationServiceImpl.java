@@ -2,7 +2,6 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
-import java.net.Authenticator.RequestorType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,21 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Request;
-import com.informatique.gov.judicialwarrant.domain.RequestAttachment;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.persistence.repository.CapacityDelegationRepository;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.CapacityDelegationService;
+import com.informatique.gov.judicialwarrant.service.InternalCapacityDelegationService;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
-import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
@@ -38,7 +32,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class CapacityDelegationServiceImpl implements CapacityDelegationService {
+public class CapacityDelegationServiceImpl implements CapacityDelegationService, InternalCapacityDelegationService {
 
 	/**
 	 * 
@@ -157,7 +151,9 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService 
 		return savedCapacityDelegationDto;
 	}
 
-	private CapacityDelegation getIfValid(String serial) throws JudicialWarrantException {
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public CapacityDelegation getIfValid(String serial) throws JudicialWarrantException {
 
 		OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
 		Short organizationUnitId = organizationUnit.getId();

@@ -44,7 +44,7 @@ public class EntitledAttachmentsValidator implements Validator, Serializable {
 		try {
 			List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeService
 					.getByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(
-							RequestTypeEnum.Entitled_REGISTRATION.getCode(), true);
+							RequestTypeEnum.ENTITLED_REGISTRATION.getCode(), true);
 			if (requestTypeAttachmentTypeDtos != null) {
 				for (EntitledDto entitledDto : entitledRegistrationDto.getEntitled()) {
 					List<EntitledAttachmentDto> entitledAttachmentDtos = entitledAttachmentService

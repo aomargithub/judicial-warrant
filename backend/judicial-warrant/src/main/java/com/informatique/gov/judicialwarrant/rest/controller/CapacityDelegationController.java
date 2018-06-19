@@ -38,17 +38,12 @@ public class CapacityDelegationController implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6878225451248023554L;
-	/**
-	 * 
-	 */
 	
 	private CapacityDelegationHandler capacityDelegationHandler;
 	private CapacityDelegationChangeStatusRequestValidator capacityDelegationChangeStatusRequestValidator;
-	/**
-	* 
-	*/
+	
 	@InitBinder("capacityDelegationChangeStatusRequest")
-	protected void setupBinder(WebDataBinder binder) {
+	protected void initCapacityDelegationChangeStatusRequestBinder(WebDataBinder binder) {
 		binder.addValidators(capacityDelegationChangeStatusRequestValidator);
 	}
 

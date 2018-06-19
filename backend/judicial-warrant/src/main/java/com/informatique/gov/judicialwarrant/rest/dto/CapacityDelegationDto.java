@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -25,5 +28,8 @@ public class CapacityDelegationDto implements UserModel<Long> {
 	@NotNull
 	private String ministerialDecreeNumber;
 	@NotNull
-	private Date decreeDate;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private Date ministerialDecreeDate;
+	@JsonIgnore
+	private Short version;
 }

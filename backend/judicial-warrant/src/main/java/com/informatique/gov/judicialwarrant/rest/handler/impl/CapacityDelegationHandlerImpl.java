@@ -101,9 +101,9 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 				throw new ResourceModifiedException(serial, etag, version);
 			}
 
-			CapacityDelegationDto savedCapacityDelegationDto = capacityDelegationService.update(serial, capacityDelegationDto);
+			CapacityDelegationDto dto = capacityDelegationService.update(serial, capacityDelegationDto);
 
-			response = ResponseEntity.ok(savedCapacityDelegationDto);
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
 
 		} catch (JudicialWarrantException e) {
 			throw e;

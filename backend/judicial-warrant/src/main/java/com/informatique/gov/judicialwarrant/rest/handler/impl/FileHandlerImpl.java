@@ -1,6 +1,6 @@
 package com.informatique.gov.judicialwarrant.rest.handler.impl;
 
-import static org.junit.Assert.assertNotNull;
+import static org.springframework.util.Assert.notNull;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class FileHandlerImpl implements FileHandler {
 	public ResponseEntity<String> upload(MultipartFile multipartFile) throws JudicialWarrantException {
 		ResponseEntity<String> response = null;
 		try {
-			assertNotNull(multipartFile);
+			notNull(multipartFile, "multipartFile must be set");
 			String fileId = fileService.upload(multipartFile);
 			response = ResponseEntity.ok(fileId);
 		} catch (JudicialWarrantException e) {

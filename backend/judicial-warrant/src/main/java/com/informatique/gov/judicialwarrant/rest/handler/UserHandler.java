@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
+import com.informatique.gov.judicialwarrant.rest.request.PasswordChangeRequest;
 
 public interface UserHandler extends Serializable{
 	ResponseEntity<List<UserDto>> getAll() throws JudicialWarrantException;
@@ -24,6 +25,6 @@ public interface UserHandler extends Serializable{
 
 	ResponseEntity<Void>  delete(Integer id) throws JudicialWarrantException;
 	
-	ResponseEntity<Void>  changePassword(Integer id, String oldPass, String newPass) throws JudicialWarrantException;
+	ResponseEntity<Void>  changePassword(Integer id, String oldPass, String newPass, PasswordChangeRequest passwordChangeRequest) throws JudicialWarrantException;
 	ResponseEntity<List<UserDto>> getByRoleIsInternal(Boolean isInternal) throws JudicialWarrantException;
 }

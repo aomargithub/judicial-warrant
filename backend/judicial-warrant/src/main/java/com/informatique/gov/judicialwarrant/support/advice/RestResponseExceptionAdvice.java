@@ -119,11 +119,11 @@ public class RestResponseExceptionAdvice implements Serializable {
     		
     		case ResourceNotModifiedException:
     			ResourceNotModifiedException entityNotModifiedException = (ResourceNotModifiedException)judicialWarrantException;
-        		bodyBuilder = ResponseEntity.status(HttpStatus.NOT_MODIFIED).eTag(entityNotModifiedException.getRealVersion().toString());
+        		bodyBuilder = ResponseEntity.status(HttpStatus.NOT_MODIFIED).eTag(entityNotModifiedException.getCurrentVersion().toString());
     			break;
     		case ResourceModifiedException:
     			ResourceModifiedException entityModifiedException = (ResourceModifiedException)judicialWarrantException;
-        		bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).eTag(entityModifiedException.getRealVersion().toString());
+        		bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).eTag(entityModifiedException.getCurrentVersion().toString());
     			break;
     		case SingleResourceModifiedException:
         		bodyBuilder = ResponseEntity.status(HttpStatus.PRECONDITION_FAILED);

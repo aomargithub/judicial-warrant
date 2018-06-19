@@ -16,8 +16,8 @@ import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.domain.UserCredentials;
 import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.exception.WrongOldPasswordException;
 import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RoleRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.UserCredentialsRepository;
@@ -334,8 +334,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 				userCredentials.setPassword(passwordEncoder.encode(newPass));
 				userCredentialsRepository.save(userCredentials);
 			} else {
-				throw new JudicialWarrantException(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode(),
-						"old password is wrong", "enter right password");
+				throw new WrongOldPasswordException();
 			}
 		} catch (JudicialWarrantException e) {
 			throw e;

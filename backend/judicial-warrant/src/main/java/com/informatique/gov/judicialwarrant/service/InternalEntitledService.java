@@ -1,11 +1,13 @@
 package com.informatique.gov.judicialwarrant.service;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import com.informatique.gov.judicialwarrant.domain.Entitled;
 import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
+import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
 
 public interface InternalEntitledService extends Serializable{
@@ -17,5 +19,6 @@ public interface InternalEntitledService extends Serializable{
 			throws JudicialWarrantException;
 	Set<Entitled> changeStatusByEntitledRegistrationId(Long entitledRegistrationId, EntitledStatusEnum entitledStatusEnum,
 			String note) throws JudicialWarrantException;
+	List<EntitledDto> getAllByEntitledRegistrationSerial(String serial) throws JudicialWarrantException;
 
 }

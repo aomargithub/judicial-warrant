@@ -2,8 +2,6 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,24 +23,19 @@ import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
-import com.informatique.gov.judicialwarrant.persistence.repository.CapacityDelegationRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.EntitledRegistrationRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
-import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.EntitledRegistrationService;
-import com.informatique.gov.judicialwarrant.service.EntitledService;
+import com.informatique.gov.judicialwarrant.service.InternalCapacityDelegationService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
-import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
-import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.report.ReportGeneration;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
@@ -60,11 +53,10 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	private static final long serialVersionUID = 1L;
 	
 	private InternalRequestService requestService;
-	private InternalEntitledService internalEntitledService;
-	private EntitledService entitledService;
+	private InternalEntitledService entitledService;
 	private InternalOrganizationUnitService organizationunitService;
+	private InternalCapacityDelegationService capacityDelegationService;
 	private EntitledRegistrationRepository entitledRegistrationRepository;
-	private CapacityDelegationRepository capacityDelegationRepository;
 	private RequestRepository requestRepository;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationMapper;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationForInternalMapper;
@@ -155,13 +147,13 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			
 			notNull(dto, "dto must be set");
 			EntitledRegistration entity = entitledRegistrationMapper.toNewEntity(dto);
-			Request request = requestService.create(RequestTypeEnum.Entitled_REGISTRATION);
+			Request request = requestService.create(RequestTypeEnum.ENTITLED_REGISTRATION);
 			
 			
 			entity.setRequest(request);
 			
 			
-			savedDto = save(entity, dto.getCapacityDelegation().getRequest().getSerial());
+			savedDto = save(entity);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -171,11 +163,12 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		return savedDto;
 	}
 	
-	private EntitledRegistrationDto save(EntitledRegistration entity, String capacityDelegationSerial) throws JudicialWarrantException {
-		CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(capacityDelegationSerial);
+	private EntitledRegistrationDto save(EntitledRegistration entity) throws JudicialWarrantException {
+		
+		CapacityDelegation capacityDelegation = capacityDelegationService.getIfValid(entity.getCapacityDelegation().getRequest().getSerial());
 		entity.setCapacityDelegation(capacityDelegation);
 		entity = entitledRegistrationRepository.save(entity);
-		Set<Entitled> entitled = internalEntitledService.save(entity.getEntitled(), entity);
+		Set<Entitled> entitled = entitledService.save(entity.getEntitled(), entity);
 		entity.setEntitled(entitled);
 		
 		EntitledRegistrationDto savedDto = entitledRegistrationMapper.toDto(entity);
@@ -198,7 +191,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			
 			EntitledRegistrationWorkflowValidator.validateForUpdate(entity);
 			
-			savedDto = save(entity, dto.getCapacityDelegation().getRequest().getSerial());
+			savedDto = save(entity);
 			
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -232,7 +225,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.RECIEVED, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
 			
-			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
+			Set<Entitled> entitled = entitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
 			
 			
 			entity.setEntitled(entitled);
@@ -259,7 +252,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.INCOMPLETE, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
 			
-			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
+			Set<Entitled> entitled = entitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
 			
 			
 			entity.setEntitled(entitled);

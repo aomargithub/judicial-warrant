@@ -15,6 +15,7 @@ import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.UserHandler;
+import com.informatique.gov.judicialwarrant.rest.request.PasswordChangeRequest;
 import com.informatique.gov.judicialwarrant.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -191,12 +192,12 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<Void> changePassword(Integer id, String oldPass, String newPass)
+	public ResponseEntity<Void> changePassword(Integer id, String oldPass, String newPass, PasswordChangeRequest passwordChangeRequest)
 			throws JudicialWarrantException {
 		ResponseEntity<Void> response = null;
 		try {
 			
-			userService.changePassword(id, oldPass, newPass);
+			userService.changePassword(id, passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword());
 			
 			response = ResponseEntity.ok().build();
 			

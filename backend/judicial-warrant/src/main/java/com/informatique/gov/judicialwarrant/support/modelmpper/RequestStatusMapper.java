@@ -20,7 +20,7 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 		if(isConvertable(entity)) {
 			dto = new RequestStatusDto();
 			dto.setArabicName(entity.getArabicName());
-			dto.setCode(entity.getEnglishName());
+			dto.setCode(entity.getCode());
 			dto.setEnglishName(entity.getEnglishName());
 			dto.setId(entity.getId());
 		}
@@ -35,7 +35,7 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 		if(isConvertable(dto)) {
 			entity = new RequestStatus();
 			entity.setArabicName(dto.getArabicName());
-			entity.setCode(dto.getEnglishName());
+			entity.setCode(dto.getCode());
 			entity.setEnglishName(dto.getEnglishName());
 			entity.setId(dto.getId());
 		}

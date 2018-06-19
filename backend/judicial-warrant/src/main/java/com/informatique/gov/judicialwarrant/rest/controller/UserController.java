@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 import com.informatique.gov.judicialwarrant.rest.handler.UserHandler;
-import com.informatique.gov.judicialwarrant.rest.request.ChangePassword;
+import com.informatique.gov.judicialwarrant.rest.request.PasswordChangeRequest;
 import com.informatique.gov.judicialwarrant.support.validator.UserDtoValidator;
 
 import lombok.AllArgsConstructor;
@@ -75,15 +75,15 @@ public class UserController implements Serializable {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody UserDto dto, @PathVariable Integer id,
+	public ResponseEntity<?> update(@Valid @RequestBody UserDto userDto, @PathVariable Integer id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return userHandler.update(dto, id, eTag);
+		return userHandler.update(userDto, id, eTag);
 	}
 
-	@PutMapping("/{id}/changingPassword")
-	public ResponseEntity<?> changingPassword(@RequestBody ChangePassword changePassword, @PathVariable Integer id)
+	@PutMapping("/{id}/passwordChange")
+	public ResponseEntity<?> changePassword(@PathVariable Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest)
 			throws JudicialWarrantException {
-		return userHandler.changePassword(id, changePassword.getOldPassword(), changePassword.getNewPassword());
+		return userHandler.changePassword(id, passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword(), null);
 	}
 
 	@DeleteMapping("/{id}")
