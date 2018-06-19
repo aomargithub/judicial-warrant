@@ -45,6 +45,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 	@Qualifier("capacityDelegationForInternalMapper")
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationForInternalMapper;
 	private CapacityDelegationRepository capacityDelegationRepository;
+	private CapacityDelegationWorkflowValidator capacityDelegationWorkflowValidator;
 
 	List<JudicialWarrantGrantedAuthority> authorities;
 
@@ -139,7 +140,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 
 			CapacityDelegation capacityDelegation = getIfValid(serial);
 
-			CapacityDelegationWorkflowValidator.validateForUpdate(capacityDelegation);
+			capacityDelegationWorkflowValidator.validateForUpdate(capacityDelegation);
 			capacityDelegation.setJobTitle(capacityDelegationDto.getJobTitle());
 			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);
 			savedCapacityDelegationDto = capacityDelegationMapper.toDto(savedCapacityDelegation);
@@ -177,7 +178,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 
 			CapacityDelegation capacityDelegation = getIfValid(serial);
 
-			CapacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.RECIEVED);
+			capacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.RECIEVED);
 
 			capacityDelegation.setJobTitle(capacityDelegationChangeStatusRequest.getCapacityDelegation().getJobTitle());
 			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.Entitled;
-import com.informatique.gov.judicialwarrant.domain.EntitledAttachment;
-import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
 import com.informatique.gov.judicialwarrant.domain.EntitledStatus;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
@@ -24,11 +22,11 @@ import com.informatique.gov.judicialwarrant.persistence.repository.EntitledRepos
 import com.informatique.gov.judicialwarrant.persistence.repository.EntitledStatusRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 import com.informatique.gov.judicialwarrant.service.EntitledService;
-import com.informatique.gov.judicialwarrant.service.InternalEntitledAttachmentService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledHistoryLogService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
 import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
+import com.informatique.gov.judicialwarrant.support.integration.contentmanger.ContentManager;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -38,11 +36,11 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 	
 	private InternalOrganizationUnitService organizationUnitService;
 	private InternalEntitledHistoryLogService entitledHistoryLogService;
-	private InternalEntitledAttachmentService entitledAttachmentService;
 	private EntitledRepository entitledRepository;
 	private EntitledStatusRepository entitledStatusRepository;
 	private EntitledHistoryLogRepository entitledHistoryLogRepository;
 	private EntitledAttachmentRepository entitledAttachmentRepository;
+	private ContentManager contentManager;
 	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
 
 	/**
@@ -87,7 +85,13 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		try {
 			notNull(entitledDto, "entitledDto must be set");
 			Entitled entitled = entitledMapper.toNewEntity(entitledDto);
+			entitled.setOrganizationUnit(organizationUnitService.getByCurrentUser());
 			entitled = entitledRepository.save(entitled);
+		
+			// create ucm folder for every entitled
+			String requestFolder = contentManager.getFolderIdFromPath("/" + entitledDto.getEntitledRegistrationDto().getRequest().getSerial() + "/");
+			contentManager.createFolder(entitled.getId().toString(), true, requestFolder);
+			
 			savedDto = entitledMapper.toDto(entitled);
 			
 		} catch (Exception e) {
@@ -125,81 +129,7 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		}
 		return entitledDtos;
 	}
-	
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public Set<Entitled> save(Set<Entitled> entities, EntitledRegistration entitledRegistration) throws JudicialWarrantException {
-		Set<Entitled> savedEntities = null;
-		try {
-			notNull(entities, "entities must be set");
-			notNull(entitledRegistration, "entitledRegistration must be set");
-			savedEntities = new HashSet<>();
-			for(Entitled entity : entities) {
-				if(entity.getId() == null) {
-					savedEntities.add(create(entity, entitledRegistration));
-				}else {
-					savedEntities.add(update(entity));
-				}
-				
-			}
-			
-		}catch(JudicialWarrantException e) {
-			throw e;
-		}catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return savedEntities;
-	}
-	
-	
-	private Entitled create(Entitled entity, EntitledRegistration entitledRegistration) throws JudicialWarrantException {
-		Entitled savedEntity = null;
-		try {
-			notNull(entity, "entity must be set");
-			notNull(entitledRegistration, "entitledRegistration must be set");
-			
-			
-			entity.setOrganizationUnit(organizationUnitService.getByCurrentUser());
-			entity.setCurrentStatus(entitledStatusRepository.findByCode(EntitledStatusEnum.DRAFT.getCode()));
-			entity.setEntitledRegistration(entitledRegistration);
-			savedEntity = entitledRepository.save(entity);
-			
-			Set<EntitledAttachment> attachments = entitledAttachmentService.create(savedEntity.getAttachments(), savedEntity);
-			savedEntity.setAttachments(attachments);
-			
-			entitledHistoryLogService.create(entity);
-			
-		}catch(JudicialWarrantException e) {
-			throw e;
-		}catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		
-		 
-		 return savedEntity;
-	}
-	
-	private Entitled update(Entitled entity) throws JudicialWarrantException {
-		Entitled savedEntity = null;
-		try {
-			notNull(entity, "dto must be set");
-			notNull(entity.getId(), "dto.id must be set");
-			
-			validateUpdateEligiablity(entity);
-			
-			savedEntity = entitledRepository.save(entity);
-			
-			Set<EntitledAttachment> attachments = entitledAttachmentService.save(savedEntity.getAttachments(), savedEntity);
-			savedEntity.setAttachments(attachments);
-			
-		}catch(JudicialWarrantException e) {
-			throw e;
-		}catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return savedEntity;
-	}
-	
+
 	private void validateUpdateEligiablity(Entitled entity) throws JudicialWarrantException{
 		
 		String entitledClassName= Entitled.class.getName();
@@ -246,7 +176,14 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 			
 			entitledHistoryLogRepository.deleteByEntitledId(id);
 			entitledAttachmentRepository.deleteByEntitledId(id);
+			
+			Entitled entitled = entitledRepository.findById(id).get();
+			
 			entitledRepository.deleteById(id);
+			
+			// create ucm folder for every entitled
+			String requestFolder = contentManager.getFolderIdFromPath("/" + entitled.getEntitledRegistration().getRequest().getSerial() + "/");
+			contentManager.createFolder(id.toString(), true, requestFolder);
 			
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

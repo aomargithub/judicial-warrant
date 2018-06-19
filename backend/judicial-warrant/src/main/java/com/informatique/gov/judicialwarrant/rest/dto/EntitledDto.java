@@ -3,6 +3,8 @@ package com.informatique.gov.judicialwarrant.rest.dto;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -27,6 +29,8 @@ public class EntitledDto implements UserModel<Long> {
 	private String mobileNumber1;
 	private String mobileNumber2;
 	private String emailAddress;
+	@NotNull
+	private EntitledRegistrationDto entitledRegistrationDto;
 	private OrganizationUnitDto organizationUnit;
 	private EntitledStatusDto currentStatus;
 	private Set<EntitledAttachmentDto> attachments;

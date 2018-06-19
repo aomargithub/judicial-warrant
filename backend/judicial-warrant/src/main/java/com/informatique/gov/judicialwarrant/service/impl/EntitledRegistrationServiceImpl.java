@@ -58,6 +58,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	private InternalCapacityDelegationService capacityDelegationService;
 	private EntitledRegistrationRepository entitledRegistrationRepository;
 	private RequestRepository requestRepository;
+	private EntitledRegistrationWorkflowValidator entitledRegistrationWorkflowValidator;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationMapper;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationForInternalMapper;
 	
@@ -167,10 +168,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		
 		CapacityDelegation capacityDelegation = capacityDelegationService.getIfValid(entity.getCapacityDelegation().getRequest().getSerial());
 		entity.setCapacityDelegation(capacityDelegation);
-		entity = entitledRegistrationRepository.save(entity);
-		Set<Entitled> entitled = entitledService.save(entity.getEntitled(), entity);
-		entity.setEntitled(entitled);
-		
+		entity = entitledRegistrationRepository.save(entity);		
 		EntitledRegistrationDto savedDto = entitledRegistrationMapper.toDto(entity);
 		
 		return savedDto;
@@ -189,7 +187,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			
 			EntitledRegistration entity = getIfValid(serial);
 			
-			EntitledRegistrationWorkflowValidator.validateForUpdate(entity);
+			entitledRegistrationWorkflowValidator.validateForUpdate(entity);
 			
 			savedDto = save(entity);
 			
@@ -220,7 +218,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		EntitledRegistrationDto savedEntitledRegistrationDto = null;
 		try {
 			EntitledRegistration entity = getIfValid(serial);
-			EntitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.RECIEVED);
+			entitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.RECIEVED);
 			
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.RECIEVED, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
@@ -247,7 +245,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		EntitledRegistrationDto savedEntitledRegistrationDto = null;
 		try {
 			EntitledRegistration entity = getIfValid(serial);
-			EntitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.INCOMPLETE);
+			entitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.INCOMPLETE);
 			
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.INCOMPLETE, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);

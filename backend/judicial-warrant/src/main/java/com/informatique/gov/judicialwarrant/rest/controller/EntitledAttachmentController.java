@@ -2,8 +2,6 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 
 import java.io.Serializable;
 
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,12 +45,12 @@ public class EntitledAttachmentController implements Serializable {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody EntitledAttachmentDto dto, @RequestParam("file") MultipartFile file) throws JudicialWarrantException {
+	public ResponseEntity<?> save(@RequestBody EntitledAttachmentDto dto, @RequestParam("file") MultipartFile file) throws JudicialWarrantException {
 		return entitledAttachmentHandler.save(dto, file);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody EntitledAttachmentDto dto, @PathVariable Long id,
+	public ResponseEntity<?> update(@RequestBody EntitledAttachmentDto dto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledAttachmentHandler.update(dto, id, eTag);
 	}

@@ -225,12 +225,12 @@ public class UcmContentManagerImpl implements ContentManager {
 		properties.put("xdoc_upload_source", "");
 		properties.put("xattachment_type", attachmentType);
 		properties.put("xrequest_serial", requestSerial);
-		properties.put("xCollectionID", getFolderIdFromPath(username, "/" + folder + "/"));
+		properties.put("xCollectionID", getFolderIdFromPath("/" + folder + "/"));
 		return properties;
 	}
 
 	// Returns Folder ID
-	public String getFolderIdFromPath(String username, String path) throws Exception {
+	public String getFolderIdFromPath(String path) throws Exception {
 		String folderId = null;
 
 		try {
