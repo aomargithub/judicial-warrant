@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.support.validator;
 
+import org.springframework.stereotype.Component;
+
 import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
 import com.informatique.gov.judicialwarrant.exception.InvalidRequestStatusException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -7,17 +9,24 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalExc
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 
+import lombok.AllArgsConstructor;
+
+@Component
+@AllArgsConstructor
 public class CapacityDelegationWorkflowValidator {
 
-	public static void validate(CapacityDelegation jwcdRequest, RequestInternalStatusEnum requiredInternalStatusEnum)
+	private CapacityDelegationAttachmentsValidator capacityDelegationAttachmentsValidator;
+	
+	public void validate(CapacityDelegation capacityDelegation, RequestInternalStatusEnum requiredInternalStatusEnum)
 			throws JudicialWarrantException {
 		try {
-			String serial = jwcdRequest.getRequest().getSerial();
-			if (jwcdRequest.getRequest().getCurrentInternalStatus() == null) {
+			String serial = capacityDelegation.getRequest().getSerial();
+			if (capacityDelegation.getRequest().getCurrentInternalStatus() == null) {
 				if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
 					throw new InvalidRequestStatusException(serial,
-							RequestInternalStatusEnum.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode()));
+							RequestInternalStatusEnum.getByCode(capacityDelegation.getRequest().getCurrentStatus().getCode()));
 				} else {
+					capacityDelegationAttachmentsValidator.validate(capacityDelegation);
 					return;
 				}
 			}
@@ -28,7 +37,7 @@ public class CapacityDelegationWorkflowValidator {
 		}
 	}
 
-	public static void validateForUpdate(CapacityDelegation jwcdRequest) throws JudicialWarrantException {
+	public void validateForUpdate(CapacityDelegation jwcdRequest) throws JudicialWarrantException {
 		try {
 			RequestStatusEnum currentStatus = RequestStatusEnum
 					.getByCode(jwcdRequest.getRequest().getCurrentStatus().getCode());

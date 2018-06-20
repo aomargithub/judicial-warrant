@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
@@ -126,11 +127,11 @@ public class RequestAttachmentHandlerImpl implements RequestAttachmentHandler {
 	}
 
 	@Override
-	public ResponseEntity<RequestAttachmentDto> create(RequestAttachmentDto dto) throws JudicialWarrantException {
+	public ResponseEntity<RequestAttachmentDto> create(RequestAttachmentDto dto, MultipartFile file) throws JudicialWarrantException {
 		ResponseEntity<RequestAttachmentDto> response = null;
 		try {
 			
-			RequestAttachmentDto savedDto = requestAttachmentService.create(dto);
+			RequestAttachmentDto savedDto = requestAttachmentService.create(dto, file);
 			
 			response = ResponseEntity.ok(savedDto);
 			

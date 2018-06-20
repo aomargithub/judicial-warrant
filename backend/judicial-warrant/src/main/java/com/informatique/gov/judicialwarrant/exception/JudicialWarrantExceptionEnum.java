@@ -16,6 +16,7 @@ public enum JudicialWarrantExceptionEnum {
   SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION("SINGLE_RESOURCE_VERSION_NOT_PROVIDED_EXCEPTION", "The version of %s with id %s must be provided", "double check data provided"),
   INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
   WRONG_OLD_PASSWORD_EXCEPTION("WRONG_OLD_PASSWORD_EXCEPTION", "Old password provided is not correct", "double check data provided"),
+  INCOMPLETE_ATTACHMENTS("INCOMPLETE_ATTACHMENTS", "the required attachments not completed ", "add all required Attachment first"),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description

@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,6 +29,13 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "civilId", "entitledRegistration", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"civilId", "entitledRegistration"}, callSuper = false)
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "Entitled.fat",
+					  attributeNodes = {
+							  @NamedAttributeNode(value = "entitledRegistration"),
+							  @NamedAttributeNode(value = "currentStatus")
+					  })
+})
 public class Entitled extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 
 	

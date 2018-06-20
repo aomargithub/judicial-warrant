@@ -2,8 +2,10 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -56,7 +58,11 @@ public class EntitledAttachmentServiceImpl implements EntitledAttachmentService,
 		try {
 			notNull(dto, "entitledDto must be set");
 			EntitledAttachment entitled = entitledAttachmentMapper.toNewEntity(dto);
-			String ucmId = contentManager.checkin(null, file);
+			
+			Map<String, String> properties = new HashMap<String, String>();
+//			properties.put("dCollectionName", request.getSerial());
+			String ucmId = contentManager.checkin(properties, file);
+			
 			entitled.setUcmDocumentId(ucmId);
 			entitled = entitledAttachmentRepository.save(entitled);
 			savedDto = entitledAttachmentMapper.toDto(entitled);

@@ -2,10 +2,13 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
 import com.informatique.gov.judicialwarrant.domain.Request;
@@ -17,6 +20,7 @@ import com.informatique.gov.judicialwarrant.persistence.repository.RequestAttach
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
 import com.informatique.gov.judicialwarrant.service.RequestAttachmentService;
+import com.informatique.gov.judicialwarrant.support.integration.contentmanger.ContentManager;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -28,12 +32,12 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 	private RequestAttachmentRepository attachmentRepository;
 	private AttachmentTypeRepository attachmentTypeRepository;
 	private RequestRepository requestRepository;
+	private ContentManager contentManager;
 	private ModelMapper<RequestAttachment, RequestAttachmentDto, Long> requestAttachmentMapper;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class,readOnly=true)
 	public List<RequestAttachmentDto> getAllByRequestSerial(String serial) throws JudicialWarrantException {
-		// TODO Auto-generated method stub
 		List<RequestAttachmentDto> dtos = null;
 		try {
 		
@@ -63,7 +67,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public RequestAttachmentDto create(RequestAttachmentDto requestAttachmentDto) throws JudicialWarrantException {
+	public RequestAttachmentDto create(RequestAttachmentDto requestAttachmentDto, MultipartFile file) throws JudicialWarrantException {
 		RequestAttachmentDto savedDto = null;
 
 		try {
@@ -71,9 +75,15 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 			RequestAttachment entiry = requestAttachmentMapper.toNewEntity(requestAttachmentDto);						
 			AttachmentType attachmentType=attachmentTypeRepository.findById(requestAttachmentDto.getAttachmentType().getId()).get();
-			Request request=requestRepository.findById(requestAttachmentDto.getRequest().getId()).get();
+			Request request=requestRepository.findBySerial(requestAttachmentDto.getRequest().getSerial());
+			
+			Map<String, String> properties = new HashMap<String, String>();
+//			properties.put("dCollectionName", request.getSerial());
+			String ucmId = contentManager.checkin(properties, file);			
+			
 			entiry.setAttachmentType(attachmentType);
 			entiry.setRequest(request);
+			entiry.setUcmDocumentId(ucmId);
 			entiry = attachmentRepository.save(entiry);
 			
 			savedDto = requestAttachmentMapper.toDto(entiry);
@@ -112,7 +122,6 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void delete(Long id) throws JudicialWarrantInternalException {
-		// TODO Auto-generated method stub
 		try {
 			notNull(id, "id must be set");
 			attachmentRepository.deleteById(id);

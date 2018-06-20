@@ -3,6 +3,7 @@ package com.informatique.gov.judicialwarrant.rest.handler;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
@@ -16,7 +17,7 @@ public interface RequestAttachmentHandler {
 	ResponseEntity<RequestAttachmentDto> update(RequestAttachmentDto dto, Long id, Short etag)
 			throws JudicialWarrantException;
 
-	ResponseEntity<RequestAttachmentDto> create(RequestAttachmentDto dto)
+	ResponseEntity<RequestAttachmentDto> create(RequestAttachmentDto dto, MultipartFile file)
 			throws JudicialWarrantException;
 
 	ResponseEntity<Void> delete(Long id) throws JudicialWarrantException;

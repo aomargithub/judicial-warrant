@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.support.validator;
 
+import org.springframework.stereotype.Component;
+
 import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
 import com.informatique.gov.judicialwarrant.exception.InvalidRequestStatusException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
@@ -7,9 +9,16 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalExc
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
 
+import lombok.AllArgsConstructor;
+
+
+@Component
+@AllArgsConstructor
 public class EntitledRegistrationWorkflowValidator {
 
-	public static void validate(EntitledRegistration entitledRegistration, RequestInternalStatusEnum requiredInternalStatusEnum)
+	private EntitledRegistrationAttachmentsValidator entitledRegistrationAttachmentsValidator;
+	
+	public void validate(EntitledRegistration entitledRegistration, RequestInternalStatusEnum requiredInternalStatusEnum)
 			throws JudicialWarrantException {
 		try {
 			String serial = entitledRegistration.getRequest().getSerial();
@@ -18,6 +27,7 @@ public class EntitledRegistrationWorkflowValidator {
 					throw new InvalidRequestStatusException(serial,
 							RequestInternalStatusEnum.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode()));
 				} else {
+					entitledRegistrationAttachmentsValidator.validate(entitledRegistration);
 					return;
 				}
 			}
@@ -59,7 +69,7 @@ public class EntitledRegistrationWorkflowValidator {
 		}
 	}
 
-	public static void validateForUpdate(EntitledRegistration entitledRegistration) throws JudicialWarrantException {
+	public void validateForUpdate(EntitledRegistration entitledRegistration) throws JudicialWarrantException {
 		try {
 			RequestStatusEnum currentStatus = RequestStatusEnum
 					.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode());

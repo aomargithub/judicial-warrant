@@ -3,11 +3,9 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.CapacityDelegation;
-import com.informatique.gov.judicialwarrant.domain.Entitled;
 import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
-import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 
@@ -23,7 +21,6 @@ public class EntitledRegistrationForInternalMapper extends AbstractModelMapper<E
 	private static final long serialVersionUID = 1L;
 	private ModelMapper<Request, RequestDto, Long> requestForInternalMapper;
 	private ModelMapper<CapacityDelegation, CapacityDelegationDto, Long> capacityDelegationForInternalMapper;
-	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
 	
 	@Override
 	public EntitledRegistrationDto toDto(EntitledRegistration entity) {
@@ -34,7 +31,6 @@ public class EntitledRegistrationForInternalMapper extends AbstractModelMapper<E
 			dto.setId(entity.getId());
 			dto.setCapacityDelegation(capacityDelegationForInternalMapper.toDto(entity.getCapacityDelegation()));
 			dto.setRequest(requestForInternalMapper.toDto(entity.getRequest()));
-			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
 		}
 		
 		return dto;
@@ -49,7 +45,6 @@ public class EntitledRegistrationForInternalMapper extends AbstractModelMapper<E
 			entity.setId(nullId ? null : dto.getId());
 			entity.setCapacityDelegation(capacityDelegationForInternalMapper.toEntity(dto.getCapacityDelegation()));
 			entity.setRequest(requestForInternalMapper.toEntity(dto.getRequest()));
-			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
 		}
 		
 		return entity;

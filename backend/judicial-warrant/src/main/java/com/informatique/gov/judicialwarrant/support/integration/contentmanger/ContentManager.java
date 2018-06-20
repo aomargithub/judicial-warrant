@@ -23,4 +23,6 @@ public interface ContentManager extends Serializable {
 
 	public String createFolder(String folderName, Boolean Has_Parent, String ParentCollectionID) throws Exception;
 
+	public String getFolderIdFromPath(String path) throws Exception;
+	
 }
