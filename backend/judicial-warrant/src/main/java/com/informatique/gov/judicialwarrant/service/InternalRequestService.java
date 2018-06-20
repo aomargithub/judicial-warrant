@@ -12,6 +12,8 @@ public interface InternalRequestService extends Serializable {
 	
 	Request create(RequestTypeEnum requestTypeEnum) throws JudicialWarrantException;
 	
+	Request create(Request request, RequestTypeEnum requestTypeEnum) throws JudicialWarrantException;
+	
 	Request update(Request request) throws JudicialWarrantException;
 
 	Request changeStatus(Request request, RequestInternalStatusEnum requestInternalStatusEnum, String note) throws JudicialWarrantException;

@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +22,7 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
 import com.informatique.gov.judicialwarrant.rest.handler.EntitledRegistrationHandler;
 import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
+import com.informatique.gov.judicialwarrant.support.validator.EntitledRegistrationDtoValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -29,10 +32,12 @@ import lombok.AllArgsConstructor;
 public class EntitledRegistrationController {
 
 	private EntitledRegistrationHandler entitledRegistrationHandlerHandler;
+	private EntitledRegistrationDtoValidator entitledRegistrationDtoValidator;
 	
-	/**
-	* 
-	*/
+	@InitBinder("entitledRegistrationDto")
+	protected void roleInitBinder(WebDataBinder binder) {
+		binder.addValidators(entitledRegistrationDtoValidator);
+	}
 	
 	@GetMapping("/serial={serial}/entitledReport/")
 	public ResponseEntity<?> generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response,

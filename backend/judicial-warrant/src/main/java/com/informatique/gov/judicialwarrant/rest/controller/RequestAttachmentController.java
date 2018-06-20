@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/requestAttachment")
+@RequestMapping("/requestAttachments")
 public class RequestAttachmentController implements Serializable{
 	/**
 	 * 

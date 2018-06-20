@@ -117,7 +117,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 			notNull(capacityDelegationDto, "capacityDelegationDto must be set");
 
 			CapacityDelegation capacityDelegation = capacityDelegationMapper.toNewEntity(capacityDelegationDto);
-			Request request = requestService.create(RequestTypeEnum.CAPACITY_DELEGATION);
+			Request request = requestService.create(capacityDelegation.getRequest(), RequestTypeEnum.CAPACITY_DELEGATION);
 			capacityDelegation.setRequest(request);
 			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);
 			savedCapacityDelegationDto = capacityDelegationMapper.toDto(savedCapacityDelegation);

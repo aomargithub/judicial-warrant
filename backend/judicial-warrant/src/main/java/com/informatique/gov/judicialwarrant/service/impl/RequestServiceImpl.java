@@ -49,20 +49,26 @@ public class RequestServiceImpl implements InternalRequestService {
 	@Transactional(rollbackFor = Exception.class)
 	public Request create(RequestTypeEnum requestTypeEnum)
 			throws JudicialWarrantException {
-		Request request = null;
+		Request request = new Request();
+		OrganizationUnitDto organizationUnitDto = securityService.getUserDetails()
+				.getOrganizationUnit();
+		request.setOrganizationUnit(organizationUnitRepository.findById(organizationUnitDto.getId()).get());
+		return create(request, requestTypeEnum);
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Request create(Request request, RequestTypeEnum requestTypeEnum)
+			throws JudicialWarrantException {
 		try {
-			request = new Request();
-			OrganizationUnitDto organizationUnitDto = securityService.getUserDetails()
-					.getOrganizationUnit();
-			request.setOrganizationUnit(organizationUnitRepository.findById(organizationUnitDto.getId()).get());
 			request.setCurrentStatus(requestStatusRepository.findByCode(RequestStatusEnum.DRAFT.getCode()));
 			RequestType requestType = requestTypeRepository.findByCode(requestTypeEnum.getCode());
 			request.setType(requestType);
-
 			String serial = requestSerialService.getRequestSerial(requestType);
 			request.setSerial(serial);
+			request.setOrganizationUnit(organizationUnitRepository.findById(request.getOrganizationUnit().getId()).get());
 			request = requestRepository.save(request);
-		//	contentManager.createFolder(request.getSerial(), false, null);
+//			contentManager.createFolder(request.getSerial(), false, null);
 			requestHistoryLogService.create(request);
 		} catch (JudicialWarrantException e) {
 			throw e;
