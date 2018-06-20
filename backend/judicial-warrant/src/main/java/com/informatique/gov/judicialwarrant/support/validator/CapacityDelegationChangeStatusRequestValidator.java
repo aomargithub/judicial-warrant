@@ -19,8 +19,6 @@ import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeSer
 import com.informatique.gov.judicialwarrant.service.RequestTypeService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 
-import lombok.AllArgsConstructor;
-
 @Component
 
 public class CapacityDelegationChangeStatusRequestValidator implements Validator, Serializable{
@@ -41,46 +39,44 @@ public class CapacityDelegationChangeStatusRequestValidator implements Validator
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		// TODO Auto-generated method stub
 		return CapacityDelegationChangeStatusRequest.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		// TODO Auto-generated method stub
 		CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest=(CapacityDelegationChangeStatusRequest)target;
-		String serial=capacityDelegationChangeStatusRequest.getCapacityDelegation().getRequest().getSerial();
-		try {
-			RequestTypeDto requestTypeDto = requestTypeService.getByCode(RequestTypeEnum.CAPACITY_DELEGATION.getCode());
-			List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeService.getByRequestTypeId(requestTypeDto.getId());
-		
-			List<RequestAttachmentDto> requestAttachmentDtos = requestAttachmentService.getAllByRequestSerial(serial);
-			
-			for (RequestTypeAttachmentTypeDto requestTypeAttachmentTypeDto : requestTypeAttachmentTypeDtos) {
-				AttachmentTypeDto attachmentTypeDto = requestTypeAttachmentTypeDto.getAttachmentType();
-				boolean found = false;
-				for(RequestAttachmentDto requestAttachmentDto : requestAttachmentDtos) {
-					if(attachmentTypeDto.getId().equals(requestAttachmentDto.getAttachmentType().getId())) {
-						found = true;
-						break;
-					}
-				}
-				if(!found) {
-					errors.reject(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode());
-
-				}
-				
-				
-				
-			}
-			
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JudicialWarrantException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		String serial=capacityDelegationChangeStatusRequest.getCapacityDelegation().getRequest().getSerial();
+//		try {
+//			RequestTypeDto requestTypeDto = requestTypeService.getByCode(RequestTypeEnum.CAPACITY_DELEGATION.getCode());
+//			List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeService.getByRequestTypeId(requestTypeDto.getId());
+//		
+//			List<RequestAttachmentDto> requestAttachmentDtos = requestAttachmentService.getAllByRequestSerial(serial);
+//			
+//			for (RequestTypeAttachmentTypeDto requestTypeAttachmentTypeDto : requestTypeAttachmentTypeDtos) {
+//				AttachmentTypeDto attachmentTypeDto = requestTypeAttachmentTypeDto.getAttachmentType();
+//				boolean found = false;
+//				for(RequestAttachmentDto requestAttachmentDto : requestAttachmentDtos) {
+//					if(attachmentTypeDto.getId().equals(requestAttachmentDto.getAttachmentType().getId())) {
+//						found = true;
+//						break;
+//					}
+//				}
+//				if(!found) {
+//					errors.reject(JudicialWarrantExceptionEnum.EXCEPTION_IN_VALIDATION.getCode());
+//
+//				}
+//				
+//				
+//				
+//			}
+//			
+//		} catch (NumberFormatException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JudicialWarrantException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 	}

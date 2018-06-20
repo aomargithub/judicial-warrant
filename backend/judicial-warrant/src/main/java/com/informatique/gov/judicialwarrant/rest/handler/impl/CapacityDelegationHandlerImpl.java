@@ -118,9 +118,9 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 		ResponseEntity<CapacityDelegationDto> response = null;
 		try {
 
-			CapacityDelegationDto savedCapacityDelegationDto = capacityDelegationService.submit(serial, capacityDelegationChangeStatusRequest);
+			CapacityDelegationDto dto = capacityDelegationService.submit(serial, capacityDelegationChangeStatusRequest);
 
-			response = ResponseEntity.ok(savedCapacityDelegationDto);
+			response = ResponseEntity.ok(dto);
 
 		} catch (JudicialWarrantException e) {
 			throw e;
