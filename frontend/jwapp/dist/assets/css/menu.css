@@ -280,6 +280,24 @@ a.article, a.article:hover {
     margin-right:  -15px;
 }
 
+.card {
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0;
+    background-color: #284c79;
+    color: rgb(136, 172, 217);
+    
+  }
+  .col-sm-3{
+      float: right !important; 
+  }
+  .col-sm-3 a{
+      margin-right: 100px;
+  }
+
 
 /* ---------------------------------------------------
     logout

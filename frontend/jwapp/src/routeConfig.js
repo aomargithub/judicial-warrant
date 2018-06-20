@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.config(function($stateProvider, $urlRouterProvider, $locationProvider, templateSrvcProvider){
+    app.config(function($stateProvider, $urlRouterProvider, templateSrvcProvider){
         $urlRouterProvider.otherwise('/login');
         $stateProvider
             .state('login', {
@@ -72,6 +72,18 @@ module.exports = function(app){
                 views : {
                     content : {
                         template : templateSrvcProvider.getTemplate('requestTypeAttachmentTypes')
+                    }
+                    
+                }
+            }).state('root.capacityDelegations',{
+                parent: 'root',
+                data: {
+                    label :'capacityDelegations'
+                },
+                url : '/capacityDelegations',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('capacityDelegations')
                     }
                     
                 }

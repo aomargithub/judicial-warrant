@@ -1,7 +1,13 @@
+<div>
+<div class="page-header">
+    <h3>{{messages.mainPage}}</h3> 
+  </div>
+<div class="col-sm-3" ng-repeat="requestType in requestTypesMenuDrtvCtrl.items track by requestType.code">
+    <div class="card avatar">
+      <img src=".\assets\imgs\judical.png"  alt="{{requestType.arabicName}}" >
+  </div>
+  
+    <a ng-href="http://localhost:8080/dist/#!/home/capacityDelegations">{{requestType.arabicName}}</a> 
 
-<div ng-repeat="requestType in requestTypesMenuDrtvCtrl.items track by requestType.code">
-        {{requestType.arabicName}}  
-        <div class="page-header">
-                        <h3>{{messages.mainPage}}</h3> 
-                      </div>
+</div>
 </div>

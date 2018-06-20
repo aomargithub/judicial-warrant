@@ -12,4 +12,6 @@ module.exports = function(app){
     require('./internalUser')(app);
     require('./externalUser')(app);
     require('./requestTypeAttachmentType')(app);
+    require('./capacityDelegation')(app);
+    
 };

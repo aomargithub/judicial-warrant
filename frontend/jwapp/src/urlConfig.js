@@ -15,5 +15,7 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('users', '/users/');
         urlSrvcProvider.addUrl('roles', '/roles/');
         urlSrvcProvider.addUrl('requestTypeAttachmentTypes','/requestTypeAttachmentTypes/');
+        urlSrvcProvider.addUrl('capacityDelegations','/capacityDelegations/');
+        urlSrvcProvider.addUrl('requestAttachments','/requestAttachments/');
     });
 };
