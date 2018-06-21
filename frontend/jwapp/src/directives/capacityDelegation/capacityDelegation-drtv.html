@@ -1,6 +1,6 @@
 <div>
         <div class="page-header">
-                <h3>{{messages.CAPACITY-DELEGATION}}</h3>  
+                <h3>{{messages.label.CAPACITY-DELEGATION}}</h3>  
         </div>
     <message-drtv close-callback="capacityDelegationDrtvCtrl.closeMessage" 
                   refetch-callback = "capacityDelegationDrtvCtrl.refetch" 
@@ -31,7 +31,7 @@
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
-                            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in capacityDelegationDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.organizationUnit">
+                            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in capacityDelegationDrtvCtrl.organizationUnites track by organizationUnit.arabicName" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.organizationUnit">
                                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                             </select>
                             <span ng-show="capacityDelegationForm.organizationUnit.$touched && capacityDelegationForm.organizationUnit.$error.required" >

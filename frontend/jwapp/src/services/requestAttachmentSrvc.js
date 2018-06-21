@@ -2,30 +2,30 @@ module.exports = function(app){
     app.service('requestAttachmentSrvc', function($http, urlSrvc){
         var self = this;
         var requestAttachmentUrl = urlSrvc.getUrl('requestAttachments');
-
+        var vm=this;
+        vm.requestAttachment=[];
 
         
        
-        self.uploadAttachment = function(requestAttachment){
+        self.uploadAttachment = function(){ 
         
             $http({
               method: 'post',
               url: requestAttachmentUrl,
               headers: {'Content-Type': undefined},
-              transformRequest: function (requestAttachment) {
+              transformRequest: function () {
                 var formData = new FormData();
-        
-                formData.append('attachmentType', new Blob([angular.toJson(requestAttachment.attachmentType)], {
-                    type: "application/json"
-                }));
-                formData.append("file", requestAttachment.file),{
+                
+                formData.append('file', vm.requestAttachment.file),{
                     'Content-Type': 'multipart/form-data'
                 };
+                formData.append('dto', new Blob([angular.toJson(vm.requestAttachment)], {
+                    type: "application/json"
+                }));
+               
                 return formData;
-            },
-            data: { attachmentType: requestAttachment.attachmentType, file: requestAttachment.file }
-        
-        
+            },        
+           // requestAttachment: {  file: requestAttachment }
             }).then(function successCallback(response) {  
               // Store response data
              // vm.requestAttachments.push(response.data);

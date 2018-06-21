@@ -28,7 +28,7 @@ module.exports = function(app){
             vm.attachments = response.data;
         });
         
-        organizationUnitSrvc.getInternal().then(function(response){
+        organizationUnitSrvc.getAll().then(function(response){
             vm.organizationUnites = response.data;
         })
         
@@ -50,8 +50,8 @@ module.exports = function(app){
         
        
         vm.addRequestAttachment = function(){
-         
-            requestAttachmentSrvc.uploadAttachment(vm.requestAttachment).then(function success(response){
+            requestAttachmentSrvc.requestAttachment=vm.requestAttachment;
+            requestAttachmentSrvc.uploadAttachment().then(function success(response){
                 vm.requestAttachments.push(response.data);
                 vm.requestAttachment = response.data;
 
