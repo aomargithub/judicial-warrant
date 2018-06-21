@@ -71,34 +71,34 @@ public class CapacityDelegationController implements Serializable{
 		return capacityDelegationHandler.submit(serial, capacityDelegationChangeStatusRequest);
 	}
 	
-	@GetMapping(path = "/serial={serial}/RequestAttachments/{id}")
+	@GetMapping(path = "/serial={serial}/requestAttachments/{id}")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> getRequestAttachmentById(@PathVariable String serial, @PathVariable Long id,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return capacityDelegationHandler.getRequestAttachmentById(serial, id, eTag);
 	}
 	
-	@GetMapping(path = "/serial={serial}/RequestAttachments")
+	@GetMapping(path = "/serial={serial}/requestAttachments")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> getAllRequestAttachmentByRequestSerial(@PathVariable String serial,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return capacityDelegationHandler.getAllRequestAttachmentByRequestSerial(serial);
 	}
 
-	@PostMapping(path = "/serial={serial}/RequestAttachments")
+	@PostMapping(path = "/serial={serial}/requestAttachments")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("dto") RequestAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
 		return capacityDelegationHandler.createRequestAttachment(serial, dto, file);
 	}
 
-	@PutMapping("/serial={serial}/RequestAttachments/{id}")
+	@PutMapping("/serial={serial}/requestAttachments/{id}")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> updateRequestAttachment(@PathVariable String serial, @Valid @RequestBody RequestAttachmentDto dto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return capacityDelegationHandler.updateRequestAttachment(serial, dto, id, eTag);
 	}
 
-	@DeleteMapping("/serial={serial}/RequestAttachments/{id}")
+	@DeleteMapping("/serial={serial}/requestAttachments/{id}")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> deleteRequestAttachment(@PathVariable String serial, @PathVariable Long id) throws JudicialWarrantException {
 		return capacityDelegationHandler.deleteRequestAttachment(serial, id);
