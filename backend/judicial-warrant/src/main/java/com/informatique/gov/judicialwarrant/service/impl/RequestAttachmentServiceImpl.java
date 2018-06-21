@@ -67,7 +67,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public RequestAttachmentDto create(RequestAttachmentDto requestAttachmentDto, MultipartFile file) throws JudicialWarrantException {
+	public RequestAttachmentDto create(String serial, RequestAttachmentDto requestAttachmentDto, MultipartFile file) throws JudicialWarrantException {
 		RequestAttachmentDto savedDto = null;
 
 		try {
@@ -75,7 +75,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 			RequestAttachment entiry = requestAttachmentMapper.toNewEntity(requestAttachmentDto);						
 			AttachmentType attachmentType=attachmentTypeRepository.findById(requestAttachmentDto.getAttachmentType().getId()).get();
-			Request request=requestRepository.findBySerial(requestAttachmentDto.getRequest().getSerial());
+			Request request=requestRepository.findBySerial(serial);
 			
 			Map<String, String> properties = new HashMap<String, String>();
 //			properties.put("dCollectionName", request.getSerial());
@@ -97,7 +97,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public RequestAttachmentDto update(RequestAttachmentDto requestAttachmentDto, Long id)
+	public RequestAttachmentDto update(String serial, RequestAttachmentDto requestAttachmentDto, Long id)
 			throws JudicialWarrantException {
 		
 		RequestAttachmentDto savedDto = null;
@@ -121,7 +121,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void delete(Long id) throws JudicialWarrantInternalException {
+	public void delete(String serial, Long id) throws JudicialWarrantInternalException {
 		try {
 			notNull(id, "id must be set");
 			attachmentRepository.deleteById(id);
@@ -133,7 +133,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class,readOnly=true)
-	public RequestAttachmentDto getById(Long id) throws JudicialWarrantException {
+	public RequestAttachmentDto getById(String serial, Long id) throws JudicialWarrantException {
 		RequestAttachmentDto dto = null;
 		try {
 			notNull(id, "id must be set");
@@ -149,7 +149,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public Short getVersionById(Long id) throws JudicialWarrantException {
+	public Short getVersionById(String serial, Long id) throws JudicialWarrantException {
 		Short version = null;
 		try {
 			notNull(id, "id must be set");
