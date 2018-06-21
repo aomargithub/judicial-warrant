@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	public List<UserDto> getAllInternal() throws JudicialWarrantException {
 		List<UserDto> dtos = null;
 		try {
-			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(true);
+			List<User> entities = userRepository.findByRoleIsInternal(true);
 			dtos = userMapper.toDto(entities);
 
 		} catch (Exception e) {
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService, InternalUserService {
 	public List<UserDto> getAllExternal() throws JudicialWarrantException {
 		List<UserDto> dtos = null;
 		try {
-			List<User> entities = userRepository.findAllByOrganizationUnitIsInternal(false);
+			List<User> entities = userRepository.findByRoleIsInternal(false);
 			dtos = userMapper.toDto(entities);
 
 		} catch (Exception e) {

@@ -40,10 +40,10 @@ public class UcmContentManagerImpl implements ContentManager {
 
 	public UcmContentManagerImpl(Environment environment) {
 
-		this.ip = environment.getProperty("ucm.ip");
-		this.port = environment.getProperty("ucm.port");
-		this.username = environment.getProperty("ucm.username");
-		this.password = environment.getProperty("ucm.password").toCharArray();
+		this.ip = environment.getProperty("app.ucm.ip");
+		this.port = environment.getProperty("app.ucm.port");
+		this.username = environment.getProperty("app.ucm.username");
+		this.password = environment.getProperty("app.ucm.password").toCharArray();
 	}
 
 	private IdcClient<?, ?, ?> getIdcClient(String ip, String port) throws IdcClientException {

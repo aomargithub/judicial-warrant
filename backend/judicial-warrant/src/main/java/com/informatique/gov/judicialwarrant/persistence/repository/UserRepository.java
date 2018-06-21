@@ -45,8 +45,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     List<User> findByUserTypeCode(String userTypeCode);
     @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     List<User> findAll();
-    @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
-    List<User> findAllByOrganizationUnitIsInternal(Boolean isInternal);
+    
     @EntityGraph(value = "User.fat", type = EntityGraphType.FETCH)
     Optional<User> findById(Integer id) ;
     

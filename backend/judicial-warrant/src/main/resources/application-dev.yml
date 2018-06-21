@@ -7,7 +7,7 @@ server:
     path: /api
     
 app:
-  default-password-length: 3
+  default-password-length: 6
   moj-ou-id: 1
   security:
     activedirectory:
@@ -26,6 +26,11 @@ app:
     pool-properties:
       initial-size: 30
       max-active: 10
+  ucm:
+    ip: 192.168.0.44
+    port: 4444
+    username: weblogic
+    password: welcome1    
 
    
 spring:
@@ -35,17 +40,13 @@ spring:
    username: attabdullah@informatique-eg.com
    password: "#$AaPw57"
    protocol: smtp
-   test-connection: false
+   test-connection: true
    properties:
       mail:
         smtp:
-          auth: true     
-     
-ucm:
-  ip: 192.168.0.44
-  port: 4444
-  username: weblogic
-  password: welcome1    
+          auth: true 
+          from: attabdullah@informatique-eg.com
+        debug: false
   
 
 

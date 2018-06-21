@@ -39,7 +39,7 @@ public class EntitledRegistrationController {
 		binder.addValidators(entitledRegistrationDtoValidator);
 	}
 	
-	@GetMapping("/serial={serial}/entitledReport/")
+	@GetMapping("/serial={serial}/entitledReport")
 	public ResponseEntity<?> generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response,
 			@PathVariable String serial) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.generateEntitledRegistrationReportByRequestSerial(response, serial);

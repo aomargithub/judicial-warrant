@@ -18,7 +18,11 @@ module.exports = function(app){
         };
 
         externalUserSrvc.getAll().then(function(response){
+
             vm.users = response.data;
+            if(!angular.isArray(vm.users)){
+                vm.users = [];
+            }
         });
 
         organizationUnitSrvc.getExternal().then(function(response){
@@ -38,7 +42,7 @@ module.exports = function(app){
 
 
         vm.add = function(){
-            vm.user.role = vm.roles.find(inInternalobj => inInternalobj.isInternal==0);
+            vm.user.role = vm.roles[0];
             externalUserSrvc.save(vm.user).then(function success(response){
                 vm.users.push(response.data);
                 vm.user = new User();
