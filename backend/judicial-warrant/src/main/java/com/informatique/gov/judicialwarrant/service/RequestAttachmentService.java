@@ -12,10 +12,10 @@ public interface RequestAttachmentService {
 
 	List<RequestAttachmentDto> getAll()throws JudicialWarrantException;
 	List<RequestAttachmentDto> getAllByRequestSerial(String serial)throws JudicialWarrantException;
-	RequestAttachmentDto getById(Long id) throws JudicialWarrantException;
-	RequestAttachmentDto create(RequestAttachmentDto requestAttachmentDto, MultipartFile file)throws JudicialWarrantException;
-	RequestAttachmentDto update(RequestAttachmentDto requestAttachmentDto,Long id)throws JudicialWarrantException;
-	void delete(Long id) throws JudicialWarrantInternalException;
-	public Short getVersionById(Long id) throws JudicialWarrantException;
+	RequestAttachmentDto getById(String serial, Long id) throws JudicialWarrantException;
+	RequestAttachmentDto create(String serial, RequestAttachmentDto requestAttachmentDto, MultipartFile file)throws JudicialWarrantException;
+	RequestAttachmentDto update(String serial, RequestAttachmentDto requestAttachmentDto,Long id)throws JudicialWarrantException;
+	void delete(String serial, Long id) throws JudicialWarrantInternalException;
+	public Short getVersionById(String serial, Long id) throws JudicialWarrantException;
 	
 }
