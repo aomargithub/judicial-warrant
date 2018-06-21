@@ -57,15 +57,16 @@ public class EntitledAttachmentServiceImpl implements EntitledAttachmentService,
 		EntitledAttachmentDto savedDto = null;
 		try {
 			notNull(dto, "entitledDto must be set");
-			EntitledAttachment entitled = entitledAttachmentMapper.toNewEntity(dto);
+			EntitledAttachment entitledAttachment = entitledAttachmentMapper.toNewEntity(dto);
+			entitledAttachment.setDocumentName(file.getOriginalFilename());
 			
 			Map<String, String> properties = new HashMap<String, String>();
 //			properties.put("dCollectionName", request.getSerial());
 			String ucmId = contentManager.checkin(properties, file);
 			
-			entitled.setUcmDocumentId(ucmId);
-			entitled = entitledAttachmentRepository.save(entitled);
-			savedDto = entitledAttachmentMapper.toDto(entitled);
+			entitledAttachment.setUcmDocumentId(ucmId);
+			entitledAttachment = entitledAttachmentRepository.save(entitledAttachment);
+			savedDto = entitledAttachmentMapper.toDto(entitledAttachment);
 			
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

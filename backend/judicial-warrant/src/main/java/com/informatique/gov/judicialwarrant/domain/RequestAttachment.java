@@ -49,6 +49,9 @@ public class RequestAttachment extends DomainEntity<Long> implements CreationAud
 	@Column(name = "UCM_DOCUMENT_ID")
 	private String ucmDocumentId;
 	
+	@Column(name = "DOCUMENT_NAME")
+	private String documentName;
+	
 	@Embedded
 	private CreateLog createLog;
 	

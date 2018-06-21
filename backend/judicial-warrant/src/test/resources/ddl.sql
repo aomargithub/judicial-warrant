@@ -319,6 +319,7 @@ create table REQUEST_ATTACHMENT
   request_id         NUMBER not null,
   attachment_type_id NUMBER(2) not null,
   ucm_document_id    VARCHAR2(50) not null,
+  DOCUMENT_NAME VARCHAR2(50) NOT NULL,
   create_by          VARCHAR2(200) not null,
   create_date        TIMESTAMP(6) not null,
   update_by          VARCHAR2(200),

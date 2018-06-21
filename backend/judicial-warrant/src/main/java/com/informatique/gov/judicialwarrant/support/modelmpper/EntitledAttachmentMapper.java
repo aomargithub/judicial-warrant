@@ -31,6 +31,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			dto.setId(entity.getId());
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
+			dto.setDocumentName(entity.getDocumentName());
 //			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
 		}
 		return dto;
@@ -45,6 +46,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			entity.setAttachmentType(attachmentTypeMapper.toEntity(dto.getAttachmentType()));
 //			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
 			entity.setUcmDocumentId(dto.getUcmDocumentId());
+			entity.setDocumentName(dto.getDocumentName());
 			entity.setId(dto.getId());
 		}
 

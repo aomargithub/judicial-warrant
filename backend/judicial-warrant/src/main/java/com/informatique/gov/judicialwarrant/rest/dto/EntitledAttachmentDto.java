@@ -23,6 +23,8 @@ public class EntitledAttachmentDto implements UserModel<Long> {
 	@NotNull
 	private AttachmentTypeDto attachmentType;
 	private String ucmDocumentId;
+	private String documentName;
 	@JsonIgnore
 	private Short version;
+	
 }

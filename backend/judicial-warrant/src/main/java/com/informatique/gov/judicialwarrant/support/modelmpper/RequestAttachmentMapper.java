@@ -24,7 +24,6 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
 
 	@Override
 	public RequestAttachmentDto toDto(RequestAttachment entity) {
-		// TODO Auto-generated method stub
 		RequestAttachmentDto dto=null;
 		if(isConvertable(entity)){
             dto = new RequestAttachmentDto();
@@ -32,6 +31,7 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
             dto.setAttachmentType(attachmentMappeer.toDto(entity.getAttachmentType()));
             dto.setRequest(requestForInternalMapper.toDto(entity.getRequest()));
             dto.setUcmDocumentId(entity.getUcmDocumentId());
+            dto.setUcmDocumentId(entity.getDocumentName());
           
         }
 
@@ -40,7 +40,6 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
 
 	@Override
 	protected RequestAttachment toEntity(RequestAttachmentDto dto, boolean nullId) {
-		// TODO Auto-generated method stub
 		RequestAttachment entity=null;
 		 if(isConvertable(dto)){
 			 entity = new RequestAttachment();
@@ -48,6 +47,7 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
 			 entity.setAttachmentType(attachmentMappeer.toEntity(dto.getAttachmentType()));
 			 entity.setRequest(requestForInternalMapper.toEntity(dto.getRequest()));
 			 entity.setUcmDocumentId(dto.getUcmDocumentId());
+			 entity.setUcmDocumentId(dto.getDocumentName());
 	        }
 		return entity;
 	}

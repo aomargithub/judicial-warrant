@@ -76,6 +76,7 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 			RequestAttachment entiry = requestAttachmentMapper.toNewEntity(requestAttachmentDto);						
 			AttachmentType attachmentType=attachmentTypeRepository.findById(requestAttachmentDto.getAttachmentType().getId()).get();
 			Request request=requestRepository.findBySerial(serial);
+			entiry.setDocumentName(file.getOriginalFilename());
 			
 			Map<String, String> properties = new HashMap<String, String>();
 //			properties.put("dCollectionName", request.getSerial());
