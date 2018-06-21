@@ -2,7 +2,37 @@ module.exports = function(app){
     app.service('capacityDelegationSrvc', function($http, urlSrvc){
         var self = this;
         var capacityDelegationsUrl = urlSrvc.getUrl('capacityDelegations');
-       
+
+        self.uploadAttachment = function(requestAttachment,capacityDelegation){ 
+        
+          return $http({
+              method: 'post',
+              url: capacityDelegationsUrl + 'serial=' + capacityDelegation.request.serial + '/requestAttachments',
+              headers: {'Content-Type': undefined},
+              transformRequest: function () {
+                var formData = new FormData();
+                
+                formData.append('file', requestAttachment.file),{
+                    'Content-Type': 'multipart/form-data'
+                };
+                formData.append('dto', new Blob([angular.toJson(requestAttachment)], {
+                    type: "application/json"
+                }));
+               
+                return formData;
+            },        
+           // requestAttachment: {  file: requestAttachment }
+            })};
+            
+        self.getAllRequestAttachment = function(capacityDelegation){
+            return $http.get(capacityDelegationsUrl + 'serial=' +  capacityDelegation.request.serial + '/requestAttachments'   );
+        };
+
+        self.deleteRequestAttachment = function(id,capacityDelegation){
+            return $http.delete(capacityDelegationsUrl + 'serial=' + capacityDelegation.request.serial + '/requestAttachments/' + id);
+        };
+
+
 
         self.getAll = function(){
             return $http.get(capacityDelegationsUrl);

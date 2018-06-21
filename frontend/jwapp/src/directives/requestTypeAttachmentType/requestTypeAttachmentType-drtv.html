@@ -14,7 +14,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="attachmentType" class="required"> {{messages.ATTACHMENT_TYPES}}</label>
-                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestTypeAttachmentTypeDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentType.attachmentType">
+                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestTypeAttachmentTypeDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentType.attachmentType" required>
                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                 </select>
                 <span ng-show="requestTypeAttachmentTypeForm.attachmentType.$touched && requestTypeAttachmentTypeForm.attachmentType.$error.required" >
@@ -24,7 +24,7 @@
 
             <div class="form-group col-md-6">
                 <label for="request" class="required">{{messages.label.RequestTypes}}</label>
-                <select class="form-control choice requiredField" ng-options="request | localeFltr for request in requestTypeAttachmentTypeDrtvCtrl.requests track by request.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentType.requestType">
+                <select class="form-control choice requiredField" ng-options="request | localeFltr for request in requestTypeAttachmentTypeDrtvCtrl.requests track by request.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentType.requestType" required>
                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                 </select>
                 <span ng-show="requestTypeAttachmentTypeForm.request.$touched && requestTypeAttachmentTypeForm.request.$error.required" >

@@ -82,7 +82,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
-            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in externalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="externalUserDrtvCtrl.user.organizationUnit">
+            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in externalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="externalUserDrtvCtrl.user.organizationUnit" required>
                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
             </select>
             <span ng-show="userForm.organizationUnit.$touched && userForm.organizationUnit.$error.required" >

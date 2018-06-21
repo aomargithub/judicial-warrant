@@ -81,7 +81,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="role" class="required">{{messages.label.role}}</label>
-                <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.user.role">
+                <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.user.role" required>
                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                 </select>
                 <span ng-show="userForm.role.$touched && userForm.role.$error.required" >

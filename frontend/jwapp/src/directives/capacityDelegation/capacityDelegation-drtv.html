@@ -1,6 +1,6 @@
 <div>
         <div class="page-header">
-                <h3>{{messages.label.CAPACITY-DELEGATION}}</h3>  
+                <h3>{{messages.label.CAPACITYDELEGATION}}</h3>  
         </div>
     <message-drtv close-callback="capacityDelegationDrtvCtrl.closeMessage" 
                   refetch-callback = "capacityDelegationDrtvCtrl.refetch" 
@@ -31,7 +31,7 @@
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
-                            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in capacityDelegationDrtvCtrl.organizationUnites track by organizationUnit.arabicName" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.organizationUnit">
+                            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in capacityDelegationDrtvCtrl.organizationUnites track by organizationUnit.arabicName" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.request.organizationUnit" required>
                                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                             </select>
                             <span ng-show="capacityDelegationForm.organizationUnit.$touched && capacityDelegationForm.organizationUnit.$error.required" >
@@ -65,7 +65,7 @@
                 <div class="row">
                         <div class="form-group col-md-6">
                                 <label for="attachmentType" class="required"> {{messages.ATTACHMENT_TYPES}}</label>
-                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in capacityDelegationDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="capacityDelegationDrtvCtrl.requestAttachment.attachmentType" novalidate>
+                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in capacityDelegationDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="capacityDelegationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
                                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                                 </select>
                                 <span ng-show="capacityDelegationFormFileUpload.attachmentType.$touched && capacityDelegationFormFileUpload.attachmentType.$error.required" >
@@ -73,9 +73,9 @@
                                 </span> 
                             </div>
                             
-                            <div class="col-md-6 form-group">
-                
-                            <input type="file" id="file" name="file"  ng-file="capacityDelegationDrtvCtrl.requestAttachment.file" />
+                            <div class="form-group file-loading" >
+                                    <label for="attachmentType" class="required"> {{messages.label.AddAttachment}}</label>
+                            <input type="file" id="file" name="file"  ng-file="capacityDelegationDrtvCtrl.requestAttachment.file"  required/>
                     
                             
                             <span ng-show="capacityDelegationFormFileUpload.file.$touched && capacityDelegationFormFileUpload.file.$error.required" >
@@ -83,15 +83,9 @@
                                 </span> 
                             </div>
                          </div>
-
-                <div class="form-check">
-                        <div class="form-check form-check-inline" >
-                            <label for="isActive" class="rigth form-check-label">{{messages.label.isActive}}</label>
-                            <input type="checkbox" class="rigth form-check-input" id="isActive" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.isActive" />
-                        </div>
-                    </div>
-            
-                    <div class="btn-group rigth" >
+               
+                    
+                     <div class="btn-group rigth">
                         <div class="btn-group row" ng-if="!capacityDelegationDrtvCtrl.editCapacityDelegation">
                             <div class="col-sm-10">
                                 <button ng-click="capacityDelegationDrtvCtrl.addRequestAttachment()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.add}}</button>
@@ -116,41 +110,31 @@
             <thead>
                 <tr>
                     <th>
-                        {{messages.ATTACHMENT_TYPES}}
+                        {{messages.label.DocumentType}}
                     </th>
                     <th>
-                        {{messages.label.RequestTypes}}
+                        {{messages.label.DocumentName}}
                     </th>
-                    <th>
-                        {{messages.label.isActive}}
-                    </th>
+                   
                     <th>
                         {{messages.label.edit}}
                     </th>
-                    <th>
-                        {{messages.label.delete}}
-                    </th>
+                  
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="cd in capacityDelegationDrtvCtrl.requestAttachments | paginationFltr:capacityDelegationDrtvCtrl.page.start:capacityDelegationDrtvCtrl.page.end track by cd.request.serial">
+                <tr ng-repeat="cd in capacityDelegationDrtvCtrl.requestAttachments | paginationFltr:capacityDelegationDrtvCtrl.page.start:capacityDelegationDrtvCtrl.page.end track by cd.id">
                     <td>
                         {{cd.attachmentType.arabicName}}
                     </td>
                     <td>
-                        {{cd.file.name}}
+                        {{cd.documentName}}
                     </td>
-                    <td>
-                        {{cd.isActive}}
-                    </td>
-                    <td>
-                        <div>
-                            <button class="btn btn-default" ng-click="capacityDelegationDrtvCtrl.edit(cd.id)"><span class="glyphicon glyphicon-pencil"></span></button>
-                        </div>
-                    </td>
+                    
+                    
                     <td>
                         <div>
-                            <button class="btn btn-default" ng-click="capacityDelegationDrtvCtrl.delete(cd.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button class="btn btn-default" ng-click="capacityDelegationDrtvCtrl.deleteRequestAttachment(cd.id)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </td>
                 </tr> 

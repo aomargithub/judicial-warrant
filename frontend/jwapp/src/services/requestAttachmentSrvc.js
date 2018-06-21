@@ -32,9 +32,10 @@ module.exports = function(app){
             })};
             
 
-        self.getAll = function(){
-            return $http.get(requestAttachmentUrl);
-        };
+            self.getAllRequestAttachment = function(){
+                return $http.get(requestAttachmentUrl + "requestAttachment.request.serial" );
+            };
+    
 
         
         self.getById = function(id){

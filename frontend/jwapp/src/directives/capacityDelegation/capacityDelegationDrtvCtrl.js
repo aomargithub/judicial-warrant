@@ -32,11 +32,12 @@ module.exports = function(app){
             vm.organizationUnites = response.data;
         })
         
+        if(vm.capacityDelegation.id) {
+            capacityDelegationSrvc.getAllRequestAttachment(vm.capacityDelegation).then(function(response){
+                vm.requestAttachments=response.data;           
 
-        requestAttachmentSrvc.getAll().then(function(response){
-            vm.requestAttachments=response.data;
-            
-        });
+        })};
+        
         
 
       
@@ -50,10 +51,10 @@ module.exports = function(app){
         
        
         vm.addRequestAttachment = function(){
-            requestAttachmentSrvc.requestAttachment=vm.requestAttachment;
-            requestAttachmentSrvc.uploadAttachment().then(function success(response){
+            capacityDelegationSrvc.uploadAttachment(vm.requestAttachment, vm.capacityDelegation).then(function success(response){
+                //vm.requestAttachments = vm.requestAttachments || [];
                 vm.requestAttachments.push(response.data);
-                vm.requestAttachment = response.data;
+                vm.requestAttachment = new RequestAttachment();
 
                 resetEntryForm();
                
@@ -84,7 +85,7 @@ module.exports = function(app){
         };
 
         vm.edit = function(id){
-            requestAttachmentSrvc.getById(id).then(function(response){
+            capacityDelegationSrvc.getById(id).then(function(response){
                 vm.editCapacityDelegation = response.data;
                 vm.editCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.requestAttachment = angular.copy(vm.editCapacityDelegation);
@@ -94,7 +95,7 @@ module.exports = function(app){
         };
 
         vm.refetch = function(id){
-            requestAttachmentSrvc.getById(id).then(function(response){
+            capacityDelegationSrvc.getById(id).then(function(response){
                 vm.editCapacityDelegation = response.data;
                 vm.editCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.requestAttachment = angular.copy(vm.editCapacityDelegation);
@@ -106,7 +107,7 @@ module.exports = function(app){
 
         vm.update = function(){
             
-            requestAttachmentSrvc.update(vm.requestAttachment).then(function success(response){
+            capacityDelegationSrvc.update(vm.requestAttachment).then(function success(response){
                
                 var tempRequestAttachment = response.data;
                 vm.requestAttachment = new RequestAttachment();
@@ -131,9 +132,9 @@ module.exports = function(app){
             });
         };
 
-        vm.delete = function(id){
+        vm.deleteRequestAttachment = function(id){
             
-            requestAttachmentSrvc.delete(id).then(function success(response){               
+            capacityDelegationSrvc.deleteRequestAttachment(id,vm.capacityDelegation).then(function success(response){               
                 vm.requestAttachments.forEach(function(cd, index){
                     if(cd.id === id){
                         vm.requestAttachments.splice(index, 1);

@@ -5,4 +5,5 @@ module.exports = function(app){
     require('./requestTypeAttachmentType')(app);
     require('./CapacityDelegation')(app);
     require('./RequestAttachment')(app);
+    require('./Request')(app);
 };
