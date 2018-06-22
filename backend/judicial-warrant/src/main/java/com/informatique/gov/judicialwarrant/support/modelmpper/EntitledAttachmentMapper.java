@@ -3,11 +3,9 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
-import com.informatique.gov.judicialwarrant.domain.Entitled;
 import com.informatique.gov.judicialwarrant.domain.EntitledAttachment;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledAttachmentDto;
-import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
@@ -31,7 +29,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			dto.setId(entity.getId());
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
-			dto.setDocumentName(entity.getDocumentName());
+			dto.setFileName(entity.getFileName());
 //			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
 		}
 		return dto;
@@ -46,7 +44,7 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			entity.setAttachmentType(attachmentTypeMapper.toEntity(dto.getAttachmentType()));
 //			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
 			entity.setUcmDocumentId(dto.getUcmDocumentId());
-			entity.setDocumentName(dto.getDocumentName());
+			entity.setFileName(dto.getFileName());
 			entity.setId(dto.getId());
 		}
 

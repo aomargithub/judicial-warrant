@@ -31,7 +31,7 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
             dto.setAttachmentType(attachmentMappeer.toDto(entity.getAttachmentType()));
             dto.setRequest(requestForInternalMapper.toDto(entity.getRequest()));
             dto.setUcmDocumentId(entity.getUcmDocumentId());
-            dto.setDocumentName(entity.getDocumentName());
+            dto.setFileName(entity.getFileName());
           
         }
 
@@ -47,7 +47,7 @@ public class RequestAttachmentMapper extends AbstractModelMapper<RequestAttachme
 			 entity.setAttachmentType(attachmentMappeer.toEntity(dto.getAttachmentType()));
 			 entity.setRequest(requestForInternalMapper.toEntity(dto.getRequest()));
 			 entity.setUcmDocumentId(dto.getUcmDocumentId());
-			 entity.setDocumentName(dto.getDocumentName());
+			 entity.setFileName(dto.getFileName());
 	        }
 		return entity;
 	}

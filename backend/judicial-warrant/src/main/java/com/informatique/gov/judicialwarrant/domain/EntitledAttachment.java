@@ -66,6 +66,6 @@ public class EntitledAttachment extends DomainEntity<Long> implements CreationAu
 	@Embedded
 	private UpdateLog updateLog;
 	
-	@Column(name = "DOCUMENT_NAME")
-	private String documentName;
+	@Column(name = "FILE_NAME")
+	private String fileName;
 }
