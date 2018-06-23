@@ -3,8 +3,11 @@ module.exports = function(app){
         var self= this;
         var requestTypeAttachmentTypesUrl = urlSrvc.getUrl('requestTypeAttachmentTypes');
        
+        self.getByRequestTypeId=function(capacityDelegation){
+            return $http.get(requestTypeAttachmentTypesUrl + '?requestTypeId=' + capacityDelegation.RequestType.id)
+        }
         self.getAll=function(){
-            return $http.get(requestTypeAttachmentTypesUrl);
+            return $http.get(requestTypeAttachmentTypesUrl); 
         }
         self.save=function(requestTypeAttachmentType){
             return $http.post(requestTypeAttachmentTypesUrl,requestTypeAttachmentType);

@@ -4,7 +4,7 @@ module.exports = function(app){
             var self = this;
             self.id = null;
             self.file = null;
-            self.attachmentType = false;
+            self.attachmentType = null;
             self.ucmDocumentId=null;
             self.documentName=null;
             
