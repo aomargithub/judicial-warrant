@@ -9,7 +9,6 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 import com.informatique.gov.judicialwarrant.rest.handler.RequestTypeHandler;
-import com.informatique.gov.judicialwarrant.rest.response.RestResponse;
 import com.informatique.gov.judicialwarrant.service.RequestTypeService;
 
 import lombok.AllArgsConstructor;
@@ -39,7 +38,7 @@ public class RequestTypeHandlerImpl implements RequestTypeHandler{
         return response;
     }
 	
-	@Override
+	/*@Override
 	public ResponseEntity<List<RequestTypeDto>> getByIsActive(Boolean isActive) throws JudicialWarrantException {
 		
 		ResponseEntity<List<RequestTypeDto>> response = null;
@@ -50,6 +49,22 @@ public class RequestTypeHandlerImpl implements RequestTypeHandler{
 			}else {
 				dtos = requestTypeService.getInActive();
 			}
+			response = ResponseEntity.ok(dtos);
+		}catch(JudicialWarrantException e){
+            throw e;
+        }catch(Exception e){
+            throw new JudicialWarrantInternalException(e);
+        }
+		return response;
+	}*/
+	
+	@Override
+	public ResponseEntity<List<RequestTypeDto>> getByIsActiveAndIsInternal(Boolean isActive, Boolean isInternal) throws JudicialWarrantException {
+		
+		ResponseEntity<List<RequestTypeDto>> response = null;
+		try {
+			List<RequestTypeDto> dtos = null;
+			dtos = requestTypeService.getByIsActiveAndIsInternal(isActive, isInternal);			
 			response = ResponseEntity.ok(dtos);
 		}catch(JudicialWarrantException e){
             throw e;

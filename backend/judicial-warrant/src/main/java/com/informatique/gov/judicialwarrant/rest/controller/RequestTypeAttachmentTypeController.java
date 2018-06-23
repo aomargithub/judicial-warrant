@@ -42,9 +42,14 @@ public class RequestTypeAttachmentTypeController implements Serializable {
 		return requestTypeAttachmentTypeHandler.getById(id, etag);
 	}
 
-	@GetMapping(params= {"requestTypeId"})
+	/*@GetMapping(params= {"requestTypeId"})
 	public ResponseEntity<?> getByRequestTypeId(@RequestParam(name = "requestTypeId") Byte requestTypeId) throws JudicialWarrantException {
 		return requestTypeAttachmentTypeHandler.getByRequestTypeId(requestTypeId);
+	}*/
+	
+	@GetMapping(params= {"requestTypeCode"})
+	public ResponseEntity<?> getByRequestTypeCode(@RequestParam(name = "requestTypeCode") String requestTypeCode) throws JudicialWarrantException {
+		return requestTypeAttachmentTypeHandler.getByRequestTypeCode(requestTypeCode);
 	}
 
 	@PostMapping

@@ -14,6 +14,9 @@ public interface RequestTypeHandler extends Serializable{
 
 	ResponseEntity<List<RequestTypeDto>> getAll() throws JudicialWarrantException;
 
-	ResponseEntity<List<RequestTypeDto>> getByIsActive(Boolean isActive) throws JudicialWarrantException;
+	/*ResponseEntity<List<RequestTypeDto>> getByIsActive(Boolean isActive) throws JudicialWarrantException;*/
+
+	ResponseEntity<List<RequestTypeDto>> getByIsActiveAndIsInternal(Boolean isActive, Boolean isInternal)
+			throws JudicialWarrantException;
 
 }

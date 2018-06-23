@@ -53,4 +53,7 @@ public class RequestType extends DomainEntity<Byte> {
 	
 	@OneToMany(mappedBy = "requestType", fetch = FetchType.LAZY)
 	private List<RequestSerial> requestSerials;
+	
+	@Column(name = "is_internal")
+	private Boolean isInternal;
 }

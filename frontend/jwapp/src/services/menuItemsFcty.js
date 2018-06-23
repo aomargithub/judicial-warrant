@@ -71,11 +71,11 @@ module.exports = function(app){
 
         attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
         .routeValue('.attachmentTypes')
-        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
+        .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
 
         requestTypeAttachmentTypesSubItem.codeValue('requestTypeAttach')
         .routeValue('.requestTypeAttachmentTypes')
-        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
+        .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
 
 
 

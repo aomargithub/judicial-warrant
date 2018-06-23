@@ -327,3 +327,5 @@ alter table REQUEST_ATTACHMENT modify file_name VARCHAR2(20);
 
 alter table ENTITLED_ATTACHMENT rename column document_name to FILE_NAME;
 alter table ENTITLED_ATTACHMENT modify file_name VARCHAR2(20);
+
+alter table REQUEST_TYPE add is_internal NUMBER(1) null;

@@ -33,8 +33,8 @@ public class RequestTypeController implements Serializable{/**
         return requestTypeHandler.getByCode(code);
     }
     
-    @GetMapping(params = {"isActive"})
-    public ResponseEntity<?> getByIsActive(@RequestParam Boolean isActive) throws JudicialWarrantException {
-    	return requestTypeHandler.getByIsActive(isActive);
+    @GetMapping(params = {"isActive", "isInternal"})
+    public ResponseEntity<?> getByIsActiveAndIsInternal(@RequestParam Boolean isActive, @RequestParam Boolean isInternal) throws JudicialWarrantException {
+    	return requestTypeHandler.getByIsActiveAndIsInternal(isActive, isInternal);
     }
 }

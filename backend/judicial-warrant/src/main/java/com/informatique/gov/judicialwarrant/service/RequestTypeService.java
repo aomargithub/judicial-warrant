@@ -16,4 +16,7 @@ public interface RequestTypeService extends Serializable{
 
 	List<RequestTypeDto> getInActive() throws JudicialWarrantException;
 
+	List<RequestTypeDto> getByIsActiveAndIsInternal(Boolean isActive, Boolean isInternal)
+			throws JudicialWarrantException;
+
 }

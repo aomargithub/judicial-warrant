@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.dto.UserDto;
 
 public interface RequestTypeAttachmentTypeHandler extends Serializable{
 	
@@ -22,5 +21,8 @@ public interface RequestTypeAttachmentTypeHandler extends Serializable{
 	ResponseEntity<RequestTypeAttachmentTypeDto> update(RequestTypeAttachmentTypeDto requestTypeAttachmentTypeDto, Short id, Short etag) throws JudicialWarrantException;
 	
 	ResponseEntity<RequestTypeAttachmentTypeDto> delete(Short id) throws JudicialWarrantException;
+
+	ResponseEntity<List<RequestTypeAttachmentTypeDto>> getByRequestTypeCode(String requestTypeCode)
+			throws JudicialWarrantException;
 
 }

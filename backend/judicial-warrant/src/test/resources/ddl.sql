@@ -146,7 +146,8 @@ create table REQUEST_TYPE
   list_order            NUMBER(2) not null,
   arabic_name           VARCHAR2(200) not null,
   id                    NUMBER(2) not null,
-  request_serial_prefix VARCHAR2(100) not null
+  request_serial_prefix VARCHAR2(100) not null,
+  is_internal NUMBER(1) not null
 );
 alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_PK primary key (ID);
