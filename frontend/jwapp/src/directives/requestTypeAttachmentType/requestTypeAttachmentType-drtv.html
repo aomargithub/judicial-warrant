@@ -13,7 +13,7 @@
     <form name="requestTypeAttachmentTypeForm" novalidate> 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="attachmentType" class="required"> {{messages.ATTACHMENT_TYPES}}</label>
+                <label for="attachmentType" class="required"> {{messages.label.DocumentName}}</label>
                 <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestTypeAttachmentTypeDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentType.attachmentType" required>
                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                 </select>
@@ -70,7 +70,7 @@
         <thead>
             <tr>
                 <th>
-                    {{messages.ATTACHMENT_TYPES}}
+                    {{messages.label.DocumentName}}
                 </th>
                 <th>
                     {{messages.label.RequestTypes}}
