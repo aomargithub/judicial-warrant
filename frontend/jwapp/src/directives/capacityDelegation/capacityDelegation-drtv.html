@@ -14,14 +14,14 @@
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="jobTitle" class="required"> {{messages.label.JobTitle}} </label>
-                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.jobTitle" placeholder={{messages.placeHolders.arabicNamePH}} required/>
+                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.jobTitle" placeholder={{messages.placeHolders.JobTitlePH}} required/>
                             <span ng-show="capacityDelegationForm.jobTitle.$touched && capacityDelegationForm.jobTitle.$error.required" >
                                 {{messages.label.required}}
                             </span>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="ministerialDecreeNumber" class="required">{{messages.label.MinisterialDecreeNumber}} </label>
-                            <input type="text" class="form-control" id="ministerialDecreeNumber" name="ministerialDecreeNumber" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeNumber" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                            <input type="text" class="form-control" id="ministerialDecreeNumber" name="ministerialDecreeNumber" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeNumber" placeholder={{messages.placeHolders.MinisterialDecreeNumberPH}} required/>
                             <span ng-show="capacityDelegationForm.ministerialDecreeNumber.$touched && capacityDelegationForm.ministerialDecreeNumber.$error.required" >
                                 {{messages.label.required}}
                             </span>
@@ -42,7 +42,7 @@
                             <label  for="ministerialDecreeDate" class="required">{{messages.label.MinisterialDecreeDate}}</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-                                <input class="form-control" name="ministerialDecreeDate" id="ministerialDecreeDate" type="date"   ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeDate"   required>
+                                <input class="form-control" name="ministerialDecreeDate" id="ministerialDecreeDate" type="date" data-format="dd/MM/yyyy"   ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeDate"   required>
                            
                             </div>
                             <span ng-show="capacityDelegationForm.ministerialDecreeDate.$touched && capacityDelegationForm.ministerialDecreeDate.$error.required" >
@@ -51,10 +51,10 @@
                         </div>
                
         </div>
-        <div class="btn-group rigth" ng-show="!capacityDelegationDrtvCtrl.capacityDelegation.id" >
+        <div class="btn-group rigth" >
                 <div class="btn-group row" ng-if="!capacityDelegationDrtvCtrl.editCapacityDelegation">
                     <div class="col-sm-10">
-                        <button ng-click="capacityDelegationDrtvCtrl.add()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.add}}</button>
+                        <button ng-click="capacityDelegationDrtvCtrl.add()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.Save}}</button>
                     </div>
                 </div>
             </div>
@@ -64,18 +64,17 @@
         <form   name="capacityDelegationFormFileUpload" novalidate  enctype="multipart/form-data">
                 <div class="row">
                         <div class="form-group col-md-6">
-                                <label for="attachmentType" class="required"> {{messages.ATTACHMENT_TYPES}}</label>
-                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in capacityDelegationDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="capacityDelegationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
+                                <label for="attachmentType" class="required"> {{messages.label.DocumentName}}</label>
+                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in capacityDelegationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="capacityDelegationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
                                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                                 </select>
                                 <span ng-show="capacityDelegationFormFileUpload.attachmentType.$touched && capacityDelegationFormFileUpload.attachmentType.$error.required" >
                                     {{messages.label.required}}
                                 </span> 
                             </div>
-                            
-                            <div class="form-group file-loading" >
+                             <div class="form-group file-loading" >
                                     <label for="attachmentType" class="required"> {{messages.label.AddAttachment}}</label>
-                            <input type="file" id="file" name="file"  ng-file="capacityDelegationDrtvCtrl.requestAttachment.file"  required/>
+                            <input type="file" id="file" name="file"   ng-file="capacityDelegationDrtvCtrl.requestAttachment.file"  required/>
                     
                             
                             <span ng-show="capacityDelegationFormFileUpload.file.$touched && capacityDelegationFormFileUpload.file.$error.required" >
@@ -83,6 +82,8 @@
                                 </span> 
                             </div>
                          </div>
+                           
+                        
                
                     
                      <div class="btn-group rigth">
@@ -117,7 +118,7 @@
                     </th>
                    
                     <th>
-                        {{messages.label.edit}}
+                        {{messages.label.delete}}
                     </th>
                   
                 </tr>
