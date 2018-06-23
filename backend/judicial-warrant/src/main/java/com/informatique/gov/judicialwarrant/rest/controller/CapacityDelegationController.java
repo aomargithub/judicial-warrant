@@ -87,8 +87,8 @@ public class CapacityDelegationController implements Serializable{
 
 	@PostMapping(path = "/serial={serial}/requestAttachments")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
-	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("dto") RequestAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
-		return capacityDelegationHandler.createRequestAttachment(serial, dto, file);
+	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("requestAttachment") RequestAttachmentDto requestAttachment, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
+		return capacityDelegationHandler.createRequestAttachment(serial, requestAttachment, file);
 	}
 
 	@PutMapping("/serial={serial}/requestAttachments/{id}")

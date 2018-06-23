@@ -58,7 +58,7 @@ public class EntitledAttachmentServiceImpl implements EntitledAttachmentService,
 		try {
 			notNull(dto, "entitledDto must be set");
 			EntitledAttachment entitledAttachment = entitledAttachmentMapper.toNewEntity(dto);
-			entitledAttachment.setDocumentName(file.getOriginalFilename());
+			entitledAttachment.setFileName(file.getOriginalFilename());
 			
 			Map<String, String> properties = new HashMap<String, String>();
 //			properties.put("dCollectionName", request.getSerial());

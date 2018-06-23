@@ -320,3 +320,10 @@ ADD (DOCUMENT_NAME VARCHAR2(50) NOT NULL);
 
 ALTER TABLE ENTITLED_ATTACHMENT 
 ADD (DOCUMENT_NAME VARCHAR2(50) NOT NULL);
+
+alter table REQUEST_ATTACHMENT rename column document_name to FILE_NAME;
+alter table REQUEST_ATTACHMENT modify file_name VARCHAR2(20);
+
+
+alter table ENTITLED_ATTACHMENT rename column document_name to FILE_NAME;
+alter table ENTITLED_ATTACHMENT modify file_name VARCHAR2(20);
