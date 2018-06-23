@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
+import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
 
 public interface RequestTypeAttachmentTypeService extends Serializable{
@@ -16,7 +17,7 @@ public interface RequestTypeAttachmentTypeService extends Serializable{
 
 	List<RequestTypeAttachmentTypeDto> getByRequestTypeId(Byte id) throws JudicialWarrantException;
 	
-	List<RequestTypeAttachmentTypeDto> getByRequestTypeCode(String code) throws JudicialWarrantException;
+	List<AttachmentTypeDto> getAttachmentTypesByRequestTypeCode(String code) throws JudicialWarrantException;
 	
 	List<RequestTypeAttachmentTypeDto> getByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(String code, Boolean isEntitledAttachment) throws JudicialWarrantException;
 	

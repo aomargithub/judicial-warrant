@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.informatique.gov.judicialwarrant.domain.AttachmentType;
 import com.informatique.gov.judicialwarrant.domain.RequestTypeAttachmentType;
 
 @Repository
@@ -23,8 +24,8 @@ public interface RequestTypeAttachmentTypeRepository extends JpaRepository<Reque
 	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
 	List<RequestTypeAttachmentType> findByRequestTypeId(Byte id);
 	
-	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
-	List<RequestTypeAttachmentType> findByRequestTypeCode(String code);
+	@Query("select attachmentType from RequestTypeAttachmentType rt where rt.requestType.code = :code")
+	List<AttachmentType> findAttachmentTypesByRequestTypeCode(@Param("code") String code);
 	
 	@EntityGraph(value = "RequestTypeAttachmentType.fat", type = EntityGraphType.FETCH)
 	List<RequestTypeAttachmentType> findByRequestTypeCodeAndAttachmentTypeIsEntitledAttachment(String code, Boolean isEntitledAttachment);

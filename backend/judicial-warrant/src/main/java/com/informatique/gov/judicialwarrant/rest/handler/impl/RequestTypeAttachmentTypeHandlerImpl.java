@@ -13,6 +13,7 @@ import com.informatique.gov.judicialwarrant.exception.PreConditionRequiredExcept
 import com.informatique.gov.judicialwarrant.exception.ResourceModifiedException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.exception.ResourceNotModifiedException;
+import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.handler.RequestTypeAttachmentTypeHandler;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
@@ -101,14 +102,14 @@ public class RequestTypeAttachmentTypeHandlerImpl implements RequestTypeAttachme
 	}
 	
 	@Override
-	public ResponseEntity<List<RequestTypeAttachmentTypeDto>> getByRequestTypeCode(String requestTypeCode)
+	public ResponseEntity<List<AttachmentTypeDto>> getAttachmentTypesByRequestTypeCode(String requestTypeCode)
 			throws JudicialWarrantException {
-		ResponseEntity<List<RequestTypeAttachmentTypeDto>> response = null;
+		ResponseEntity<List<AttachmentTypeDto>> response = null;
 		try {
 			notNull(requestTypeCode, "requestTypeCode must be set");
-			List<RequestTypeAttachmentTypeDto> dtos = null;
+			List<AttachmentTypeDto> dtos = null;
 
-			dtos = requestTypeAttachmentTypeService.getByRequestTypeCode(requestTypeCode);
+			dtos = requestTypeAttachmentTypeService.getAttachmentTypesByRequestTypeCode(requestTypeCode);
 			response = ResponseEntity.ok(dtos);
 
 		} catch (JudicialWarrantException e) {

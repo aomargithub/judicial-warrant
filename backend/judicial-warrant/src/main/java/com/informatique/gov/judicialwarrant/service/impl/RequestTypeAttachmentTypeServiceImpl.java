@@ -15,6 +15,7 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalExc
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeAttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestTypeRepository;
+import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
@@ -30,9 +31,13 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 	 */
 	private static final long serialVersionUID = -6476773292451702937L;
 	private RequestTypeAttachmentTypeRepository requestTypeAttachmentTypeRepository;
-	private ModelMapper<RequestTypeAttachmentType, RequestTypeAttachmentTypeDto, Short> requestTypeAttachmentTypeMapper;
+	
 	private RequestTypeRepository requestTypeRepository;
 	private AttachmentTypeRepository attachmentTypeRepository;
+	
+	private ModelMapper<RequestTypeAttachmentType, RequestTypeAttachmentTypeDto, Short> requestTypeAttachmentTypeMapper;
+	
+	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -93,17 +98,17 @@ public class RequestTypeAttachmentTypeServiceImpl implements RequestTypeAttachme
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public List<RequestTypeAttachmentTypeDto> getByRequestTypeCode(String code) throws JudicialWarrantException {
-		List<RequestTypeAttachmentType> requestTypeAttachmentTypes = null;
-		List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = null;
+	public List<AttachmentTypeDto> getAttachmentTypesByRequestTypeCode(String code) throws JudicialWarrantException {
+		List<AttachmentType> attachmentTypes = null;
+		List<AttachmentTypeDto> attachmentTypeDtos = null;
 		try {
 			notNull(code, "code must be set");
-			requestTypeAttachmentTypes = requestTypeAttachmentTypeRepository.findByRequestTypeCode(code);
-			requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeMapper.toDto(requestTypeAttachmentTypes);
+			attachmentTypes = requestTypeAttachmentTypeRepository.findAttachmentTypesByRequestTypeCode(code);
+			attachmentTypeDtos = attachmentTypeMapper.toDto(attachmentTypes);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return requestTypeAttachmentTypeDtos;
+		return attachmentTypeDtos;
 	}
 	
 	@Override
