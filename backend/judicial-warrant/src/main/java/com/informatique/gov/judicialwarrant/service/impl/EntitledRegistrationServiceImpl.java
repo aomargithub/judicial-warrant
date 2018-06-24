@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -70,6 +71,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			throws JudicialWarrantException {
 		try {
 			List<EntitledDto> entitledDtos = entitledService.getAllByEntitledRegistrationSerial(serial);
+			entitledDtos = entitledDtos == null ? Arrays.asList(new EntitledDto()) : entitledDtos;
 			EntitledRegistrationDto entitledRegistrationDto = getBySerial(SecurityContextHolder.getContext().getAuthentication(), serial);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Request_Serial", entitledRegistrationDto.getRequest().getSerial());
