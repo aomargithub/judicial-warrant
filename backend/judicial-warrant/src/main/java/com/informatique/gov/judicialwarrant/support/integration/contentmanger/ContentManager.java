@@ -1,7 +1,6 @@
 package com.informatique.gov.judicialwarrant.support.integration.contentmanger;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -15,7 +14,7 @@ public interface ContentManager extends Serializable {
 
 	public void getProperties(String contentId) throws Exception;
 
-	public InputStream getContent(String contentId) throws Exception;
+	public byte[] getContent(String contentId) throws Exception;
 
 	public void delete(String contentId) throws Exception;
 

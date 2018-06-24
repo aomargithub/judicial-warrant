@@ -33,6 +33,8 @@ public interface CapacityDelegationHandler {
 	ResponseEntity<RequestAttachmentDto> createRequestAttachment(String serial, RequestAttachmentDto dto, MultipartFile file)
 			throws JudicialWarrantException;
 
-	ResponseEntity<Void> deleteRequestAttachment(String serial, Long id) throws JudicialWarrantException;
+	ResponseEntity<?> deleteRequestAttachment(String serial, Long id) throws JudicialWarrantException;
+	
+	ResponseEntity<byte[]> downloadFile(String serial, Long id, String ucmDocumentId) throws JudicialWarrantException;
 	
 }

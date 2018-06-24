@@ -104,4 +104,10 @@ public class CapacityDelegationController implements Serializable{
 		return capacityDelegationHandler.deleteRequestAttachment(serial, id);
 	}
 	
+	@GetMapping("/serial={serial}/requestAttachments/{id}/ucmDocumentId={ucmDocumentId}/download")
+	public ResponseEntity<byte[]> generateEntitledRegistrationReportByRequestSerial(
+			@PathVariable String serial,  @PathVariable Long id,  @PathVariable String ucmDocumentId) throws JudicialWarrantException {
+		return capacityDelegationHandler.downloadFile(serial, id, ucmDocumentId);
+	}
+	
 }

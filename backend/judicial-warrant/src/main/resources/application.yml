@@ -5,7 +5,7 @@ spring:
   main:
     banner-mode: 'off'
   jpa:
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: validate
     properties:

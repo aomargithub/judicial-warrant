@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +25,7 @@ import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitServ
 import com.informatique.gov.judicialwarrant.service.InternalRequestService;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
 import com.informatique.gov.judicialwarrant.support.validator.CapacityDelegationWorkflowValidator;
@@ -47,7 +49,7 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 	private CapacityDelegationRepository capacityDelegationRepository;
 	private CapacityDelegationWorkflowValidator capacityDelegationWorkflowValidator;
 
-	List<JudicialWarrantGrantedAuthority> authorities;
+	List<JudicialWarrantGrantedAuthority> authorities = Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER));
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)

@@ -18,4 +18,6 @@ public interface RequestAttachmentService {
 	void delete(String serial, Long id) throws JudicialWarrantInternalException;
 	public Short getVersionById(String serial, Long id) throws JudicialWarrantException;
 	
+	byte[] downloadFile(String serial, Long id, String ucmDocumentId) throws JudicialWarrantException;
+	
 }

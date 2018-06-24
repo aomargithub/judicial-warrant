@@ -15,6 +15,7 @@ import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.domain.RequestAttachment;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestAttachmentRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.RequestRepository;
@@ -36,14 +37,14 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 	private ModelMapper<RequestAttachment, RequestAttachmentDto, Long> requestAttachmentMapper;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class,readOnly=true)
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public List<RequestAttachmentDto> getAllByRequestSerial(String serial) throws JudicialWarrantException {
 		List<RequestAttachmentDto> dtos = null;
 		try {
-		
-			List<RequestAttachment> requestAttachments=attachmentRepository.findByRequestSerial(serial);
-			dtos=requestAttachmentMapper.toDto(requestAttachments);
-			
+
+			List<RequestAttachment> requestAttachments = attachmentRepository.findByRequestSerial(serial);
+			dtos = requestAttachmentMapper.toDto(requestAttachments);
+
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -51,14 +52,14 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class,readOnly=true)
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public List<RequestAttachmentDto> getAll() throws JudicialWarrantException {
 		List<RequestAttachmentDto> dtos = null;
 		try {
-		
-			List<RequestAttachment> requestAttachments=attachmentRepository.findAll();
-			dtos=requestAttachmentMapper.toDto(requestAttachments);
-			
+
+			List<RequestAttachment> requestAttachments = attachmentRepository.findAll();
+			dtos = requestAttachmentMapper.toDto(requestAttachments);
+
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
@@ -67,49 +68,51 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public RequestAttachmentDto create(String serial, RequestAttachmentDto requestAttachmentDto, MultipartFile file) throws JudicialWarrantException {
+	public RequestAttachmentDto create(String serial, RequestAttachmentDto requestAttachmentDto, MultipartFile file)
+			throws JudicialWarrantException {
 		RequestAttachmentDto savedDto = null;
 
 		try {
 			notNull(requestAttachmentDto, "dto must be set");
 
-			RequestAttachment entiry = requestAttachmentMapper.toNewEntity(requestAttachmentDto);						
-			AttachmentType attachmentType=attachmentTypeRepository.findById(requestAttachmentDto.getAttachmentType().getId()).get();
-			Request request=requestRepository.findBySerial(serial);
+			RequestAttachment entiry = requestAttachmentMapper.toNewEntity(requestAttachmentDto);
+			AttachmentType attachmentType = attachmentTypeRepository
+					.findById(requestAttachmentDto.getAttachmentType().getId()).get();
+			Request request = requestRepository.findBySerial(serial);
 			entiry.setFileName(file.getOriginalFilename());
-			
+
 			Map<String, String> properties = new HashMap<String, String>();
-//			properties.put("dCollectionName", request.getSerial());
-			String ucmId = contentManager.checkin(properties, file);			
-			
+			// properties.put("dCollectionName", request.getSerial());
+			String ucmId = contentManager.checkin(properties, file);
+
 			entiry.setAttachmentType(attachmentType);
 			entiry.setRequest(request);
 			entiry.setUcmDocumentId(ucmId);
 			entiry = attachmentRepository.save(entiry);
-			
+
 			savedDto = requestAttachmentMapper.toDto(entiry);
 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 
-		return savedDto;	
+		return savedDto;
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public RequestAttachmentDto update(String serial, RequestAttachmentDto requestAttachmentDto, Long id)
 			throws JudicialWarrantException {
-		
+
 		RequestAttachmentDto savedDto = null;
 
 		try {
-			notNull(requestAttachmentDto, "dto must be set");			
+			notNull(requestAttachmentDto, "dto must be set");
 
 			RequestAttachment entiry = requestAttachmentMapper.toEntity(requestAttachmentDto);
 
 			entiry = attachmentRepository.save(entiry);
-			
+
 			savedDto = requestAttachmentMapper.toDto(entiry);
 
 		} catch (Exception e) {
@@ -129,25 +132,25 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		
+
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class,readOnly=true)
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public RequestAttachmentDto getById(String serial, Long id) throws JudicialWarrantException {
 		RequestAttachmentDto dto = null;
 		try {
 			notNull(id, "id must be set");
-			
+
 			RequestAttachment entity = attachmentRepository.findById(id).get();
 			dto = requestAttachmentMapper.toDto(entity);
-			
+
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
 		return dto;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
 	public Short getVersionById(String serial, Long id) throws JudicialWarrantException {
@@ -158,8 +161,25 @@ public class RequestAttachmentServiceImpl implements RequestAttachmentService {
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return version;		
+		return version;
 	}
 
+	@Override
+	public byte[] downloadFile(String serial, Long id, String ucmDocumentId)
+			throws JudicialWarrantException {
+		try {
+			RequestAttachment requestAttachment = attachmentRepository.findByIdAndRequestSerial(id, serial);
+			if (requestAttachment != null && ucmDocumentId.equals(requestAttachment.getUcmDocumentId())) {
+				return contentManager.getContent(ucmDocumentId);
+			} else {
+				throw new ResourceNotFoundException(id);
+			}
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+	}
 
 }

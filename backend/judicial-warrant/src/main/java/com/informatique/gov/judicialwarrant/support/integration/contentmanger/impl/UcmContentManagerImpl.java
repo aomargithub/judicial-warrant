@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -152,7 +153,7 @@ public class UcmContentManagerImpl implements ContentManager {
 	}
 
 	@Override
-	public InputStream getContent(String contentId) throws Exception {
+	public byte[] getContent(String contentId) throws Exception {
 
 		InputStream inputStream = null;
 		ServiceResponse serviceResponse = null;
@@ -167,6 +168,8 @@ public class UcmContentManagerImpl implements ContentManager {
 			requestDataBinder.putLocal("dDocName", contentId);
 			serviceResponse = idcClient.sendRequest(idcContext, requestDataBinder);
 			inputStream = serviceResponse.getResponseStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
+			return bytes;
 
 		} finally {
 			if (serviceResponse != null) {
@@ -174,8 +177,6 @@ public class UcmContentManagerImpl implements ContentManager {
 			}
 
 		}
-
-		return inputStream;
 	}
 
 	@Override

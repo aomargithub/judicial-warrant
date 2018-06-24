@@ -28,12 +28,13 @@ import lombok.AllArgsConstructor;
 @Component
 @AllArgsConstructor
 public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler {
-	
+
 	private CapacityDelegationService capacityDelegationService;
 	private RequestAttachmentService requestAttachmentService;
 
 	@Override
-	public ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication) throws JudicialWarrantException {
+	public ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication)
+			throws JudicialWarrantException {
 		ResponseEntity<List<CapacityDelegationDto>> response = null;
 		try {
 			List<CapacityDelegationDto> dtos = capacityDelegationService.getAll(authentication);
@@ -45,10 +46,10 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 		}
 		return response;
 	}
-	
 
 	@Override
-	public ResponseEntity<CapacityDelegationDto> getBySerial(Authentication authentication, String serial) throws JudicialWarrantException {
+	public ResponseEntity<CapacityDelegationDto> getBySerial(Authentication authentication, String serial)
+			throws JudicialWarrantException {
 		ResponseEntity<CapacityDelegationDto> response = null;
 		try {
 			CapacityDelegationDto dto = capacityDelegationService.getBySerial(authentication, serial);
@@ -65,7 +66,6 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 		return response;
 	}
 
-	
 	@Override
 	public ResponseEntity<CapacityDelegationDto> create(CapacityDelegationDto capacityDelegationDto)
 			throws JudicialWarrantException {
@@ -85,8 +85,8 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	}
 
 	@Override
-	public ResponseEntity<CapacityDelegationDto> update(String serial, CapacityDelegationDto capacityDelegationDto, Short etag)
-			throws JudicialWarrantException {
+	public ResponseEntity<CapacityDelegationDto> update(String serial, CapacityDelegationDto capacityDelegationDto,
+			Short etag) throws JudicialWarrantException {
 		ResponseEntity<CapacityDelegationDto> response = null;
 		try {
 
@@ -119,7 +119,9 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	}
 
 	@Override
-	public ResponseEntity<CapacityDelegationDto> submit(String serial, CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest) throws JudicialWarrantException {
+	public ResponseEntity<CapacityDelegationDto> submit(String serial,
+			CapacityDelegationChangeStatusRequest capacityDelegationChangeStatusRequest)
+			throws JudicialWarrantException {
 		ResponseEntity<CapacityDelegationDto> response = null;
 		try {
 
@@ -151,32 +153,33 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	}
 
 	@Override
-	public ResponseEntity<RequestAttachmentDto> getRequestAttachmentById(String serial, Long id, Short etag) throws JudicialWarrantException {
+	public ResponseEntity<RequestAttachmentDto> getRequestAttachmentById(String serial, Long id, Short etag)
+			throws JudicialWarrantException {
 		ResponseEntity<RequestAttachmentDto> response = null;
 		try {
 			notNull(id, "id must be set");
 			RequestAttachmentDto dto = null;
-			
-			if(etag != null) {
+
+			if (etag != null) {
 				Short version = requestAttachmentService.getVersionById(serial, id);
-				
-				if(version == null) {
+
+				if (version == null) {
 					throw new ResourceNotFoundException(id);
 				}
-				
-				if(version.equals(etag)) {
+
+				if (version.equals(etag)) {
 					throw new ResourceNotModifiedException(id, version);
 				}
 			}
-			
+
 			dto = requestAttachmentService.getById(serial, id);
-			
-			if(dto == null) {
+
+			if (dto == null) {
 				throw new ResourceNotFoundException(id);
 			}
-			
+
 			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
-			
+
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
@@ -187,34 +190,34 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	}
 
 	@Override
-	public ResponseEntity<RequestAttachmentDto> updateRequestAttachment(String serial, RequestAttachmentDto dto, Long id, Short etag)
-			throws JudicialWarrantException {
+	public ResponseEntity<RequestAttachmentDto> updateRequestAttachment(String serial, RequestAttachmentDto dto,
+			Long id, Short etag) throws JudicialWarrantException {
 		ResponseEntity<RequestAttachmentDto> response = null;
 		try {
 			notNull(dto, "candidateAttachmentDto must be set");
 			notNull(id, "id must be set");
-			
-			if(etag == null) {
+
+			if (etag == null) {
 				throw new PreConditionRequiredException(id);
 			}
-			
+
 			Short version = requestAttachmentService.getVersionById(serial, id);
-			
-			if(version == null) {
+
+			if (version == null) {
 				throw new ResourceNotFoundException(id);
 			}
-			
-			if(!version.equals(etag)) {
+
+			if (!version.equals(etag)) {
 				throw new ResourceModifiedException(id, etag, version);
 			}
-			
+
 			dto.setId(id);
 			dto.setVersion(etag);
-			
-			RequestAttachmentDto savedDto = requestAttachmentService.update(serial, dto,id);
-			
+
+			RequestAttachmentDto savedDto = requestAttachmentService.update(serial, dto, id);
+
 			response = ResponseEntity.ok().body(savedDto);
-			
+
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
@@ -224,35 +227,56 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	}
 
 	@Override
-	public ResponseEntity<RequestAttachmentDto> createRequestAttachment(String serial, RequestAttachmentDto dto, MultipartFile file) throws JudicialWarrantException {
+	public ResponseEntity<RequestAttachmentDto> createRequestAttachment(String serial, RequestAttachmentDto dto,
+			MultipartFile file) throws JudicialWarrantException {
 		ResponseEntity<RequestAttachmentDto> response = null;
 		try {
-			
+
 			RequestAttachmentDto savedDto = requestAttachmentService.create(serial, dto, file);
-			
+
 			response = ResponseEntity.ok(savedDto);
-			
+
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
-		}return response;	
+		}
+		return response;
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteRequestAttachment(String serial, Long id) throws JudicialWarrantException {
-		ResponseEntity<Void> response = null;
+	public ResponseEntity<?> deleteRequestAttachment(String serial, Long id) throws JudicialWarrantException {
+		ResponseEntity<?> response = null;
 		try {
-			
+
 			requestAttachmentService.delete(serial, id);
-			
+
 			response = ResponseEntity.ok().build();
-			
+
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
-		}return response;
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseEntity<byte[]> downloadFile(String serial, Long id, String ucmDocumentId)
+			throws JudicialWarrantException {
+		ResponseEntity<byte[]> responseEntity = null;
+		try {
+
+			byte[] bytes = requestAttachmentService.downloadFile(serial, id, ucmDocumentId);
+
+			responseEntity = ResponseEntity.ok(bytes);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return responseEntity;
 	}
 
 }
