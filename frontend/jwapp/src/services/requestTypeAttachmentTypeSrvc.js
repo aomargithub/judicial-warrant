@@ -6,6 +6,11 @@ module.exports = function(app){
         self.getByRequestTypeId=function(capacityDelegation){
             return $http.get(requestTypeAttachmentTypesUrl + '?requestTypeId=' + capacityDelegation.RequestType.id)
         }
+
+        self.getAttachmentTypesByRequestTypeCode = function(requestTypeCode){
+            return $http.get(requestTypeAttachmentTypesUrl + '?requestTypeCode=' + requestTypeCode)
+        }
+
         self.getAll=function(){
             return $http.get(requestTypeAttachmentTypesUrl); 
         }

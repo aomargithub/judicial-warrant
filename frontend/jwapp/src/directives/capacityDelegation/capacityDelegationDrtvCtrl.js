@@ -1,13 +1,13 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope,requestTypeSrvc, organizationUnitSrvc,requestTypeAttachmentTypeSrvc, $scope, CapacityDelegation, RequestAttachment, capacityDelegationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc) {
+    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, capacityDelegationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
-        vm.editId = null;
+      //  vm.editId = null;
         vm.message = null;
-        vm.editCapacityDelegation = null;
-        vm.capacityDelegations = [];
-        vm.attachments = [];
+      //  vm.editCapacityDelegation = null;
+       
+     //   vm.attachments = [];
         vm.requestAttachments = [];
         vm.organizationUnites = [];
         vm.attachmentTypes = [];
@@ -21,38 +21,53 @@ module.exports = function (app) {
             end: 0
         };
 
-        capacityDelegationSrvc.getAll().then(function (response) {
-            vm.capacityDelegations = response.data;
-        });
+       
        
        
         organizationUnitSrvc.getExternal().then(function (response) {
             vm.organizationUnites = response.data;
         });
 
-        requestTypeSrvc.getAll().then(function(response){
-            vm.capacityDelegation.RequestType=response.data;
+        // requestTypeSrvc.getAll().then(function(response){
+        //     vm.capacityDelegation.RequestType = response.data;
 
-        });
-      requestTypeAttachmentTypeSrvc.getAttachmentTypes(vm.capacityDelegation).then(function(response){
+        // });
+
+        requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name).then(function(response){
               vm.attachmentTypes=response.data;
 
         });
 
-        if (vm.capacityDelegation.id) {
-            capacityDelegationSrvc.getAllRequestAttachment(vm.capacityDelegation).then(function (response) {
-                vm.requestAttachments = response.data;
+        vm.save = function () {
 
-            })
+            capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
+              
+                vm.capacityDelegation = response.data;
+
+                resetEntryForm();
+
+            }, function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.badRequest.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
         };
+
+        // if (vm.capacityDelegation.id) {
+        //     capacityDelegationSrvc.getRequestAttachments(vm.capacityDelegation.request.serial).then(function (response) {
+        //         vm.requestAttachments = response.data;
+
+        //     })
+        // };
 
 
 
 
 
         var resetEntryForm = function () {
-            $scope.capacityDelegationFormFileUpload.$setPristine();
-            $scope.capacityDelegationFormFileUpload.$setUntouched();
+            $scope.capacityDelegationForm.$setPristine();
+            $scope.capacityDelegationForm.$setUntouched();
         }
 
 
@@ -76,31 +91,17 @@ module.exports = function (app) {
 
 
 
-        vm.add = function () {
+        
 
-            capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
-                vm.capacityDelegations.push(response.data);
-                vm.capacityDelegation = response.data;
+        // vm.edit = function (id) {
+        //     capacityDelegationSrvc.getById(id).then(function (response) {
+        //         vm.editCapacityDelegation = response.data;
+        //         vm.editCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+        //         vm.requestAttachment = angular.copy(vm.editCapacityDelegation);
+        //         resetEntryForm();
 
-                resetEntryForm();
-
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-            });
-        };
-
-        vm.edit = function (id) {
-            capacityDelegationSrvc.getById(id).then(function (response) {
-                vm.editCapacityDelegation = response.data;
-                vm.editCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
-                vm.requestAttachment = angular.copy(vm.editCapacityDelegation);
-                resetEntryForm();
-
-            });
-        };
+        //     });
+        // };
 
         vm.refetch = function (id) {
             capacityDelegationSrvc.getById(id).then(function (response) {

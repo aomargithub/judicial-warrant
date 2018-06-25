@@ -27,8 +27,8 @@ module.exports = function (app) {
             })
         };
 
-        self.getAllRequestAttachment = function (capacityDelegation) {
-            return $http.get(capacityDelegationsUrl + 'serial=' + capacityDelegation.request.serial + '/requestAttachments');
+        self.getRequestAttachments = function (requestSerial) {
+            return $http.get(capacityDelegationsUrl + 'serial=' + requestSerial + '/requestAttachments');
         };
 
         self.deleteRequestAttachment = function (id, capacityDelegation) {

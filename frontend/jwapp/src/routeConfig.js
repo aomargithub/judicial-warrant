@@ -75,7 +75,7 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('root.capacityDelegations',{
+            }).state('root.CAPACITY_DELEGATION',{
                 parent: 'root',
                 data: {
                     label :'capacityDelegations'
