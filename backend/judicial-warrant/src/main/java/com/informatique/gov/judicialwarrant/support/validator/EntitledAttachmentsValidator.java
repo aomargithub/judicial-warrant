@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.support.validator;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,7 @@ public class EntitledAttachmentsValidator implements Serializable {
 	private RequestTypeAttachmentTypeService requestTypeAttachmentTypeService;
 	private EntitledAttachmentService entitledAttachmentService;
 
-	public void validate(List<EntitledDto> entitledDtos) throws JudicialWarrantException {
+	public void validate(Set<EntitledDto> entitledDtos) throws JudicialWarrantException {
 
 		try {
 			List<RequestTypeAttachmentTypeDto> requestTypeAttachmentTypeDtos = requestTypeAttachmentTypeService

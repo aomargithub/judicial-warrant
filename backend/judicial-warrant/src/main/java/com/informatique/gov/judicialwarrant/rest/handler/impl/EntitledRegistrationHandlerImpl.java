@@ -3,6 +3,7 @@ package com.informatique.gov.judicialwarrant.rest.handler.impl;
 import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -151,6 +152,57 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 		try {
 
 			EntitledRegistrationDto dto = entitledRegistrationService.submit(serial, registrationChangeStatusRequest);
+
+			response = ResponseEntity.ok(dto);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledRegistrationDto> inProgress(String serial, EntitledRegistrationChangeStatusRequest registrationChangeStatusRequest) throws JudicialWarrantException {
+		ResponseEntity<EntitledRegistrationDto> response = null;
+		try {
+
+			EntitledRegistrationDto dto = entitledRegistrationService.inProgress(serial, registrationChangeStatusRequest);
+
+			response = ResponseEntity.ok(dto);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledRegistrationDto> inComplete(String serial, EntitledRegistrationChangeStatusRequest registrationChangeStatusRequest) throws JudicialWarrantException {
+		ResponseEntity<EntitledRegistrationDto> response = null;
+		try {
+
+			EntitledRegistrationDto dto = entitledRegistrationService.inComplete(serial, registrationChangeStatusRequest);
+
+			response = ResponseEntity.ok(dto);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledRegistrationDto> reject(String serial, EntitledRegistrationChangeStatusRequest registrationChangeStatusRequest) throws JudicialWarrantException {
+		ResponseEntity<EntitledRegistrationDto> response = null;
+		try {
+
+			EntitledRegistrationDto dto = entitledRegistrationService.reject(serial, registrationChangeStatusRequest);
 
 			response = ResponseEntity.ok(dto);
 
@@ -388,13 +440,159 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 			throw new JudicialWarrantInternalException(e);
 		}return response;
 	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> acceptEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.accept(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<Set<EntitledDto>> acceptAllEntitleds(String serial, String note) throws JudicialWarrantException {
+		ResponseEntity<Set<EntitledDto>> response = null;
+		try {
+			notNull(serial, "serial must be set");
+			Set<EntitledDto> dtos = null;
+			
+			dtos = entitledService.acceptAll(serial, note);
+			
+			response = ResponseEntity.ok().body(dtos);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> rejectEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.reject(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> inTrainingEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.inTraining(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> passedEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.passed(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> failEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.fail(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
+	
+	@Override
+	public ResponseEntity<EntitledDto> cardRecievedEntitled(String serial, Long id, String note) throws JudicialWarrantException {
+		ResponseEntity<EntitledDto> response = null;
+		try {
+			notNull(id, "id must be set");
+			notNull(serial, "serial must be set");
+			EntitledDto dto = null;
+			
+			dto = entitledService.cardRecieved(serial, id, note);
+			
+			response = ResponseEntity.ok().body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
 
 	@Override
-	public ResponseEntity<List<EntitledDto>> getAllEntitledsByEntitledRegistrationSerial(String serial)
+	public ResponseEntity<Set<EntitledDto>> getAllEntitledsByEntitledRegistrationSerial(String serial)
 			throws JudicialWarrantException {
-		ResponseEntity<List<EntitledDto>> response = null;
+		ResponseEntity<Set<EntitledDto>> response = null;
 		try {
-			List<EntitledDto> dtos = entitledService.getAllByEntitledRegistrationSerial(serial);
+			Set<EntitledDto> dtos = entitledService.getAllByEntitledRegistrationSerial(serial);
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -523,124 +721,5 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 			throw new JudicialWarrantInternalException(e);
 		}return response;
 	}
-	
-	/*@Override
-	public ResponseEntity<ERRequestForInternalResponse> incompleteRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.incompleteRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-	
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> rejectRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.rejectRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> inprogressRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.inprogressRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-	
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> inTrainingRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.inTrainingRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-	
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> passTrainingRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.passTrainingRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-	
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> failTrainingRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.failTrainingRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<ERRequestForInternalResponse> issuedRequest(String serial, ERRequestNotesData erRequestNotesData) throws JudicialWarrantException {
-		ResponseEntity<ERRequestForInternalResponse> response = null;
-		try {
-
-			ERRequestForInternalResponse dto = requestService.issuedRequest(serial, erRequestNotesData);
-
-			response = ResponseEntity.ok(dto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}*/
 
 }

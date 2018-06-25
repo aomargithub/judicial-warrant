@@ -7,8 +7,7 @@ public enum RequestInternalStatusEnum {
 	RECIEVED("RECIEVED", RequestStatusEnum.SUBMITED),
 	INCOMPLETE("INCOMPLETE", RequestStatusEnum.INCOMPLETE),
 	REJECTED("REJECTED", RequestStatusEnum.REJECTED),
-	INPROGRESS("INPROGRESS", RequestStatusEnum.INPROGRESS),
-	CAPACITY_DELEGATION_ISSUED("ISSUED", RequestStatusEnum.ISSUED);
+	INPROGRESS("INPROGRESS", RequestStatusEnum.INPROGRESS);
 	
 	
 	
