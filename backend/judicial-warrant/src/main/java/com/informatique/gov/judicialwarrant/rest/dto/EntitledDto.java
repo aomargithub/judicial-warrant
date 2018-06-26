@@ -30,7 +30,7 @@ public class EntitledDto implements UserModel<Long> {
 	private String mobileNumber2;
 	private String emailAddress;
 	@NotNull
-	private EntitledRegistrationDto entitledRegistrationDto;
+	private EntitledRegistrationDto entitledRegistration;
 	private OrganizationUnitDto organizationUnit;
 	private EntitledStatusDto currentStatus;
 	private Set<EntitledAttachmentDto> attachments;

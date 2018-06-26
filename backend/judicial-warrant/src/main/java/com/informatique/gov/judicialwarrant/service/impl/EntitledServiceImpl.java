@@ -87,9 +87,9 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 			entitled = entitledRepository.save(entitled);
 
 			// create ucm folder for every entitled
-			String requestFolder = contentManager
-					.getFolderIdFromPath("/" + entitledDto.getEntitledRegistrationDto().getRequest().getSerial() + "/");
-			contentManager.createFolder(entitled.getId().toString(), true, requestFolder);
+//			String requestFolder = contentManager
+//					.getFolderIdFromPath("/" + entitledDto.getEntitledRegistration().getRequest().getSerial() + "/");
+//			contentManager.createFolder(entitled.getId().toString(), true, requestFolder);
 
 			savedDto = entitledMapper.toDto(entitled);
 

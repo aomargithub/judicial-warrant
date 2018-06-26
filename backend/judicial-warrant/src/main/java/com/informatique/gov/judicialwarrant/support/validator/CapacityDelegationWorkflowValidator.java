@@ -16,19 +16,17 @@ import lombok.AllArgsConstructor;
 public class CapacityDelegationWorkflowValidator {
 
 	private CapacityDelegationAttachmentsValidator capacityDelegationAttachmentsValidator;
-	
+
 	public void validate(CapacityDelegation capacityDelegation, RequestInternalStatusEnum requiredInternalStatusEnum)
 			throws JudicialWarrantException {
 		try {
 			String serial = capacityDelegation.getRequest().getSerial();
-			if (capacityDelegation.getRequest().getCurrentInternalStatus() == null) {
-				if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
-					throw new InvalidRequestStatusException(serial,
-							RequestInternalStatusEnum.getByCode(capacityDelegation.getRequest().getCurrentStatus().getCode()));
-				} else {
-					capacityDelegationAttachmentsValidator.validate(capacityDelegation);
-					return;
-				}
+			if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.ISSUED)) {
+				throw new InvalidRequestStatusException(serial, RequestInternalStatusEnum
+						.getByCode(capacityDelegation.getRequest().getCurrentStatus().getCode()));
+			} else {
+				capacityDelegationAttachmentsValidator.validate(capacityDelegation);
+				return;
 			}
 		} catch (JudicialWarrantException e) {
 			throw e;

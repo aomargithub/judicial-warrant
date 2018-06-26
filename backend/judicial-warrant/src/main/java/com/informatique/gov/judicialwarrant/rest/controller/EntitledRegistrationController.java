@@ -76,6 +76,30 @@ public class EntitledRegistrationController {
 		return entitledRegistrationHandlerHandler.update(serial, entitledRegistrationDto, eTag);
 	}
 	
+	@PutMapping(path = "/serial={serial}/submission")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> submitRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.submit(serial, entitledRegistrationChangeStatusRequest);
+	}
+	
+	@PutMapping(path = "/serial={serial}/inProgress")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	public ResponseEntity<?> inProgressRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.inProgress(serial, entitledRegistrationChangeStatusRequest);
+	}
+
+	@PutMapping(path = "/serial={serial}/inCompletion")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	public ResponseEntity<?> incompleteRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.inComplete(serial, entitledRegistrationChangeStatusRequest);
+	}
+	
+	@PutMapping(path = "/serial={serial}/rejection")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	public ResponseEntity<?> rejectRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.reject(serial, entitledRegistrationChangeStatusRequest);
+	}
+	
 	@GetMapping(path = "/serial={serial}/requestAttachments/{id}")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> getRequestAttachmentById(@PathVariable String serial, @PathVariable Long id,
@@ -148,7 +172,7 @@ public class EntitledRegistrationController {
 	}
 
 	@PostMapping(path = "/entitleds/entitledAttachments")
-	public ResponseEntity<?> saveEntitledAttachment(@RequestPart("dto") EntitledAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
+	public ResponseEntity<?> saveEntitledAttachment(@RequestPart("entitledAttachment") EntitledAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.saveEntitledAttachment(dto, file);
 	}
 
@@ -164,62 +188,44 @@ public class EntitledRegistrationController {
 		return entitledRegistrationHandlerHandler.deleteEntitledAttachment(id);
 	}
 	
-	@PutMapping(path = "/serial={serial}/inProgress")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> inProgressRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.inProgress(serial, entitledRegistrationChangeStatusRequest);
-	}
-	
-	@PutMapping(path = "/serial={serial}/inprogress")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> submitRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.submit(serial, entitledRegistrationChangeStatusRequest);
-	}
-
-	@PutMapping(path = "/serial={serial}/inCompletion")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> incompleteRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.inComplete(serial, entitledRegistrationChangeStatusRequest);
-	}
-	
-	@PutMapping(path = "/serial={serial}/rejection")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> rejectRequest(@PathVariable String serial, @RequestBody EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.reject(serial, entitledRegistrationChangeStatusRequest);
-	}
-	
-	
 	@PutMapping("/serial={serial}/entitleds/{id}/acception")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> acceptEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.acceptEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/acception")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> acceptAllEntitleds(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.acceptAllEntitleds(serial, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/rejection")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> rejectEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.acceptEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/inTraining")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> inTrainingEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.inTrainingEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/passed")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> passEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.passedEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/failture")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> failEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.failEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/cardRecieved")
+	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> cardRecievedEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.cardRecievedEntitled(serial, id, changeStatusRequest.getNote());
 	}

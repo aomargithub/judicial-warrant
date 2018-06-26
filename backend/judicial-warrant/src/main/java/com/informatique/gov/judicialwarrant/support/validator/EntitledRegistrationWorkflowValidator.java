@@ -22,20 +22,19 @@ public class EntitledRegistrationWorkflowValidator {
 			throws JudicialWarrantException {
 		try {
 			String serial = entitledRegistration.getRequest().getSerial();
-			if (entitledRegistration.getRequest().getCurrentInternalStatus() == null) {
-				if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
-					throw new InvalidRequestStatusException(serial,
-							RequestInternalStatusEnum.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode()));
-				} else {
-					entitledRegistrationAttachmentsValidator.validate(entitledRegistration);
-					return;
-				}
-			}
 			RequestInternalStatusEnum currentInternalStatus = RequestInternalStatusEnum
 					.getByCode(entitledRegistration.getRequest().getCurrentInternalStatus().getCode());
 			RequestInternalStatusEnum requiredInternalStatus = RequestInternalStatusEnum
 					.getByCode(requiredInternalStatusEnum.getCode());
 			switch (currentInternalStatus) {
+			case DRAFT : 
+				if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
+					throw new InvalidRequestStatusException(serial,
+							RequestInternalStatusEnum.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode()));
+				} else {
+					entitledRegistrationAttachmentsValidator.validate(entitledRegistration);
+				}
+				break;
 			case RECIEVED:
 				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.INCOMPLETE)
 						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)

@@ -21,9 +21,6 @@ public interface EntitledRegistrationRepository extends JpaRepository<EntitledRe
 	EntitledRegistration findByRequestSerialAndRequestOrganizationUnitId(String serial, Short id) throws JudicialWarrantException;
 	
 	@EntityGraph(value = "EntitledRegistration.fat", type = EntityGraphType.FETCH)
-	List<EntitledRegistration> findAllByRequestOrganizationUnitId(Short organizationUnitId);
-	
-	@EntityGraph(value = "EntitledRegistration.fat", type = EntityGraphType.FETCH)
 	List<EntitledRegistration> findByRequestOrganizationUnitId(Short organizationUnitId);
 	
 }
