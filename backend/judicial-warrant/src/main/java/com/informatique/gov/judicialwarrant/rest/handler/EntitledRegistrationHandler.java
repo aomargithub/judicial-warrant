@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.rest.handler;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +36,19 @@ public interface EntitledRegistrationHandler extends Serializable{
 	ResponseEntity<EntitledRegistrationDto> submit(String serial,
 			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledRegistrationDto> inProgress(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledRegistrationDto> inComplete(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
 
+	ResponseEntity<EntitledRegistrationDto> reject(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
+	
 	ResponseEntity<List<RequestAttachmentDto>> getAllRequestAttachmentByRequestSerial(String serial) throws JudicialWarrantException;
 
 	ResponseEntity<RequestAttachmentDto> getRequestAttachmentById(String serial, Long id, Short etag) throws JudicialWarrantException;
@@ -54,7 +67,21 @@ public interface EntitledRegistrationHandler extends Serializable{
 	
 	ResponseEntity<EntitledDto> getEntitledById(Long id, Short etag) throws JudicialWarrantException;
 	
-	ResponseEntity<List<EntitledDto>> getAllEntitledsByEntitledRegistrationSerial(String serial) throws JudicialWarrantException;
+	ResponseEntity<EntitledDto> acceptEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<Set<EntitledDto>> acceptAllEntitleds(String serial, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledDto> rejectEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledDto> inTrainingEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledDto> passedEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<EntitledDto> failEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+		
+	ResponseEntity<EntitledDto> cardRecievedEntitled(String serial, Long id, String note) throws JudicialWarrantException;
+	
+	ResponseEntity<Set<EntitledDto>> getAllEntitledsByEntitledRegistrationSerial(String serial) throws JudicialWarrantException;
 	
 	ResponseEntity<Void> deleteEntitled(Long id) throws JudicialWarrantException;
 

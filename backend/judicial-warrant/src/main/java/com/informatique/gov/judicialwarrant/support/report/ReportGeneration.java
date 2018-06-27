@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URLDecoder;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class ReportGeneration implements Serializable {
 
 	private static final long serialVersionUID = -2157284910174686034L;
 
-	public static void generateReportToResponse(String reportName, Map<String, Object> parameters, List<? extends Object> reportList,
+	public static void generateReportToResponse(String reportName, Map<String, Object> parameters, Collection<? extends Object> reportList,
 			HttpServletResponse response, Locale locale) throws JRException, IOException, Exception {
 		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList, locale);
 
@@ -41,7 +42,7 @@ public class ReportGeneration implements Serializable {
 		JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
 	}
 	
-	public static JasperPrint generateReport(String reportName, Map<String, Object> parameters, List<? extends Object> reportList, Locale locale)
+	public static JasperPrint generateReport(String reportName, Map<String, Object> parameters, Collection<? extends Object> reportList, Locale locale)
 			throws JRException, Exception {
 		String reportLocation = getReportFullPath(reportName);
 		JasperReport jasperReport = JasperCompileManager.compileReport(reportLocation);

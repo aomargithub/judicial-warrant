@@ -4,11 +4,12 @@ import lombok.Getter;
 
 public enum RequestInternalStatusEnum {
 	
+	DRAFT("DRAFT", RequestStatusEnum.DRAFT),
 	RECIEVED("RECIEVED", RequestStatusEnum.SUBMITED),
 	INCOMPLETE("INCOMPLETE", RequestStatusEnum.INCOMPLETE),
 	REJECTED("REJECTED", RequestStatusEnum.REJECTED),
 	INPROGRESS("INPROGRESS", RequestStatusEnum.INPROGRESS),
-	CAPACITY_DELEGATION_ISSUED("ISSUED", RequestStatusEnum.ISSUED);
+	ISSUED("ISSUED", RequestStatusEnum.ISSUED);
 	
 	
 	

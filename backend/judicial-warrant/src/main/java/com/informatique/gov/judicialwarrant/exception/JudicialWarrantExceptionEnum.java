@@ -19,6 +19,7 @@ public enum JudicialWarrantExceptionEnum {
   INVALID_REQUEST_STATUS_EXCEPTION("INVALID_REQUEST_STATUS_EXCEPTION", "The target status : %s is invalid, request serial : %s", "double check data provided"),
   INCOMPLETE_ATTACHMENTS("INCOMPLETE_ATTACHMENTS", "the required attachments not completed ", "add all required Attachment first"),
   CAPACITY_DELEGATION_NOT_ALLOWED("CAPACITY_DELEGATION_NOT_ALLOWED", "capacityDelegation not allowed for your organizationUnit", "get allowed CapacityDelegation"),
+  INVALID_ENTITLED_STATUS_EXCEPTION("INVALID_ENTITLED_STATUS_EXCEPTION", "The target status : %s is invalid", "double check data provided"),
   
   // Validation for custom Validation and validation annotation
   // TODO edit in exception description

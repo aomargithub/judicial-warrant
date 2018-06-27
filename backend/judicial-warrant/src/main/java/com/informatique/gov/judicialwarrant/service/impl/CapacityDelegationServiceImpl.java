@@ -180,17 +180,14 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 
 			CapacityDelegation capacityDelegation = getIfValid(serial);
 
-			capacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.RECIEVED);
-
-			capacityDelegation.setJobTitle(capacityDelegationChangeStatusRequest.getCapacityDelegation().getJobTitle());
-			CapacityDelegation savedCapacityDelegation = capacityDelegationRepository.save(capacityDelegation);
+			capacityDelegationWorkflowValidator.validate(capacityDelegation, RequestInternalStatusEnum.ISSUED);
 
 			Request request = requestService.changeStatus(capacityDelegation.getRequest(),
-					RequestInternalStatusEnum.RECIEVED, capacityDelegationChangeStatusRequest.getNote());
+					RequestInternalStatusEnum.ISSUED, capacityDelegationChangeStatusRequest.getNote());
 
-			savedCapacityDelegation.setRequest(request);
+			capacityDelegation.setRequest(request);
 
-			savedCapacityDelegationDto = capacityDelegationMapper.toDto(savedCapacityDelegation);
+			savedCapacityDelegationDto = capacityDelegationMapper.toDto(capacityDelegation);
 
 		} catch (JudicialWarrantException e) {
 			throw e;

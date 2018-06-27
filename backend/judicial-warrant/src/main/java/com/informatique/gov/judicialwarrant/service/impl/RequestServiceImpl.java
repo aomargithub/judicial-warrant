@@ -79,6 +79,8 @@ public class RequestServiceImpl implements InternalRequestService, RequestServic
 		try {
 			newRequest = new Request();
 			newRequest.setCurrentStatus(requestStatusRepository.findByCode(RequestStatusEnum.DRAFT.getCode()));
+			newRequest.setCurrentInternalStatus(
+					requestInternalStatusRepository.findByCode(RequestStatusEnum.DRAFT.getCode()));
 			RequestType requestType = requestTypeRepository.findByCode(requestTypeEnum.getCode());
 			newRequest.setType(requestType);
 			String serial = requestSerialService.getRequestSerial(requestType);
@@ -129,17 +131,39 @@ public class RequestServiceImpl implements InternalRequestService, RequestServic
 	@Override
 	public List<RequestDto> getAll(Authentication authentication, String typeCode,
 			String currentStatusCode) throws JudicialWarrantException {
+
 		List<Request> requests = null;
 		List<RequestDto> requestDtos = null;
 		try {
 			if (authentication.getAuthorities().stream().anyMatch(authorities::contains)) {
-				requests = requestRepository.findByTypeCodeAndCurrentInternalStatusAndCurrentStatus(typeCode,
-						currentStatusCode, null, null);
+				List<String> typeCodes = null;
+				if (typeCode == null) {
+					typeCodes = Arrays.asList(RequestTypeEnum.CAPACITY_DELEGATION.getCode());
+					requests = requestRepository
+							.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(
+									typeCodes, currentStatusCode, null, null);
+				} else if (typeCode.equals(RequestTypeEnum.ENTITLED_REGISTRATION.getCode())) {
+					requests = requestRepository
+							.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(
+									null, currentStatusCode, null, null);
+				} else {
+					typeCodes = Arrays.asList(typeCode);
+					requests = requestRepository.findByTypeCodesAndCurrentInternalStatusAndCurrentStatus(typeCodes,
+							currentStatusCode, null, null);
+				}
 				requestDtos = requestForInternalMapper.toDto(requests);
 			} else {
+				List<String> typeCodes = null;
+				if (typeCode == null ) {
+					typeCodes = Arrays.asList(RequestTypeEnum.ENTITLED_REGISTRATION.getCode());
+				} else if (typeCode.equals(RequestTypeEnum.CAPACITY_DELEGATION.getCode())){
+					typeCodes = null;
+				} else {
+					typeCodes = Arrays.asList(typeCode);
+				}
 				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
-				requests = requestRepository.findByTypeCodeAndCurrentInternalStatusAndCurrentStatus(typeCode,
-						null, currentStatusCode, organizationUnit.getId());
+				requests = requestRepository.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutCapacityDelegation(typeCodes, null,
+						currentStatusCode, organizationUnit.getId());
 				requestDtos = requestMapper.toDto(requests);
 			}
 			return requestDtos;

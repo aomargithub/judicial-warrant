@@ -40,13 +40,13 @@ public class EntitledRegistrationDtoValidator implements Validator, Serializable
 		CapacityDelegation capacityDelegation = capacityDelegationRepository.findByRequestSerial(entitledRegistrationDto.getCapacityDelegation().getRequest().getSerial());
 		try {
 			// check if capacityDelegation request submitted before add any entitled based it
-			if(!capacityDelegation.getRequest().getCurrentInternalStatus().getCode().equals(RequestInternalStatusEnum.RECIEVED.getCode())) {
+			if(!capacityDelegation.getRequest().getCurrentInternalStatus().getCode().equals(RequestInternalStatusEnum.ISSUED.getCode())) {
 				errors.reject(JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getCode(), JudicialWarrantExceptionEnum.INVALID_REQUEST_STATUS_EXCEPTION.getDescription());
 			}
 			// check that user add right capacityDelagation for organizationUnit
 			OrganizationUnitDto userOrganizationUnitDto = securityService.getUserDetails().getOrganizationUnit();
 			OrganizationUnit requestOrganizationUnit = capacityDelegation.getRequest().getOrganizationUnit();
-			if(userOrganizationUnitDto.getId() != requestOrganizationUnit.getId()) {
+			if(!userOrganizationUnitDto.getId().equals(requestOrganizationUnit.getId())) {
 				errors.reject(JudicialWarrantExceptionEnum.CAPACITY_DELEGATION_NOT_ALLOWED.getCode(), JudicialWarrantExceptionEnum.CAPACITY_DELEGATION_NOT_ALLOWED.getDescription());
 			}
 		} catch (JudicialWarrantException e) {

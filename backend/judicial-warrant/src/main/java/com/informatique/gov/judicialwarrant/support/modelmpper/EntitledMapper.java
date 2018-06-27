@@ -45,7 +45,7 @@ public class EntitledMapper extends AbstractModelMapper<Entitled, EntitledDto, L
 			dto.setId(entity.getId());
 			dto.setMobileNumber1(entity.getMobileNumber1());
 			dto.setMobileNumber2(entity.getMobileNumber2());
-			dto.setEntitledRegistrationDto(entitledRegistrationForInternalMapper.toDto(entity.getEntitledRegistration()));
+			dto.setEntitledRegistration(entitledRegistrationForInternalMapper.toDto(entity.getEntitledRegistration()));
 			dto.setAttachments(entitledAttachmentMapper.toDto(entity.getAttachments()));
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 
@@ -67,7 +67,7 @@ public class EntitledMapper extends AbstractModelMapper<Entitled, EntitledDto, L
 			entity.setId(dto.getId());
 			entity.setMobileNumber1(dto.getMobileNumber1());
 			entity.setMobileNumber2(dto.getMobileNumber2());
-			entity.setEntitledRegistration(entitledRegistrationForInternalMapper.toEntity(dto.getEntitledRegistrationDto()));
+			entity.setEntitledRegistration(entitledRegistrationForInternalMapper.toEntity(dto.getEntitledRegistration()));
 			entity.setAttachments(entitledAttachmentMapper.toEntity(dto.getAttachments()));
 			entity.setOrganizationUnit(organizationUnitMapper.toEntity(dto.getOrganizationUnit()));
 

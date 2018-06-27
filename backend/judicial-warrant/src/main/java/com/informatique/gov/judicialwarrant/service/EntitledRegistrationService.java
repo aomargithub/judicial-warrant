@@ -29,7 +29,15 @@ public interface EntitledRegistrationService extends Serializable {
 			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException;
 
-	EntitledRegistrationDto incomplete(String serial,
+	EntitledRegistrationDto inComplete(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
+	
+	EntitledRegistrationDto inProgress(String serial,
+			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+			throws JudicialWarrantException;
+	
+	EntitledRegistrationDto reject(String serial,
 			EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException;
 	

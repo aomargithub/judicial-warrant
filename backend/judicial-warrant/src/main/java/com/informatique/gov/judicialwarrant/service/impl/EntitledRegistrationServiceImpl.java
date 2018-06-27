@@ -2,8 +2,8 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,6 +30,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledRegistrationDto;
 import com.informatique.gov.judicialwarrant.rest.request.EntitledRegistrationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.EntitledRegistrationService;
+import com.informatique.gov.judicialwarrant.service.EntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalCapacityDelegationService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
@@ -54,7 +55,8 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	private static final long serialVersionUID = 1L;
 	
 	private InternalRequestService requestService;
-	private InternalEntitledService entitledService;
+	private InternalEntitledService internalEntitledService;
+	private EntitledService entitledService;
 	private InternalOrganizationUnitService organizationunitService;
 	private InternalCapacityDelegationService capacityDelegationService;
 	private EntitledRegistrationRepository entitledRegistrationRepository;
@@ -70,8 +72,11 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	public void generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response, String serial)
 			throws JudicialWarrantException {
 		try {
-			List<EntitledDto> entitledDtos = entitledService.getAllByEntitledRegistrationSerial(serial);
-			entitledDtos = entitledDtos == null ? Arrays.asList(new EntitledDto()) : entitledDtos;
+			Set<EntitledDto> entitledDtos = entitledService.getAllByEntitledRegistrationSerial(serial);
+			if(entitledDtos == null) {
+				entitledDtos = new HashSet<>();
+				entitledDtos.add(new EntitledDto());
+			}
 			EntitledRegistrationDto entitledRegistrationDto = getBySerial(SecurityContextHolder.getContext().getAuthentication(), serial);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("Request_Serial", entitledRegistrationDto.getRequest().getSerial());
@@ -225,7 +230,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.RECIEVED, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
 			
-			Set<Entitled> entitled = entitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
+			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
 			
 			
 			entity.setEntitled(entitled);
@@ -242,7 +247,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public EntitledRegistrationDto incomplete(String serial, EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
+	public EntitledRegistrationDto inComplete(String serial, EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException {
 		EntitledRegistrationDto savedEntitledRegistrationDto = null;
 		try {
@@ -252,7 +257,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.INCOMPLETE, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
 			
-			Set<Entitled> entitled = entitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.SUBMITED, null);
+			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.INCOMPLETE, null);
 			
 			
 			entity.setEntitled(entitled);
@@ -265,134 +270,52 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		}
 		return savedEntitledRegistrationDto;
 	}
-
-	/*@Override
-	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse rejectRequest(String serial, ERRequestNotesData erRequestNotesData)
-			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
-		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			EntitledRegistrationWorkflowValidator.validate(erRequest, RequestInternalStatusEnum.REJECTED);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.REJECTED, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.REJECTED);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return erRequestForInternalResponse;
-	}
-
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse inprogressRequest(String serial, ERRequestNotesData erRequestNotesData)
-			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
-		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			EntitledRegistrationWorkflowValidator.validate(erRequest, RequestInternalStatusEnum.INPROGRESS);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.INPROGRESS, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.ACCEPTED);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return erRequestForInternalResponse;
-	}
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse inTrainingRequest(String serial, ERRequestNotesData erRequestNotesData)
+	public EntitledRegistrationDto inProgress(String serial, EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
+		EntitledRegistrationDto savedEntitledRegistrationDto = null;
 		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			EntitledRegistrationWorkflowValidator.validate(erRequest, RequestInternalStatusEnum.INPROGRESS);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.INPROGRESS, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.TRAINNING);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
+			EntitledRegistration entity = getIfValid(serial);
+			entitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.INPROGRESS);
+			
+			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.INPROGRESS, entitledRegistrationChangeStatusRequest.getNote());
+			entity.setRequest(request);
+									
+			savedEntitledRegistrationDto = entitledRegistrationMapper.toDto(entity);
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return erRequestForInternalResponse;
+		return savedEntitledRegistrationDto;
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse passTrainingRequest(String serial, ERRequestNotesData erRequestNotesData)
+	public EntitledRegistrationDto reject(String serial, EntitledRegistrationChangeStatusRequest entitledRegistrationChangeStatusRequest)
 			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
+		EntitledRegistrationDto savedEntitledRegistrationDto = null;
 		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.INPROGRESS, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.PASSED);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
+			EntitledRegistration entity = getIfValid(serial);
+			entitledRegistrationWorkflowValidator.validate(entity, RequestInternalStatusEnum.REJECTED);
+			
+			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.REJECTED, entitledRegistrationChangeStatusRequest.getNote());
+			entity.setRequest(request);
+			
+			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.REJECTED, null);
+			
+			
+			entity.setEntitled(entitled);
+			
+			savedEntitledRegistrationDto = entitledRegistrationMapper.toDto(entity);
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return erRequestForInternalResponse;
+		return savedEntitledRegistrationDto;
 	}
-	
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse failTrainingRequest(String serial, ERRequestNotesData erRequestNotesData)
-			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
-		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.INPROGRESS, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.FAILED);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return erRequestForInternalResponse;
-	}
-	
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public ERRequestForInternalResponse issuedRequest(String serial, ERRequestNotesData erRequestNotesData)
-			throws JudicialWarrantException {
-		ERRequestForInternalResponse erRequestForInternalResponse = null;
-		try {
-			ERRequest erRequest = erRequestRepository.findByRequestSerial(serial);
-			Request request = requestService.changeStatus(erRequest.getRequest(), RequestInternalStatusEnum.CAPACITY_DELEGATION_ISSUED, erRequestNotesData.getNotes());
-			erRequest.setRequest(request);
-			Set<EntitledDto> candidates = candidateService.getByEntitledRegistrationId(request);
-			candidates = candidateService.changeStatus(candidates, EntitledStatusEnum.CARD_RECIEVED);
-			erRequestForInternalResponse = erRequestForInternalMapper.toDto(erRequest);
-			erRequestForInternalResponse.setCandidates(candidates);
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return erRequestForInternalResponse;
-	}*/
 
 }
