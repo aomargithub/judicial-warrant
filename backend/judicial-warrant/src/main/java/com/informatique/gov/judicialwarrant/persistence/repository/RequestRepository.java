@@ -37,6 +37,12 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	List<Request> findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(@Param("typeCodes") List<String> typeCodes,
 			@Param("currentInternalStatusCode") String currentInternalStatusCode,
 			@Param("currentStatusCode") String currentStatusCode, @Param("organizationId") Short organizationId);
+	
+	
+	
+	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
+	@Query("from Request r left join r.type rt left join r.currentInternalStatus cis left join r.currentStatus cs left join r.organizationUnit ou where ou.id = :organizationUnitId and (:requestTypeCodes is not null and rt.code in :requestTypeCodes) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and not (cis.code = :execludeCurrentInternalStatusCode and rt.code != :execludeRequestTypeCode)")
+	List<Request> findByRequestTypeCodeAndCurrentStatus(@Param("requestTypeCodes") List<String> requestTypeCodes, @Param("currentInternalStatusCode") String currentInternalStatusCode, @Param("currentStatusCode") String currentStatusCode, @Param("organizationUnitId") Short organizationUnitId, @Param("execludeCurrentInternalStatusCode") String execludeCurrentInternalStatusCode, @Param("execludeRequestTypeCode") String execludeRequestTypeCode);
 
 
 	@Query("select version from Request req where req.serial = :serial")
