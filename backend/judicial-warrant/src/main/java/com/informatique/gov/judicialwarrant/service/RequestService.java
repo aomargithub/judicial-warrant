@@ -10,6 +10,6 @@ import com.informatique.gov.judicialwarrant.rest.dto.RequestDto;
 
 public interface RequestService extends Serializable {
 
-	List<RequestDto> getAllRequest(Authentication authentication, String typeCode, String currentStatusCode) throws JudicialWarrantException;
+	List<RequestDto> getAll(Authentication authentication, String typeCode, String currentStatusCode) throws JudicialWarrantException;
 
 }

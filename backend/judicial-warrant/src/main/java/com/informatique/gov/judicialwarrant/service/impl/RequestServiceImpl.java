@@ -127,7 +127,7 @@ public class RequestServiceImpl implements InternalRequestService, RequestServic
 	}
 
 	@Override
-	public List<RequestDto> getAllRequest(Authentication authentication, String typeCode,
+	public List<RequestDto> getAll(Authentication authentication, String typeCode,
 			String currentStatusCode) throws JudicialWarrantException {
 		List<Request> requests = null;
 		List<RequestDto> requestDtos = null;

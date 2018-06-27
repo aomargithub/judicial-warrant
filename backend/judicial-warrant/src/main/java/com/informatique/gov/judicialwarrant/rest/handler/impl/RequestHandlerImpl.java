@@ -25,7 +25,7 @@ public class RequestHandlerImpl implements RequestHandler {
 			String currentStatusCode) throws JudicialWarrantException {
 		ResponseEntity<List<RequestDto>> response = null;
 		try {
-			List<RequestDto> dtos = requestService.getAllRequest(authentication, typeCode, currentStatusCode);
+			List<RequestDto> dtos = requestService.getAll(authentication, typeCode, currentStatusCode);
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;
