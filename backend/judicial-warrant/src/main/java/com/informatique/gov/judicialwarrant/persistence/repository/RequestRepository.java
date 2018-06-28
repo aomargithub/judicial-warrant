@@ -41,7 +41,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	
 	
 	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
-	@Query("from Request r left join r.type rt left join r.currentInternalStatus cis left join r.currentStatus cs left join r.organizationUnit ou where ou.id = :organizationUnitId and (:requestTypeCodes is not null and rt.code in :requestTypeCodes) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and not (cis.code = :execludeCurrentInternalStatusCode and rt.code != :execludeRequestTypeCode)")
+	@Query("from Request r where ou.id = :organizationUnitId and (:requestTypeCodes is not null and rt.code in :requestTypeCodes) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and not (cis.code = :execludeCurrentInternalStatusCode and rt.code = :execludeRequestTypeCode)")
 	List<Request> findByRequestTypeCodeAndCurrentStatus(@Param("requestTypeCodes") List<String> requestTypeCodes, @Param("currentInternalStatusCode") String currentInternalStatusCode, @Param("currentStatusCode") String currentStatusCode, @Param("organizationUnitId") Short organizationUnitId, @Param("execludeCurrentInternalStatusCode") String execludeCurrentInternalStatusCode, @Param("execludeRequestTypeCode") String execludeRequestTypeCode);
 
 
