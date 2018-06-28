@@ -116,8 +116,8 @@ public class EntitledRegistrationController {
 
 	@PostMapping(path = "/serial={serial}/requestAttachments")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
-	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("dto") RequestAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.createRequestAttachment(serial, dto, file);
+	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("requestAttachment") RequestAttachmentDto RequestAttachment, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.createRequestAttachment(serial, RequestAttachment, file);
 	}
 
 	@PutMapping("/serial={serial}/requestAttachments/{id}")

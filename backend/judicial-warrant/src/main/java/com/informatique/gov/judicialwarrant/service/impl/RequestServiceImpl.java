@@ -136,34 +136,11 @@ public class RequestServiceImpl implements InternalRequestService, RequestServic
 		List<RequestDto> requestDtos = null;
 		try {
 			if (authentication.getAuthorities().stream().anyMatch(authorities::contains)) {
-				List<String> typeCodes = null;
-				if (typeCode == null) {
-					typeCodes = Arrays.asList(RequestTypeEnum.CAPACITY_DELEGATION.getCode());
-					requests = requestRepository
-							.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(
-									typeCodes, currentStatusCode, null, null);
-				} else if (typeCode.equals(RequestTypeEnum.ENTITLED_REGISTRATION.getCode())) {
-					requests = requestRepository
-							.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(
-									null, currentStatusCode, null, null);
-				} else {
-					typeCodes = Arrays.asList(typeCode);
-					requests = requestRepository.findByTypeCodesAndCurrentInternalStatusAndCurrentStatus(typeCodes,
-							currentStatusCode, null, null);
-				}
+				requests = requestRepository.findByRequestTypeCodeAndCurrentStatus(typeCode, currentStatusCode, null, RequestTypeEnum.ENTITLED_REGISTRATION.getCode(), RequestInternalStatusEnum.DRAFT.getCode());
 				requestDtos = requestForInternalMapper.toDto(requests);
 			} else {
-				List<String> typeCodes = null;
-				if (typeCode == null ) {
-					typeCodes = Arrays.asList(RequestTypeEnum.ENTITLED_REGISTRATION.getCode());
-				} else if (typeCode.equals(RequestTypeEnum.CAPACITY_DELEGATION.getCode())){
-					typeCodes = null;
-				} else {
-					typeCodes = Arrays.asList(typeCode);
-				}
 				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
-				requests = requestRepository.findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutCapacityDelegation(typeCodes, null,
-						currentStatusCode, organizationUnit.getId());
+				requests = requestRepository.findByRequestTypeCodeAndCurrentStatus(typeCode, currentStatusCode, organizationUnit.getId(), RequestTypeEnum.CAPACITY_DELEGATION.getCode());
 				requestDtos = requestMapper.toDto(requests);
 			}
 			return requestDtos;

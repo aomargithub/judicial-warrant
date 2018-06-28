@@ -19,32 +19,17 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	Request findBySerial(String serial);
 
 	List<Request> findByType(RequestType requestType);
-
-	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
-	@Query("select req from Request req left join req.type t left join req.currentInternalStatus cis left join req.currentStatus cs left join req.organizationUnit ou  where (:typeCodes is null or t.code in :typeCodes) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and (:organizationId is null or ou.id = :organizationId)")
-	List<Request> findByTypeCodesAndCurrentInternalStatusAndCurrentStatus(@Param("typeCodes") List<String> typeCodes,
-			@Param("currentInternalStatusCode") String currentInternalStatusCode,
-			@Param("currentStatusCode") String currentStatusCode, @Param("organizationId") Short organizationId);
 	
 	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
-	@Query("select req from Request req left join req.type t left join req.currentInternalStatus cis left join req.currentStatus cs left join req.organizationUnit ou  where ((:typeCodes is null or t.code in :typeCodes) and t.code != 'CAPACITY_DELEGATION' ) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and (:organizationId is null or ou.id = :organizationId)")
-	List<Request> findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutCapacityDelegation(@Param("typeCodes") List<String> typeCodes,
-			@Param("currentInternalStatusCode") String currentInternalStatusCode,
-			@Param("currentStatusCode") String currentStatusCode, @Param("organizationId") Short organizationId);
-	
-	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
-	@Query("select req from Request req left join req.type t left join req.currentInternalStatus cis left join req.currentStatus cs left join req.organizationUnit ou  where ((:typeCodes is not null and t.code in :typeCodes) or (t.code = 'ENTITLED_REGISTRATION' and cis.code != 'DRAFT')) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and (:organizationId is null or ou.id = :organizationId)")
-	List<Request> findByTypeCodesAndCurrentInternalStatusAndCurrentStatusWithOutEntitledRegistrationNotSubmited(@Param("typeCodes") List<String> typeCodes,
-			@Param("currentInternalStatusCode") String currentInternalStatusCode,
-			@Param("currentStatusCode") String currentStatusCode, @Param("organizationId") Short organizationId);
-	
-	
-	
-	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
-	@Query("from Request r where ou.id = :organizationUnitId and (:requestTypeCodes is not null and rt.code in :requestTypeCodes) and (:currentInternalStatusCode is null or cis.code = :currentInternalStatusCode) and (:currentStatusCode is null or cs.code = :currentStatusCode) and not (cis.code = :execludeCurrentInternalStatusCode and rt.code = :execludeRequestTypeCode)")
-	List<Request> findByRequestTypeCodeAndCurrentStatus(@Param("requestTypeCodes") List<String> requestTypeCodes, @Param("currentInternalStatusCode") String currentInternalStatusCode, @Param("currentStatusCode") String currentStatusCode, @Param("organizationUnitId") Short organizationUnitId, @Param("execludeCurrentInternalStatusCode") String execludeCurrentInternalStatusCode, @Param("execludeRequestTypeCode") String execludeRequestTypeCode);
+	@Query("from Request r where (:organizationUnitId is null or r.organizationUnit.id = :organizationUnitId) and (:requestTypeCode is null or r.type.code = :requestTypeCode) and (:currentInternalStatusCode is null or r.currentInternalStatus.code = :currentInternalStatusCode) and not (r.currentInternalStatus.code = :execludeCurrentInternalStatusCode and r.type.code = :execludeRequestTypeCode)")
+	List<Request> findByRequestTypeCodeAndCurrentStatus(@Param("requestTypeCode") String requestTypeCode, @Param("currentInternalStatusCode") String currentInternalStatusCode, @Param("organizationUnitId") Short organizationUnitId, @Param("execludeRequestTypeCode") String execludeRequestTypeCode, @Param("execludeCurrentInternalStatusCode") String execludeCurrentInternalStatusCode);
 
 
+	@EntityGraph(value = "Request.fat", type = EntityGraphType.FETCH)
+	@Query("from Request r where (:organizationUnitId is null or r.organizationUnit.id = :organizationUnitId) and (:requestTypeCode is null or r.type.code = :requestTypeCode) and (:currentStatusCode is null or r.currentStatus.code = :currentStatusCode) and r.type.code != :execludeRequestTypeCode")
+	List<Request> findByRequestTypeCodeAndCurrentStatus(@Param("requestTypeCode") String requestTypeCode, @Param("currentStatusCode") String currentStatusCode, @Param("organizationUnitId") Short organizationUnitId, @Param("execludeRequestTypeCode") String execludeRequestTypeCode);
+
+	
 	@Query("select version from Request req where req.serial = :serial")
 	Short findVersionBySerial(@Param("serial") String serial);
 

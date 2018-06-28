@@ -27,6 +27,8 @@ public class CapacityDelegationForInternalMapper extends AbstractModelMapper<Cap
 			dto = new CapacityDelegationDto();
 			dto.setId(entity.getId());
 			dto.setJobTitle(entity.getJobTitle());
+			dto.setMinisterialDecreeNumber(entity.getMinisterialDecreeNumber());
+			dto.setMinisterialDecreeDate(entity.getMinisterialDecreeDate());
 			dto.setRequest(requestForInternalMapper.toDto(entity.getRequest()));
 		}
 		
@@ -42,6 +44,8 @@ public class CapacityDelegationForInternalMapper extends AbstractModelMapper<Cap
 			entity = new CapacityDelegation();
 			entity.setId(nullId ? null : dto.getId());
 			entity.setJobTitle(dto.getJobTitle());
+			entity.setMinisterialDecreeNumber(dto.getMinisterialDecreeNumber());
+			entity.setMinisterialDecreeDate(dto.getMinisterialDecreeDate());
 			entity.setRequest(requestForInternalMapper.toEntity(dto.getRequest()));
 		}
 		

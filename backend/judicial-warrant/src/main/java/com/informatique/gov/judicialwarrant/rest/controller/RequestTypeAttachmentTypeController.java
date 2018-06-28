@@ -41,11 +41,6 @@ public class RequestTypeAttachmentTypeController implements Serializable {
 			@RequestHeader(name = "If-None-Match", required = false) Short etag) throws JudicialWarrantException {
 		return requestTypeAttachmentTypeHandler.getById(id, etag);
 	}
-
-	/*@GetMapping(params= {"requestTypeId"})
-	public ResponseEntity<?> getByRequestTypeId(@RequestParam(name = "requestTypeId") Byte requestTypeId) throws JudicialWarrantException {
-		return requestTypeAttachmentTypeHandler.getByRequestTypeId(requestTypeId);
-	}*/
 	
 	@GetMapping(value = "/attachmentTypes", params= {"requestTypeCode"})
 	public ResponseEntity<?> getAttachmentTypesByRequestTypeCode(@RequestParam(name = "requestTypeCode") String requestTypeCode) throws JudicialWarrantException {
