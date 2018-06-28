@@ -87,6 +87,18 @@ module.exports = function(app){
                     }
                     
                 }
+            }).state('root.ENTITLED_REGISTRATION',{
+                parent: 'root',
+                data: {
+                    label :'entitledRegistrations'
+                },
+                url : '/entitledRegistrations',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('entitledRegistrations')
+                    }
+                    
+                }
             });
     });
 };

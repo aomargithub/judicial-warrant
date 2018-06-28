@@ -4,6 +4,7 @@ module.exports = function(app){
     require('./User')(app);
     require('./requestTypeAttachmentType')(app);
     require('./CapacityDelegation')(app);
+    require('./EntitledRegistration')(app);
     require('./RequestAttachment')(app);
     require('./Request')(app);
 };

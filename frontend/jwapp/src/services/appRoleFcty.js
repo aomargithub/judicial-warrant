@@ -8,6 +8,10 @@ module.exports = function(app){
             officer : {
                 code : 'ROLE_OFFICER',
                 description : ''
+            },
+            user : {
+                code : 'ROLE_USER',
+                description : ''
             }
         };
     });

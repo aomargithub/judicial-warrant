@@ -13,5 +13,6 @@ module.exports = function(app){
     require('./externalUser')(app);
     require('./requestTypeAttachmentType')(app);
     require('./capacityDelegation')(app);
+    require('./entitledRegistration')(app);
     
 };

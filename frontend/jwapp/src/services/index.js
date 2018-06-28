@@ -20,5 +20,6 @@ module.exports = function(app){
     require('./roleSrvc')(app);
     require('./requestTypeAttachmentTypeSrvc')(app);
     require('./capacityDelegationSrvc')(app);
+    require('./entitledRegistrationSrvc')(app);
     require('./requestAttachmentSrvc')(app);
 };

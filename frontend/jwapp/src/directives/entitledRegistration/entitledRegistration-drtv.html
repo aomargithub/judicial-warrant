@@ -1,0 +1,108 @@
+<div>
+        <div class="page-header">
+                <h3>EntitledRegistration</h3>  
+        </div>
+    <message-drtv close-callback="entitledRegistrationDrtvCtrl.closeMessage" 
+                  refetch-callback = "entitledRegistrationDrtvCtrl.refetch" 
+                  message="entitledRegistrationDrtvCtrl.message" 
+                  ng-if="entitledRegistrationDrtvCtrl.message" 
+                  edit-id="entitledRegistrationDrtvCtrl.entitledRegistration.id"
+                  class="message-bar" >
+    </message-drtv>
+    <div class="btn-group btn-group-justified">
+        <form name="entitledRegistrationForm" novalidate> 
+            <div class="row">
+                    <div class="form-group col-md-6">
+                            <label for="capacityDelegation" class="required"> Job Title</label>
+                            <select class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
+                                <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                            </select>
+                            <span ng-show="entitledRegistrationForm.capacityDelegation.$touched && entitledRegistrationForm.capacityDelegation.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>               
+        </div>
+        <div class="btn-group rigth" >
+                <div class="btn-group row" >
+                    <div class="col-sm-10">
+                        <button ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="well" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
+        <form   name="entitledRegistrationAttachmentForm" novalidate  enctype="multipart/form-data">
+                <div class="row">
+                        <div class="form-group col-md-6">
+                                <label for="attachmentType" class="required"> {{messages.label.DocumentName}}</label>
+                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
+                                    <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                                </select>
+                                <span ng-show="entitledRegistrationAttachmentForm.attachmentType.$touched && entitledRegistrationAttachmentForm.attachmentType.$error.required" >
+                                    {{messages.label.required}}
+                                </span> 
+                            </div>
+                             <div class="form-group file-loading" >
+                                    <label for="attachmentType" class="required"> {{messages.label.AddAttachment}}</label>
+                            <input type="file" id="file" name="file"   ng-file="entitledRegistrationDrtvCtrl.requestAttachment.file"  required/>
+                    
+                            
+                            <span ng-show="entitledRegistrationAttachmentForm.file.$touched && entitledRegistrationAttachmentForm.file.$error.required" >
+                                    {{messages.label.required}}
+                                </span> 
+                            </div>
+                         </div>
+        
+                    
+                     <div class="btn-group rigth">
+                        <div class="btn-group row">
+                            <div class="col-sm-10">
+                                <button ng-click="entitledRegistrationDrtvCtrl.addRequestAttachment()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.add}}</button>
+                            </div>
+                        </div>
+                    </div>
+        </form>
+    
+    <div class="table-responsive" >
+        <table class="table table-striped table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>
+                        {{messages.label.DocumentType}}
+                    </th>
+                    <th>
+                        {{messages.label.DocumentName}}
+                    </th>
+                   
+                    <th>
+                        {{messages.label.delete}}
+                    </th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cd in entitledRegistrationDrtvCtrl.requestAttachments | paginationFltr:entitledRegistrationDrtvCtrl.page.start:entitledRegistrationDrtvCtrl.page.end track by cd.id">
+                    <td>
+                        {{cd.attachmentType.arabicName}}
+                    </td>
+                    <td>
+                        {{cd.documentName}}
+                    </td>
+                    
+                    
+                    <td>
+                        <div>
+                            <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteRequestAttachment(cd.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </td>
+                </tr> 
+            </tbody> 
+        </table>
+        <td colspan="7">
+            <pagination items-size="entitledRegistrationDrtvCtrl.files.length" page="entitledRegistrationDrtvCtrl.page">
+            </pagination>
+        </td>
+        </div>
+    </div>
+    </div>
