@@ -1,6 +1,6 @@
 module.exports = function(app){
     app.factory('RequestTypeAttachmentType', function(){
-        return function requestTypeAttachmentType(){
+        return function RequestTypeAttachmentType(){
             var self = this;
             self.id=null;
             self.attachmentType = null;

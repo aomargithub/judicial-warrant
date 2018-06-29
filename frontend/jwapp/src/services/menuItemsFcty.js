@@ -56,12 +56,43 @@ module.exports = function(app){
             };
         }
 
+
+ //===================================
+ var entitledRegistration = new Item();
+ entitledRegistration.codeValue('ENTITLED_REGISTRATION').routeValue('ENTITLED_REGISTRATION').classesValue(["glyphicon","glyphicon-user"])
+      
+ 
+ 
+ 
+ 
+ //========================================
+ var requestsItem = new Item();
+        requestsItem.codeValue('REQUEST_MANAGMENT').routeValue('RequestsSubmenu').classesValue(["glyphicon", "glyphicon-envelope"]);
+        
+        var requestsSubItem = new SubItem(), 
+        mayRequestsSubItem = new SubItem();
+
+        requestsSubItem.codeValue('REQUESTS')
+        .routeValue('.requests')
+        .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
+
+         mayRequestsSubItem.codeValue('USER_REQUESTS')
+        .routeValue('.myRequests')
+        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
+
+        requestsItem.addSubItem(requestsSubItem)
+        .addSubItem(mayRequestsSubItem);
+ //===================================
+
+
+
         var lookupsItem = new Item();
         lookupsItem.codeValue('LOOKUPS').routeValue('lookupsSubmenu').classesValue(["glyphicon", "glyphicon-cog"]);
 
         var organizationUnitsSubItem = new SubItem(), 
         attachmentTypesSubItem = new SubItem(),
         requestTypeAttachmentTypesSubItem = new SubItem();
+      
        
 
         organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
@@ -77,6 +108,9 @@ module.exports = function(app){
         .routeValue('.requestTypeAttachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
 
+       
+
+
 
 
 
@@ -85,6 +119,7 @@ module.exports = function(app){
         lookupsItem.addSubItem(organizationUnitsSubItem)
                    .addSubItem(attachmentTypesSubItem)
                    .addSubItem(requestTypeAttachmentTypesSubItem);
+                  
                    
 
 
@@ -113,7 +148,7 @@ module.exports = function(app){
 
         .addSubItem(externalUsersSubItem);
 
-        var menu = [lookupsItem, usersItem];
+        var menu = [entitledRegistration,requestsItem,lookupsItem, usersItem];
 
         return {
             items :  menu

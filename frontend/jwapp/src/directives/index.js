@@ -14,5 +14,7 @@ module.exports = function(app){
     require('./requestTypeAttachmentType')(app);
     require('./capacityDelegation')(app);
     require('./entitledRegistration')(app);
-    
+    require('./request')(app);
+    require('./myRequest')(app);
+
 };

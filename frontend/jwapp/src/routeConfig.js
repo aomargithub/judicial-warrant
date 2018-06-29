@@ -80,7 +80,10 @@ module.exports = function(app){
                 data: {
                     label :'capacityDelegations'
                 },
-                url : '/capacityDelegations',
+                url : '/capacityDelegations/:serial',
+                params: {
+                    serial: null
+                },
                 views : {
                     content : {
                         template : templateSrvcProvider.getTemplate('capacityDelegations')
@@ -92,12 +95,38 @@ module.exports = function(app){
                 data: {
                     label :'entitledRegistrations'
                 },
-                url : '/entitledRegistrations',
+                url : '/entitledRegistrations/:serial',
+                params: {
+                    serial: null
+                },
                 views : {
                     content : {
                         template : templateSrvcProvider.getTemplate('entitledRegistrations')
                     }
                     
+                }
+            }).state('root.requests',{
+                parent: 'root',
+                data: {
+                    label :'requests'
+                },
+                url : '/requests',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('requests')
+                    }
+                    
+                }
+            }).state('root.myRequests',{
+                parent : 'root',
+                data: {
+                    label: 'myRequests'
+                },
+                url : '/myRequests',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('myRequests')
+                    }
                 }
             });
     });

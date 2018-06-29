@@ -1,13 +1,13 @@
 module.exports = function (app) {
-    app.service('capacityDelegationSrvc', function ($http, urlSrvc) {
+    app.service('capacityDelegationSrvc', function ($http, urlSrvc,$q) {
         var self = this;
         var capacityDelegationsUrl = urlSrvc.getUrl('capacityDelegations');
 
-        self.uploadAttachment = function (requestAttachment, capacityDelegation) {
+        self.uploadAttachment = function (requestAttachment, serial) {
 
             return $http({
                 method: 'post',
-                url: capacityDelegationsUrl + 'serial=' + capacityDelegation.request.serial + '/requestAttachments',
+                url: capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments',
                 headers: {
                     'Content-Type': undefined
                 },
@@ -17,7 +17,7 @@ module.exports = function (app) {
                     formData.append('file', requestAttachment.file), {
                         'Content-Type': 'multipart/form-data'
                     };
-                    formData.append('dto', new Blob([angular.toJson(requestAttachment)], {
+                    formData.append('requestAttachment', new Blob([angular.toJson(requestAttachment)], {
                         type: "application/json"
                     }));
 
@@ -27,16 +27,19 @@ module.exports = function (app) {
             })
         };
 
-        self.getRequestAttachments = function (requestSerial) {
-            return $http.get(capacityDelegationsUrl + 'serial=' + requestSerial + '/requestAttachments');
+        self.getRequestAttachments = function (Serial) {
+            return $http.get(capacityDelegationsUrl + 'serial=' + Serial + '/requestAttachments');
         };
 
-        self.deleteRequestAttachment = function (id, capacityDelegation) {
-            return $http.delete(capacityDelegationsUrl + 'serial=' + capacityDelegation.request.serial + '/requestAttachments/' + id);
+        self.getCapacityDelegations = function (Serial) {
+            return $http.get(capacityDelegationsUrl + 'serial=' + Serial);
         };
 
+        self.deleteRequestAttachment = function (id, serial) {
+            return $http.delete(capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments/' + id);
+        };
 
-
+        
         self.getAll = function () {
             return $http.get(capacityDelegationsUrl);
         };
@@ -45,16 +48,44 @@ module.exports = function (app) {
             return $http.post(capacityDelegationsUrl, capacityDelegation);
         };
 
-        self.getById = function (id) {
-            return $http.get(capacityDelegationsUrl + id);
-        };
 
         self.update = function (capacityDelegation) {
             return $http.put(capacityDelegationsUrl + capacityDelegation.id, capacityDelegation);
         };
 
-        self.delete = function (id) {
-            return $http.delete(capacityDelegationsUrl + id);
+
+        self.showImage = function (serial,id,ucmDocumentId) {
+                return $http.get(capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments/' + id +'/ucmDocumentId=' + ucmDocumentId + '/download'
+                , {responseType: 'arraybuffer'});
+ 
         };
+
+
+        // self.showImage = function (index,serial,id,ucmDocumentId) {
+             //var ucmDocumentId = (index.exist) ? index.ucmDocumentId : index.id;
+            // var url;
+            
+            // if(ucmDocumentId){
+                // ucmDocumentId = ucmDocumentId.substring(1, ucmDocumentId.length - 1);
+                // url = capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments' + id +'/ucmDocumentId=' + ucmDocumentId + '/download';
+                // return $http({
+                //     url: url,
+                //     method: 'GET',
+                //     responseType: 'blob'
+                // });
+               
+            // }else{
+            //     var reader = new FileReader();
+            //     reader.onload = function(){
+            //         url = reader.result;
+            //         defer.resolve(url);
+            //     };
+                // reader.readAsDataURL(index.file);
+        //     }
+    
+           
+        // };
+    
+
     });
 };

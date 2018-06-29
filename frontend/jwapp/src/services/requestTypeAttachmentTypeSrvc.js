@@ -8,7 +8,7 @@ module.exports = function(app){
         }
 
         self.getAttachmentTypesByRequestTypeCode = function(requestTypeCode){
-            return $http.get(requestTypeAttachmentTypesUrl + '?requestTypeCode=' + requestTypeCode)
+            return $http.get(requestTypeAttachmentTypesUrl + 'attachmentTypes?requestTypeCode=' + requestTypeCode)
         }
 
         self.getAll=function(){

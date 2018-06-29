@@ -22,4 +22,5 @@ module.exports = function(app){
     require('./capacityDelegationSrvc')(app);
     require('./entitledRegistrationSrvc')(app);
     require('./requestAttachmentSrvc')(app);
+    require('./requestSrvc')(app);
 };

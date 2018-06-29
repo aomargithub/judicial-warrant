@@ -6,7 +6,7 @@ module.exports = function(app){
             self.file = null;
             self.attachmentType = null;
             self.ucmDocumentId=null;
-            self.documentName=null;
+            self.fileName=null;
             
         }
     });
