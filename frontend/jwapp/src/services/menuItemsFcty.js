@@ -4,7 +4,7 @@ module.exports = function(app){
         function Item(){
 
             var subItemsValue = [];
-
+            var selfShowFilter = null;
             this.codeValue = function(code){
                 this.code = code;
                 this.title = $rootScope.messages[this.code];
@@ -16,10 +16,19 @@ module.exports = function(app){
                 return this;
             };
 
+            this.selfShowFilterValue = function(selfShowFilterValue){
+                selfShowFilter = selfShowFilterValue;
+                return this;
+            };
+
+            this.hasSubItems = function(){
+                return selfShowFilter === null;
+            }
+
             this.routeValue = function(route){
                 this.route = route;
                 return this;
-            }
+            };
 
             this.addSubItem = function(subItem){
                 subItemsValue.push(subItem);
@@ -28,12 +37,15 @@ module.exports = function(app){
 
             this.showFilter = function(role){
                
+                if(selfShowFilter){
+                    return selfShowFilter(role);
+                }
 
                 this.subItems = subItemsValue.filter(function(subItem){
                     return subItem.showFilter(role);
                 });
                 
-                return this.subItems.length > 0 ? true : false;
+                return this.subItems.length > 0? true : false;
             };
         }
 
@@ -55,33 +67,18 @@ module.exports = function(app){
                 return this;
             };
         }
-
-
- //===================================
- var entitledRegistration = new Item();
- entitledRegistration.codeValue('ENTITLED_REGISTRATION').routeValue('ENTITLED_REGISTRATION').classesValue(["glyphicon","glyphicon-user"])
-      
- 
- 
- 
- 
- //========================================
- var requestsItem = new Item();
-        requestsItem.codeValue('REQUEST_MANAGMENT').routeValue('RequestsSubmenu').classesValue(["glyphicon", "glyphicon-envelope"]);
+//========================================
+        var homeItem = new Item();
+        homeItem.codeValue('HOME').routeValue('root').selfShowFilterValue(function(role){return true;}).classesValue(["glyphicon", "glyphicon-home"]);
         
-        var requestsSubItem = new SubItem(), 
-        mayRequestsSubItem = new SubItem();
+        var requestsItem = new Item();
+        requestsItem.codeValue('REQUESTS').routeValue('.requests').selfShowFilterValue(function(role){return role === appRoleFcty.officer.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
+        
+        var myRequestsItem = new Item();
+        myRequestsItem.codeValue('MY_REQUESTS').routeValue('.myRequests').selfShowFilterValue(function(role){return role === appRoleFcty.user.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
+        
 
-        requestsSubItem.codeValue('REQUESTS')
-        .routeValue('.requests')
-        .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
-
-         mayRequestsSubItem.codeValue('USER_REQUESTS')
-        .routeValue('.myRequests')
-        .showFilterValue(function(role){return role === appRoleFcty.admin.code;});
-
-        requestsItem.addSubItem(requestsSubItem)
-        .addSubItem(mayRequestsSubItem);
+       
  //===================================
 
 
@@ -148,7 +145,7 @@ module.exports = function(app){
 
         .addSubItem(externalUsersSubItem);
 
-        var menu = [entitledRegistration,requestsItem,lookupsItem, usersItem];
+        var menu = [homeItem, requestsItem, myRequestsItem, lookupsItem, usersItem];
 
         return {
             items :  menu
