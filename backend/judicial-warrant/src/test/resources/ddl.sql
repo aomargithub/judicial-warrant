@@ -391,7 +391,7 @@ create table REQUEST_TYPE_ATTACHMENT_TYPE
   create_date        TIMESTAMP(6) not null,
   is_active          NUMBER(1) not null,
   list_order         NUMBER(4) not null,
-  is_required        NUMBER(1) not null,
+ 
   update_by          VARCHAR2(200),
   update_date        TIMESTAMP(6),
   version            NUMBER(3) not null

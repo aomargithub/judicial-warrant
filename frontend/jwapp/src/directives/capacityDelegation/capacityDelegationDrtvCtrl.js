@@ -201,26 +201,21 @@ module.exports = function (app) {
 
         vm.showImage = function (requestAttachment) {
             capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
-                var file = new Blob([response], {type: "image/png"});
-                console.log(response);
-                // var fileURL = URL.createObjectURL(file);
+                var file = new Blob([response.data], {type: "image/png"});
+               
                 var reader = new FileReader();
                 
                
                 reader.onload = (function(f) {
                     return function(e) {
-                        // Here you can use `e.target.result` or `this.result`
-                        // and `f.name`.
                         vm.imgsrc = e.target.result;
-                        console.log(response);
-                        console.log(vm.imgsrc);
+                       
                     };
                 })(file);
                
                 
                 reader.readAsDataURL(file);
-                // vm.imgsrc = fileURL;
-                // window.open(fileURL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+               
 
             })
         };
