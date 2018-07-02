@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $q, requestSrcv, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, capacityDelegationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc) {
+    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, requestSrcv, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, capacityDelegationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
@@ -200,21 +200,14 @@ module.exports = function (app) {
         //     })};
 
         vm.showImage = function (requestAttachment) {
+
+
+            
+
             capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
-                var file = new Blob([response.data], {type: "image/png"});
                
-                var reader = new FileReader();
-                
                
-                reader.onload = (function(f) {
-                    return function(e) {
-                        vm.imgsrc = e.target.result;
-                       
-                    };
-                })(file);
-               
-                
-                reader.readAsDataURL(file);
+                modalSrvc.viewContent(response);
                
 
             })

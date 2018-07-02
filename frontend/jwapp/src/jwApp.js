@@ -3,7 +3,8 @@
         uiRouter = require('angular-ui-router')
         ngCookies = require('angular-cookies'),
         ngAnimate = require('angular-animate'),
-        jwApp = angular.module('jwApp', [uiRouter, ngCookies, ngAnimate]);
+        uiBootstrap = require('angular-ui-bootstrap'),
+        jwApp = angular.module('jwApp', [uiRouter, ngCookies, ngAnimate, uiBootstrap]);
     
     require('./index')(jwApp);
 })();
