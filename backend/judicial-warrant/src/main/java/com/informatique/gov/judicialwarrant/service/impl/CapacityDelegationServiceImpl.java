@@ -53,17 +53,17 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true)
-	public List<CapacityDelegationDto> getAll(Authentication authentication) throws JudicialWarrantException {
+	public List<CapacityDelegationDto> getAll(Authentication authentication, String status) throws JudicialWarrantException {
 		List<CapacityDelegationDto> dtos = null;
 
 		try {
 			List<CapacityDelegation> entities = null;
 			if (authentication.getAuthorities().stream().anyMatch(authorities::contains)) {
-				entities = capacityDelegationRepository.findAll();
+				entities = capacityDelegationRepository.findByRequestCurrentStatusCodeAndOrganizationUnitId(status, null);
 				dtos = capacityDelegationForInternalMapper.toDto(entities);
 			} else {
 				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
-				entities = capacityDelegationRepository.findByRequestOrganizationUnitId(organizationUnit.getId());
+				entities = capacityDelegationRepository.findByRequestCurrentStatusCodeAndOrganizationUnitId(status, organizationUnit.getId());
 				dtos = capacityDelegationMapper.toDto(entities);
 			}
 		} catch (Exception e) {

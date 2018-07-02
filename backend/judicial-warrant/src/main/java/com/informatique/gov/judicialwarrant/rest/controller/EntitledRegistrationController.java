@@ -101,34 +101,40 @@ public class EntitledRegistrationController {
 	}
 	
 	@GetMapping(path = "/serial={serial}/requestAttachments/{id}")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_OFFICER')")
 	public ResponseEntity<?> getRequestAttachmentById(@PathVariable String serial, @PathVariable Long id,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.getRequestAttachmentById(serial, id, eTag);
 	}
 	
+	@GetMapping("/serial={serial}/requestAttachments/{id}/ucmDocumentId={ucmDocumentId}/download")
+	public ResponseEntity<byte[]> downloadRequestAttachment(
+			@PathVariable String serial,  @PathVariable Long id,  @PathVariable String ucmDocumentId) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.downloadRequestAttachmentFile(serial, id, ucmDocumentId);
+	}
+	
 	@GetMapping(path = "/serial={serial}/requestAttachments")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_OFFICER')")
 	public ResponseEntity<?> getAllRequestAttachmentByRequestSerial(@PathVariable String serial,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.getAllRequestAttachmentByRequestSerial(serial);
 	}
 
 	@PostMapping(path = "/serial={serial}/requestAttachments")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> createRequestAttachment(@PathVariable String serial, @Valid @RequestPart("requestAttachment") RequestAttachmentDto RequestAttachment, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.createRequestAttachment(serial, RequestAttachment, file);
 	}
 
 	@PutMapping("/serial={serial}/requestAttachments/{id}")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> updateRequestAttachment(@PathVariable String serial, @Valid @RequestBody RequestAttachmentDto dto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.updateRequestAttachment(serial, dto, id, eTag);
 	}
 
 	@DeleteMapping("/serial={serial}/requestAttachments/{id}")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> deleteRequestAttachment(@PathVariable String serial, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.deleteRequestAttachment(serial, id);
 	}
@@ -143,6 +149,12 @@ public class EntitledRegistrationController {
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.getEntitledById(id, eTag);
 	}
+	
+	@GetMapping("/serial={serial}/entitledAttachments/{id}/ucmDocumentId={ucmDocumentId}/download")
+	public ResponseEntity<byte[]> downloadEntitledAttachment(
+			@PathVariable String serial,  @PathVariable Long id,  @PathVariable String ucmDocumentId) throws JudicialWarrantException {
+		return entitledRegistrationHandlerHandler.downloadEntitledAttachmentFile(serial, id, ucmDocumentId);
+	}
 
 	@PostMapping(path = "/serial={serial}/entitleds")
 	public ResponseEntity<?> saveEntitled(@Valid @RequestBody EntitledDto entitledDto) throws JudicialWarrantException {
@@ -155,35 +167,35 @@ public class EntitledRegistrationController {
 		return entitledRegistrationHandlerHandler.updateEntitled(entitledDto, id, eTag);
 	}
 
-	@DeleteMapping("entitleds/{id}")
+	@DeleteMapping("/serial={serial}/entitleds/{id}")
 	public ResponseEntity<?> deleteEntitled(@PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.deleteEntitled(id);
 	}
 	
-	@GetMapping(path = "/entitleds/{id}/entitledAttachments")
+	@GetMapping(path = "/serial={serial}/entitleds/{id}/entitledAttachments")
 	public ResponseEntity<?> getAllEntitledAttachments(@PathVariable("id") Long entiteldId) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.getAllEntitledAttachmentByEntitledId(entiteldId);
 	}
 
-	@GetMapping(path = "/entitleds/entitledAttachments/{id}")
+	@GetMapping(path = "/serial={serial}/entitleds/entitledAttachments/{id}")
 	public ResponseEntity<?> getEntitledAttachmentById(@PathVariable Long id,
 			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.getEntitledAttachmentById(id, eTag);
 	}
 
-	@PostMapping(path = "/entitleds/entitledAttachments")
+	@PostMapping(path = "/serial={serial}/entitleds/{id}/entitledAttachments")
 	public ResponseEntity<?> saveEntitledAttachment(@RequestPart("entitledAttachment") EntitledAttachmentDto dto, @RequestPart("file") MultipartFile file) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.saveEntitledAttachment(dto, file);
 	}
 
-	@PutMapping("/entitleds/entitledAttachments/{id}")
+	@PutMapping("/serial={serial}/entitleds/entitledAttachments/{id}")
 	public ResponseEntity<?> updateEntitledAttachment(@RequestBody EntitledAttachmentDto dto, @PathVariable Long id,
 			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.updateEntitledAttachment(dto, id, eTag);
 	}
 
 	
-	@DeleteMapping("/entitleds/entitledAttachments/{id}")
+	@DeleteMapping("/serial={serial}/entitleds/entitledAttachments/{id}")
 	public ResponseEntity<?> deleteEntitledAttachment(@PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.deleteEntitledAttachment(id);
 	}

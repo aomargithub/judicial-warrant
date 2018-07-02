@@ -12,7 +12,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
 
 public interface CapacityDelegationHandler {
-	ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication) throws JudicialWarrantException;
+	ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication, String status) throws JudicialWarrantException;
 	
 	ResponseEntity<CapacityDelegationDto> getBySerial(Authentication authentication, String serial) throws JudicialWarrantException;
 	

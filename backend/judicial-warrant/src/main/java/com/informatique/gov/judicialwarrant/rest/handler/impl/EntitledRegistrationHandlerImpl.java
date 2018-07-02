@@ -7,7 +7,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -263,6 +265,26 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 		}
 
 		return response;
+	}
+	
+	@Override
+	public ResponseEntity<byte[]> downloadRequestAttachmentFile(String serial, Long id, String ucmDocumentId)
+			throws JudicialWarrantException {
+		ResponseEntity<byte[]> responseEntity = null;
+		try {
+
+			byte[] bytes = requestAttachmentService.downloadFile(serial, id, ucmDocumentId);
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.IMAGE_PNG);
+			
+			responseEntity = new ResponseEntity<byte[]>(bytes, httpHeaders, HttpStatus.OK);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return responseEntity;
 	}
 
 	@Override
@@ -636,6 +658,26 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 		}
 
 		return response;
+	}
+	
+	@Override
+	public ResponseEntity<byte[]> downloadEntitledAttachmentFile(String serial, Long id, String ucmDocumentId)
+			throws JudicialWarrantException {
+		ResponseEntity<byte[]> responseEntity = null;
+		try {
+
+			byte[] bytes = entitledAttachmentService.downloadFile(serial, id, ucmDocumentId);
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.IMAGE_PNG);
+			
+			responseEntity = new ResponseEntity<byte[]>(bytes, httpHeaders, HttpStatus.OK);
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return responseEntity;
 	}
 	
 	@Override

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,8 +44,8 @@ public class CapacityDelegationController implements Serializable{
 	private CapacityDelegationHandler capacityDelegationHandler;
 
 	@GetMapping
-	public ResponseEntity<?> getAll(Authentication authentication) throws JudicialWarrantException {
-		return  capacityDelegationHandler.getAll(authentication);
+	public ResponseEntity<?> getAll(Authentication authentication,@RequestParam(required = false) String currentStatus) throws JudicialWarrantException {
+		return  capacityDelegationHandler.getAll(authentication, currentStatus);
 	}
 
 	@GetMapping("/serial={serial}")
@@ -105,7 +106,7 @@ public class CapacityDelegationController implements Serializable{
 	}
 	
 	@GetMapping("/serial={serial}/requestAttachments/{id}/ucmDocumentId={ucmDocumentId}/download")
-	public ResponseEntity<byte[]> generateEntitledRegistrationReportByRequestSerial(
+	public ResponseEntity<byte[]> downloadRequestAttachment(
 			@PathVariable String serial,  @PathVariable Long id,  @PathVariable String ucmDocumentId) throws JudicialWarrantException {
 		return capacityDelegationHandler.downloadFile(serial, id, ucmDocumentId);
 	}

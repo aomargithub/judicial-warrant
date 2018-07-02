@@ -35,11 +35,11 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 	private RequestAttachmentService requestAttachmentService;
 
 	@Override
-	public ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication)
+	public ResponseEntity<List<CapacityDelegationDto>> getAll(Authentication authentication, String Status)
 			throws JudicialWarrantException {
 		ResponseEntity<List<CapacityDelegationDto>> response = null;
 		try {
-			List<CapacityDelegationDto> dtos = capacityDelegationService.getAll(authentication);
+			List<CapacityDelegationDto> dtos = capacityDelegationService.getAll(authentication, Status);
 			response = ResponseEntity.ok(dtos);
 		} catch (JudicialWarrantException e) {
 			throw e;

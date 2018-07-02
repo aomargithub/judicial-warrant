@@ -16,8 +16,10 @@ import com.informatique.gov.judicialwarrant.domain.Entitled;
 import com.informatique.gov.judicialwarrant.domain.EntitledAttachment;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.exception.ResourceNotFoundException;
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.persistence.repository.EntitledAttachmentRepository;
+import com.informatique.gov.judicialwarrant.persistence.repository.EntitledRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledAttachmentDto;
 import com.informatique.gov.judicialwarrant.service.EntitledAttachmentService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledAttachmentService;
@@ -30,6 +32,7 @@ import lombok.AllArgsConstructor;
 public class EntitledAttachmentServiceImpl implements EntitledAttachmentService, InternalEntitledAttachmentService {
 	
 	private EntitledAttachmentRepository entitledAttachmentRepository;
+	private EntitledRepository entitledRepository;
 	private AttachmentTypeRepository attachmentTypeRepository;
 	private ModelMapper<EntitledAttachment, EntitledAttachmentDto, Long> entitledAttachmentMapper;
 	private ContentManager contentManager;
@@ -65,6 +68,8 @@ public class EntitledAttachmentServiceImpl implements EntitledAttachmentService,
 			String ucmId = contentManager.checkin(properties, file);
 			
 			entitledAttachment.setUcmDocumentId(ucmId);
+			entitledAttachment.setEntitled(entitledRepository.findById(entitledAttachment.getEntitled().getId()).get());
+			entitledAttachment.setAttachmentType(attachmentTypeRepository.findById(entitledAttachment.getAttachmentType().getId()).get());
 			entitledAttachment = entitledAttachmentRepository.save(entitledAttachment);
 			savedDto = entitledAttachmentMapper.toDto(entitledAttachment);
 			
@@ -159,6 +164,24 @@ public class EntitledAttachmentServiceImpl implements EntitledAttachmentService,
 			throw new JudicialWarrantInternalException(e);
 		}	
 		return dto;
+	}
+	
+	@Override
+	public byte[] downloadFile(String serial, Long id, String ucmDocumentId)
+			throws JudicialWarrantException {
+		try {
+			EntitledAttachment entitledAttachment = entitledAttachmentRepository.findById(id).get();
+			if (entitledAttachment != null && ucmDocumentId.equals(entitledAttachment.getUcmDocumentId())) {
+				return contentManager.getContent(ucmDocumentId);
+			} else {
+				throw new ResourceNotFoundException(id);
+			}
+
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
 	}
 
 	@Override

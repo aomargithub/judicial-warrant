@@ -7,4 +7,6 @@ module.exports = function(app){
     require('./EntitledRegistration')(app);
     require('./RequestAttachment')(app);
     require('./Request')(app);
+    require('./Entitled')(app);
+    require('./EntitledAttachment')(app);
 };

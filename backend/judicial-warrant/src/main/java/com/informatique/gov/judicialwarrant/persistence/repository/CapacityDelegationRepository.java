@@ -27,6 +27,7 @@ public interface CapacityDelegationRepository extends JpaRepository<CapacityDele
 	CapacityDelegation findByRequestSerialAndRequestOrganizationUnitId(String serial, Short organizationUnitId);
 	
 	@EntityGraph(value = "CapacityDelegation.fat", type = EntityGraphType.FETCH)
-	List<CapacityDelegation> findByRequestOrganizationUnitId(Short organizationUnitId);
+	@Query("from CapacityDelegation cd where (:status is null or cd.request.currentStatus.code = :status) and ( :organizationUnitId is null or cd.request.organizationUnit.id = :organizationUnitId)")
+	List<CapacityDelegation> findByRequestCurrentStatusCodeAndOrganizationUnitId(@Param("status") String status, @Param("organizationUnitId") Short organizationUnitId);
 	
 }

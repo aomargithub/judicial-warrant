@@ -10,7 +10,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.CapacityDelegationDto;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
 
 public interface CapacityDelegationService extends Serializable {
-	List<CapacityDelegationDto> getAll(Authentication  authentication) throws JudicialWarrantException;
+	List<CapacityDelegationDto> getAll(Authentication  authentication, String status) throws JudicialWarrantException;
 
 	Short getVersionBySerial(String serial) throws JudicialWarrantException;
 	

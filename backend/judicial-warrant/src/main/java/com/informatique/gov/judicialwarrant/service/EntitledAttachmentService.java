@@ -14,6 +14,8 @@ public interface EntitledAttachmentService extends Serializable{
 	
 	EntitledAttachmentDto getById(Long id) throws JudicialWarrantException;
 	
+	byte[] downloadFile(String serial, Long id, String ucmDocumentId) throws JudicialWarrantException;
+	
 	EntitledAttachmentDto save(EntitledAttachmentDto dto, MultipartFile file) throws JudicialWarrantException;
 	
 	EntitledAttachmentDto update(EntitledAttachmentDto dto) throws JudicialWarrantException;

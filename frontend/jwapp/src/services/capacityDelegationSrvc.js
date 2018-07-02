@@ -40,8 +40,8 @@ module.exports = function (app) {
         };
 
         
-        self.getAll = function () {
-            return $http.get(capacityDelegationsUrl);
+        self.getAll = function (status) {
+            return $http.get(capacityDelegationsUrl + "?currentStatus=" + status);
         };
 
         self.save = function (capacityDelegation) {

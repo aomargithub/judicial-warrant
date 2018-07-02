@@ -27,10 +27,10 @@ app:
       initial-size: 30
       max-active: 10
   ucm:
-    ip: 192.168.0.83
+    ip: 192.168.0.44
     port: 4444
     username: weblogic
-    password: P@ssw0rd    
+    password: welcome1    
 
    
 spring:

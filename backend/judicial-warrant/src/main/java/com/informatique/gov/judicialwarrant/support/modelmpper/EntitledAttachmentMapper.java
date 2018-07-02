@@ -3,9 +3,11 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
+import com.informatique.gov.judicialwarrant.domain.Entitled;
 import com.informatique.gov.judicialwarrant.domain.EntitledAttachment;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledAttachmentDto;
+import com.informatique.gov.judicialwarrant.rest.dto.EntitledDto;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttachment, EntitledAttachmentDto, Long> {
 
 	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
-//	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
+	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
 
 	/**
 	 * 
@@ -30,7 +32,8 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 			dto.setUcmDocumentId(entity.getUcmDocumentId());
 			dto.setAttachmentType(attachmentTypeMapper.toDto(entity.getAttachmentType()));
 			dto.setFileName(entity.getFileName());
-//			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
+			dto.setVersion(entity.getVersion());
+			dto.setEntitled(entitledMapper.toDto(entity.getEntitled()));
 		}
 		return dto;
 	}
@@ -42,10 +45,11 @@ public class EntitledAttachmentMapper extends AbstractModelMapper<EntitledAttach
 		if (isConvertable(dto)) {
 			entity = new EntitledAttachment();
 			entity.setAttachmentType(attachmentTypeMapper.toEntity(dto.getAttachmentType()));
-//			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
+			entity.setEntitled(entitledMapper.toEntity(dto.getEntitled()));
 			entity.setUcmDocumentId(dto.getUcmDocumentId());
 			entity.setFileName(dto.getFileName());
 			entity.setId(dto.getId());
+			entity.setVersion(dto.getVersion());
 		}
 
 		return entity;

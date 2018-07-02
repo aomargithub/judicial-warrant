@@ -53,6 +53,8 @@ public interface EntitledRegistrationHandler extends Serializable{
 
 	ResponseEntity<RequestAttachmentDto> getRequestAttachmentById(String serial, Long id, Short etag) throws JudicialWarrantException;
 
+	ResponseEntity<byte[]> downloadRequestAttachmentFile(String serial, Long id, String ucmDocumentId) throws JudicialWarrantException;
+	
 	ResponseEntity<RequestAttachmentDto> updateRequestAttachment(String serial, RequestAttachmentDto dto, Long id, Short etag)
 			throws JudicialWarrantException;
 
@@ -90,6 +92,8 @@ public interface EntitledRegistrationHandler extends Serializable{
 	ResponseEntity<EntitledAttachmentDto> updateEntitledAttachment(EntitledAttachmentDto dto, Long id, Short etag) throws JudicialWarrantException;
 	
 	ResponseEntity<EntitledAttachmentDto> getEntitledAttachmentById(Long id, Short etag) throws JudicialWarrantException;
+	
+	ResponseEntity<byte[]> downloadEntitledAttachmentFile(String serial, Long id, String ucmDocumentId) throws JudicialWarrantException;
 	
 	ResponseEntity<List<EntitledAttachmentDto>> getAllEntitledAttachmentByEntitledId(Long id) throws JudicialWarrantException;
 	

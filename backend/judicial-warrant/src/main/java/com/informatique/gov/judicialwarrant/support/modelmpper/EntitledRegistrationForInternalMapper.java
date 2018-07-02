@@ -45,6 +45,7 @@ public class EntitledRegistrationForInternalMapper extends AbstractModelMapper<E
 			entity.setId(nullId ? null : dto.getId());
 			entity.setCapacityDelegation(capacityDelegationForInternalMapper.toEntity(dto.getCapacityDelegation()));
 			entity.setRequest(requestForInternalMapper.toEntity(dto.getRequest()));
+			
 		}
 		
 		return entity;
