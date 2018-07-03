@@ -70,6 +70,10 @@ module.exports = function (app) {
             });
         };
 
+        vm.prepareToUpdate = function (entitled) {
+            vm.entitled = entitled;
+        }
+
         vm.addRequestAttachment = function () {
             entitledRegistrationSrvc.uploadAttachment(vm.requestAttachment, vm.entitledRegistration.request.serial).then(function success(response) {
                 //vm.requestAttachments = vm.requestAttachments || [];
@@ -165,6 +169,11 @@ module.exports = function (app) {
             });
         };
 
+        vm.prepareToOpenEntitedAttachments = function (entitled) {
+            vm.entitled = entitled;
+            vm.getEntitledAttachments(entitled.id);
+        }
+
         vm.showEntitledAttachmentImage = function (entitledAttachment) {
             entitledRegistrationSrvc.showEntitledAttachmentImage(vm.entitledRegistration.request.serial, entitledAttachment.id, entitledAttachment.ucmDocumentId).then(function success(response) {
             modalSrvc.viewContent(response);   
@@ -191,10 +200,16 @@ module.exports = function (app) {
             $scope.entitledAttachmentForm.$setUntouched();
         }
         
+        vm.getEntitledAttachments = function (entitledId) {
+            entitledRegistrationSrvc.getAllEntitledAttachments(vm.entitledRegistration.request.serial, entitledId).then(function success(response) {
+                vm.entitledAttachments = response.data;
+            });
+        }
+
         vm.addEntitledAttachment = function () {
             vm.entitledAttachment.entitled = vm.entitled;
             entitledRegistrationSrvc.uploadEntitledAttachment(vm.entitledAttachment, vm.entitledRegistration.request.serial, vm.entitled.id).then(function success(response) {
-                //vm.requestAttachments = vm.requestAttachments || [];
+                vm.entitledAttachments = vm.entitledAttachments || [];
                 vm.entitledAttachments.push(response.data);
                 vm.entitledAttachment = new EntitledAttachment();
 
@@ -209,28 +224,15 @@ module.exports = function (app) {
         };
 
         vm.deleteEntitledAttachment = function (id) {
-            entitledRegistrationSrvc.deleteEntitledAttachment(id, vm.entitledRegistration.request.serial);
-        };
-
-
-        // var dialogOptions = {
-        //     controller: 'EditCtrl',
-        //     templateUrl: 'itemEdit.html'
-        //   };
+            entitledRegistrationSrvc.deleteEntitledAttachment(vm.entitledRegistration.request.serial, id).then (function success (response){
+                vm.entitledAttachments.forEach(function (ea, index) {
+                    if (ea.id === id) {
+                        vm.entitledAttachments.splice(index, 1);
+                    }
+                });
+            });
         
-        //   $scope.openEntitledAttachmentsDialog = function(item){
-            
-        //     var itemToEdit = item;
-            
-        //     $dialog.dialog(angular.extend(dialogOptions, {resolve: {item: angular.copy(itemToEdit)}}))
-        //       .open()
-        //       .then(function(result) {
-        //         if(result) {
-        //           angular.copy(result, itemToEdit);                
-        //         }
-        //         itemToEdit = undefined;
-        //     });
-        //   };
+        };
 
     });
 };

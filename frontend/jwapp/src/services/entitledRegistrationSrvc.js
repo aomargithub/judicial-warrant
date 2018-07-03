@@ -113,7 +113,7 @@ module.exports = function (app) {
         };
 
         self.getAllEntitledAttachments = function (serial, entitledId) {
-            return $http.get(entitledRegistrationsUrl + 'serial' + serial + '/entitleds/' + entitledId + '/entitledAttachments');
+            return $http.get(entitledRegistrationsUrl + 'serial=' + serial + '/entitleds/' + entitledId + '/entitledAttachments');
         };
 
     });
