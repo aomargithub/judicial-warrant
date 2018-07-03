@@ -53,11 +53,7 @@
                
         </div>
         <div class="btn-group rigth" >
-                <div class="btn-group row" ng-if="!capacityDelegationDrtvCtrl.editCapacityDelegation">
-                    <div class="col-sm-10">
-                        <button ng-click="capacityDelegationDrtvCtrl.save()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.Save}}</button>
-                    </div>
-                </div>
+                
                 <!-- <div class="btn-group row">
                         <div class="col-sm-10">
                             <button ng-click="capacityDelegationDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
@@ -93,6 +89,11 @@
                             </div>
 
                               <!--             -->
+                              <div class="btn-group row" ng-if="!capacityDelegationDrtvCtrl.editCapacityDelegation">
+                                <div class="col-sm-10">
+                                    <button ng-click="capacityDelegationDrtvCtrl.save()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                                </div>
+                            </div>
             </div>
         </form>
     <div> 

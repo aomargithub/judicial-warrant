@@ -23,11 +23,7 @@
                         </div>               
         </div>
         <div class="btn-group rigth" >
-                <div class="btn-group row" >
-                    <div class="col-sm-10">
-                        <button ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
-                    </div>
-                </div>
+             
                  <!-- submission dialog -->
                  <div class="btn-group row" >
                         <div class="col-sm-10">
@@ -58,6 +54,11 @@
                         </div>
 
                           <!--             -->
+                          <div class="btn-group row" >
+                            <div class="col-sm-10">
+                                <button ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                            </div>
+                        </div>
             </div>
         </form>
 
@@ -152,44 +153,62 @@
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-                            <input type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledRegistrationDrtvCtrl.entitled.arabicName" placeholder='Arabic Name' required/>
-                    </div>
+                            <input type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledRegistrationDrtvCtrl.entitled.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
+                            <span ng-show="entitledForm.arabicName.$touched && entitledForm.arabicName.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>
                     <div class="form-group col-md-6">    
                             <label for="englishName" class="required">{{messages.label.englishName}}</label>
-                            <input type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledRegistrationDrtvCtrl.entitled.englishName" placeholder='Arabic Name' required/>
-
+                            <input type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledRegistrationDrtvCtrl.entitled.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                            <span ng-show="entitledForm.englishName.$touched && entitledForm.englishName.$error.required" >
+                                {{messages.label.required}}
+                            </span>
                     </div>
             </div>
             <div class="row">
                     <div class="form-group col-md-6">                
                             <label for="civilId" class="required">{{messages.label.civilId}}</label>
-                            <input type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledRegistrationDrtvCtrl.entitled.civilId" placeholder='Civil Id' required/>
-                    </div>
+                            <input type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledRegistrationDrtvCtrl.entitled.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
+                            <span ng-show="entitledForm.civilId.$touched && entitledForm.civilId.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>
                     <div class="form-group col-md-6">    
                             <label for="mobileNumber1" class="required"> {{messages.label.mobileNumber1}}</label>
-                            <input type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber1" placeholder='mobile Number 1' required/>
-                    </div>
+                            <input type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber1" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                            <span ng-show="entitledForm.mobileNumber1.$touched && entitledForm.mobileNumber1.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                            <span ng-show="entitledForm.mobileNumber1.$error.maxlength && entitledForm.mobileNumber1.$invalid" >
+                                    {{messages.label.mobileError}}
+                                                    </span>
+                        </div>
             </div>             
             <div class="row">
                     <div class="form-group col-md-6">                
                             <label for="mobileNumber2" class="required"> {{messages.label.mobileNumber2}}</label>
-                            <input type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber2" placeholder='mobile Number2' required/>
-                    </div>
+                            <input type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber2" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                            <span ng-show="entitledForm.mobileNumber2.$touched && entitledForm.mobileNumber2.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                            <span ng-show="entitledForm.mobileNumber2.$error.maxlength && entitledForm.mobileNumber2.$invalid" >
+                                    {{messages.label.mobileError}}        
+                                            </span>
+                        </div>
                     <div class="form-group col-md-6">    
                             <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
-                            <input type="email" class="form-control" id="emailAddress" name="email Address" ng-pattern="emailPattern" ng-model="entitledRegistrationDrtvCtrl.entitled.emailAddress" placeholder='email Address' required/>
+                            <input type="email" class="form-control" id="emailAddress" name="email Address"  ng-model="entitledRegistrationDrtvCtrl.entitled.emailAddress" placeholder={{messages.placeHolders.emailPH}} required/>
                             <span ng-show="entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required" >
                                     {{messages.label.required}}
                                 </span>
                                 <span ng-show="entitledForm.emailAddress.$error.email && entitledForm.emailAddress.$invalid" >
                                         {{messages.label.emailError}}
                                 </span>
-                    </div>
-            </div>                
+                           </div>
+                                 </div>                
 
-                            <span ng-show="entitledForm.entitled.$touched && entitledForm.entitled.$error.required" >
-                                {{messages.label.required}}
-                            </span>
+                            
         <div class="btn-group rigth" >
                 <div class="btn-group row" >
                     <div class="col-sm-10">
@@ -223,7 +242,7 @@
                                 {{messages.label.delete}}
                         </th>
                         <td>
-                            Attachments
+                            {{messages.label.attachments}}
                         </td>
 
                     </tr>
@@ -352,7 +371,7 @@
                 </td>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"> 
                 <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
             </div>
         </div>
