@@ -158,10 +158,8 @@ public class CapacityDelegationServiceImpl implements CapacityDelegationService,
 	@Transactional(rollbackFor = Exception.class)
 	public CapacityDelegation getIfValid(String serial) throws JudicialWarrantException {
 
-		OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
-		Short organizationUnitId = organizationUnit.getId();
 		CapacityDelegation capacityDelegation = capacityDelegationRepository
-				.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitId);
+				.findByRequestSerial(serial);
 
 		if (capacityDelegation == null) {
 			throw new ResourceNotFoundException(serial);

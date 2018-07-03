@@ -58,7 +58,7 @@ public class CapacityDelegationHandlerImpl implements CapacityDelegationHandler 
 			if (dto == null) {
 				throw new ResourceNotFoundException(serial);
 			}
-			response = ResponseEntity.ok().body(dto);
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
 
 		} catch (JudicialWarrantException e) {
 			throw e;
