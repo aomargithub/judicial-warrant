@@ -1,6 +1,6 @@
 <div>
         <div class="page-header">
-                <h3>EntitledRegistration</h3>  
+                <h3>{{messages.ENTITLEDREGISTRATION}}</h3>  
         </div>
     <message-drtv close-callback="entitledRegistrationDrtvCtrl.closeMessage" 
                   refetch-callback = "entitledRegistrationDrtvCtrl.refetch" 
@@ -13,7 +13,7 @@
         <form name="entitledRegistrationForm" novalidate> 
             <div class="row">
                     <div class="form-group col-md-6">
-                            <label for="capacityDelegation" class="required"> Job Title</label>
+                            <label for="capacityDelegation" class="required"> {{messages.label.JobTitle}} </label>
                             <select class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
                                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                             </select>
@@ -28,6 +28,36 @@
                         <button ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
                     </div>
                 </div>
+                 <!-- submission dialog -->
+                 <div class="btn-group row" >
+                        <div class="col-sm-10">
+                            <button ng-click="" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT'">{{messages.label.sendRequest}}</button>
+                        </div>
+                    </div>
+                    <div id="myNote" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                <form>
+                                        <div class="form-group shadow-textarea">
+                                                <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
+                                                <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="entitledRegistrationDrtvCtrl.entitledRegistrationChangeStatusRequest.note"></textarea>
+                                            </div>
+                                   
+                                    </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="entitledRegistrationDrtvCtrl.submission()">{{messages.label.implementRequest}}</button>
+                                <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+
+                          <!--             -->
             </div>
         </form>
 
@@ -37,7 +67,7 @@
         <form   name="entitledRegistrationAttachmentForm" novalidate  enctype="multipart/form-data">
                 <div class="row">
                         <div class="form-group col-md-6">
-                                <label for="attachmentType" class="required"> {{messages.label.DocumentName}}</label>
+                                <label for="attachmentType" class="required"> {{messages.label.DocumentType}}</label>
                                 <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
                                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                                 </select>
@@ -115,38 +145,38 @@
     <br/>
 
     <!-- entitled Section -->
-    <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion" data-target="#entitledShow">Entitleds Section</button>
+    <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion" data-target="#entitledShow">{{messages.label.addEntitles}}</button>
     <div id="entitledShow" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
 
         <form name="entitledForm" novalidate> 
             <div class="row">
                     <div class="form-group col-md-6">
-                            <label for="arabicName" class="required"> Arabic Name</label>
+                            <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
                             <input type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledRegistrationDrtvCtrl.entitled.arabicName" placeholder='Arabic Name' required/>
                     </div>
                     <div class="form-group col-md-6">    
-                            <label for="englishName" class="required">english Name</label>
+                            <label for="englishName" class="required">{{messages.label.englishName}}</label>
                             <input type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledRegistrationDrtvCtrl.entitled.englishName" placeholder='Arabic Name' required/>
 
                     </div>
             </div>
             <div class="row">
                     <div class="form-group col-md-6">                
-                            <label for="civilId" class="required">civil Id</label>
+                            <label for="civilId" class="required">{{messages.label.civilId}}</label>
                             <input type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledRegistrationDrtvCtrl.entitled.civilId" placeholder='Civil Id' required/>
                     </div>
                     <div class="form-group col-md-6">    
-                            <label for="mobileNumber1" class="required"> mobile Number 1</label>
+                            <label for="mobileNumber1" class="required"> {{messages.label.mobileNumber1}}</label>
                             <input type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber1" placeholder='mobile Number 1' required/>
                     </div>
             </div>             
             <div class="row">
                     <div class="form-group col-md-6">                
-                            <label for="mobileNumber2" class="required"> mobile Number2</label>
+                            <label for="mobileNumber2" class="required"> {{messages.label.mobileNumber2}}</label>
                             <input type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber2" placeholder='mobile Number2' required/>
                     </div>
                     <div class="form-group col-md-6">    
-                            <label for="emailAddress" class="required">email Address</label>
+                            <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
                             <input type="email" class="form-control" id="emailAddress" name="email Address" ng-pattern="emailPattern" ng-model="entitledRegistrationDrtvCtrl.entitled.emailAddress" placeholder='email Address' required/>
                             <span ng-show="entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required" >
                                     {{messages.label.required}}
@@ -177,14 +207,14 @@
                 <thead>
                     <tr >
                         <th>
-                            Arabic Name
+                            {{messages.label.arabicName}}
                         </th>
                         <th>
-                            English Name
+                            {{messages.label.englishName}}
                         </th>
                        
                         <th>
-                            Civil Id
+                            {{messages.label.civilId}}
                         </th>
                         <th>
                             {{messages.label.edit}}
@@ -227,7 +257,7 @@
                                 <div class="col-sm-10">
                                     <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.prepareToOpenEntitedAttachments(e)"
                                      data-toggle="modal" data-target="#enitledAttachments" >
-                                        Attachments</button>
+                                        {{messages.label.AddAttachment}}</button>
                                 </div>
                             </div>
                         </td>
@@ -250,7 +280,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">إرسال الطلب</h3>
+                <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
             </div>
             <div class="modal-body" id="modal-body">
                 <form   name="entitledAttachmentForm" novalidate  enctype="multipart/form-data">
@@ -323,7 +353,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-warning" type="button" data-dismiss="modal">إغلاق</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
             </div>
         </div>
         </div>

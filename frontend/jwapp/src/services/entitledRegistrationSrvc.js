@@ -6,6 +6,9 @@ module.exports = function (app) {
         self.getAll = function () {
             return $http.get(entitledRegistrationsUrl);
         };
+        self.submission = function (requestSerial, entitledRegistrationChangeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/submission' , entitledRegistrationChangeStatusRequest);
+        };
 
         self.getBySerial = function (serial) {
             return $http.get(entitledRegistrationsUrl + 'serial=' + serial);

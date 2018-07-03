@@ -1,6 +1,7 @@
 module.exports = function (app) {
-    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, $stateParams) {
+    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope,EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, $stateParams) {
         var vm = this;
+        vm.entitledRegistrationChangeStatusRequest = new EntitledRegistrationChangeStatusRequest();
         vm.entitledRegistration = new EntitledRegistration();
         vm.requestAttachment = new RequestAttachment();
         vm.message = null;       
@@ -28,6 +29,12 @@ module.exports = function (app) {
 
     });
 
+    vm.submission = function () {
+        vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
+        entitledRegistrationSrvc.submission(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
+            vm.entitledRegistration = response.data; 
+        });
+    };
     
         if ($stateParams.serial) {
             entitledRegistrationSrvc.getBySerial($stateParams.serial).then(function success(response) {
