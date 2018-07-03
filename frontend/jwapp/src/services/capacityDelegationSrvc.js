@@ -23,7 +23,6 @@ module.exports = function (app) {
 
                     return formData;
                 },
-                // requestAttachment: {  file: requestAttachment }
             })
         };
 
@@ -61,31 +60,8 @@ module.exports = function (app) {
         };
 
 
-        // self.showImage = function (index,serial,id,ucmDocumentId) {
-             //var ucmDocumentId = (index.exist) ? index.ucmDocumentId : index.id;
-            // var url;
-            
-            // if(ucmDocumentId){
-                // ucmDocumentId = ucmDocumentId.substring(1, ucmDocumentId.length - 1);
-                // url = capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments' + id +'/ucmDocumentId=' + ucmDocumentId + '/download';
-                // return $http({
-                //     url: url,
-                //     method: 'GET',
-                //     responseType: 'blob'
-                // });
-               
-            // }else{
-            //     var reader = new FileReader();
-            //     reader.onload = function(){
-            //         url = reader.result;
-            //         defer.resolve(url);
-            //     };
-                // reader.readAsDataURL(index.file);
-        //     }
-    
-           
-        // };
-    
-
+        self.submission = function(serial, capacityDelegationChangeStatusRequest){
+            return $http.put(capacityDelegationsUrl + 'serial=' + serial + '/submission', capacityDelegationChangeStatusRequest)
+        }
     });
 };

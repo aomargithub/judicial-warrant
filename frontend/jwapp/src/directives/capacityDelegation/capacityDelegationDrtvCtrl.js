@@ -1,16 +1,14 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, requestSrcv, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, capacityDelegationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc) {
+    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
-        //  vm.editId = null;
         vm.message = null;
-        vm.editCapacityDelegation = null;
         vm.requestAttachments = [];
-        vm.capacityDelegations=[];
         vm.organizationUnites = [];
         vm.attachmentTypes = [];
         vm.imgsrc = null;
+        vm.capacityDelegationChangeStatusRequest = new CapacityDelegationChangeStatusRequest();
 
 
         vm.page = {
@@ -22,19 +20,13 @@ module.exports = function (app) {
             $scope.capacityDelegationForm.$setUntouched();
         };
 
-
-
-
         //===================================
 
         organizationUnitSrvc.getExternal().then(function (response) {
             vm.organizationUnites = response.data;
         });
 
-        // requestTypeSrvc.getAll().then(function(response){
-        //     vm.capacityDelegation.RequestType = response.data;
-
-        // });
+       
 
         requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.slice(5)).then(function (response) {
             vm.attachmentTypes = response.data;
@@ -73,6 +65,8 @@ module.exports = function (app) {
         vm.getCapacityDelegations = function () {
             capacityDelegationSrvc.getCapacityDelegations($stateParams.serial).then(function (response) {
                 vm.capacityDelegation = response.data;
+                vm.capacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+
 
             })
         };
@@ -85,74 +79,31 @@ module.exports = function (app) {
             })
         };
 
-        if ($stateParams.serial !="") {
+        if ($stateParams.serial) {
             vm.getCapacityDelegations();
             vm.getRequestAttachments();
         }
 
 
         //================================
-        vm.edit = function (serial) {
-            capacityDelegationSrvc.getRequestAttachments(vm.capacityDelegation.serial).then(function (response) {
-                vm.editCapacityDelegation = response.data;
-                vm.editCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
-                vm.requestAttachment = angular.copy(vm.editCapacityDelegation);
-                resetEntryForm();
-
-            });
-        };
-
-
 
         vm.submission = function () {
-
-            requestSrcv.activeRequest($stateParams.serial).then(function success(response) {
+            vm.capacityDelegationChangeStatusRequest.capacityDelegation = vm.capacityDelegation;
+            capacityDelegationSrvc.submission(vm.capacityDelegation.request.serial, vm.capacityDelegationChangeStatusRequest).then(function (response) {
                 vm.capacityDelegation = response.data;
-                vm.capacityDelegation.forEach(function (cd, index) {
-                    if (cd.id === tempCapacity.id) {
-                        vm.capacityDelegation[index] = tempCapacity;
-                    }
-                });
                 resetEntryForm();
+     
 
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
             });
         };
 
-        //===================================
 
-        vm.update = function () {
-
-            capacityDelegationSrvc.update(vm.requestAttachment).then(function success(response) {
-
-                var tempRequestAttachment = response.data;
-                vm.requestAttachment = new RequestAttachment();
-                vm.editCapacityDelegation = null;
-                vm.requestAttachments.forEach(function (cd, index) {
-                    if (cd.id === tempRequestAttachment.id) {
-                        vm.requestAttachments[index] = tempFile;
-                    }
-                });
-
-                resetEntryForm();
-
-            }, function error(response) {
-
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-
-                resetEntryForm();
-
-            });
-        };
         //===============================================
-
+        vm.showImage = function (requestAttachment) {
+            capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
+           modalSrvc.viewContent(response);
+            })
+        };
 
         vm.deleteRequestAttachment = function (id) {
 
@@ -179,39 +130,10 @@ module.exports = function (app) {
         vm.closeMessage = function () {
             vm.message = null;
         };
-        //=============================================
-        //download service 
-
-        // var defer =$q.defer();
-        //  vm.showImage = function (requestAttachment) {
-        //      capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response){
-        //         defer.resolve(URL.createObjectURL(response.data));
-        //         defer.promise.then(function(url){
-        //             var url=capacityDelegationSrvc.capacityDelegationsUrl+ 'serial=' + vm.capacityDelegation.request.serial + '/requestAttachments=' + vm.requestAttachment.id +'/ucmDocumentId=' + vm.requestAttachment.ucmDocumentId + '/download';
-        //             var reader = new FileReader();
-
-        //             reader.onload = function(){
-        //                 url = reader.result;
-        //                 defer.resolve(capacityDelegationsUrl + 'serial=' + serial + '/requestAttachments/' + id +'/ucmDocumentId=' + ucmDocumentId + '/download');
-        //             };    
-
-        //         });
-
-        //     })};
-
-        vm.showImage = function (requestAttachment) {
 
 
-            
 
-            capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
-               
-               
-                modalSrvc.viewContent(response);
-               
 
-            })
-        };
 
 
     });

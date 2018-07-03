@@ -1,8 +1,9 @@
 module.exports = function(app){
-    app.controller('requestDrtvCtrl', function( requestSrcv,$state){
+    app.controller('requestDrtvCtrl', function( requestSrcv,$state,OrganizationUnit){
         var vm = this;
         vm.message = null;
-
+        //vm.requestType=null;
+        vm.organizationUnit = new OrganizationUnit();
 
       
         vm.page = {
@@ -18,17 +19,14 @@ module.exports = function(app){
             vm.serial = request.serial;
             if (vm.code ==='CAPACITY_DELEGATION')
             {
-             //   return 'http://localhost:8080/dist/#!/home/capacityDelegations/' + vm.serial;
               return    $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial});
             }
             else(vm.code ==='ENTITLED_REGISTRATION')
             {
-               // return '/dist/#!/home/entitledRegistrations' + vm.serial;
               return    $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial});
 
             }
         }
-       // vm.capacityDelegation=vm.requests;
 
      
      

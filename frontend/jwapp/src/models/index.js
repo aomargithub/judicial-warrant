@@ -9,4 +9,5 @@ module.exports = function(app){
     require('./Request')(app);
     require('./Entitled')(app);
     require('./EntitledAttachment')(app);
+    require('./CapacityDelegationChangeStatusRequest')(app);
 };

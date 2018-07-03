@@ -4,6 +4,7 @@ module.exports = function(app){
             var self = this;
             self.organizationUnit=null;
             self.serial=null;
+            self.currentStatus=null;
             
         }
     });

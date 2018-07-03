@@ -7,9 +7,7 @@ module.exports = function(app){
         self.getAll = function(){
             return $http.get(requestesUrl);
         };
-        self.activeRequest = function(serial){
-            return $http.post(requestesUrl + 'serial=' + serial + '/submission')
-        }
+       
 
     });
 }
