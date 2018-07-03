@@ -7,7 +7,6 @@ module.exports = function(app){
             self.arabicName = null;
             self.civilId = null;
             self.mobileNumber1 = null;
-            self.mobileNumber1 = null;
             self.mobileNumber2 = null;
             self.emailAddress = null;
             self.entitledRegistration = new EntitledRegistration();

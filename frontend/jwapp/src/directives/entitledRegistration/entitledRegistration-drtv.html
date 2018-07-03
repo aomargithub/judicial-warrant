@@ -14,7 +14,7 @@
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="capacityDelegation" class="required"> {{messages.label.JobTitle}} </label>
-                            <select class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
+                            <select ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
                                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                             </select>
                             <span ng-show="entitledRegistrationForm.capacityDelegation.$touched && entitledRegistrationForm.capacityDelegation.$error.required" >
@@ -24,41 +24,35 @@
         </div>
         <div class="btn-group rigth" >
              
-                 <!-- submission dialog -->
-                 <div class="btn-group row" >
-                        <div class="col-sm-10">
-                            <button ng-click="" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT'">{{messages.label.sendRequest}}</button>
-                        </div>
-                    </div>
-                    <div id="myNote" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
-                            </div>
-                            <div class="modal-body" id="modal-body">
-                                <form>
-                                        <div class="form-group shadow-textarea">
-                                                <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
-                                                <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="entitledRegistrationDrtvCtrl.entitledRegistrationChangeStatusRequest.note"></textarea>
-                                            </div>
-                                   
-                                    </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="entitledRegistrationDrtvCtrl.submission()">{{messages.label.implementRequest}}</button>
-                                <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
-                            </div>
-                        </div>
-                        </div>
-                        </div>
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inProgress</button>
+                </div>
+            </div>
 
-                          <!--             -->
-                          <div class="btn-group row" >
-                            <div class="col-sm-10">
-                                <button ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
-                            </div>
-                        </div>
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >reject</button>
+                </div>
+            </div>
+           
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inComplete</button>
+                </div>
+            </div>
+
+            <div class="btn-group row" >
+                 <div class="col-sm-10">
+                       <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('submission')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT'">{{messages.label.sendRequest}}</button>
+                 </div>
+             </div>
+
+             <div class="btn-group row" >
+                 <div class="col-sm-10">
+                        <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                  </div>
+              </div>
             </div>
         </form>
 
@@ -69,7 +63,7 @@
                 <div class="row">
                         <div class="form-group col-md-6">
                                 <label for="attachmentType" class="required"> {{messages.label.DocumentType}}</label>
-                                <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
+                                <select ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.requestAttachment.attachmentType" novalidate required>
                                     <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                                 </select>
                                 <span ng-show="entitledRegistrationAttachmentForm.attachmentType.$touched && entitledRegistrationAttachmentForm.attachmentType.$error.required" >
@@ -78,7 +72,7 @@
                             </div>
                              <div class="form-group file-loading" >
                                     <label for="attachmentType" class="required"> {{messages.label.AddAttachment}}</label>
-                            <input type="file" id="file" name="file"   ng-file="entitledRegistrationDrtvCtrl.requestAttachment.file"  required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="file" id="file" name="file"   ng-file="entitledRegistrationDrtvCtrl.requestAttachment.file"  required/>
                     
                             
                             <span ng-show="entitledRegistrationAttachmentForm.file.$touched && entitledRegistrationAttachmentForm.file.$error.required" >
@@ -91,7 +85,7 @@
                      <div class="btn-group rigth">
                         <div class="btn-group row">
                             <div class="col-sm-10">
-                                <button ng-click="entitledRegistrationDrtvCtrl.addRequestAttachment()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.add}}</button>
+                                <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.addRequestAttachment()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.add}}</button>
                             </div>
                         </div>
                     </div>
@@ -128,7 +122,7 @@
                     
                     <td>
                         <div>
-                            <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteRequestAttachment(ra.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button  class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteRequestAttachment(ra.id)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </td>
                 </tr>
@@ -149,18 +143,18 @@
     <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion" data-target="#entitledShow">{{messages.label.addEntitles}}</button>
     <div id="entitledShow" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
 
-        <form name="entitledForm" novalidate> 
+        <form ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" name="entitledForm" novalidate> 
             <div class="row">
                     <div class="form-group col-md-6">
                             <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-                            <input type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledRegistrationDrtvCtrl.entitled.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledRegistrationDrtvCtrl.entitled.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
                             <span ng-show="entitledForm.arabicName.$touched && entitledForm.arabicName.$error.required" >
                                 {{messages.label.required}}
                             </span>
                         </div>
                     <div class="form-group col-md-6">    
                             <label for="englishName" class="required">{{messages.label.englishName}}</label>
-                            <input type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledRegistrationDrtvCtrl.entitled.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledRegistrationDrtvCtrl.entitled.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
                             <span ng-show="entitledForm.englishName.$touched && entitledForm.englishName.$error.required" >
                                 {{messages.label.required}}
                             </span>
@@ -169,14 +163,14 @@
             <div class="row">
                     <div class="form-group col-md-6">                
                             <label for="civilId" class="required">{{messages.label.civilId}}</label>
-                            <input type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledRegistrationDrtvCtrl.entitled.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledRegistrationDrtvCtrl.entitled.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
                             <span ng-show="entitledForm.civilId.$touched && entitledForm.civilId.$error.required" >
                                 {{messages.label.required}}
                             </span>
                         </div>
                     <div class="form-group col-md-6">    
                             <label for="mobileNumber1" class="required"> {{messages.label.mobileNumber1}}</label>
-                            <input type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber1" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber1" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
                             <span ng-show="entitledForm.mobileNumber1.$touched && entitledForm.mobileNumber1.$error.required" >
                                 {{messages.label.required}}
                             </span>
@@ -188,7 +182,7 @@
             <div class="row">
                     <div class="form-group col-md-6">                
                             <label for="mobileNumber2" class="required"> {{messages.label.mobileNumber2}}</label>
-                            <input type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber2" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledRegistrationDrtvCtrl.entitled.mobileNumber2" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
                             <span ng-show="entitledForm.mobileNumber2.$touched && entitledForm.mobileNumber2.$error.required" >
                                 {{messages.label.required}}
                             </span>
@@ -198,7 +192,7 @@
                         </div>
                     <div class="form-group col-md-6">    
                             <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
-                            <input type="email" class="form-control" id="emailAddress" name="email Address"  ng-model="entitledRegistrationDrtvCtrl.entitled.emailAddress" placeholder={{messages.placeHolders.emailPH}} required/>
+                            <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="email" class="form-control" id="emailAddress" name="email Address"  ng-model="entitledRegistrationDrtvCtrl.entitled.emailAddress" placeholder={{messages.placeHolders.emailPH}} required/>
                             <span ng-show="entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required" >
                                     {{messages.label.required}}
                                 </span>
@@ -261,13 +255,13 @@
                         
                         <td>
                             <div>
-                                <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.prepareToUpdate(e)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.prepareToUpdate(e)"><span class="glyphicon glyphicon-pencil"></span></button>
                             </div>
                         </td>
 
                         <td>
                             <div>
-                                <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteEntitled(e.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteEntitled(e.id)"><span class="glyphicon glyphicon-trash"></span></button>
                             </div>
                         </td>
 
@@ -302,11 +296,11 @@
                 <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
             </div>
             <div class="modal-body" id="modal-body">
-                <form   name="entitledAttachmentForm" novalidate  enctype="multipart/form-data">
+                <form ng-disabled="entitledRegistrationDrtvCtrl.isNotUser"  name="entitledAttachmentForm" novalidate  enctype="multipart/form-data">
                     <div class="row">
                             <div class="form-group col-md-6">
                                     <label for="attachmentType" class="required"> {{messages.label.DocumentName}}</label>
-                                    <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.entitledAttachment.attachmentType" novalidate required>
+                                    <select ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledRegistrationDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledRegistrationDrtvCtrl.entitledAttachment.attachmentType" novalidate required>
                                         <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
                                     </select>
                                     <span ng-show="entitledAttachmentForm.attachmentType.$touched && entitledAttachmentForm.attachmentType.$error.required" >
@@ -315,7 +309,7 @@
                                 </div>
                                  <div class="form-group file-loading" >
                                         <label for="attachmentType" class="required"> {{messages.label.AddAttachment}}</label>
-                                <input type="file" id="file" name="file"   ng-file="entitledRegistrationDrtvCtrl.entitledAttachment.file"  required/>
+                                <input ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" type="file" id="file" name="file"   ng-file="entitledRegistrationDrtvCtrl.entitledAttachment.file"  required/>
                                                  
                                 <span ng-show="entitledAttachmentForm.file.$touched && entitledAttachmentForm.file.$error.required" >
                                         {{messages.label.required}}
@@ -326,7 +320,7 @@
                          <div class="btn-group rigth">
                             <div class="btn-group row">
                                 <div class="col-sm-10">
-                                    <button ng-click="entitledRegistrationDrtvCtrl.addEntitledAttachment()" class="btn btn-default" ng-disabled="entitledAttachmentForm.$invalid" type="submit">{{messages.label.add}}</button>
+                                    <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.addEntitledAttachment()" class="btn btn-default" ng-disabled="entitledAttachmentForm.$invalid" type="submit">{{messages.label.add}}</button>
                                 </div>
                             </div>
                         </div>
@@ -359,7 +353,7 @@
                             </td>           
                             <td>
                                 <div>
-                                    <button class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteEntitledAttachment(ea.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="btn btn-default" ng-click="entitledRegistrationDrtvCtrl.deleteEntitledAttachment(ea.id)"><span class="glyphicon glyphicon-trash"></span></button>
                                 </div>
                             </td>
                         </tr> 
@@ -378,6 +372,30 @@
         </div>
         </div>
 
+                 <!-- submission dialog -->
+        <div  id="myNote" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <form>
+                            <div class="form-group shadow-textarea">
+                                    <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
+                                    <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="entitledRegistrationDrtvCtrl.entitledRegistrationChangeStatusRequest.note"></textarea>
+                                </div>
+                       
+                        </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="entitledRegistrationDrtvCtrl.workFlowProccess()">{{messages.label.implementRequest}}</button>
+                    <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
+                </div>
+            </div>
+            </div>
+            </div>
+            <!--  -->
 
 
     </div>

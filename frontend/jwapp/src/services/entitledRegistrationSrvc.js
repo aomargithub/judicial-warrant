@@ -10,6 +10,18 @@ module.exports = function (app) {
             return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/submission' , entitledRegistrationChangeStatusRequest);
         };
 
+        self.inCompletion = function (requestSerial, entitledRegistrationChangeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/inCompletion' , entitledRegistrationChangeStatusRequest);
+        };
+
+        self.rejection = function (requestSerial, entitledRegistrationChangeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/rejection' , entitledRegistrationChangeStatusRequest);
+        };
+
+        self.inProgress = function (requestSerial, entitledRegistrationChangeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/inProgress' , entitledRegistrationChangeStatusRequest);
+        };
+
         self.getBySerial = function (serial) {
             return $http.get(entitledRegistrationsUrl + 'serial=' + serial);
         };
