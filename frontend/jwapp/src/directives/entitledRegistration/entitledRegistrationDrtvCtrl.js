@@ -3,12 +3,12 @@ module.exports = function (app) {
         var vm = this;
         vm.entitledRegistrationChangeStatusRequest = new EntitledRegistrationChangeStatusRequest();
         vm.entitledRegistration = new EntitledRegistration();
-        vm.requestAttachment = new RequestAttachment();
         vm.message = null;       
-        vm.requestAttachments = [];
         vm.organizationUnites = [];
         vm.attachmentTypes = [];
         vm.capacityDelegations = [];
+
+        vm.serial = $stateParams.serial;
 
         vm.entitleds = [];
         vm.entitled = new Entitled();
@@ -84,14 +84,11 @@ module.exports = function (app) {
         });
     };
     
-        if ($stateParams.serial) {
-            entitledRegistrationSrvc.getBySerial($stateParams.serial).then(function success(response) {
+        if (vm.serial) {
+            entitledRegistrationSrvc.getBySerial(vm.serial).then(function success(response) {
                 vm.entitledRegistration = response.data;   
                });
-               entitledRegistrationSrvc.getRequestAttachments($stateParams.serial).then(function success(response) {
-                vm.requestAttachments = response.data;    
-                });
-                entitledRegistrationSrvc.getEntitleds($stateParams.serial).then(function success(response) {
+                entitledRegistrationSrvc.getEntitleds(vm.serial).then(function success(response) {
                     vm.entitleds = response.data;
                 });
         };
@@ -101,6 +98,7 @@ module.exports = function (app) {
          if(!vm.entitledRegistration.id) {
             entitledRegistrationSrvc.save(vm.entitledRegistration).then(function success(response) {
                 vm.entitledRegistration = response.data;
+                vm.serial = vm.entitledRegistration.request.serial;
            
             }, function error(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
@@ -129,43 +127,6 @@ module.exports = function (app) {
             vm.entitled = entitled;
         }
 
-        vm.addRequestAttachment = function () {
-            entitledRegistrationSrvc.uploadAttachment(vm.requestAttachment, vm.entitledRegistration.request.serial).then(function success(response) {
-                //vm.requestAttachments = vm.requestAttachments || [];
-                vm.requestAttachments.push(response.data);
-                vm.requestAttachment = new RequestAttachment();
-
-                resetEntitledRegistrationAttachmentEntryForm();
-
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-            });
-        };
-
-        vm.deleteRequestAttachment = function (id) {
-            entitledRegistrationSrvc.deleteRequestAttachment(id, vm.entitledRegistration).then(function success(response) {
-                vm.requestAttachments.forEach(function (cd, index) {
-                    if (cd.id === id) {
-                        vm.requestAttachments.splice(index, 1);
-                    }
-                });
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-            });
-        };
-
-
-        var resetEntitledRegistrationAttachmentEntryForm = function () {
-            $scope.entitledRegistrationAttachmentForm.$setPristine();
-            $scope.entitledRegistrationAttachmentForm.$setUntouched();
-        }
-
         vm.refetch = function (id) {
             entitledRegistrationSrvc.getById(id).then(function (response) {
                 vm.entitledRegistration = response.data;
@@ -183,19 +144,13 @@ module.exports = function (app) {
             $scope.entitledRegistrationForm.$setUntouched();
         }
 
-        vm.showRequestAttachmentImage = function (requestAttachment) {
-            entitledRegistrationSrvc.showRequestAttachmentImage(vm.entitledRegistration.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
-            modalSrvc.viewContent(response);   
-            })
-        };
-
-
         vm.saveEntitled = function () {
             if(!vm.entitled.id) {
                 vm.entitled.entitledRegistration = vm.entitledRegistration;
                entitledRegistrationSrvc.saveEntitled(vm.entitledRegistration.request.serial, vm.entitled).then(function success(response) {
-                   vm.entitled = response.data;
-                   vm.entitleds.push(vm.entitled);
+                   vm.entitleds = vm.entitleds || [];
+                   vm.entitleds.push(response.data);
+                   vm.entitled = new Entitled();
                }, function error(response) {
                    var status = httpStatusSrvc.getStatus(response.status);
                    if (status.code === httpStatusSrvc.badRequest.code) {

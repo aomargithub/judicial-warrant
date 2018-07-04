@@ -1,54 +1,49 @@
 module.exports = function(app){
     app.service('requestAttachmentSrvc', function($http, urlSrvc){
         var self = this;
-        var requestAttachmentUrl = urlSrvc.getUrl('requestAttachments');
         var vm=this;
         vm.requestAttachment=[];
 
         
        
-        self.uploadAttachment = function(){ 
-        
-            $http({
-              method: 'post',
-              url: requestAttachmentUrl,
-              headers: {'Content-Type': undefined},
-              transformRequest: function () {
-                var formData = new FormData();
-                
-                formData.append('file', vm.requestAttachment.file),{
-                    'Content-Type': 'multipart/form-data'
-                };
-                formData.append('dto', new Blob([angular.toJson(vm.requestAttachment)], {
-                    type: "application/json"
-                }));
-               
-                return formData;
-            },        
-           // requestAttachment: {  file: requestAttachment }
-            }).then(function successCallback(response) {  
-              // Store response data
-             // vm.requestAttachments.push(response.data);
-            })};
+        self.uploadAttachment = function (urlprefix, requestAttachment, serial) {
+
+            return $http({
+                method: 'post',
+                url: urlSrvc.getUrl(urlprefix) + 'serial=' + serial + '/requestAttachments',
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: function () {
+                    var formData = new FormData();
+
+                    formData.append('file', requestAttachment.file), {
+                        'Content-Type': 'multipart/form-data'
+                    };
+                    formData.append('requestAttachment', new Blob([angular.toJson(requestAttachment)], {
+                        type: "application/json"
+                    }));
+
+                    return formData;
+                },
+                // requestAttachment: {  file: requestAttachment }
+            })
+        };
             
-
-            self.getAllRequestAttachment = function(){
-                return $http.get(requestAttachmentUrl + "requestAttachment.request.serial" );
-            };
-    
-
-        
-        self.getById = function(id){
-            return $http.get(requestAttachmentUrl + id);
-        };
-        
-
-        self.update = function(requestAttachment){
-            return $http.put(requestAttachmentUrl + requestAttachment.id, requestAttachment);
+        self.getRequestAttachments = function (urlprefix, serial) {
+            return $http.get(urlSrvc.getUrl(urlprefix) + 'serial=' + serial + '/requestAttachments');
         };
 
-        self.delete = function(id){
-            return $http.delete(requestAttachmentUrl + id);
+        self.showRequestAttachmentImage = function (urlprefix, serial,id,ucmDocumentId) {
+            return $http.get(urlSrvc.getUrl(urlprefix) + 'serial=' + serial + '/requestAttachments/' + id +'/ucmDocumentId=' + ucmDocumentId + '/download'
+            , {responseType: 'arraybuffer'});
+
         };
+
+        self.deleteRequestAttachment = function (urlprefix, id, serial) {
+            return $http.delete(urlSrvc.getUrl(urlprefix) + 'serial=' + serial + '/requestAttachments/' + id);
+        };
+
+
     });
 };

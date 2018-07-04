@@ -4,6 +4,9 @@ module.exports = function (app) {
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
         vm.message = null;
+
+        vm.serial = $stateParams.serial;
+
         vm.requestAttachments = [];
         vm.organizationUnites = [];
         vm.attachmentTypes = [];
@@ -37,21 +40,7 @@ module.exports = function (app) {
         vm.save = function () {
             capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
                 vm.capacityDelegation = response.data;
-                resetEntryForm();
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-            });
-        };
-
-        vm.addRequestAttachment = function () {
-            capacityDelegationSrvc.uploadAttachment(vm.requestAttachment, vm.capacityDelegation.request.serial).then(function success(response) {
-                 vm.requestAttachments = vm.requestAttachments || [];
-                vm.requestAttachments.push(response.data);
-                vm.requestAttachment = new RequestAttachment();
-                resetEntryForm();
+                vm.serial = vm.capacityDelegation.request.serial;
             }, function error(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
                 if (status.code === httpStatusSrvc.badRequest.code) {
@@ -71,17 +60,8 @@ module.exports = function (app) {
             })
         };
 
-        vm.getRequestAttachments = function () {
-            capacityDelegationSrvc.getRequestAttachments($stateParams.serial).then(function (response) {
-                vm.requestAttachments = response.data;
-
-
-            })
-        };
-
-        if ($stateParams.serial) {
+        if (vm.serial) {
             vm.getCapacityDelegations();
-            vm.getRequestAttachments();
         }
 
 
@@ -105,28 +85,7 @@ module.exports = function (app) {
             })
         };
 
-        vm.deleteRequestAttachment = function (id) {
 
-            capacityDelegationSrvc.deleteRequestAttachment(id, vm.capacityDelegation).then(function success(response) {
-                vm.requestAttachments.forEach(function (cd, index) {
-                    if (cd.id === id) {
-                        vm.requestAttachments.splice(index, 1);
-                    }
-                });
-
-                resetEntryForm();
-
-            }, function error(response) {
-
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
-
-                resetEntryForm();
-
-            });
-        };
         vm.closeMessage = function () {
             vm.message = null;
         };

@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.informatique.gov.judicialwarrant.service.InternalRequestService;
 import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
 import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.report.ReportGeneration;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
@@ -65,8 +67,7 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationMapper;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationForInternalMapper;
 	
-	List<JudicialWarrantGrantedAuthority> authorities;
-
+	List<JudicialWarrantGrantedAuthority> authorities = Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER), new JudicialWarrantGrantedAuthority(UserRoleEnum.TRAINING_INSTITUTE));
 
 	@Override
 	public void generateEntitledRegistrationReportByRequestSerial(HttpServletResponse response, String serial)

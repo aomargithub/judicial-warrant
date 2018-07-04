@@ -219,19 +219,19 @@ public class EntitledRegistrationController {
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/inTraining")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_TRAINING_INSTITUTE')")
 	public ResponseEntity<?> inTrainingEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.inTrainingEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/passed")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_TRAINING_INSTITUTE')")
 	public ResponseEntity<?> passEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.passedEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/failture")
-	@PreAuthorize("hasRole('ROLE_OFFICER')")
+	@PreAuthorize("hasRole('ROLE_TRAINING_INSTITUTE')")
 	public ResponseEntity<?> failEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
 		return entitledRegistrationHandlerHandler.failEntitled(serial, id, changeStatusRequest.getNote());
 	}
