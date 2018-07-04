@@ -12,6 +12,10 @@ module.exports = function(app){
             user : {
                 code : 'ROLE_USER',
                 description : ''
+            },
+             training : {
+            code : 'ROLE_TRAINING_INSTITUTE',
+            description : ''
             }
         };
     });

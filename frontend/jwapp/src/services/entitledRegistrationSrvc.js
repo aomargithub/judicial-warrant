@@ -100,6 +100,18 @@ module.exports = function (app) {
             return $http.get(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/', id);
         };
 
+
+        self.getEntitledInTraining = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id + '/inTraining', changeStatusRequest);
+        };
+        self.getEntitledPassed = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/passed', changeStatusRequest);
+        };
+        self.getEntitledFailture  = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/failture', changeStatusRequest);
+        };
+        
+
         self.uploadEntitledAttachment = function (entitledAttachment, serial, entitledId) {
 
             return $http({

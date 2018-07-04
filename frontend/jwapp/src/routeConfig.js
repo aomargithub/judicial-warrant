@@ -128,6 +128,31 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('myRequests')
                     }
                 }
+            }).state('root.entitledTrainnings',{
+                parent : 'root',
+                data: {
+                    label: 'entitledTrainnings'
+                },
+                url : '/entitledTrainnings/:serial',
+                params: {
+                    serial: null
+                },
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('entitledTrainnings')
+                    }
+                }
+            }).state('root.requestEntitledRegistrations',{
+                parent : 'root',
+                data: {
+                    label: 'requestEntitledRegistrations'
+                },
+                url : '/requestEntitledRegistrations',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('requestEntitledRegistrations')
+                    }
+                }
             });
     });
 };

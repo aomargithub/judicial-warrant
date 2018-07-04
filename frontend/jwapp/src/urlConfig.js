@@ -20,5 +20,7 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('requestAttachments','/requestAttachments/');
         urlSrvcProvider.addUrl('requests','/requests/');
         urlSrvcProvider.addUrl('myRequests','/myRequests/');
+        urlSrvcProvider.addUrl('entitledTrainnings','/entitledTrainnings/');
+        urlSrvcProvider.addUrl('requestEntitledRegistrations','/requestEntitledRegistrations/')
     });
 };

@@ -77,7 +77,8 @@ module.exports = function(app){
         var myRequestsItem = new Item();
         myRequestsItem.codeValue('MY_REQUESTS').routeValue('.myRequests').selfShowFilterValue(function(role){return role === appRoleFcty.user.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
         
-
+        var trainingEntitledRegistrationsItem = new Item();
+        trainingEntitledRegistrationsItem.codeValue('TRAINING_ENTITLED_REGISTRATION').routeValue('.requestEntitledRegistrations').selfShowFilterValue(function(role){return role === appRoleFcty.training.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
        
  //===================================
 
@@ -145,7 +146,7 @@ module.exports = function(app){
 
         .addSubItem(externalUsersSubItem);
 
-        var menu = [homeItem, requestsItem, myRequestsItem, lookupsItem, usersItem];
+        var menu = [homeItem, requestsItem, myRequestsItem,trainingEntitledRegistrationsItem, lookupsItem, usersItem];
 
         return {
             items :  menu

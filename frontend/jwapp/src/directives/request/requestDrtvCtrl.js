@@ -28,15 +28,7 @@ module.exports = function(app){
             }
         }
 
-     
-     
-       
-
-       
-
-
-     
-
+    
         vm.closeMessage = function(){
             vm.message = null;
         };

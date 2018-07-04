@@ -1,0 +1,70 @@
+<div>
+    <div class="page-header">
+            <h3>{{messages.TRAINING_ENTITLED_REGISTRATION}}</h3> 
+          </div>
+<!-- <message-drtv close-callback="organizationUnitDrtvCtrl.closeMessage" 
+              refetch-callback = "organizationUnitDrtvCtrl.refetch" 
+              message="organizationUnitDrtvCtrl.message" 
+              ng-if="organizationUnitDrtvCtrl.message" 
+              edit-id="organizationUnitDrtvCtrl.editOrganizationUnit.id"
+              class="message-bar" >
+</message-drtv> -->
+
+<div class="row">       
+        <div class="panel-primary">              
+ <div class="table-responsive">
+    <table class="table table-striped table-bordered  table-hover">
+        <thead >
+                             
+            <tr>
+                <th>
+                    {{messages.label.RequestSerial}}
+                </th>
+                <th>
+                    {{messages.label.RequestArabicName}}
+                </th>
+                <th >
+                    {{messages.label.JobTitle}}
+                </th>
+                <th>
+                        {{messages.label.RequestStatus}}
+              </th>
+                <th>
+                    {{messages.label.edit}}
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="re in requestEntitledRegistrationDrtvCtrl.requestEntitledRegistrations  | paginationFltr:requestEntitledRegistrationDrtvCtrl.page.start:requestEntitledRegistrationDrtvCtrl.page.end track by re.id">
+                <td>
+                    {{re.request.serial}}
+                </td>
+                <td>
+                    {{re.request.type.arabicName}}
+                </td>
+                <td>
+                    {{re.capacityDelegation.jobTitle}}
+                </td>
+                <td>
+                    {{re.request.currentStatus.arabicName}}
+                </td>
+                <td>
+                    <div>
+                        
+                        <button class="btn btn-default" ng-click="requestEntitledRegistrationDrtvCtrl.route(re)"><span class="glyphicon glyphicon-edit"></span></button>
+                     
+                    </div>
+                </td>
+               
+            </tr>
+           
+        </tbody>
+    </table>
+    <td colspan="5">
+            <pagination items-size="requestEntitledRegistrationDrtvCtrl.requests.length" page="requestEntitledRegistrationDrtvCtrl.page">
+            </pagination></td>
+</div>
+</div>
+</div>
+</div>

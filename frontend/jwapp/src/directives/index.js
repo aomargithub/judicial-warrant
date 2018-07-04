@@ -17,5 +17,6 @@ module.exports = function(app){
     require('./request')(app);
     require('./myRequest')(app);
     require('./requestAttachment')(app);
-
+    require('./entitledTrainning')(app);
+    require('./requestEntitledRegistration')(app);
 };
