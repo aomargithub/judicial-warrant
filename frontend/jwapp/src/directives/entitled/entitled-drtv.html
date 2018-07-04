@@ -1,0 +1,233 @@
+<div>
+    <div class="btn-group btn-group-justified">
+
+            <form ng-disabled="{{noteditable}}" name="entitledForm" novalidate> 
+                    <div class="row">
+                            <div class="form-group col-md-6">
+                                    <label for="arabicName" class="required">{{$parent.messages.label.arabicName}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="text" class="form-control" id="arabicName" name="Arabic Name" ng-model="entitledDrtvCtrl.entitled.arabicName" placeholder={{$parent.messages.placeHolders.arabicNamePH}} required/>
+                                    <span ng-show="entitledForm.arabicName.$touched && entitledForm.arabicName.$error.required" >
+                                        {{$parent.messages.label.required}}
+                                    </span>
+                                </div>
+                            <div class="form-group col-md-6">    
+                                    <label for="englishName" class="required">{{$parent.messages.label.englishName}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="text" class="form-control" id="englishName" name="English Name" ng-model="entitledDrtvCtrl.entitled.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                                    <span ng-show="entitledForm.englishName.$touched && entitledForm.englishName.$error.required" >
+                                        {{$parent.messages.label.required}}
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="form-group col-md-6">                
+                                    <label for="civilId" class="required">{{$parent.messages.label.civilId}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="number" class="form-control" id="civilId" name="Civil Id" ng-model="entitledDrtvCtrl.entitled.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
+                                    <span ng-show="entitledForm.civilId.$touched && entitledForm.civilId.$error.required" >
+                                        {{$parent.messages.label.required}}
+                                    </span>
+                                </div>
+                            <div class="form-group col-md-6">    
+                                    <label for="mobileNumber1" class="required"> {{$parent.messages.label.mobileNumber1}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="number" class="form-control" id="mobileNumber1" name="mobile Number 1" ng-model="entitledDrtvCtrl.entitled.mobileNumber1" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                                    <span ng-show="entitledForm.mobileNumber1.$touched && entitledForm.mobileNumber1.$error.required" >
+                                        {{$parent.messages.label.required}}
+                                    </span>
+                                    <span ng-show="entitledForm.mobileNumber1.$error.maxlength && entitledForm.mobileNumber1.$invalid" >
+                                            {$parent.{messages.label.mobileError}}
+                                                            </span>
+                                </div>
+                    </div>             
+                    <div class="row">
+                            <div class="form-group col-md-6">                
+                                    <label for="mobileNumber2" class="required"> {{$parent.messages.label.mobileNumber2}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="number" class="form-control" id="mobileNumber2" name="mobile Number2" ng-model="entitledDrtvCtrl.entitled.mobileNumber2" ng-maxlength="8"  placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                                    <span ng-show="entitledForm.mobileNumber2.$touched && entitledForm.mobileNumber2.$error.required" >
+                                        {{$parent.messages.label.required}}
+                                    </span>
+                                    <span ng-show="entitledForm.mobileNumber2.$error.maxlength && entitledForm.mobileNumber2.$invalid" >
+                                            {{$parent.messages.label.mobileError}}        
+                                                    </span>
+                                </div>
+                            <div class="form-group col-md-6">    
+                                    <label for="emailAddress" class="required">{{$parent.messages.label.emailAddress}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="email" class="form-control" id="emailAddress" name="email Address"  ng-model="entitledDrtvCtrl.entitled.emailAddress" placeholder={{messages.placeHolders.emailPH}} required/>
+                                    <span ng-show="entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required" >
+                                            {{$parent.messages.label.required}}
+                                        </span>
+                                        <span ng-show="entitledForm.emailAddress.$error.email && entitledForm.emailAddress.$invalid" >
+                                                {{$parent.messages.label.emailError}}
+                                        </span>
+                                   </div>
+                                         </div>                
+        
+                                    
+                <div class="btn-group rigth" >
+                        <div class="btn-group row" >
+                            <div class="col-sm-10">
+                                <button ng-click="entitledDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledForm.$invalid" type="submit">{{$parent.messages.label.Save}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+        
+               
+        
+        
+                <div class="table-responsive" >
+                    <table class="table table-striped table-bordered table-hover text-center">
+                        <thead>
+                            <tr >
+                                <th>
+                                    {{$parent.messages.label.arabicName}}
+                                </th>
+                                <th>
+                                    {{$parent.messages.label.englishName}}
+                                </th>
+                               
+                                <th>
+                                    {{$parent.messages.label.civilId}}
+                                </th>
+                                <th>
+                                    {{$parent.messages.label.edit}}
+                                </th>
+                                <th>
+                                        {{$parent.messages.label.delete}}
+                                </th>
+                                <td>
+                                    {{$parent.messages.label.attachments}}
+                                </td>
+        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="e in entitledDrtvCtrl.entitleds | paginationFltr:entitledDrtvCtrl.page.start:entitledDrtvCtrl.page.end track by e.id">
+                                <td>
+                                    {{e.arabicName}}
+                                </td>
+                                <td>
+                                    {{e.englishName}}
+                                </td>
+                                <td>
+                                    {{e.civilId}}
+                                </td>
+                                
+                                <td>
+                                    <div>
+                                        <button ng-disabled="{{noteditable}}" class="btn btn-default" ng-click="entitledDrtvCtrl.prepareToUpdate(e)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    </div>
+                                </td>
+        
+                                <td>
+                                    <div>
+                                        <button ng-disabled="{{noteditable}}" class="btn btn-default" ng-click="entitledDrtvCtrl.deleteEntitled(e.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </div>
+                                </td>
+        
+                                <td>
+                                    <div class="btn-group row" >
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-default" ng-click="entitledDrtvCtrl.prepareToOpenEntitedAttachments(e)"
+                                             data-toggle="modal" data-target="#enitledAttachments" >
+                                                {{$parent.messages.label.AddAttachment}}</button>
+                                        </div>
+                                    </div>
+                                </td>
+        
+                            </tr> 
+                              
+                        </tbody> 
+                    </table>
+                    <td colspan="7">
+                        <pagination items-size="entitledDrtvCtrl.files.length" page="entitledDrtvCtrl.page">
+                        </pagination>
+                    </td>
+                    </div>
+
+    </div>
+
+    <!-- entitled Attachments dialog -->
+    <div id="enitledAttachments" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">{{$parent.messages.label.sendRequest}}</h3>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <form ng-disabled="{{noteditable}}"  name="entitledAttachmentForm" novalidate  enctype="multipart/form-data">
+                        <div class="row">
+                                <div class="form-group col-md-6">
+                                        <label for="attachmentType" class="required"> {{$parent.messages.label.DocumentName}}</label>
+                                        <select ng-disabled="{{noteditable}}" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledDrtvCtrl.entitledAttachment.attachmentType" novalidate required>
+                                            <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                                        </select>
+                                        <span ng-show="entitledAttachmentForm.attachmentType.$touched && entitledAttachmentForm.attachmentType.$error.required" >
+                                            {{$parent.messages.label.required}}
+                                        </span> 
+                                    </div>
+                                     <div class="form-group file-loading" >
+                                            <label for="attachmentType" class="required"> {{$parent.messages.label.AddAttachment}}</label>
+                                    <input ng-disabled="{{noteditable}}" type="file" id="file" name="file"   ng-file="entitledDrtvCtrl.entitledAttachment.file"  required/>
+                                                     
+                                    <span ng-show="entitledAttachmentForm.file.$touched && entitledAttachmentForm.file.$error.required" >
+                                            {{$parent.messages.label.required}}
+                                        </span> 
+                                    </div>
+                                 </div>
+                                
+                             <div class="btn-group rigth">
+                                <div class="btn-group row">
+                                    <div class="col-sm-10">
+                                        <button ng-disabled="{{noteditable}}" ng-click="entitledDrtvCtrl.addEntitledAttachment()" class="btn btn-default" ng-disabled="entitledAttachmentForm.$invalid" type="submit">{{$parent.messages.label.add}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                </form>
+            
+                <div class="table-responsive" >
+                    <table class="table table-striped table-bordered table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{$parent.messages.label.DocumentType}}
+                                </th>
+                                <th>
+                                    {{$parent.messages.label.DocumentName}}
+                                </th>                         
+                                <th>
+                                    {{$parent.messages.label.delete}}
+                                </th>                         
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ea in entitledDrtvCtrl.entitledAttachments | paginationFltr:entitledDrtvCtrl.page.start:entitledDrtvCtrl.page.end track by ea.id"
+                            class="accordion-toggle" data-toggle="collapse" data-target="#entitledAttachments">
+                                <td>
+                                    {{ea.attachmentType.arabicName}}
+                                </td>
+                                <td>
+                                    {{ea.fileName}}
+                                    <button class="btn btn-default" ng-click="entitledDrtvCtrl.showEntitledAttachmentImage(ea)"><span class="glyphicon glyphicon-eye-open"></span></button>    
+                                </td>           
+                                <td>
+                                    <div>
+                                        <button ng-disabled="{{noteditable}}" class="btn btn-default" ng-click="entitledDrtvCtrl.deleteEntitledAttachment(ea.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </div>
+                                </td>
+                            </tr> 
+                        </tbody> 
+                    </table>
+                    <td colspan="7">
+                        <pagination items-size="entitledDrtvCtrl.files.length" page="entitledDrtvCtrl.page">
+                        </pagination>
+                    </td>
+                    </div>
+                </div>
+                <div class="modal-footer"> 
+                    <button class="btn btn-warning" type="button" data-dismiss="modal">{{$parent.messages.label.closePopup}}</button>
+                </div>
+            </div>
+            </div>
+            </div>
+
+
+    </div>
