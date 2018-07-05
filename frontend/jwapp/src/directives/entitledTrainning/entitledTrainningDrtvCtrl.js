@@ -37,19 +37,37 @@ module.exports = function(app){
     
         vm.getEntitledInTraining = function () {
             entitledRegistrationSrvc.getEntitledInTraining($stateParams.serial, vm.entitled.id, vm.changeStatusRequest ).then(function (response) {
-                vm.entitled = response.data; 
+                var tempEntitled= response.data;
+                vm.entitled = new Entitled();
+                vm.entitleds.forEach(function(ou, index){
+                    if(ou.id === tempEntitled.id){
+                        vm.entitleds[index] = tempEntitled;
+                    }
+                });
             });
         };
     
         vm.getEntitledPassed = function () {
             entitledRegistrationSrvc.getEntitledPassed($stateParams.serial, vm.entitled.id, vm.changeStatusRequest ).then(function (response) {
-                vm.entitled  = response.data; 
+                var tempEntitled= response.data;
+                vm.entitled = new Entitled();
+                vm.entitleds.forEach(function(ou, index){
+                    if(ou.id === tempEntitled.id){
+                        vm.entitleds[index] = tempEntitled;
+                    }
+                }); 
             });
         };
     
         vm.getEntitledFailture = function () {
             entitledRegistrationSrvc.getEntitledFailture($stateParams.serial, vm.entitled.id, vm.changeStatusRequest ).then(function (response) {
-                vm.entitled  = response.data; 
+                var tempEntitled= response.data;
+                vm.entitled = new Entitled();
+                vm.entitleds.forEach(function(ou, index){
+                    if(ou.id === tempEntitled.id){
+                        vm.entitleds[index] = tempEntitled;
+                    }
+                }); 
             });
         };
     
