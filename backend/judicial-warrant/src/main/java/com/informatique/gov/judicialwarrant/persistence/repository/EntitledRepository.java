@@ -28,10 +28,13 @@ public interface EntitledRepository extends JpaRepository<Entitled, Long>{
 	
 	Integer deleteByEntitledRegistrationId(Long id);
 	
+	@EntityGraph(value = "Entitled.fat", type = EntityGraphType.FETCH)
 	Set<Entitled> findByEntitledRegistrationId(Long id);
 	
+	@EntityGraph(value = "Entitled.fat", type = EntityGraphType.FETCH)
 	Set<Entitled> findByEntitledRegistrationRequestSerial(String serial);
 	
+	@EntityGraph(value = "Entitled.fat", type = EntityGraphType.FETCH)
 	Set<Entitled> findByEntitledRegistrationRequestSerialAndCurrentStatusCodeIn(String serial, List<String> statusCodes);
 
 }
