@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +22,9 @@ import com.informatique.gov.judicialwarrant.service.EntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledHistoryLogService;
 import com.informatique.gov.judicialwarrant.service.InternalEntitledService;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.dataenum.EntitledStatusEnum;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.integration.contentmanger.ContentManager;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.validator.EntitledWorkflowValidator;
@@ -41,6 +44,7 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 	private ContentManager contentManager;
 	private ModelMapper<Entitled, EntitledDto, Long> entitledMapper;
 	private EntitledWorkflowValidator entitledWorkflowValidator;
+	private SecurityService securityService;
 
 	/**
 	 * 
@@ -121,7 +125,13 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 		Set<EntitledDto> entitledDtos = null;
 		try {
 			notNull(serial, "serial must be set");
-			Set<Entitled> entitleds = entitledRepository.findByEntitledRegistrationRequestSerial(serial);
+			Set<Entitled> entitleds = null;
+			if(securityService.getUserDetails().getRole().equals(UserRoleEnum.TRAINING_INSTITUTE.getCode())) {
+				entitleds = entitledRepository.findByCurrentStatusCodeIn(Arrays.asList(EntitledStatusEnum.ACCEPTED.getCode(), EntitledStatusEnum.TRAINNING.getCode()
+						, EntitledStatusEnum.PASSED.getCode(), EntitledStatusEnum.FAILED.getCode()));
+			} else {
+				entitleds = entitledRepository.findByEntitledRegistrationRequestSerial(serial);
+			}
 			entitledDtos = entitledMapper.toDto(entitleds);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
@@ -22,5 +24,11 @@ public interface EntitledRegistrationRepository extends JpaRepository<EntitledRe
 	
 	@EntityGraph(value = "EntitledRegistration.fat", type = EntityGraphType.FETCH)
 	List<EntitledRegistration> findByRequestOrganizationUnitId(Short organizationUnitId);
+	
+	
+	@EntityGraph(value = "EntitledRegistration.fat", type = EntityGraphType.FETCH)
+	@Query("select distinct er from EntitledRegistration er inner join Entitled e on (er.id = e.entitledRegistration.id) "
+			+ "where er.request.currentInternalStatus.code = :requestStatusCode and e.currentStatus.code in :entitledStausCodes")
+	List<EntitledRegistration> findByRequestCurrentInternalStatusAndEntitledStatus(@Param("requestStatusCode") String requestStatusCode, @Param("entitledStausCodes") List<String> entitledStausCodes);
 	
 }

@@ -95,10 +95,15 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 		List<EntitledRegistrationDto> dtos = null;
 		try {
 			List<EntitledRegistration> entities = null;
-			if(authentication.getAuthorities().stream().anyMatch(authorities::contains)) {
+			if(authentication.getAuthorities().contains(new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER))) {
 				entities = entitledRegistrationRepository.findAll();
 				dtos = entitledRegistrationForInternalMapper.toDto(entities);
-			}else {
+			} else if (authentication.getAuthorities().contains(new JudicialWarrantGrantedAuthority(UserRoleEnum.TRAINING_INSTITUTE))) {
+				entities = entitledRegistrationRepository.findByRequestCurrentInternalStatusAndEntitledStatus(RequestInternalStatusEnum.INPROGRESS.getCode(), 
+						Arrays.asList(EntitledStatusEnum.ACCEPTED.getCode(), EntitledStatusEnum.TRAINNING.getCode(), 
+								EntitledStatusEnum.PASSED.getCode(), EntitledStatusEnum.FAILED.getCode()));
+				dtos = entitledRegistrationForInternalMapper.toDto(entities);
+			} else {
 				OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
 				entities = entitledRegistrationRepository.findByRequestOrganizationUnitId(organizationUnit.getId());
 				dtos = entitledRegistrationMapper.toDto(entities);

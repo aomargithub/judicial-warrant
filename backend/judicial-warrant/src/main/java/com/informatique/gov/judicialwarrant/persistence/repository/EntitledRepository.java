@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.persistence.repository;
 
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -30,5 +31,7 @@ public interface EntitledRepository extends JpaRepository<Entitled, Long>{
 	Set<Entitled> findByEntitledRegistrationId(Long id);
 	
 	Set<Entitled> findByEntitledRegistrationRequestSerial(String serial);
+	
+	Set<Entitled> findByCurrentStatusCodeIn(List<String> statusCodes);
 
 }
