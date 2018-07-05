@@ -23,24 +23,26 @@ module.exports = function (app) {
 
 
         vm.save = function () {
-            //// enhanchment
             entitledRegistrationSrvc.getBySerial($scope.serial).then(function success(respone){
                 vm.entitled.entitledRegistration = respone.data;
+
+                if(!vm.entitled.id) {
+                    entitledRegistrationSrvc.saveEntitled($scope.serial, vm.entitled).then(function success(response) {
+                        vm.entitleds = vm.entitleds || [];
+                        vm.entitleds.push(response.data);
+                        vm.entitled = new Entitled();
+                    }, function error(response) {
+                        var status = httpStatusSrvc.getStatus(response.status);
+                        if (status.code === httpStatusSrvc.badRequest.code) {
+                            vm.message = $rootScope.messages[status.text];
+                        };
+                    });
+                } else {
+                    vm.updateEntitled();
+                }
+                
+
             });
-            if(!vm.entitled.id) {
-               entitledRegistrationSrvc.saveEntitled($scope.serial, vm.entitled).then(function success(response) {
-                   vm.entitleds = vm.entitleds || [];
-                   vm.entitleds.push(response.data);
-                   vm.entitled = new Entitled();
-               }, function error(response) {
-                   var status = httpStatusSrvc.getStatus(response.status);
-                   if (status.code === httpStatusSrvc.badRequest.code) {
-                       vm.message = $rootScope.messages[status.text];
-                   };
-               });
-           } else {
-               vm.updateEntitled();
-           }
         };
    
         vm.updateEntitled = function () {
