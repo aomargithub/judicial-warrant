@@ -32,6 +32,6 @@ public interface EntitledRepository extends JpaRepository<Entitled, Long>{
 	
 	Set<Entitled> findByEntitledRegistrationRequestSerial(String serial);
 	
-	Set<Entitled> findByCurrentStatusCodeIn(List<String> statusCodes);
+	Set<Entitled> findByEntitledRegistrationRequestSerialAndCurrentStatusCodeIn(String serial, List<String> statusCodes);
 
 }

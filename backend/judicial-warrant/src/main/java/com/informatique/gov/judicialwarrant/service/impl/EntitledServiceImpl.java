@@ -127,7 +127,7 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 			notNull(serial, "serial must be set");
 			Set<Entitled> entitleds = null;
 			if(securityService.getUserDetails().getRole().equals(UserRoleEnum.TRAINING_INSTITUTE.getCode())) {
-				entitleds = entitledRepository.findByCurrentStatusCodeIn(Arrays.asList(EntitledStatusEnum.ACCEPTED.getCode(), EntitledStatusEnum.TRAINNING.getCode()
+				entitleds = entitledRepository.findByEntitledRegistrationRequestSerialAndCurrentStatusCodeIn(serial, Arrays.asList(EntitledStatusEnum.ACCEPTED.getCode(), EntitledStatusEnum.TRAINNING.getCode()
 						, EntitledStatusEnum.PASSED.getCode(), EntitledStatusEnum.FAILED.getCode()));
 			} else {
 				entitleds = entitledRepository.findByEntitledRegistrationRequestSerial(serial);
