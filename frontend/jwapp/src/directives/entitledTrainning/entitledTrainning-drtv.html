@@ -34,6 +34,9 @@
                 <th >
                     {{messages.label.emailAddress}}
                 </th>
+                <th >
+                    {{messages.label.RequestStatus}}
+                </th>
                 
                 <th>
                     {{messages.label.trainingOperation}}
@@ -56,22 +59,25 @@
                     {{et.emailAddress}}
                 </td>
                 <td>
+                    {{et.currentStatus.code}}
+                </td>
+                <td>
                     
 
                     <div class="btn-group row" >
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" ng-if="et.currentStatus.code ==='ACCEPTED'">
                             <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('inTraining', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inTraining</button>
                         </div>
                     </div>
         
                     <div class="btn-group row" >
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" ng-if="et.currentStatus.code ==='TRAINNING'">
                             <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('passed', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >passed</button>
                         </div>
                     </div>
                    
                     <div class="btn-group row" >
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" ng-if="et.currentStatus.code ==='TRAINNING'">
                             <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('failture', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >failture</button>
                         </div>
                     </div>

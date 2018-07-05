@@ -11,7 +11,7 @@ module.exports = function(app){
             self.emailAddress = null;
             self.entitledRegistration = new EntitledRegistration();
             self.organizationUnit = null;
-            self.currentStatusid = null;
+            self.currentStatus = null;
             self.id = null;
             
             
