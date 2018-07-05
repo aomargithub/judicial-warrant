@@ -48,9 +48,17 @@ public class EntitledWorkflowValidator implements Serializable {
 					throw new InvalidEntitledStatusException(entitled.getId(), requiredEntitledStatusEnum);
 				}
 				break;
+				
+			case INPROGRESS:
+				if (!requiredEntitledStatusEnum.equals(EntitledStatusEnum.REJECTED)
+						&& !requiredEntitledStatusEnum.equals(EntitledStatusEnum.ACCEPTED)) {
+					throw new InvalidEntitledStatusException(entitled.getId(), requiredEntitledStatusEnum);
+				}
+				break;	
 			case SUBMITED:
 				checkEntitledRegistrationInProgress(entitled);
 				if (!requiredEntitledStatusEnum.equals(EntitledStatusEnum.INCOMPLETE)
+						&& !requiredEntitledStatusEnum.equals(EntitledStatusEnum.INPROGRESS)
 						&& !requiredEntitledStatusEnum.equals(EntitledStatusEnum.REJECTED)
 						&& !requiredEntitledStatusEnum.equals(EntitledStatusEnum.ACCEPTED)) {
 					throw new InvalidEntitledStatusException(entitled.getId(), requiredEntitledStatusEnum);

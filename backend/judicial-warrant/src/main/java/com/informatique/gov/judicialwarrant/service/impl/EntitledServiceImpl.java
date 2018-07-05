@@ -88,6 +88,10 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 			notNull(entitledDto, "entitledDto must be set");
 			Entitled entitled = entitledMapper.toNewEntity(entitledDto);
 			entitled.setOrganizationUnit(organizationUnitService.getByCurrentUser());
+			
+			EntitledStatus entitledStatus = entitledStatusRepository.findByCode(EntitledStatusEnum.DRAFT.getCode());
+			entitled.setCurrentStatus(entitledStatus);
+			
 			entitled = entitledRepository.save(entitled);
 
 			// create ucm folder for every entitled

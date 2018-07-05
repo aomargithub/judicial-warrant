@@ -8,14 +8,14 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "code", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"code"}, callSuper = false)
-public class EntitledStatusDto implements UserModel<Byte> {
+public class EntitledStatusDto implements UserModel<Short> {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4507299751782117054L;
 
-	private Byte id;
+	private Short id;
 	private String code;
 	private String englishName;
 	private String arabicName;

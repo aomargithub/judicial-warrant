@@ -110,6 +110,18 @@ module.exports = function (app) {
         self.getEntitledFailture  = function (requestSerial, id,changeStatusRequest) {
             return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/failture', changeStatusRequest);
         };
+
+        self.acceptEntitled  = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/acception', changeStatusRequest);
+        };
+
+        self.cardRecievedEntitledCardRecieved  = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/cardRecieved', changeStatusRequest);
+        };
+
+        self.rejectionEntitled  = function (requestSerial, id,changeStatusRequest) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + requestSerial + '/entitleds/'+ id +  '/rejection', changeStatusRequest);
+        };
         
 
         self.uploadEntitledAttachment = function (entitledAttachment, serial, entitledId) {

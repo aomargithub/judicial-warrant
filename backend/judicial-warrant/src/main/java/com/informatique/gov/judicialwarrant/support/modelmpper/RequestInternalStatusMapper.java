@@ -7,7 +7,7 @@ import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
 
 
 @Component
-public class RequestInternalStatusMapper extends AbstractModelMapper<RequestInternalStatus, RequestStatusDto, Byte> {
+public class RequestInternalStatusMapper extends AbstractModelMapper<RequestInternalStatus, RequestStatusDto, Short> {
 
 	/**
 	 * 

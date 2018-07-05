@@ -1,11 +1,14 @@
 module.exports = function (app) {
-    app.controller('entitledDrtvCtrl', function ($rootScope, $state, $scope, Entitled, EntitledAttachment, entitledRegistrationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
+    app.controller('entitledDrtvCtrl', function ($rootScope, $state, $scope, Entitled, EntitledAttachment, ChangeStatusRequest, entitledRegistrationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
         var vm = this;
         vm.entitleds = [];
         vm.entitled = new Entitled();
         vm.entitledAttachments = [];
         vm.entitledAttachment = new EntitledAttachment ();
         vm.attachmentTypes = [];
+
+        vm.changeStatusRequest = new ChangeStatusRequest();
+        vm.action = null;
 
         vm.page = {
             start: 0,
@@ -73,11 +76,78 @@ module.exports = function (app) {
             })
         };
 
+        vm.prepareToOpenWorkFlowActionDialog = function (entitled, action) {
+            vm.action = action;
+            vm.entitled = entitled;
+        }
+
+        vm.workFlowAction = function () {
+            if(vm.action === 'ACCEPTED') {
+                vm.acceptEntitled();
+            } else if (vm.action === 'REJECTED') {
+                vm.rejectionEntitled();
+            } else if (vm.action === 'CARD_RECIEVED') {
+                vm.cardRecievedEntitledCardRecieved();
+            }
+            
+        }
+
         vm.deleteEntitled = function (id) {
             entitledRegistrationSrvc.deleteEntitled($scope.serial, id).then(function success(response) {
                 vm.entitleds.forEach(function (e, index) {
                     if (e.id === id) {
                         vm.entitleds.splice(index, 1);
+                    }
+                });
+            }, function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.preconditionFailed.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
+        };
+
+        vm.acceptEntitled = function () {
+            entitledRegistrationSrvc.acceptEntitled($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitled = response.data;
+                vm.entitleds.forEach(function (e, index) {
+                    if (e.id === vm.entitled.id) {
+                        vm.entitleds[index] = vm.entitled;
+                        vm.entitled = new Entitled();
+                    }
+                });
+            }, function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.preconditionFailed.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
+        };
+
+        vm.cardRecievedEntitledCardRecieved = function () {
+            entitledRegistrationSrvc.cardRecievedEntitledCardRecieved($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitled = response.data;
+                vm.entitleds.forEach(function (e, index) {
+                    if (e.id === vm.entitled.id) {
+                        vm.entitleds[index] = vm.entitled;
+                        vm.entitled = new Entitled();
+                    }
+                });
+            }, function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.preconditionFailed.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
+        };
+
+        vm.rejectionEntitled = function () {
+            entitledRegistrationSrvc.rejectionEntitled($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitled = response.data;
+                vm.entitleds.forEach(function (e, index) {
+                    if (e.id === vm.entitled.id) {
+                        vm.entitleds[index] = vm.entitled;
+                        vm.entitled = new Entitled();
                     }
                 });
             }, function error(response) {

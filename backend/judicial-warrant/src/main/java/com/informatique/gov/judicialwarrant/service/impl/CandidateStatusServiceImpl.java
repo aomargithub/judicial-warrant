@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CandidateStatusServiceImpl implements EntitledStatusService {
 	private EntitledStatusRepository candidateStatusRepository;
-	private ModelMapper<EntitledStatus, EntitledStatusDto, Byte> candidateStatusMapper;
+	private ModelMapper<EntitledStatus, EntitledStatusDto, Short> candidateStatusMapper;
 
 	/**
 	 * 

@@ -23,7 +23,7 @@ public class RequestForInternalMapper extends AbstractModelMapper<Request, Reque
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private ModelMapper<RequestInternalStatus, RequestStatusDto, Byte> requestInternalStatusMapper;
+	private ModelMapper<RequestInternalStatus, RequestStatusDto, Short> requestInternalStatusMapper;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<RequestType, RequestTypeDto, Byte> requestTypeMapper;
 	

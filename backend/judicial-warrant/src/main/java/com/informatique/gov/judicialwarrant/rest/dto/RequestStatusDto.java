@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "code", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"code"}, callSuper = false)
-public class RequestStatusDto implements UserModel<Byte> {
+public class RequestStatusDto implements UserModel<Short> {
 	
 	
 	
@@ -16,7 +16,7 @@ public class RequestStatusDto implements UserModel<Byte> {
 	 */
 	private static final long serialVersionUID = -8973371922744404362L;
 
-	private Byte id;
+	private Short id;
 	private String code;
 	private String englishName;
 	private String arabicName;

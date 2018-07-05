@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EntitledHistoryLogMapper extends AbstractModelMapper<EntitledHistoryLog, EntitledHistoryLogDto, Long> {
 
-	private ModelMapper<EntitledStatus, EntitledStatusDto, Byte> entitledStatusMapper;
+	private ModelMapper<EntitledStatus, EntitledStatusDto, Short> entitledStatusMapper;
 	private ModelMapper<User, UserDto, Integer> userMapper;
 
 	/**

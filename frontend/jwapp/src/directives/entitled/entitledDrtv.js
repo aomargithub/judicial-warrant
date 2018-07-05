@@ -8,7 +8,8 @@ module.exports = function(app){
 
             scope : {
                 serial: '@',
-                noteditable: '@'
+                noteditable: '@',
+                workflow: '@'
 
             },
 

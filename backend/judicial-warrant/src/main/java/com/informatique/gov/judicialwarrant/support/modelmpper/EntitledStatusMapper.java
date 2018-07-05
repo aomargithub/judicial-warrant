@@ -6,7 +6,7 @@ import com.informatique.gov.judicialwarrant.domain.EntitledStatus;
 import com.informatique.gov.judicialwarrant.rest.dto.EntitledStatusDto;
 
 @Component
-public class EntitledStatusMapper extends AbstractModelMapper<EntitledStatus, EntitledStatusDto, Byte>{
+public class EntitledStatusMapper extends AbstractModelMapper<EntitledStatus, EntitledStatusDto, Short>{
 
 	/**
 	 * 

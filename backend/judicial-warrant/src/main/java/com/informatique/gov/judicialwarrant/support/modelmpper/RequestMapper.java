@@ -22,7 +22,7 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 	 * 
 	 */
 	private static final long serialVersionUID = -6598101623050234667L;
-	private ModelMapper<RequestStatus, RequestStatusDto, Byte> requestStatusMapper;
+	private ModelMapper<RequestStatus, RequestStatusDto, Short> requestStatusMapper;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<RequestType, RequestTypeDto, Byte> requestTypeMapper;
 

@@ -18,7 +18,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "code", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"code"}, callSuper = false)
-public class EntitledStatus extends DomainEntity<Byte> {
+public class EntitledStatus extends DomainEntity<Short> {
 	
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class EntitledStatus extends DomainEntity<Byte> {
 
 	@Id
     @Column(name = "id")
-    private Byte id;
+    private Short id;
 	
 	@NaturalId
 	@Column(name = "code")

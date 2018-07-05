@@ -288,7 +288,10 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.INPROGRESS, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
-									
+					
+			Set<Entitled> entitleds = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.INPROGRESS, null);
+			entity.setEntitled(entitleds);
+			
 			savedEntitledRegistrationDto = entitledRegistrationMapper.toDto(entity);
 		} catch (JudicialWarrantException e) {
 			throw e;
@@ -310,10 +313,10 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			Request request = requestService.changeStatus(entity.getRequest(), RequestInternalStatusEnum.REJECTED, entitledRegistrationChangeStatusRequest.getNote());
 			entity.setRequest(request);
 			
-			Set<Entitled> entitled = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.REJECTED, null);
+			Set<Entitled> entitleds = internalEntitledService.changeStatusByEntitledRegistrationId(entity.getId(), EntitledStatusEnum.REJECTED, null);
 			
 			
-			entity.setEntitled(entitled);
+			entity.setEntitled(entitleds);
 			
 			savedEntitledRegistrationDto = entitledRegistrationMapper.toDto(entity);
 		} catch (JudicialWarrantException e) {

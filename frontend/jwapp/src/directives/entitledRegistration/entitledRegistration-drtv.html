@@ -26,25 +26,29 @@
              
             <div class="btn-group row" >
                 <div class="col-sm-10">
-                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inProgress</button>
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >inProgress</button>
                 </div>
             </div>
 
             <div class="btn-group row" >
                 <div class="col-sm-10">
-                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >reject</button>
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >reject</button>
                 </div>
             </div>
            
             <div class="btn-group row" >
                 <div class="col-sm-10">
-                    <button ng-disabled="!entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inComplete</button>
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'" 
+                    ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >inComplete</button>
                 </div>
             </div>
 
             <div class="btn-group row" >
                  <div class="col-sm-10">
-                       <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('submission')" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT'">{{messages.label.sendRequest}}</button>
+                       <button ng-hide="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('submission')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" 
+                       type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT' && entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'INCOMPLETE'">{{messages.label.sendRequest}}</button>
                  </div>
              </div>
 
@@ -74,12 +78,13 @@
 
             <entitled 
             serial = "{{entitledRegistrationDrtvCtrl.serial}}"
-             notEditable = "{{entitledRegistrationDrtvCtrl.isNotUser}}" ></entitled>
+             notEditable = "{{entitledRegistrationDrtvCtrl.isNotUser}}" 
+             workflow = "{{entitledRegistrationDrtvCtrl.isNotUser}}"></entitled>
 
     </div>    
 
                  <!-- submission dialog -->
-        <div  id="myNote" class="modal fade" role="dialog">
+        <div  id="entitledRegstrationWorkFlowDialog" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">

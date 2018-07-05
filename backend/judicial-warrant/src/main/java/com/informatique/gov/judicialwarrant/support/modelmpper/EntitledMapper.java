@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @Component
 public class EntitledMapper extends AbstractModelMapper<Entitled, EntitledDto, Long> {
 
-	private ModelMapper<EntitledStatus, EntitledStatusDto, Byte> entitledStatusMapper;
+	private ModelMapper<EntitledStatus, EntitledStatusDto, Short> entitledStatusMapper;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 	private ModelMapper<EntitledHistoryLog, EntitledHistoryLogDto, Long> entitledHistoryLogMapper;
 //	private ModelMapper<EntitledAttachment, EntitledAttachmentDto, Long> entitledAttachmentMapper;
