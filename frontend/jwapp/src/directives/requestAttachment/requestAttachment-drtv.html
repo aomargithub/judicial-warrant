@@ -6,7 +6,7 @@
                         <div class="form-group col-md-6">
                                 <label for="attachmentType" class="required"> {{$parent.messages.label.DocumentType}}</label>
                                 <select ng-disabled="{{noteditable}}" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestAttachmentDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="requestAttachmentDrtvCtrl.requestAttachment.attachmentType" novalidate required>
-                                    <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                                    <option value="" disabled selected>{{$parent.messages.placeHolders.selectMessage}}</option>
                                 </select>
                                 <span ng-show="requestAttachmentForm.attachmentType.$touched && requestAttachmentForm.attachmentType.$error.required" >
                                     {{$parent.messages.label.required}}
@@ -14,10 +14,10 @@
                             </div>
                              <div class="form-group file-loading" >
                                     <label for="attachmentType" class="required"> {{$parent.messages.label.AddAttachment}}</label>
-                            <input ng-disabled="{{noteditable}}" type="file" id="file" name="file"   ng-file="requestAttachmentDrtvCtrl.requestAttachment.file"  required/>
+                            <input ng-disabled="{{noteditable}}" type="file" id="file" name="files"   ng-file="requestAttachmentDrtvCtrl.requestAttachment.file"   required/>
                     
                             
-                            <span ng-show="requestAttachmentForm.file.$touched && requestAttachmentForm.file.$error.required" >
+                            <span ng-show="requestAttachmentForm.files.$touched && requestAttachmentForm.files.$error.required" >
                                     {{$parent.messages.label.required}}
                                 </span> 
                             </div>

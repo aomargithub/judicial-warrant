@@ -20,4 +20,5 @@ module.exports = function(app){
     require('./entitledTrainning')(app);
     require('./requestEntitledRegistration')(app);
     require('./entitled')(app);
+    require('./preventE')(app);
 };
