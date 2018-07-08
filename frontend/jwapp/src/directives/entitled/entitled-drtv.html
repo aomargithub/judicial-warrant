@@ -278,12 +278,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
+                    <h3 class="modal-title" id="modal-title">{{$parent.messages.label.sendRequest}}</h3>
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form>
                             <div class="form-group shadow-textarea">
-                                    <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
+                                    <label for="exampleFormControlTextarea6">{{$parent.messages.label.notes}}</label>
                                     <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="entitledDrtvCtrl.changeStatusRequest.note"></textarea>
                                 </div>
                        
