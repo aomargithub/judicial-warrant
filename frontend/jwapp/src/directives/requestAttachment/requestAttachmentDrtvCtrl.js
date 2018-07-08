@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('requestAttachmentDrtvCtrl', function ($rootScope, $state, $scope, requestTypeSrvc, requestTypeAttachmentTypeSrvc, RequestAttachment, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
+    app.controller('requestAttachmentDrtvCtrl', function ($rootScope, $state, $scope, requestTypeAttachmentTypeSrvc, RequestAttachment, requestAttachmentSrvc, httpStatusSrvc,modalSrvc) {
         var vm = this;
         vm.requestAttachment = new RequestAttachment();
         vm.message = null;       

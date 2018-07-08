@@ -18,11 +18,16 @@ module.exports = function(app){
         return {
            restrict: 'A',
            link: function(scope, element, attrs) {
-            element.bind('change', function(){
-       
-            $parse(attrs.ngFile).assign(scope,element[0].files[0])
+            element.bind('change', function(event){
+              //  var files = event.target.files;
+             // scope[attrs.ngFile] = loadEvent.target.result;
+            $parse(attrs.ngFile).assign(scope,element.files)
             scope.$apply();
+            scope.$watch(attrs.ngFile, function(files) {
+                element.val(files);
+              });
           });
+        
          }
         };
      });

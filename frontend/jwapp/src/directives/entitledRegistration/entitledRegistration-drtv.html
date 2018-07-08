@@ -27,21 +27,21 @@
             <div class="btn-group row" >
                 <div class="col-sm-10">
                     <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
-                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >inProgress</button>
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.inProgress}}</button>
                 </div>
             </div>
 
             <div class="btn-group row" >
                 <div class="col-sm-10">
                     <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
-                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >reject</button>
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.rejection}}</button>
                 </div>
             </div>
            
             <div class="btn-group row" >
                 <div class="col-sm-10">
                     <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'" 
-                    ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >inComplete</button>
+                    ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.inComplete}}</button>
                 </div>
             </div>
 
