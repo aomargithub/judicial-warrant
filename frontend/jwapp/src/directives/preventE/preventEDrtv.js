@@ -5,7 +5,7 @@ module.exports = function(app){
             restrict: 'A',
             link: function(element) {
             
-              element.on('keypress', function(event) {
+              element.$on('keypress', function(event) {
         
                 if ( !isIntegerChar() ) 
                   event.preventDefault();
