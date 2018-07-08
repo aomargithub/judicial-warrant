@@ -66,19 +66,19 @@
 
                     <div class="btn-group row" >
                         <div class="col-sm-10" ng-if="et.currentStatus.code ==='ACCEPTED'" ng-cloak>
-                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('inTraining', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >inTraining</button>
+                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('inTraining', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >{{messages.label.inTraining}}</button>
                         </div>
                     </div>
         
                     <div class="btn-group row" >
                         <div class="col-sm-10" ng-if="et.currentStatus.code ==='TRAINNING'" ng-cloak>
-                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('passed', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >passed</button>
+                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('passed', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >{{messages.label.passed}}</button>
                         </div>
                     </div>
                    
                     <div class="btn-group row" >
                         <div class="col-sm-10" ng-if="et.currentStatus.code ==='TRAINNING'" ng-cloak>
-                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('failture', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >failture</button>
+                            <button  ng-click="entitledTrainningDrtvCtrl.prepareBeforeworkFlowProccess('failture', et)" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" >{{messages.label.failture}}</button>
                         </div>
                     </div>
         
