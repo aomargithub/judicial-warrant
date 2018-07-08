@@ -41,6 +41,7 @@ module.exports = function (app) {
             capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
                 vm.capacityDelegation = response.data;
                 vm.serial = vm.capacityDelegation.request.serial;
+                vm.reload();
             }, function error(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
                 if (status.code === httpStatusSrvc.badRequest.code) {
@@ -72,6 +73,7 @@ module.exports = function (app) {
             capacityDelegationSrvc.submission(vm.capacityDelegation.request.serial, vm.capacityDelegationChangeStatusRequest).then(function (response) {
                 vm.capacityDelegation = response.data;
                 resetEntryForm();
+                vm.reload();
      
 
             });
@@ -91,7 +93,11 @@ module.exports = function (app) {
         };
 
 
-
+        vm.reLoad = function() {
+            // set serial in url to make user can refresh page and with same data
+            // and refetch data to two change status
+            return $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial},{reload: true});
+        }
 
 
 

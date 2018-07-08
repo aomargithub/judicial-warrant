@@ -103,7 +103,9 @@ public class EntitledWorkflowValidator implements Serializable {
 	public void checkEntitledRegistrationInProgress(Entitled entitled) throws JudicialWarrantException {
 		EntitledRegistration entitledRegistration = entitledRegistrationRepository.findByRequestSerial(entitled.getEntitledRegistration().getRequest().getSerial());
 		RequestInternalStatus requestInternalStatus = entitledRegistration.getRequest().getCurrentInternalStatus();
-		if (!requestInternalStatus.getCode().equals(RequestInternalStatusEnum.INPROGRESS.getCode())) {
+		if (!requestInternalStatus.getCode().equals(RequestInternalStatusEnum.INPROGRESS.getCode()) 
+				&& !requestInternalStatus.getCode().equals(RequestInternalStatusEnum.INCOMPLETE.getCode())
+				&& !requestInternalStatus.getCode().equals(RequestInternalStatusEnum.REJECTED.getCode())) {
 			throw new InvalidRequestStatusException(entitled.getEntitledRegistration().getRequest().getSerial(),
 					RequestInternalStatusEnum.getByCode(requestInternalStatus.getCode()));
 		}

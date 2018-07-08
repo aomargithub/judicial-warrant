@@ -213,10 +213,8 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	}
 	
 	private EntitledRegistration getIfValid(String serial) throws JudicialWarrantException {
-		OrganizationUnit organizationUnit = organizationunitService.getByCurrentUser();
-		Short organizationUnitId = organizationUnit.getId();
 		
-		EntitledRegistration entity = entitledRegistrationRepository.findByRequestSerialAndRequestOrganizationUnitId(serial, organizationUnitId);
+		EntitledRegistration entity = entitledRegistrationRepository.findByRequestSerial(serial);
 		if(entity == null) {
 			throw new ResourceNotFoundException(serial);
 		}

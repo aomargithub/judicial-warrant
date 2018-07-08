@@ -215,7 +215,7 @@ public class EntitledRegistrationController {
 	@PutMapping("/serial={serial}/entitleds/{id}/rejection")
 	@PreAuthorize("hasRole('ROLE_OFFICER')")
 	public ResponseEntity<?> rejectEntitled(@PathVariable String serial, @RequestBody EntitledChangeStatusRequest changeStatusRequest, @PathVariable Long id) throws JudicialWarrantException {
-		return entitledRegistrationHandlerHandler.acceptEntitled(serial, id, changeStatusRequest.getNote());
+		return entitledRegistrationHandlerHandler.rejectEntitled(serial, id, changeStatusRequest.getNote());
 	}
 	
 	@PutMapping("/serial={serial}/entitleds/{id}/inTraining")
