@@ -60,13 +60,15 @@ module.exports = function (app) {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.submission(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            vm.reLoad();
         });
     };
 
     vm.inCompletion = function () {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.inCompletion(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
-            vm.entitledRegistration = response.data; 
+            vm.entitledRegistration = response.data;
+            vm.reLoad(); 
         });
     };
 
@@ -74,6 +76,7 @@ module.exports = function (app) {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.rejection(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            vm.reLoad();
         });
     };
 
@@ -81,6 +84,7 @@ module.exports = function (app) {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.inProgress(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            vm.reLoad();
         });
     };
     
@@ -99,6 +103,8 @@ module.exports = function (app) {
             entitledRegistrationSrvc.save(vm.entitledRegistration).then(function success(response) {
                 vm.entitledRegistration = response.data;
                 vm.serial = vm.entitledRegistration.request.serial;
+                // set serial in url to make user can refresh page and with same data
+                vm.reLoad();
            
             }, function error(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
@@ -142,6 +148,12 @@ module.exports = function (app) {
         var resetEntryForm = function(){
             $scope.entitledRegistrationForm.$setPristine();
             $scope.entitledRegistrationForm.$setUntouched();
+        }
+
+        vm.reLoad = function() {
+            // set serial in url to make user can refresh page and with same data
+            // and refetch data in entitleds two change status
+            return $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial});
         }
 
     });

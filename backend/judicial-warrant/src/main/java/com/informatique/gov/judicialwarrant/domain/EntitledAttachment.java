@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -29,8 +30,18 @@ import lombok.ToString;
 	@NamedEntityGraph(name = "EntitledAttachment.fat",
 					  attributeNodes = {
 							  @NamedAttributeNode(value = "attachmentType"),
-							  @NamedAttributeNode(value = "entitled")
-					  })
+							  @NamedAttributeNode(value = "entitled", subgraph= "Entitled.fat")
+					  },
+							  subgraphs = {
+									  @NamedSubgraph(name = "Entitled.fat", 
+									  attributeNodes = {
+											  @NamedAttributeNode("currentStatus")
+											  }
+									  )
+							  }
+			
+			
+			)
 })
 public class EntitledAttachment extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 

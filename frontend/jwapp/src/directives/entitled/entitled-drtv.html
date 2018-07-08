@@ -65,12 +65,19 @@
         
                                     
                 <div class="btn-group rigth" >
-                        <div class="btn-group row" >
+                    <div class="btn-group row" >
+                        <div class="col-sm-10">
+                            <button ng-click="entitledDrtvCtrl.resetEntitled()" class="btn btn-default">Reset</button>
+                        </div>
+                    </div>    
+                    <div class="btn-group row" >
                             <div class="col-sm-10">
                                 <button ng-click="entitledDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledForm.$invalid" type="submit">{{$parent.messages.label.Save}}</button>
                             </div>
                         </div>
+                        
                     </div>
+
                 </form>
         
                
@@ -143,25 +150,25 @@
                                 <td ng-show="{{workflow}}">
                                     <div class="btn-group row" >
                                         <div class="col-sm-10">
-                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'INPROGRESS'" ng-click="e.prepareToOpenWorkFlowActionDialog(e, 'ACCEPTED')"
+                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'INPROGRESS'" ng-click="entitledDrtvCtrl.prepareToOpenWorkFlowActionDialog(e, 'ACCEPTED')"
                                              data-toggle="modal" data-target="#entitledWorkFlowActionDialog" >
-                                                {{messages.label.accept}}</button>
+                                                {{$parent.messages.label.accept}}</button>
                                         </div>
                                     </div>
 
                                     <div class="btn-group row" >
                                         <div class="col-sm-10">
-                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'INPROGRESS'" ng-click="e.prepareToOpenWorkFlowActionDialog(e, 'REJECTED')"
+                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'INPROGRESS'" ng-click="entitledDrtvCtrl.prepareToOpenWorkFlowActionDialog(e, 'REJECTED')"
                                              data-toggle="modal" data-target="#entitledWorkFlowActionDialog" >
-                                             {{messages.label.rejection}}</button>
+                                             {{$parent.messages.label.rejection}}</button>
                                         </div>
                                     </div>
 
                                     <div class="btn-group row" >
                                         <div class="col-sm-10">
-                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'PASSED'" ng-click="e.prepareToOpenWorkFlowActionDialog(e, 'CARD_RECIEVED')"
+                                            <button class="btn btn-default" ng-show="e.currentStatus.code === 'PASSED'" ng-click="entitledDrtvCtrl.prepareToOpenWorkFlowActionDialog(e, 'CARD_RECIEVED')"
                                              data-toggle="modal" data-target="#entitledWorkFlowActionDialog" >
-                                             {{messages.label.cardRecieved}}</button>
+                                             {{$parent.messages.label.cardRecieved}}</button>
                                         </div>
                                     </div>
                                 </td>

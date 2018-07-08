@@ -170,15 +170,9 @@ public class EntitledServiceImpl implements EntitledService, InternalEntitledSer
 
 			entitledHistoryLogRepository.deleteByEntitledId(id);
 			entitledAttachmentRepository.deleteByEntitledId(id);
-
-			Entitled entitled = entitledRepository.findById(id).get();
+//			contentManager.delete(contentId);
 
 			entitledRepository.deleteById(id);
-
-			// create ucm folder for every entitled
-			String requestFolder = contentManager
-					.getFolderIdFromPath("/" + entitled.getEntitledRegistration().getRequest().getSerial() + "/");
-			contentManager.createFolder(id.toString(), true, requestFolder);
 
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);

@@ -31,8 +31,8 @@ module.exports = function (app) {
         };
         
 
-        self.update = function (id, entitledRegistration) {
-            return $http.put(entitledRegistrationsUrl + 'serial=' + entitledRegistration.request.serial);
+        self.update = function (entitledRegistration) {
+            return $http.put(entitledRegistrationsUrl + 'serial=' + entitledRegistration.request.serial, entitledRegistration);
         };
 
         self.uploadAttachment = function (requestAttachment, serial) {

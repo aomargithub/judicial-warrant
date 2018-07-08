@@ -70,6 +70,14 @@ module.exports = function (app) {
             vm.getEntitledAttachments(entitled.id);
         }
 
+        vm.prepareToUpdate = function (entitled) {
+            vm.entitled = entitled;
+        }
+
+        vm.resetEntitled = function () {
+            vm.entitled = new Entitled();
+        }
+
         vm.showEntitledAttachmentImage = function (entitledAttachment) {
             entitledRegistrationSrvc.showEntitledAttachmentImage($scope.serial, entitledAttachment.id, entitledAttachment.ucmDocumentId).then(function success(response) {
             modalSrvc.viewContent(response);   
