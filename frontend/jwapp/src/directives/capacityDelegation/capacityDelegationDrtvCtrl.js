@@ -4,7 +4,7 @@ module.exports = function (app) {
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
         vm.message = null;
-
+        vm.editeCapacityDelegation = null;
         vm.serial = $stateParams.serial;
 
         vm.requestAttachments = [];
@@ -50,6 +50,16 @@ module.exports = function (app) {
             });
         };
 
+        vm.refetch = function(){
+            capacityDelegationSrvc.getCapacityDelegations(vm.capacityDelegation.request.serial).then(function(response){
+                vm.editeCapacityDelegation = response.data;
+                vm.editeCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
+                 vm.capacityDelegation = angular.copy(vm.editeCapacityDelegation);
+                vm.message = null; 
+                resetEntryForm();
+            });
+        };
+
 
         //===================================
         vm.getCapacityDelegations = function () {
@@ -58,7 +68,12 @@ module.exports = function (app) {
                 vm.capacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
 
 
-            })
+            },function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.badRequest.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
         };
 
         if (vm.serial) {
@@ -76,6 +91,11 @@ module.exports = function (app) {
                 vm.reload();
      
 
+            },function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.badRequest.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
             });
         };
 
@@ -84,7 +104,12 @@ module.exports = function (app) {
         vm.showImage = function (requestAttachment) {
             capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
            modalSrvc.viewContent(response);
-            })
+            },function error(response) {
+                var status = httpStatusSrvc.getStatus(response.status);
+                if (status.code === httpStatusSrvc.badRequest.code) {
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
         };
 
 
@@ -96,7 +121,7 @@ module.exports = function (app) {
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
-            return $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial},{reload: true});
+            return $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
         }
 
 
