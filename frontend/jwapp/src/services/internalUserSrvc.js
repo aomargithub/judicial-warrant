@@ -15,6 +15,10 @@ module.exports = function(app){
             return $http.get(usersUrl + id);
         };
 
+        self.getCurrentUser = function(){
+            return $http.get(usersUrl + "currentUser");
+        };
+
         self.update = function(user){
             return $http.put(usersUrl + user.id, user);
         };

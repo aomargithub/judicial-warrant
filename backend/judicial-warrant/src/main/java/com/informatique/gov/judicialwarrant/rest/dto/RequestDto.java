@@ -26,7 +26,7 @@ public class RequestDto implements UserModel<Long> {
 	private RequestTypeDto type;
 	private RequestStatusDto currentStatus;
 	private OrganizationUnitDto organizationUnit;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date createDate;
 	private List<RequestHistoryLogDto> histortyLogs;
 	

@@ -21,6 +21,7 @@ module.exports = function(app){
         urlSrvcProvider.addUrl('requests','/requests/');
         urlSrvcProvider.addUrl('myRequests','/myRequests/');
         urlSrvcProvider.addUrl('entitledTrainnings','/entitledTrainnings/');
-        urlSrvcProvider.addUrl('requestEntitledRegistrations','/requestEntitledRegistrations/')
+        urlSrvcProvider.addUrl('requestEntitledRegistrations','/requestEntitledRegistrations/');
+        urlSrvcProvider.addUrl('userProfiles','/userProfiles/');
     });
 };

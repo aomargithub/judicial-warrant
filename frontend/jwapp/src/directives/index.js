@@ -21,4 +21,5 @@ module.exports = function(app){
     require('./requestEntitledRegistration')(app);
     require('./entitledRegistration/entitled')(app);
     require('./preventE')(app);
+    require('./userProfile')(app);
 };

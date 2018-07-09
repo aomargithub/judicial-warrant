@@ -153,6 +153,17 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('requestEntitledRegistrations')
                     }
                 }
+            }).state('root.userProfiles',{
+                parent : 'root',
+                data: {
+                    label: 'userProfiles'
+                },
+                url : '/userProfiles',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('userProfiles')
+                    }
+                }
             });
     });
 };

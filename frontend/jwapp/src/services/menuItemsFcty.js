@@ -71,6 +71,9 @@ module.exports = function(app){
         var homeItem = new Item();
         homeItem.codeValue('HOME').routeValue('root').selfShowFilterValue(function(role){return true;}).classesValue(["glyphicon", "glyphicon-home"]);
         
+        var userProfileItem = new Item();
+        userProfileItem.codeValue('MY_PROFILE').routeValue('.userProfiles').selfShowFilterValue(function(role){return true;}).classesValue(["glyphicon", "glyphicon-user"]);
+
         var requestsItem = new Item();
         requestsItem.codeValue('REQUESTS').routeValue('.requests').selfShowFilterValue(function(role){return role === appRoleFcty.officer.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
         
@@ -146,7 +149,7 @@ module.exports = function(app){
 
         .addSubItem(externalUsersSubItem);
 
-        var menu = [homeItem, requestsItem, myRequestsItem,trainingEntitledRegistrationsItem, lookupsItem, usersItem];
+        var menu = [homeItem, userProfileItem,requestsItem, myRequestsItem,trainingEntitledRegistrationsItem, lookupsItem, usersItem];
 
         return {
             items :  menu
