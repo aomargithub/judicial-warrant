@@ -38,6 +38,7 @@ public class RequestMapper extends AbstractModelMapper<Request, RequestDto, Long
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setType(requestTypeMapper.toDto(entity.getType()));
 			dto.setVersion(entity.getVersion());
+			dto.setCreateDate(entity.getCreateLog().getCreateDate());
 		}
 		return dto;
 	}

@@ -39,6 +39,7 @@ public class RequestForInternalMapper extends AbstractModelMapper<Request, Reque
 			dto.setOrganizationUnit(organizationUnitMapper.toDto(entity.getOrganizationUnit()));
 			dto.setType(requestTypeMapper.toDto(entity.getType()));
 			dto.setVersion(entity.getVersion());
+			dto.setCreateDate(entity.getCreateLog().getCreateDate());
 		}
 		return dto;
 	}
