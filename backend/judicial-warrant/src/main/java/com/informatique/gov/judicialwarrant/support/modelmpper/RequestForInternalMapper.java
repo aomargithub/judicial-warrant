@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.support.modelmpper;
 
 import org.springframework.stereotype.Component;
 
+import com.informatique.gov.judicialwarrant.domain.CreateLog;
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.Request;
 import com.informatique.gov.judicialwarrant.domain.RequestInternalStatus;
@@ -56,6 +57,7 @@ public class RequestForInternalMapper extends AbstractModelMapper<Request, Reque
 			entity.setOrganizationUnit(organizationUnitMapper.toEntity(dto.getOrganizationUnit()));
 			entity.setType(requestTypeMapper.toEntity(dto.getType()));
 			entity.setVersion(dto.getVersion());
+			entity.setCreateLog(new CreateLog(null, dto.getCreateDate()));
 		}
 		return entity;
 	}
