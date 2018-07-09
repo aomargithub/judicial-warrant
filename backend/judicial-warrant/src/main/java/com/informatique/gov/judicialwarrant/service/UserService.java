@@ -16,6 +16,8 @@ public interface UserService extends Serializable{
 	UserDto save(final UserDto dto) throws JudicialWarrantException;
 
 	UserDto getById(Integer id) throws JudicialWarrantException;
+	
+	UserDto getCurrentUser() throws JudicialWarrantException;
 
 	UserDto update(UserDto dto) throws JudicialWarrantException;
 	

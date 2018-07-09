@@ -64,6 +64,11 @@ public class UserController implements Serializable {
 		return userHandler.getById(id, eTag);
 	}
 	
+	@GetMapping(path = "/currentUser")
+	public ResponseEntity<?> getCurrentUser() throws JudicialWarrantException {
+		return userHandler.getCurrentUser();
+	}
+	
 	@GetMapping(path = "/role", params = {"isInternal"})
 	public ResponseEntity<?> getByRoleIsInternal(@RequestParam Boolean isInternal)throws JudicialWarrantException {
 		return userHandler.getByRoleIsInternal(isInternal);

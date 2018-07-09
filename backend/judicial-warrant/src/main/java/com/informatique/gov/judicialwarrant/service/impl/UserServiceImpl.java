@@ -267,6 +267,20 @@ public class UserServiceImpl implements UserService, InternalUserService {
 		}
 		return dto;
 	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public UserDto getCurrentUser() throws JudicialWarrantException {
+		UserDto dto = null;
+		try {
+			User entity = userRepository.findByLoginNameIgnoreCase(securityService.getUserDetails().getUsername());
+			dto = userMapper.toDto(entity);
+
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return dto;
+	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)

@@ -137,6 +137,25 @@ public class UserHandlerImpl implements UserHandler {
 
 		return response;
 	}
+	
+	@Override
+	public ResponseEntity<UserDto> getCurrentUser() throws JudicialWarrantException {
+		ResponseEntity<UserDto> response = null;
+		try {
+			UserDto dto = null;	
+			
+			dto = userService.getCurrentUser();
+			
+			response = ResponseEntity.ok().eTag(dto.getVersion().toString()).body(dto);
+			
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+
+		return response;
+	}
 
 	@Override
 	public ResponseEntity<UserDto> update(UserDto dto,Integer id,Short etag) throws JudicialWarrantException {

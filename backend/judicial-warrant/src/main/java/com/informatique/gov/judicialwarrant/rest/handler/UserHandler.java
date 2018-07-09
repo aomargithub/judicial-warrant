@@ -20,6 +20,8 @@ public interface UserHandler extends Serializable{
 	ResponseEntity<UserDto> createUserExternal(final UserDto dto) throws JudicialWarrantException;*/
 
 	ResponseEntity<UserDto> getById(Integer id, Short etag) throws JudicialWarrantException;
+	
+	ResponseEntity<UserDto> getCurrentUser() throws JudicialWarrantException;
 
 	ResponseEntity<UserDto> update(UserDto dto, Integer id, Short etag) throws JudicialWarrantException;
 
