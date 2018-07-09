@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope,EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
+    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, blockUI, EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
         var vm = this;
         vm.entitledRegistrationChangeStatusRequest = new EntitledRegistrationChangeStatusRequest();
         vm.entitledRegistration = new EntitledRegistration();
@@ -98,11 +98,12 @@ module.exports = function (app) {
         };
 
         vm.save = function () {
-
          if(!vm.entitledRegistration.id) {
+            blockUI.start();
             entitledRegistrationSrvc.save(vm.entitledRegistration).then(function success(response) {
                 vm.entitledRegistration = response.data;
                 vm.serial = vm.entitledRegistration.request.serial;
+                blockUI.stop();
                 // set serial in url to make user can refresh page and with same data
                 vm.reLoad();
            
@@ -111,6 +112,7 @@ module.exports = function (app) {
                 if (status.code === httpStatusSrvc.badRequest.code) {
                     vm.message = $rootScope.messages[status.text];
                 };
+                blockUI.stop();
             });
         } else {
             vm.update();
@@ -118,14 +120,16 @@ module.exports = function (app) {
         };
 
         vm.update = function () {
-
+            blockUI.start();
             entitledRegistrationSrvc.update(vm.entitledRegistration).then(function success(response) {
                 vm.entitledRegistration = response.data;
+                blockUI.stop();
             }, function error(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
                 if (status.code === httpStatusSrvc.preconditionFailed.code) {
                     vm.message = $rootScope.messages[status.text];
                 };
+                blockUI.stop();
             });
         };
 

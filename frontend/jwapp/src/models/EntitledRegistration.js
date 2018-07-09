@@ -3,7 +3,7 @@ module.exports = function(app){
         return function EntitledRegistration(){
             var self = this;
             self.id = null;
-            self.version = null;
+            self.version = 0;
             self.request = new Request();
             self.capacityDelegation = null;
             self.requestType = null;

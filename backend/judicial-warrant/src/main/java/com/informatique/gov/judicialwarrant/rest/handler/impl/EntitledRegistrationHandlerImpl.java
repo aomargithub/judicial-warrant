@@ -122,20 +122,6 @@ public class EntitledRegistrationHandlerImpl implements EntitledRegistrationHand
 
 			notNull(entitledRegistrationDto, "entitledRegistrationDto must be set");
 
-			if (etag == null) {
-				throw new PreConditionRequiredException(serial);
-			}
-
-			Short version = entitledRegistrationService.getVersionBySerial(serial);
-
-			if (version == null) {
-				throw new ResourceNotFoundException(serial);
-			}
-
-			if (!version.equals(etag)) {
-				throw new ResourceModifiedException(serial, etag, version);
-			}
-
 			EntitledRegistrationDto savedDto = entitledRegistrationService.update(serial, entitledRegistrationDto);
 
 			response = ResponseEntity.ok(savedDto);
