@@ -12,4 +12,5 @@ module.exports = function(app){
     require('./CapacityDelegationChangeStatusRequest')(app);
     require('./EntitledRegistrationChangeStatusRequest')(app);
     require('./ChangeStatusRequest')(app);
+    require('./PasswordChange')(app);
 };

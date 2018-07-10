@@ -1,8 +1,9 @@
 module.exports = function(app){
-    app.controller('userProfileDrtvCtrl', function($rootScope,internalUserSrvc, $scope, User,appSessionSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('userProfileDrtvCtrl', function($rootScope,internalUserSrvc,PasswordChange, $scope, User,appSessionSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.message = null;
         vm.CurrentUser = new User();
+        vm.passwordChange = new PasswordChange();
         vm.emailPattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
         vm.mobilePattern="/^[0-9]{10,10}$/";
 
@@ -21,7 +22,7 @@ module.exports = function(app){
                 vm.message = null;
             });
         };
-
+        
         vm.update = function(){
             internalUserSrvc.update(vm.currentUser).then(function success(response){
                 vm.currentUser = response.data;
@@ -33,6 +34,17 @@ module.exports = function(app){
                 };
             });
         };
+if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
+        vm.updatePassword = function(){
+            internalUserSrvc.updatePassword(vm.currentUser.id,vm.passwordChange).then(function success(response){
+            }, function error(response){
+                
+                var status = httpStatusSrvc.getStatus(response.status);
+                if(status.code === httpStatusSrvc.preconditionFailed.code){
+                    vm.message = $rootScope.messages[status.text];
+                };
+            });
+        }};
 
 
         vm.reset = function(){

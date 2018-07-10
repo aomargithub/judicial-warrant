@@ -106,6 +106,10 @@ ol {
     margin-left: -30px;
 }
 
+.row img {
+    margin-right: 1000px !important;
+    margin-top: -300px !important;
+}
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */

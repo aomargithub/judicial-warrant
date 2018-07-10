@@ -1,7 +1,7 @@
 <div>
-        <div class="page-header">
-                <h3>{{messages.EXTERNAL_USERS}}</h3> 
-              </div>
+        <!-- <div class="page-header">
+                <h3></h3> 
+              </div> -->
     <message-drtv close-callback="userProfileDrtvCtrl.closeMessage" 
         refetch-callback = "userProfileDrtvCtrl.refetch" 
         message="userProfileDrtvCtrl.message" 
@@ -9,26 +9,39 @@
         edit-id="userProfileDrtvCtrl.currentUser.id"
         class="message-bar" >
     </message-drtv>
-<div class="btn-group btn-group-justified ">
-    <form name="userProfileForm"  novalidate>
+    <div class="row">
+        <div class="col-md-10 ">
+
+<div class="">
+    <form name="userProfileForm" class="form-horizontal"  novalidate>
+            <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>{{messages.MY_PROFILE}}</legend>
+                    
         <div class="row">
-        <div class="form-group col-md-6">
-            <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
+        <div class="form-group col-md-5">
+                <label for="englishName" class="required">{{messages.label.arabicName}}</label>
+
             <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="userProfileDrtvCtrl.currentUser.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
             <span ng-show="userProfileForm.arabicName.$touched && userProfileForm.arabicName.$error.required" >
                 {{messages.label.required}}
             </span>
         </div>
-        <div class="form-group col-md-6">
-            <label for="englishName" class="required">{{messages.label.englishName}}</label>
-            <input type="text" class="form-control" id="englishName" name="englishName" ng-model="userProfileDrtvCtrl.currentUser.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
-            <span ng-show="userProfileForm.englishName.$touched && userProfileForm.englishName.$error.required" >
-                {{messages.label.required}}
-            </span>
-        </div>
+        <div class="form-group col-md-5">
+                <label for="englishName" class="required">{{messages.label.englishName}}</label>
+                <input type="text" class="form-control" id="englishName" name="englishName" ng-model="userProfileDrtvCtrl.currentUser.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                <span ng-show="userProfileForm.englishName.$touched && userProfileForm.englishName.$error.required" >
+                    {{messages.label.required}}
+                </span>
+            </div>
     </div>
+    
+    
+    
+    
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-5">
             <label for="mobileNumber1" class="required">{{messages.label.mobileNumber1}}</label>
             <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber1" name="mobileNumber1" ng-model="userProfileDrtvCtrl.currentUser.mobileNumber1" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
             <span ng-show="userProfileForm.mobileNumber1.$touched && userProfileForm.mobileNumber1.$error.required" >
@@ -37,21 +50,23 @@
             <span ng-show="userProfileForm.mobileNumber1.$error.maxlength && userProfileForm.mobileNumber1.$invalid" >
                     {{messages.label.mobileError}}              
                   </span>
-            
         </div>
-        <div class="form-group col-md-6">
-            <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
-            <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber2" name="mobileNumber2" ng-model="userProfileDrtvCtrl.currentUser.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
-            <span ng-show="userProfileForm.mobileNumber2.$touched && userProfileForm.mobileNumber2.$error.required" >
-                {{messages.label.required}}
-            </span>
-            <span ng-show="userProfileForm.mobileNumber2.$error.maxlength && userProfileForm.mobileNumber2.$invalid" >
-                    {{messages.label.mobileError}}
+        <div class="form-group col-md-5">
+                <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
+                <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber2" name="mobileNumber2" ng-model="userProfileDrtvCtrl.currentUser.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
+                <span ng-show="userProfileForm.mobileNumber2.$touched && userProfileForm.mobileNumber2.$error.required" >
+                    {{messages.label.required}}
                 </span>
-        </div>
+                <span ng-show="userProfileForm.mobileNumber2.$error.maxlength && userProfileForm.mobileNumber2.$invalid" >
+                        {{messages.label.mobileError}}
+                    </span>
+            </div>
+    
     </div>
+   
+ 
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-5">
             <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
             <input type="email" class="form-control" id="emailAddress" name="emailAddress" ng-model="userProfileDrtvCtrl.currentUser.emailAddress" ng-pattern="emailPattern" placeholder={{messages.placeHolders.emailPH}} required/>
             <span ng-show="userProfileForm.emailAddress.$touched && userProfileForm.emailAddress.$error.required" >
@@ -61,22 +76,19 @@
                 {{messages.label.emailError}}
             </span>
         </div>
-        <div class="form-group col-md-6">
-            <label for="civilId" class="required">{{messages.label.civilId}}</label>
-            <input type="number" class="form-control civilID" prevent-e id="civilId" name="civilId" ng-model="userProfileDrtvCtrl.currentUser.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
-            <span ng-show="userProfileForm.civilId.$touched && userProfileForm.civilId.$error.required " >
-                {{messages.label.required}}
-            </span>
-            <span ng-show="userProfileForm.civilId.$error.maxlength && userProfileForm.civilId.$invalid" >
-                    {{messages.label.civilError}}
+        <div class="form-group col-md-5">
+                <label for="civilId" class="required">{{messages.label.civilId}}</label>
+                <input type="number" class="form-control civilID" prevent-e id="civilId" name="civilId" ng-model="userProfileDrtvCtrl.currentUser.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
+                <span ng-show="userProfileForm.civilId.$touched && userProfileForm.civilId.$error.required " >
+                    {{messages.label.required}}
                 </span>
-        </div>
+                <span ng-show="userProfileForm.civilId.$error.maxlength && userProfileForm.civilId.$invalid" >
+                        {{messages.label.civilError}}
+                    </span>
+            </div>
     </div>
-    
-    
- 
-
-        <div class="btn-group rigth" >
+        
+        <div class="btn-group  rigth" >
             <div class="btn-group row" ng-if="!userProfileDrtvCtrl.editCurrentUser">
                 <div class="col-sm-10">
                     <button ng-click="userProfileDrtvCtrl.update()" class="btn btn-default"  type="submit">{{messages.label.update}}</button>
@@ -88,7 +100,63 @@
                     <button ng-click="userProfileDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
                 </div>
             </div>
+            
         </div>
+        <div class="btn-group ">
+        <div class="btn-group row" >
+                <div class="col-sm-10">
+                      <button ng-show="userProfileDrtvCtrl.currentUser.userType.code === 'EXTERNAL'" ng-click="" class="btn btn-default" data-toggle="modal" data-target="#passwordChange" 
+                      type="submit" ng-disabled="userProfileForm.$invalid">{{messages.label.passwordChange}}</button>
+                </div>
+            </div>
+        </div>
+        </fieldset>
     </form>
 </div>
+</div>
+</div>
+<div class="col-md-2 hidden-xs">
+        <img src="http://websamplenow.com/30/userprofile/images/avatar.jpg" class="img-responsive img-thumbnail ">
+          </div>
+                    <!-- submission dialog -->
+        <div  id="passwordChange" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-title">{{messages.label.passwordChange}}</h3>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <form>
+                            <!--  -->
+                                <div class="form-group">
+                                        <div class="input-group">
+                                                <label for="oldPassword" class="required">{{messages.label.oldPassword}}</label>
+                                                <input type="password" id="oldPassword" ng-model="userProfileDrtvCtrl.passwordChange.oldPassword" class="form-control" placeholder="Enter PassWord" required/>
+                                </div>
+                            </div>
+                            <!--  -->
+                                <div class="form-group">
+                                        <div class="input-group">
+                                                <label for="newPassword" class="required">{{messages.label.newPassword}}</label>
+                                                <input type="password" id="newPassword" ng-model="userProfileDrtvCtrl.passwordChange.newPassword" class="form-control" placeholder="Enter PassWord" required/>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="form-group">
+                                    <div class="input-group">
+                                            <label for="confirmNewPassword" class="required">{{messages.label.confirmNewPassword}}</label>
+                                            <input type="password" id="confirmNewPassword" ng-model="userProfileDrtvCtrl.passwordChange.confirmNewPassword" class="form-control" placeholder="Enter PassWord" required/>
+                            </div>
+                        </div>
+                           
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="userProfileDrtvCtrl.updatePassword()">{{messages.label.implementRequest}}</button>
+                        <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
+                    </div>
+                </div>
+                </div>
+                </div>
+                <!--  -->
 </div>
