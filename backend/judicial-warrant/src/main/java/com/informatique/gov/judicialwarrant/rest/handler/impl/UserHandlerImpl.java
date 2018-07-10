@@ -211,7 +211,7 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public ResponseEntity<Void> changePassword(Integer id, String oldPass, String newPass, PasswordChangeRequest passwordChangeRequest)
+	public ResponseEntity<Void> changePassword(Integer id, PasswordChangeRequest passwordChangeRequest)
 			throws JudicialWarrantException {
 		ResponseEntity<Void> response = null;
 		try {

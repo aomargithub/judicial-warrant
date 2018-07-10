@@ -27,6 +27,6 @@ public interface UserHandler extends Serializable{
 
 	ResponseEntity<Void>  delete(Integer id) throws JudicialWarrantException;
 	
-	ResponseEntity<Void>  changePassword(Integer id, String oldPass, String newPass, PasswordChangeRequest passwordChangeRequest) throws JudicialWarrantException;
+	ResponseEntity<Void>  changePassword(Integer id, PasswordChangeRequest passwordChangeRequest) throws JudicialWarrantException;
 	ResponseEntity<List<UserDto>> getByRoleIsInternal(Boolean isInternal) throws JudicialWarrantException;
 }

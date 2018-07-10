@@ -49,7 +49,7 @@ module.exports = function (app) {
 
 
         self.update = function (capacityDelegation) {
-            return $http.put(capacityDelegationsUrl + capacityDelegation.id, capacityDelegation);
+            return $http.put(capacityDelegationsUrl + "serial=" + capacityDelegation.request.serial, capacityDelegation);
         };
 
 

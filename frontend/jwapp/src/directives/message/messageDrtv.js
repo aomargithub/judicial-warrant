@@ -11,7 +11,9 @@ module.exports = function(app){
                 closeCallback: '=',
                 refetchCallback : '=',
                 editId: '=',
-                mode: '='
+                mode: '=',
+                withlink : '@',
+                discription : '@'
             },
             template : require('./message-drtv.html'),
             replace: true

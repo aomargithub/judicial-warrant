@@ -4,6 +4,8 @@ module.exports = function (app) {
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
         vm.message = null;
+        vm.messageWithLink = false;
+        vm.messageDiscription = null;
         vm.editeCapacityDelegation = null;
         vm.serial = $stateParams.serial;
 
@@ -38,16 +40,22 @@ module.exports = function (app) {
         //===================================
  
         vm.save = function () {
-            capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
+        if(!vm.capacityDelegation.id) {
+            capacityDelegationSrvc.save(null).then(function success(response) {
                 vm.capacityDelegation = response.data;
                 vm.serial = vm.capacityDelegation.request.serial;
                 vm.reload();
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                vm.handleErrorMessage(response);
             });
+
+        } else {
+            capacityDelegationSrvc.update(vm.capacityDelegation).then(function success(response) {
+                vm.capacityDelegation = response.data;
+            }, function error(response) {
+                vm.handleErrorMessage(response);
+            });
+        }
         };
 
         vm.refetch = function(){
@@ -69,10 +77,7 @@ module.exports = function (app) {
 
 
             },function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                vm.handleErrorMessage(response);
             });
         };
 
@@ -92,10 +97,7 @@ module.exports = function (app) {
      
 
             },function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                vm.handleErrorMessage(response);
             });
         };
 
@@ -105,16 +107,14 @@ module.exports = function (app) {
             capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
            modalSrvc.viewContent(response);
             },function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                vm.handleErrorMessage(response);
             });
         };
 
 
         vm.closeMessage = function () {
             vm.message = null;
+            vm.messageDiscription = null;
         };
 
 
@@ -122,6 +122,19 @@ module.exports = function (app) {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
             return $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
+        }
+
+        vm.handleErrorMessage = function(response) {
+            var status = httpStatusSrvc.getStatus(response.status);
+                console.log(response);
+                if (status.code === httpStatusSrvc.preconditionFailed.code) {
+                    vm.messageWithLink = true;
+                    vm.message = $rootScope.messages[status.text];
+                } else {
+                    vm.messageWithLink = false;
+                    vm.messageDiscription = response.data.message.split(":")[0];
+                    vm.message = $rootScope.messages[status.text];
+                };
         }
 
 

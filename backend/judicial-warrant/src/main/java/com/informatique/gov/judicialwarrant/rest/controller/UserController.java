@@ -88,7 +88,7 @@ public class UserController implements Serializable {
 	@PutMapping("/{id}/passwordChange")
 	public ResponseEntity<?> changePassword(@PathVariable Integer id, @RequestBody PasswordChangeRequest passwordChangeRequest)
 			throws JudicialWarrantException {
-		return userHandler.changePassword(id, passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword(), null);
+		return userHandler.changePassword(id, passwordChangeRequest);
 	}
 
 	@DeleteMapping("/{id}")
