@@ -23,6 +23,10 @@ module.exports = function(app){
             return $http.put(usersUrl + user.id, user);
         };
 
+        self.updatePassword = function(id,passwordChange){
+            return $http.put(usersUrl +id + "/passwordChange",passwordChange);
+        };
+
         self.delete = function(id){
             return $http.delete(usersUrl + id);
         };

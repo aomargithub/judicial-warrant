@@ -1,5 +1,17 @@
 <div>
-  <a class="left" >{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }}</a>
+  
+    <!-- <div class="">
+        <ul class="nav pull-right">
+            <li class="dropdown"><a  class="dropdown-toggle" data-toggle="dropdown">{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!/home/userProfiles" ui-serf="root.userProfiles" ><i class="icon-cog"></i> Preferences</a></li>
+                    <li><a ><i class="icon-envelope"></i> Contact Support</a></li>
+                    <li><a href="#" ng-click="logoutDrtvCtrl.doLogout()" ><i class="icon-off"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+      </div> -->
+  <a href="#!/home/userProfiles" ui-serf="root.userProfiles" class="left" >{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }}</a>
   <button href="#" ng-click="logoutDrtvCtrl.doLogout()" class="btn btn-default">
   <span class="glyphicon glyphicon-log-out"></span> {{messages.label.logOut}}
 </button>
