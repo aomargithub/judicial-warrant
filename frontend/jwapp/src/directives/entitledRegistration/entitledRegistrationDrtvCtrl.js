@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
+    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams, blockUI) {
         var vm = this;
         vm.entitledRegistrationChangeStatusRequest = new EntitledRegistrationChangeStatusRequest();
         vm.entitledRegistration = new EntitledRegistration();
