@@ -1,7 +1,7 @@
 <div>
     <div class="message-bar-content">
            <h5>{{$parent.messages.label.error}}</h5>  {{messageDrtvCtrl.message}}
-       <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)" ng-show="messageDrtvCtrl.withlink === 'true'" >{{$parent.messages.label.refetch}}</a>
+       <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)" ng-show="messageDrtvCtrl.withlink" >{{$parent.messages.label.refetch}}</a>
        <p>{{messageDrtvCtrl.discription}}</p>
         <button type="button" class="close" ng-click="messageDrtvCtrl.closeCallback()"><span>&times;</span></button>
     </div>
