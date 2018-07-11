@@ -1,7 +1,6 @@
 module.exports = function(app){
-    app.controller('requestEntitledRegistrationDrtvCtrl', function( EntitledRegistration,entitledRegistrationSrvc,$state,OrganizationUnit){
+    app.controller('requestEntitledRegistrationDrtvCtrl', function( EntitledRegistration,  messageFcty,entitledRegistrationSrvc,$state,OrganizationUnit){
         var vm = this;
-        vm.message = null;
         vm.entitledRegistration = new EntitledRegistration();
         vm.requestEntitledRegistrations = [];
  
@@ -26,8 +25,5 @@ module.exports = function(app){
         }
 
     
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
     });
 }

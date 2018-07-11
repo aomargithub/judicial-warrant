@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('entitledDrtvCtrl', function ($rootScope, $state, $scope, Entitled, EntitledAttachment, ChangeStatusRequest, entitledRegistrationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
+    app.controller('entitledDrtvCtrl', function ($rootScope,messageFcty, $state, $scope, Entitled, EntitledAttachment, ChangeStatusRequest, entitledRegistrationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams) {
         var vm = this;
         vm.entitleds = [];
         vm.entitled = new Entitled();
@@ -35,10 +35,7 @@ module.exports = function (app) {
                         vm.entitleds.push(response.data);
                         vm.entitled = new Entitled();
                     }, function error(response) {
-                        var status = httpStatusSrvc.getStatus(response.status);
-                        if (status.code === httpStatusSrvc.badRequest.code) {
-                            vm.message = $rootScope.messages[status.text];
-                        };
+                        messageFcty.handleErrorMessage(response);
                     });
                 } else {
                     vm.updateEntitled();
@@ -52,10 +49,7 @@ module.exports = function (app) {
                entitledRegistrationSrvc.updateEntitled($scope.serial, vm.entitled).then(function success(response) {
                    vm.entitled = response.data;
                }, function error(response) {
-                   var status = httpStatusSrvc.getStatus(response.status);
-                   if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                       vm.message = $rootScope.messages[status.text];
-                   };
+                messageFcty.handleErrorMessage(response);
                });
            };
 
@@ -108,10 +102,7 @@ module.exports = function (app) {
                     }
                 });
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -125,10 +116,7 @@ module.exports = function (app) {
                     }
                 });
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -142,10 +130,7 @@ module.exports = function (app) {
                     }
                 });
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -159,10 +144,7 @@ module.exports = function (app) {
                     }
                 });
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
         
@@ -187,10 +169,7 @@ module.exports = function (app) {
                 resetEntitledAttachmentEntryForm();
 
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 

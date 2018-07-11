@@ -1,9 +1,8 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($rootScope, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('internalUserDrtvCtrl', function($rootScope,messageFcty, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
-        vm.message = null;
         vm.editUser = null;
         vm.emailPattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
         vm.mobilePattern="/^[0-9]{10,10}$/";
@@ -39,10 +38,7 @@ module.exports = function(app){
                 vm.user = new User();
                 resetEntryForm();
             }, function error(response){
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.badRequest.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -61,7 +57,7 @@ module.exports = function(app){
                 vm.editUser = response.data;
                 vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.user = angular.copy(vm.editUser);
-                vm.message = null;
+                messageFcty.resetMessage(response);
                 resetEntryForm();
             });
         };
@@ -82,12 +78,8 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
-                resetEntryForm();
+                messageFcty.handleErrorMessage(response);
+                  resetEntryForm();
             });
         };
 
@@ -102,20 +94,14 @@ module.exports = function(app){
 
                 resetEntryForm();
             }, function error(response){
-                
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
-                resetEntryForm();
+                messageFcty.handleErrorMessage(response);
+                                resetEntryForm();
             }); 
         };
 
         vm.cancel = function(){
             vm.user = new User();
             vm.editUser = null;
-            vm.message = null;
             resetEntryForm();
         };
 
@@ -129,9 +115,7 @@ module.exports = function(app){
             resetEntryForm();
         };
 
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
+       
 
     });
 };

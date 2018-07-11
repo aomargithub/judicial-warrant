@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('externalUserDrtvCtrl', function($rootScope, $scope, User, externalUserSrvc,httpStatusSrvc,stringUtilSrvc,organizationUnitSrvc,roleSrvc){
+    app.controller('externalUserDrtvCtrl', function($rootScope,messageFcty, $scope, User, externalUserSrvc,httpStatusSrvc,stringUtilSrvc,organizationUnitSrvc,roleSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
@@ -49,10 +49,7 @@ module.exports = function(app){
 
                 resetEntryForm();
             }, function error(response){
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.badRequest.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -70,7 +67,7 @@ module.exports = function(app){
                 vm.editUser = response.data;
                 vm.editUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.user = angular.copy(vm.editUser);
-                vm.message = null;
+                messageFcty.resetMessage(response);
                 resetEntryForm();
             });
         };
@@ -91,10 +88,7 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
 
                 resetEntryForm();
             });
@@ -112,10 +106,7 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
 
                 resetEntryForm();
             }); 

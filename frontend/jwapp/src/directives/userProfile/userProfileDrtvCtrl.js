@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('userProfileDrtvCtrl', function($rootScope,internalUserSrvc,PasswordChange, $scope, User,appSessionSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('userProfileDrtvCtrl', function($rootScope,internalUserSrvc,  messageFcty,PasswordChange, $scope, User,appSessionSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.message = null;
         vm.CurrentUser = new User();
@@ -19,7 +19,7 @@ module.exports = function(app){
             internalUserSrvc.getCurrentUser().then(function(response){
                 vm.currentUser = response.data;
                 vm.currentUser.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
-                vm.message = null;
+                messageFcty.resetMessage(response);
             });
         };
         
@@ -28,10 +28,7 @@ module.exports = function(app){
                 vm.currentUser = response.data;
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
@@ -39,10 +36,7 @@ if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
             internalUserSrvc.updatePassword(vm.currentUser.id,vm.passwordChange).then(function success(response){
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         }};
 
@@ -54,9 +48,6 @@ if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
               });
         };
 
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
-
+    
     });
 };

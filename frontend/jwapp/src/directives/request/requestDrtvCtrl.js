@@ -1,8 +1,7 @@
 module.exports = function(app){
     app.controller('requestDrtvCtrl', function( requestSrcv,$state,OrganizationUnit){
         var vm = this;
-        vm.message = null;
-        //vm.requestType=null;
+      
         vm.organizationUnit = new OrganizationUnit();
 
       
@@ -29,8 +28,6 @@ module.exports = function(app){
         }
 
     
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
+     
     });
 }

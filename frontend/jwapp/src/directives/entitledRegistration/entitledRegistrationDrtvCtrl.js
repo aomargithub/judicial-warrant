@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams, blockUI) {
+    app.controller('entitledRegistrationDrtvCtrl', function ($rootScope, messageFcty,EntitledRegistrationChangeStatusRequest , $state, $scope, capacityDelegationSrvc, requestTypeSrvc, requestTypeAttachmentTypeSrvc, EntitledRegistration, CapacityDelegation, RequestAttachment, Entitled, EntitledAttachment, entitledRegistrationSrvc, attachmentTypeSrvc, requestAttachmentSrvc, httpStatusSrvc, stringUtilSrvc, modalSrvc, appSessionSrvc, appRoleFcty, $stateParams, blockUI) {
         var vm = this;
         vm.entitledRegistrationChangeStatusRequest = new EntitledRegistrationChangeStatusRequest();
         vm.entitledRegistration = new EntitledRegistration();
@@ -108,10 +108,7 @@ module.exports = function (app) {
                 vm.reLoad();
            
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
                 blockUI.stop();
             });
         } else {
@@ -125,10 +122,7 @@ module.exports = function (app) {
                 vm.entitledRegistration = response.data;
                 blockUI.stop();
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
                 blockUI.stop();
             });
         };
@@ -141,7 +135,7 @@ module.exports = function (app) {
             entitledRegistrationSrvc.getById(id).then(function (response) {
                 vm.entitledRegistration = response.data;
                 vm.entitledRegistration.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
-                vm.message = null;
+                messageFcty.resetMessage();
             });
         };
 

@@ -1,8 +1,7 @@
 module.exports = function (app) {
-    app.controller('requestAttachmentDrtvCtrl', function ($rootScope, $state, $scope, requestTypeAttachmentTypeSrvc, RequestAttachment, requestAttachmentSrvc, httpStatusSrvc,modalSrvc) {
+    app.controller('requestAttachmentDrtvCtrl', function ($rootScope,  messageFcty, $state, $scope, requestTypeAttachmentTypeSrvc, RequestAttachment, requestAttachmentSrvc, httpStatusSrvc,modalSrvc) {
         var vm = this;
-        vm.requestAttachment = new RequestAttachment();
-        vm.message = null;       
+        vm.requestAttachment = new RequestAttachment();     
         vm.requestAttachments = [];
         vm.attachmentTypes = [];
 
@@ -10,7 +9,7 @@ module.exports = function (app) {
             start: 0,
             end: 0
         };
-
+       
        requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('root.', '')).then(function success(response) {
         vm.attachmentTypes=response.data;
 
@@ -32,10 +31,7 @@ module.exports = function (app) {
                 resetRequestAttachmentEntryForm();
 
             }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.badRequest.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -46,11 +42,8 @@ module.exports = function (app) {
                         vm.requestAttachments.splice(index, 1);
                     }
                 });
-            }, function error(response) {
-                var status = httpStatusSrvc.getStatus(response.status);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.message = $rootScope.messages[status.text];
-                };
+            }, function error(response) { 
+                 messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -60,9 +53,6 @@ module.exports = function (app) {
             $scope.requestAttachmentForm.$setUntouched();
         }
 
-        vm.closeMessage = function () {
-            vm.message = null;
-        };
 
         vm.showRequestAttachmentImage = function (requestAttachment) {
             requestAttachmentSrvc.showRequestAttachmentImage($scope.urlperfix, $scope.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
@@ -70,6 +60,5 @@ module.exports = function (app) {
             })
         };
 
-    
     });
 };

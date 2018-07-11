@@ -19,16 +19,14 @@ module.exports = function(app){
 
             handleErrorMessage : function(response) {
                 var status = httpStatusSrvc.getStatus(response.status);
-                    console.log(response);
                     if (status.code === httpStatusSrvc.preconditionFailed.code) {
                         messageWithLink = true;
                         message = $rootScope.messages[status.text];
                     } else {
                         messageWithLink = false;
-                        messageDiscription = response.data.message.split(":")[0];
+                        messageDiscription = response.data.message ? response.data.message.split(":")[0] : response.data.errorDescription;
                         message = $rootScope.messages[status.text];
                     };
-                    console.log(message);
             },
     
             resetMessage : function () {

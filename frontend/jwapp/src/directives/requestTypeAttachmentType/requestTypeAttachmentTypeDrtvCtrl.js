@@ -1,9 +1,8 @@
 module.exports = function(app){
-    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($rootScope,$scope,RequestTypeAttachmentType,requestTypeAttachmentTypeSrvc,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc){
+    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($rootScope,$scope,  messageFcty,RequestTypeAttachmentType,requestTypeAttachmentTypeSrvc,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc){
         var vm = this;
         vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
         vm.editId = null;
-        vm.message = null;
         vm.editrequestTypeAttachmentType = null;
         vm.requestTypeAttachmentTypes = [];
         vm.requests = [];
@@ -38,10 +37,7 @@ module.exports = function(app){
                 vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
                 resetEntryForm();
             }, function error(response){
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.badRequest.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -62,7 +58,7 @@ module.exports = function(app){
                 vm.editrequestTypeAttachmentType = response.data;
                 vm.editrequestTypeAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.requestTypeAttachmentType = angular.copy(vm.editrequestTypeAttachmentType);
-                vm.message = null;
+                messageFcty.resetMessage(response);
                 resetEntryForm();
             });
         };
@@ -105,11 +101,7 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
+                messageFcty.handleErrorMessage(response);
                 resetEntryForm();
             }); 
         };
@@ -117,7 +109,6 @@ module.exports = function(app){
         vm.cancel = function(){
             vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
             vm.editrequestTypeAttachmentType = null;
-            vm.message = null;
             resetEntryForm();
         };
 
@@ -128,10 +119,6 @@ module.exports = function(app){
                 vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
             }
             resetEntryForm();
-        };
-
-        vm.closeMessage = function(){
-            vm.message = null;
         };
     });
 }

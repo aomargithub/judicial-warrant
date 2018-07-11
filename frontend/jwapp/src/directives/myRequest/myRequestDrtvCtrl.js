@@ -1,10 +1,7 @@
 module.exports = function(app){
     app.controller('myRequestDrtvCtrl', function( requestSrcv,CapacityDelegation,  httpStatusSrvc, stringUtilSrvc,$state){
         var vm = this;
-        vm.message = null;
-
-
-      
+  
         vm.page = {
             start: 0,
             end: 0
@@ -30,8 +27,6 @@ module.exports = function(app){
 
             }
         }
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
+       
     });
 }

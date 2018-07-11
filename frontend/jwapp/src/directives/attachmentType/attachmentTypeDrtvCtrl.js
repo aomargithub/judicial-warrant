@@ -1,10 +1,9 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;
         vm.editAttachmentType = null;
-        vm.message = null;
         vm.attachmentTypes = [];
         vm.page = {
             start: 0,
@@ -25,10 +24,7 @@ module.exports = function(app){
                 vm.attachmentType = new AttachmentType();
                 resetEntryForm();
             }, function error(response){
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.badRequest.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -46,7 +42,7 @@ module.exports = function(app){
                 vm.editAttachmentType = response.data;
                 vm.editAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.attachmentType = angular.copy(vm.editAttachmentType);
-                vm.message = null;
+                messageFcty.resetMessage();
                 resetEntryForm();
             });
         };
@@ -67,11 +63,7 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
+                messageFcty.handleErrorMessage(response);
                 resetEntryForm();
             });
         };
@@ -88,10 +80,7 @@ module.exports = function(app){
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
 
                 resetEntryForm();
             });
