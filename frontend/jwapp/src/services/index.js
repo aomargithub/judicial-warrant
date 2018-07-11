@@ -23,4 +23,5 @@ module.exports = function(app){
     require('./entitledRegistrationSrvc')(app);
     require('./requestAttachmentSrvc')(app);
     require('./requestSrvc')(app);
+    require('./messageFcty')(app);
 };

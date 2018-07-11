@@ -1,11 +1,8 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc) {
+    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc, messageFcty) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
-        vm.message = null;
-        vm.messageWithLink = false;
-        vm.messageDiscription = null;
         vm.editeCapacityDelegation = null;
         vm.serial = $stateParams.serial;
 
@@ -46,14 +43,14 @@ module.exports = function (app) {
                 vm.serial = vm.capacityDelegation.request.serial;
                 vm.reload();
             }, function error(response) {
-                vm.handleErrorMessage(response);
+                messageFcty.handleErrorMessage(response);
             });
 
         } else {
             capacityDelegationSrvc.update(vm.capacityDelegation).then(function success(response) {
                 vm.capacityDelegation = response.data;
             }, function error(response) {
-                vm.handleErrorMessage(response);
+                messageFcty.handleErrorMessage(response);
             });
         }
         };
@@ -63,7 +60,7 @@ module.exports = function (app) {
                 vm.editeCapacityDelegation = response.data;
                 vm.editeCapacityDelegation.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                  vm.capacityDelegation = angular.copy(vm.editeCapacityDelegation);
-                vm.message = null; 
+                 messageFcty.resetMessage();
                 resetEntryForm();
             });
         };
@@ -77,7 +74,7 @@ module.exports = function (app) {
 
 
             },function error(response) {
-                vm.handleErrorMessage(response);
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -97,7 +94,7 @@ module.exports = function (app) {
      
 
             },function error(response) {
-                vm.handleErrorMessage(response);
+                messageFcty.handleErrorMessage(response);
             });
         };
 
@@ -107,34 +104,16 @@ module.exports = function (app) {
             capacityDelegationSrvc.showImage(vm.capacityDelegation.request.serial, requestAttachment.id, requestAttachment.ucmDocumentId).then(function success(response) {
            modalSrvc.viewContent(response);
             },function error(response) {
-                vm.handleErrorMessage(response);
+                messageFcty.handleErrorMessage(response);
             });
         };
 
-
-        vm.closeMessage = function () {
-            vm.message = null;
-            vm.messageDiscription = null;
-        };
 
 
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
             return $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
-        }
-
-        vm.handleErrorMessage = function(response) {
-            var status = httpStatusSrvc.getStatus(response.status);
-                console.log(response);
-                if (status.code === httpStatusSrvc.preconditionFailed.code) {
-                    vm.messageWithLink = true;
-                    vm.message = $rootScope.messages[status.text];
-                } else {
-                    vm.messageWithLink = false;
-                    vm.messageDiscription = response.data.message.split(":")[0];
-                    vm.message = $rootScope.messages[status.text];
-                };
         }
 
 
