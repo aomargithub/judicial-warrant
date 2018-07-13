@@ -10,8 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
 import com.informatique.gov.judicialwarrant.domain.UserType;

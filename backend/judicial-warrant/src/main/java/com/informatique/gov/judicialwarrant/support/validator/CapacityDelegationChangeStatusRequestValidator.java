@@ -1,23 +1,15 @@
 package com.informatique.gov.judicialwarrant.support.validator;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.exception.JudicialWarrantExceptionEnum;
-import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestAttachmentDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeAttachmentTypeDto;
-import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
 import com.informatique.gov.judicialwarrant.rest.request.CapacityDelegationChangeStatusRequest;
 import com.informatique.gov.judicialwarrant.service.RequestAttachmentService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeAttachmentTypeService;
 import com.informatique.gov.judicialwarrant.service.RequestTypeService;
-import com.informatique.gov.judicialwarrant.support.dataenum.RequestTypeEnum;
 
 @Component
 
