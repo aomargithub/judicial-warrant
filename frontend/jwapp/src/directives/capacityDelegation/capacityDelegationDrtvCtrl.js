@@ -38,7 +38,7 @@ module.exports = function (app) {
  
         vm.save = function () {
         if(!vm.capacityDelegation.id) {
-            capacityDelegationSrvc.save(null).then(function success(response) {
+            capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
                 vm.capacityDelegation = response.data;
                 vm.serial = vm.capacityDelegation.request.serial;
                 vm.reload();

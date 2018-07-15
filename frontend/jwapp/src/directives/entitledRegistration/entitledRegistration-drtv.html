@@ -55,7 +55,7 @@
         </form>
 
 
-        <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion" data-target="#bot">{{messages.label.AddAttachmentLable}}</button>
+        <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion btn btn-default" data-target="#bot"><i class="more-less pull-right glyphicon glyphicon-chevron-down"></i>{{messages.label.AddAttachmentLable}}</button>
         <div id="bot" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
             <request-Attachment urlPerfix = "entitledRegistrations"  
             serial = "{{entitledRegistrationDrtvCtrl.serial}}"
@@ -67,7 +67,7 @@
     <br/>
 
     <!-- entitled Section -->
-    <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion" data-target="#entitledShow">{{messages.label.addEntitles}}</button>
+    <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion btn btn-default" data-target="#entitledShow"><i class="more-less pull-right glyphicon glyphicon-chevron-down"></i>{{messages.label.addEntitles}}</button>
     <div id="entitledShow" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
 
             <entitled 

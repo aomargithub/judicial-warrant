@@ -3,6 +3,7 @@ module.exports = function (app) {
         var vm = this;
         vm.entitleds = [];
         vm.entitled = new Entitled();
+        vm.entitledForAttachmentsDialog = new Entitled();
         vm.entitledAttachments = [];
         vm.entitledAttachment = new EntitledAttachment ();
         vm.attachmentTypes = [];
@@ -14,14 +15,14 @@ module.exports = function (app) {
             start: 0,
             end: 0
         };
-    
+
         requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('root.', '')).then(function success(response) {
             vm.attachmentTypes=response.data;
     
         });
 
         entitledRegistrationSrvc.getEntitleds($scope.serial).then(function success(response) {
-            vm.entitleds = response.data;
+        vm.entitleds = response.data;
         });
 
 
@@ -60,7 +61,7 @@ module.exports = function (app) {
         };
 
         vm.prepareToOpenEntitedAttachments = function (entitled) {
-            vm.entitled = entitled;
+            vm.entitledForAttachmentsDialog = entitled;
             vm.getEntitledAttachments(entitled.id);
         }
 
@@ -80,7 +81,7 @@ module.exports = function (app) {
 
         vm.prepareToOpenWorkFlowActionDialog = function (entitled, action) {
             vm.action = action;
-            vm.entitled = entitled;
+            vm.entitledForAttachmentsDialog = entitled;
         }
 
         vm.workFlowAction = function () {
@@ -107,12 +108,12 @@ module.exports = function (app) {
         };
 
         vm.acceptEntitled = function () {
-            entitledRegistrationSrvc.acceptEntitled($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
-                vm.entitled = response.data;
+            entitledRegistrationSrvc.acceptEntitled($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
                     if (e.id === vm.entitled.id) {
                         vm.entitleds[index] = vm.entitled;
-                        vm.entitled = new Entitled();
+                        vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
             }, function error(response) {
@@ -121,12 +122,12 @@ module.exports = function (app) {
         };
 
         vm.cardRecievedEntitledCardRecieved = function () {
-            entitledRegistrationSrvc.cardRecievedEntitledCardRecieved($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
-                vm.entitled = response.data;
+            entitledRegistrationSrvc.cardRecievedEntitledCardRecieved($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
                     if (e.id === vm.entitled.id) {
-                        vm.entitleds[index] = vm.entitled;
-                        vm.entitled = new Entitled();
+                        vm.entitleds[index] = vm.entitledForAttachmentsDialog;
+                        vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
             }, function error(response) {
@@ -135,12 +136,12 @@ module.exports = function (app) {
         };
 
         vm.rejectionEntitled = function () {
-            entitledRegistrationSrvc.rejectionEntitled($scope.serial, vm.entitled.id, vm.changeStatusRequest).then(function success(response) {
-                vm.entitled = response.data;
+            entitledRegistrationSrvc.rejectionEntitled($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
+                vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
                     if (e.id === vm.entitled.id) {
-                        vm.entitleds[index] = vm.entitled;
-                        vm.entitled = new Entitled();
+                        vm.entitleds[index] = vm.entitledForAttachmentsDialog;
+                        vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
             }, function error(response) {
@@ -160,8 +161,8 @@ module.exports = function (app) {
         }
 
         vm.addEntitledAttachment = function () {
-            vm.entitledAttachment.entitled = vm.entitled;
-            entitledRegistrationSrvc.uploadEntitledAttachment(vm.entitledAttachment, $scope.serial, vm.entitled.id).then(function success(response) {
+            vm.entitledAttachment.entitled = vm.entitledForAttachmentsDialog;
+            entitledRegistrationSrvc.uploadEntitledAttachment(vm.entitledAttachment, $scope.serial, vm.entitledForAttachmentsDialog.id).then(function success(response) {
                 vm.entitledAttachments = vm.entitledAttachments || [];
                 vm.entitledAttachments.push(response.data);
                 vm.entitledAttachment = new EntitledAttachment();

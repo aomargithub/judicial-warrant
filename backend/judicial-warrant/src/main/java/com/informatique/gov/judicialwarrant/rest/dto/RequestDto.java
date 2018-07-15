@@ -3,7 +3,6 @@ package com.informatique.gov.judicialwarrant.rest.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -26,7 +25,6 @@ public class RequestDto implements UserModel<Long> {
 	private RequestTypeDto type;
 	private RequestStatusDto currentStatus;
 	private OrganizationUnitDto organizationUnit;
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date createDate;
 	private List<RequestHistoryLogDto> histortyLogs;
 	
