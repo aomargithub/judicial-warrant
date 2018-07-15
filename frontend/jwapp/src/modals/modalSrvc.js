@@ -17,6 +17,7 @@ module.exports = function(app){
                         template: require('./content-viewer/content-viewer-mdl.html'),
                         controller: 'contentViewerCtrl',
                         controllerAs: 'contentViewerCtrl',
+                        windowClass: 'zindex',
                         size: 'lg',
                         resolve: {
                         imgSrc: function () {
