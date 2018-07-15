@@ -106,6 +106,7 @@ module.exports = function (app) {
                 blockUI.stop();
                 // set serial in url to make user can refresh page and with same data
                 vm.reLoad();
+                messageFcty.showSuccessMessage();
            
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);

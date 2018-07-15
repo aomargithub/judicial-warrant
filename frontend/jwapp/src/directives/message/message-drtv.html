@@ -1,8 +1,15 @@
-<div ng-show="messageFcty.getMessage()">
-    <div class="message-bar-content">
+<div ng-show="messageFcty.getMessage() || messageFcty.getSuccessMessage()">
+    <div class="message-bar-content" ng-show="messageFcty.getMessage()">
            <h5>{{$parent.messages.label.error}}</h5> {{messageFcty.getMessage()}}
        <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)" ng-show="messageFcty.getMessageWithLink()" >{{$parent.messages.label.refetch}}</a>
        <p>{{messageFcty.getMessageDiscription()}}</p>
         <button type="button" class="close" ng-click="messageDrtvCtrl.closeMessage()"><span>&times;</span></button>
     </div>
+
+    <div class="message-bar-content" ng-show="messageFcty.getSuccessMessage()">
+        <br/>
+        <h5 style="margin-right: 0;">{{messageFcty.getSuccessMessage()}}</h5> 
+        <button type="button" class="close" ng-click="messageDrtvCtrl.closeSuccessMessage()"><span>&times;</span></button>
+    </div>
+
 </div>

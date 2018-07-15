@@ -6,6 +6,7 @@ module.exports = function(app){
         self.sameOriginPolicyViolation = {code : -1, text : 'SAME_ORIGIN_POLICY_VIOLATION'};
         self.preconditionFailed =  {code : 412, text : 'PRECONDITION_FAILED'};
         self.badRequest =  {code : 400, text : 'BAD_REQUEST'};
+        self.internalServerError =  {code : 500, text : 'INTERNAL_SERVER_ERROR'};
         function init(){
             statuses = new Map();
             statuses.set(-1, self.sameOriginPolicyViolation);
@@ -19,7 +20,7 @@ module.exports = function(app){
             statuses.set(405, {code : 405, text : 'METHOD_NOT_ALLOWED'});
             statuses.set(412, self.preconditionFailed);
             statuses.set(428, {code : 428, text : 'PRECONDITION_REQUIRED'});
-            statuses.set(500, {code : 500, text : 'INTERNAL_SERVER_ERROR'});
+            statuses.set(500, self.internalServerError);
         }
         init();
         self.getStatus = function(code){

@@ -6,6 +6,10 @@ module.exports = function (app) {
         vm.closeMessage = function () {
             messageFcty.resetMessage();
         };
+
+        vm.closeSuccessMessage = function () {
+            messageFcty.resetSuccessMessage();
+        };
         
     });
 };
