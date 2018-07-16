@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function($rootScope, $scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function($rootScope,messageFcty, $scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;
@@ -22,6 +22,7 @@ module.exports = function(app){
             attachmentTypeSrvc.save(vm.attachmentType).then(function success(response){
                 vm.attachmentTypes.push(response.data);
                 vm.attachmentType = new AttachmentType();
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 messageFcty.handleErrorMessage(response);
@@ -33,6 +34,7 @@ module.exports = function(app){
                 vm.editAttachmentType = response.data;
                 vm.editAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.attachmentType = angular.copy(vm.editAttachmentType);
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             });
         };
@@ -59,6 +61,7 @@ module.exports = function(app){
                         vm.attachmentTypes[index] = tempAttachmentType;
                     }
                 });
+                messageFcty.showSuccessMessage();
 
                 resetEntryForm();
             }, function error(response){

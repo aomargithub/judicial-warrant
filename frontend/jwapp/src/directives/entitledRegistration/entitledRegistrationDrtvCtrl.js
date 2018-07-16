@@ -34,7 +34,7 @@ module.exports = function (app) {
             vm.capacityDelegations = response.data;
        });
 
-       requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('root.', '')).then(function success(response) {
+       requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('home.', '')).then(function success(response) {
         vm.attachmentTypes=response.data;
 
     });
@@ -90,7 +90,7 @@ module.exports = function (app) {
     
         if (vm.serial) {
             entitledRegistrationSrvc.getBySerial(vm.serial).then(function success(response) {
-                vm.entitledRegistration = response.data;   
+                vm.entitledRegistration = response.data;    
                });
                 entitledRegistrationSrvc.getEntitleds(vm.serial).then(function success(response) {
                     vm.entitleds = response.data;
@@ -121,6 +121,7 @@ module.exports = function (app) {
             blockUI.start();
             entitledRegistrationSrvc.update(vm.entitledRegistration).then(function success(response) {
                 vm.entitledRegistration = response.data;
+                messageFcty.showSuccessMessage();
                 blockUI.stop();
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);
@@ -152,7 +153,7 @@ module.exports = function (app) {
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data in entitleds two change status
-            return $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial},{reload: true});
+            return $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial},{reload: true});
         }
 
     });

@@ -18,11 +18,11 @@ module.exports = function(app){
             vm.serial = request.serial;
             if (vm.code ==='CAPACITY_DELEGATION')
             {
-              return    $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial});
+              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial});
             }
             else(vm.code ==='ENTITLED_REGISTRATION')
             {
-              return    $state.go('root.ENTITLED_REGISTRATION',{serial:vm.serial});
+              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial});
 
             }
         }

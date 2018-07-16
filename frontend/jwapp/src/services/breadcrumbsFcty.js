@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.factory('breadcrumbsFcty', function ($state, breadcrumbsConfig) {
+    app.factory('breadcrumbsFcty', function ($state, breadcrumbsConfig,$rootScope) {
 
         var createBreadcrumbs = function (abstract) {
 
@@ -25,14 +25,14 @@ module.exports = function (app) {
             if (!abstract) {
                 for (i in parentStates) {
                     if (!parentStates[i].abstract) {
-                        breadcrumbs.push(parentStates[i]);
+                        breadcrumbs.push({"state":parentStates[i] , "name" : $rootScope.messages[parentStates[i]]});
                     }
                 }
             } else {
                 breadcrumbs = parentStates;
             }
             // add current state to breadcrumbs
-            breadcrumbs.push($state.current);
+            breadcrumbs.push({"state":$state.current , "name" : $rootScope.messages[$state.current.data.label]});
             return breadcrumbs;
         };
         return {

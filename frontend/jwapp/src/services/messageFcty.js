@@ -49,7 +49,7 @@ module.exports = function(app){
             },
 
             showSuccessMessage : function (){
-                successMessage = "saved Successfully";
+                successMessage =$rootScope.messages['successMessage'] ;
             },
 
             resetSuccessMessage : function (){

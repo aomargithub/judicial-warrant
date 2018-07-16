@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc, messageFcty) {
+    app.controller('capacityDelegationDrtvCtrl', function ($rootScope,messageFcty, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc, messageFcty) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
@@ -41,6 +41,7 @@ module.exports = function (app) {
             capacityDelegationSrvc.save(vm.capacityDelegation).then(function success(response) {
                 vm.capacityDelegation = response.data;
                 vm.serial = vm.capacityDelegation.request.serial;
+                messageFcty.showSuccessMessage();
                 vm.reload();
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);
@@ -89,6 +90,7 @@ module.exports = function (app) {
             vm.capacityDelegationChangeStatusRequest.capacityDelegation = vm.capacityDelegation;
             capacityDelegationSrvc.submission(vm.capacityDelegation.request.serial, vm.capacityDelegationChangeStatusRequest).then(function (response) {
                 vm.capacityDelegation = response.data;
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
                 vm.reload();
      
@@ -113,7 +115,7 @@ module.exports = function (app) {
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
-            return $state.go('root.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
+            return $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
         }
 
 

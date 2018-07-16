@@ -10,7 +10,7 @@ module.exports = function (app) {
             end: 0
         };
        
-       requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('root.', '')).then(function success(response) {
+       requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('home.', '')).then(function success(response) {
         vm.attachmentTypes=response.data;
 
         if($scope.serial) {
@@ -27,7 +27,7 @@ module.exports = function (app) {
                 vm.requestAttachments = vm.requestAttachments || [];
                 vm.requestAttachments.push(response.data);
                 vm.requestAttachment = new RequestAttachment();
-
+                messageFcty.showSuccessMessage();
                 resetRequestAttachmentEntryForm();
 
             }, function error(response) {

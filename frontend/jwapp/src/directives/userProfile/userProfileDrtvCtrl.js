@@ -26,6 +26,7 @@ module.exports = function(app){
         vm.update = function(){
             internalUserSrvc.update(vm.currentUser).then(function success(response){
                 vm.currentUser = response.data;
+                messageFcty.showSuccessMessage();
             }, function error(response){
                 
                 messageFcty.handleErrorMessage(response);
@@ -34,6 +35,7 @@ module.exports = function(app){
 if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
         vm.updatePassword = function(){
             internalUserSrvc.updatePassword(vm.currentUser.id,vm.passwordChange).then(function success(response){
+                messageFcty.showSuccessMessage();
             }, function error(response){
                 
                 messageFcty.handleErrorMessage(response);

@@ -16,7 +16,7 @@ module.exports = function (app) {
             end: 0
         };
 
-        requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('root.', '')).then(function success(response) {
+        requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('home.', '')).then(function success(response) {
             vm.attachmentTypes=response.data;
     
         });
@@ -35,6 +35,7 @@ module.exports = function (app) {
                         vm.entitleds = vm.entitleds || [];
                         vm.entitleds.push(response.data);
                         vm.entitled = new Entitled();
+                        messageFcty.showSuccessMessage();
                     }, function error(response) {
                         messageFcty.handleErrorMessage(response);
                     });
@@ -49,6 +50,7 @@ module.exports = function (app) {
         vm.updateEntitled = function () {
                entitledRegistrationSrvc.updateEntitled($scope.serial, vm.entitled).then(function success(response) {
                    vm.entitled = response.data;
+                   messageFcty.showSuccessMessage();
                }, function error(response) {
                 messageFcty.handleErrorMessage(response);
                });
@@ -116,6 +118,7 @@ module.exports = function (app) {
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
+                messageFcty.showSuccessMessage();
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);
             });
@@ -130,6 +133,7 @@ module.exports = function (app) {
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
+                messageFcty.showSuccessMessage();
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);
             });
@@ -144,6 +148,7 @@ module.exports = function (app) {
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
+                messageFcty.showSuccessMessage();
             }, function error(response) {
                 messageFcty.handleErrorMessage(response);
             });

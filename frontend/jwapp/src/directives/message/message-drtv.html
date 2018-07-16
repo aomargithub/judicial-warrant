@@ -1,4 +1,5 @@
 <div ng-show="messageFcty.getMessage() || messageFcty.getSuccessMessage()">
+    <!-- erorr message -->
     <div class="message-bar-content" ng-show="messageFcty.getMessage()">
            <h5>{{$parent.messages.label.error}}</h5> {{messageFcty.getMessage()}}
        <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)" ng-show="messageFcty.getMessageWithLink()" >{{$parent.messages.label.refetch}}</a>
@@ -6,6 +7,7 @@
         <button type="button" class="close" ng-click="messageDrtvCtrl.closeMessage()"><span>&times;</span></button>
     </div>
 
+    <!-- success message -->
     <div class="message-bar-content" ng-show="messageFcty.getSuccessMessage()">
         <br/>
         <h5 style="margin-right: 0;">{{messageFcty.getSuccessMessage()}}</h5> 

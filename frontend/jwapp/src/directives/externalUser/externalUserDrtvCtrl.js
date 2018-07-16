@@ -46,7 +46,7 @@ module.exports = function(app){
             externalUserSrvc.save(vm.user).then(function success(response){
                 vm.users.push(response.data);
                 vm.user = new User();
-
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 messageFcty.handleErrorMessage(response);
@@ -84,7 +84,7 @@ module.exports = function(app){
                         vm.users[index] = tempUser;
                     }
                 });
-
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 

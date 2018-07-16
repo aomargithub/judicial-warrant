@@ -35,6 +35,7 @@ module.exports = function(app){
                 
                 vm.requestTypeAttachmentTypes.push(response.data);
                 vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 messageFcty.handleErrorMessage(response);
@@ -76,15 +77,11 @@ module.exports = function(app){
                         vm.requestTypeAttachmentTypes[index] = tempRequestAttachment;
                     }
                 });
-
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
+                messageFcty.handleErrorMessage(response);
                 resetEntryForm();
             });
         };

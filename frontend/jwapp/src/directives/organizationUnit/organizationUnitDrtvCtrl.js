@@ -22,6 +22,7 @@ module.exports = function(app){
             organizationUnitSrvc.save(vm.organizationUnit).then(function(response){
                 vm.organizationUnits.push(response.data);
                 vm.organizationUnit = new OrganizationUnit();
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             },function error (response){
                 messageFcty.handleErrorMessage(response);
@@ -60,7 +61,7 @@ module.exports = function(app){
                         vm.organizationUnits[index] = tempOrganizationUnit;
                     }
                 });
-
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 

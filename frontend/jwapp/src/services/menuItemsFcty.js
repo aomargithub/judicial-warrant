@@ -69,13 +69,13 @@ module.exports = function(app){
         }
 //========================================
         var homeItem = new Item();
-        homeItem.codeValue('HOME').routeValue('root').selfShowFilterValue(function(role){return true;}).classesValue(["glyphicon", "glyphicon-home"]);
+        homeItem.codeValue('home').routeValue('home').selfShowFilterValue(function(role){return true;}).classesValue(["glyphicon", "glyphicon-home"]);
         
         var requestsItem = new Item();
-        requestsItem.codeValue('REQUESTS').routeValue('.requests').selfShowFilterValue(function(role){return role === appRoleFcty.officer.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
+        requestsItem.codeValue('requests').routeValue('.requests').selfShowFilterValue(function(role){return role === appRoleFcty.officer.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
         
         var myRequestsItem = new Item();
-        myRequestsItem.codeValue('MY_REQUESTS').routeValue('.myRequests').selfShowFilterValue(function(role){return role === appRoleFcty.user.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
+        myRequestsItem.codeValue('myRequests').routeValue('.myRequests').selfShowFilterValue(function(role){return role === appRoleFcty.user.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
         
         var trainingEntitledRegistrationsItem = new Item();
         trainingEntitledRegistrationsItem.codeValue('TRAINING_ENTITLED_REGISTRATION').routeValue('.requestEntitledRegistrations').selfShowFilterValue(function(role){return role === appRoleFcty.training.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
@@ -93,16 +93,16 @@ module.exports = function(app){
       
        
 
-        organizationUnitsSubItem.codeValue('ORGANIZATION_UNITS')
+        organizationUnitsSubItem.codeValue('organizationUnits')
         .routeValue('.organizationUnits')
         .showFilterValue(function(role){
             return role === appRoleFcty.admin.code;});
 
-        attachmentTypesSubItem.codeValue('ATTACHMENT_TYPES')
+        attachmentTypesSubItem.codeValue('attachmentTypes')
         .routeValue('.attachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
 
-        requestTypeAttachmentTypesSubItem.codeValue('requestTypeAttach')
+        requestTypeAttachmentTypesSubItem.codeValue('requestTypeAttachmentTypes')
         .routeValue('.requestTypeAttachmentTypes')
         .showFilterValue(function(role){return role === appRoleFcty.officer.code;});
 
@@ -129,13 +129,13 @@ module.exports = function(app){
         externalUsersSubItem = new SubItem();
 
 
-        internalUsersSubItem.codeValue('INTERNAL_USERS')
+        internalUsersSubItem.codeValue('internalUsers')
         .routeValue('.internalUsers')
         .showFilterValue(function(role){
             return role === appRoleFcty.admin.code;
         });
 
-        externalUsersSubItem.codeValue('EXTERNAL_USERS')
+        externalUsersSubItem.codeValue('externalUsers')
         .routeValue('.externalUsers')
         .showFilterValue(function(role){
             return role === appRoleFcty.admin.code;

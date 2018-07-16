@@ -5,9 +5,10 @@ module.exports = function(app){
             .state('login', {
                 url : '/login',
                 template : templateSrvcProvider.getTemplate('login')
-            }).state('root', {
+            }).state('home', {
                 parent: '',
                 data: {
+                   
                     label : 'home'
                 },
                 url : '/home',
@@ -15,12 +16,12 @@ module.exports = function(app){
                     '' : {
                         template : templateSrvcProvider.getTemplate('layout')
                     },
-                    'content@root' : {
+                    'content@home' : {
                         template : templateSrvcProvider.getTemplate('home')
                     }
                 }
-            }).state('root.organizationUnits', {
-                parent: 'root',
+            }).state('home.organizationUnits', {
+                parent: 'home',
                 data: {
                     label : 'organizationUnits'
                 },
@@ -30,8 +31,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('organizationUnits')
                     }
                 }
-            }).state('root.attachmentTypes', {
-                parent: 'root',
+            }).state('home.attachmentTypes', {
+                parent: 'home',
                 data: {
                     label : 'attachmentTypes'
                 },
@@ -41,8 +42,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('attachmentTypes')
                     }
                 }
-            }).state('root.internalUsers', {
-                parent: 'root',
+            }).state('home.internalUsers', {
+                parent: 'home',
                 data: {
                     label : 'internalUsers'
                 },
@@ -52,8 +53,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('internalUsers')
                     }
                 }
-            }).state('root.externalUsers', {
-                parent: 'root',
+            }).state('home.externalUsers', {
+                parent: 'home',
                 data: {
                     label : 'externalUsers'
                 },
@@ -63,10 +64,10 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('externalUsers')
                     }
                 }
-            }).state('root.requestTypeAttachmentTypes',{
-                parent: 'root',
+            }).state('home.requestTypeAttachmentTypes',{
+                parent: 'home',
                 data: {
-                    label :'requestTypeAttachmentTypes'
+                    label :'requestTypeAttachmentTypes' 
                 },
                 url : '/requestTypeAttachmentTypes',
                 views : {
@@ -75,8 +76,8 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('root.CAPACITY_DELEGATION',{
-                parent: 'root',
+            }).state('home.CAPACITY_DELEGATION',{
+                parent: 'home',
                 data: {
                     label :'capacityDelegations'
                 },
@@ -90,8 +91,8 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('root.ENTITLED_REGISTRATION',{
-                parent: 'root',
+            }).state('home.ENTITLED_REGISTRATION',{
+                parent: 'home',
                 data: {
                     label :'entitledRegistrations'
                 },
@@ -105,8 +106,8 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('root.requests',{
-                parent: 'root',
+            }).state('home.requests',{
+                parent: 'home',
                 data: {
                     label :'requests'
                 },
@@ -117,8 +118,8 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('root.myRequests',{
-                parent : 'root',
+            }).state('home.myRequests',{
+                parent : 'home',
                 data: {
                     label: 'myRequests'
                 },
@@ -128,8 +129,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('myRequests')
                     }
                 }
-            }).state('root.entitledTrainnings',{
-                parent : 'root',
+            }).state('home.entitledTrainnings',{
+                parent : 'home',
                 data: {
                     label: 'entitledTrainnings'
                 },
@@ -142,8 +143,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('entitledTrainnings')
                     }
                 }
-            }).state('root.requestEntitledRegistrations',{
-                parent : 'root',
+            }).state('home.requestEntitledRegistrations',{
+                parent : 'home',
                 data: {
                     label: 'requestEntitledRegistrations'
                 },
@@ -153,8 +154,8 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('requestEntitledRegistrations')
                     }
                 }
-            }).state('root.userProfiles',{
-                parent : 'root',
+            }).state('home.userProfiles',{
+                parent : 'home',
                 data: {
                     label: 'userProfiles'
                 },
