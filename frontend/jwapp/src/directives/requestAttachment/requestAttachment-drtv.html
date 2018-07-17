@@ -62,7 +62,7 @@
                     
                     <td>
                         <div>
-                            <button ng-disabled="{{noteditable}}" class="btn btn-default" ng-click="requestAttachmentDrtvCtrl.deleteRequestAttachment(ra.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button ng-disabled="{{noteditable}}" class="btn btn-default" confirm  on-confirm="requestAttachmentDrtvCtrl.deleteRequestAttachment(ra.id)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </td>
                 </tr>

@@ -252,7 +252,7 @@
                                 <td>
                                     <div>
                             <!-- <tr ng-repeat="ea in entitledDrtvCtrl.entitledAttachments | paginationFltr:entitledDrtvCtrl.page.start:entitledDrtvCtrl.page.end track by ea.id"></tr> -->
-                                        <button ng-disabled="{{noteditable}} || (entitledDrtvCtrl.entitledForAttachmentsDialog.currentStatus.code != 'DRAFT' && entitledDrtvCtrl.entitledForAttachmentsDialog.currentStatus.code != 'INCOMPLETE')" class="btn btn-default" ng-click="entitledDrtvCtrl.deleteEntitledAttachment(ea.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                        <button ng-disabled="{{noteditable}} || (entitledDrtvCtrl.entitledForAttachmentsDialog.currentStatus.code != 'DRAFT' && entitledDrtvCtrl.entitledForAttachmentsDialog.currentStatus.code != 'INCOMPLETE')" class="btn btn-default" confirm  on-confirm="entitledDrtvCtrl.deleteEntitledAttachment(ea.id)"><span class="glyphicon glyphicon-trash"></span></button>
                                     </div>
                                 </td>
                             </tr> 

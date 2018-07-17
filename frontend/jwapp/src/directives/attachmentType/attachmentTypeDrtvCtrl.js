@@ -34,7 +34,7 @@ module.exports = function(app){
                 vm.editAttachmentType = response.data;
                 vm.editAttachmentType.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.attachmentType = angular.copy(vm.editAttachmentType);
-                messageFcty.showSuccessMessage();
+
                 resetEntryForm();
             });
         };
