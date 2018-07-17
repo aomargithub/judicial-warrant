@@ -71,14 +71,14 @@
 	<field name="emailAddress" class="java.lang.String"/>
 	<title>
 		<band height="134" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement x="500" y="30" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{date} :]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$R{date}]]></textFieldExpression>
+			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="410" y="30" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
 				<textElement textAlignment="Right"/>
@@ -98,21 +98,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CapacityDelegation_JobTitle}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement x="460" y="70" width="90" height="15" uuid="e5cf353c-7d0a-471d-832b-50263fec3855"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{serialNumber} :]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{serialNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="460" y="100" width="90" height="15" uuid="16cf5666-be1d-4e8a-82b7-3de1daabaa83"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{jobTitle} :]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{jobTitle}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="110" y="10" width="285" height="25" uuid="da47cc8c-7208-4c82-8177-aa7271039ea1">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -120,8 +120,8 @@
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="19" isBold="true"/>
 				</textElement>
-				<text><![CDATA[$R{entitledRegistration.title}]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$R{entitledRegistration.title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -144,7 +144,7 @@
 				</textElement>
 				<text><![CDATA[#]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="371" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="be8c85ef-718a-4d13-b3c4-71d86b00ce22">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="04db08a2-bc60-40f5-85d3-1894b224a872"/>
 				</reportElement>
@@ -157,9 +157,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{englishName}]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{englishName}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="450" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="12871fc9-b0a4-48a3-8e57-cd710215015c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f00c529-e1be-4e40-a7c2-8bb3b02a6389"/>
 				</reportElement>
@@ -172,9 +172,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{arabicName}]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{arabicName}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="292" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="7a769cb0-f0e0-4369-bca7-1b1427531045">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="601e8699-44ce-45ee-a679-6b4fd2674ce6"/>
 				</reportElement>
@@ -187,9 +187,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{civilNumber}]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{civilNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="213" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="b77c6233-ad51-4755-9a2c-d521a24e7b99">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="06272c5a-78af-4261-8429-d563270ad45f"/>
 				</reportElement>
@@ -202,9 +202,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{mobile1}]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{mobile1}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="134" y="5" width="79" height="30" backcolor="#BAB6B6" uuid="63227592-3b2d-4ebf-ad09-b4bed530112b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20ea6a9b-38c4-48a9-b1a6-0247e2333c3c"/>
 				</reportElement>
@@ -217,9 +217,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{mobile2}]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression><![CDATA[$R{mobile2}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="0" y="5" width="134" height="30" backcolor="#BAB6B6" uuid="a5729925-1b6e-48a4-99ad-460d9d50d697">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0f2aa94-67dc-428a-a05c-5bcbd36f7cd5"/>
 				</reportElement>
@@ -232,8 +232,8 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[$R{email}]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$R{email}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>

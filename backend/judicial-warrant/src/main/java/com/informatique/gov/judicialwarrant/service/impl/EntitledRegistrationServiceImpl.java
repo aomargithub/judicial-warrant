@@ -2,6 +2,7 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,7 @@ import com.informatique.gov.judicialwarrant.support.dataenum.UserRoleEnum;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 import com.informatique.gov.judicialwarrant.support.report.ReportGeneration;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantGrantedAuthority;
+import com.informatique.gov.judicialwarrant.support.utils.MailUtil;
 import com.informatique.gov.judicialwarrant.support.validator.EntitledRegistrationWorkflowValidator;
 
 import lombok.AllArgsConstructor;
@@ -66,6 +69,8 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 	private EntitledRegistrationWorkflowValidator entitledRegistrationWorkflowValidator;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationMapper;
 	private ModelMapper<EntitledRegistration, EntitledRegistrationDto, Long> entitledRegistrationForInternalMapper;
+	private MailUtil mailUtil;
+	private Environment environment;
 	
 	List<JudicialWarrantGrantedAuthority> authorities = Arrays.asList(new JudicialWarrantGrantedAuthority(UserRoleEnum.OFFICER), new JudicialWarrantGrantedAuthority(UserRoleEnum.TRAINING_INSTITUTE));
 
@@ -291,6 +296,17 @@ public class EntitledRegistrationServiceImpl implements EntitledRegistrationServ
 			entity.setEntitled(entitleds);
 			
 			savedEntitledRegistrationDto = entitledRegistrationMapper.toDto(entity);
+			
+			// send email With Report
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("Request_Serial", savedEntitledRegistrationDto.getRequest().getSerial());
+			parameters.put("CapacityDelegation_JobTitle", savedEntitledRegistrationDto.getCapacityDelegation().getJobTitle());
+			File file = File.createTempFile("checkEntitleds", ".pdf"); 
+			ReportGeneration.generateReportToFile("EntitledRegistrationReport", parameters, entitleds, file.getPath(), new Locale("ar"));
+			
+			mailUtil.sendEntitledsCheck(environment.getProperty("app.lawaffairs.email"), file);
+			
+			
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
