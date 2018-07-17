@@ -27,30 +27,30 @@ app:
       initial-size: 30
       max-active: 10
   ucm:
-    ip: 192.168.0.83
+    ip: 192.168.0.44
     port: 4444
     username: weblogic
-    password: P@ssw0rd    
+    password: welcome1    
 
+  lawaffairs:
+      email: noreply@informatique-eg.com
    
 spring:
   mail:
    host: mail.informatique-eg.com
    port: 25
-   username: attabdullah@informatique-eg.com
-   password: "#$AaPw57"
+   username: noreply@informatique-eg.com
+   password: "#$NrPw567"
    protocol: smtp
    test-connection: true
    properties:
       mail:
         smtp:
           auth: true 
-          from: attabdullah@informatique-eg.com
+          from: noreply@informatique-eg.com
         debug: false
   
 
-
-   
 
 
               

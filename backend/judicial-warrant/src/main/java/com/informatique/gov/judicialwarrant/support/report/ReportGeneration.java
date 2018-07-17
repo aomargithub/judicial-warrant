@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URLDecoder;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -36,7 +35,7 @@ public class ReportGeneration implements Serializable {
 		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 	}
 
-	public static void generateReportToFile(String reportName, Map<String, Object> parameters, List<? extends Object> reportList, String filePath, Locale locale)
+	public static void generateReportToFile(String reportName, Map<String, Object> parameters, Collection<? extends Object> reportList, String filePath, Locale locale)
 			throws JRException, Exception {
 		JasperPrint jasperPrint = generateReport(reportName, parameters, reportList, locale);
 		JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
