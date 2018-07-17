@@ -78,7 +78,7 @@ module.exports = function(app){
         myRequestsItem.codeValue('myRequests').routeValue('.myRequests').selfShowFilterValue(function(role){return role === appRoleFcty.user.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
         
         var trainingEntitledRegistrationsItem = new Item();
-        trainingEntitledRegistrationsItem.codeValue('TRAINING_ENTITLED_REGISTRATION').routeValue('.requestEntitledRegistrations').selfShowFilterValue(function(role){return role === appRoleFcty.training.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
+        trainingEntitledRegistrationsItem.codeValue('requestEntitledRegistrations').routeValue('.requestEntitledRegistrations').selfShowFilterValue(function(role){return role === appRoleFcty.training.code;}).classesValue(["glyphicon", "glyphicon-envelope"]);
        
  //===================================
 

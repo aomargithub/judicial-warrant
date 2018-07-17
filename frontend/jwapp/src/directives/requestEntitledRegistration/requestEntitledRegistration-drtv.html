@@ -1,6 +1,6 @@
 <div>
     <div class="page-header">
-            <h3>{{messages.TRAINING_ENTITLED_REGISTRATION}}</h3> 
+            <h3>{{messages.requestEntitledRegistrations}}</h3> 
           </div>
 
 <div class="row">       
@@ -43,7 +43,7 @@
                     {{re.capacityDelegation.jobTitle}}
                 </td>
                 <td>
-                        {{re.request.createDate}}
+                        {{re.request.createDate | date :"dd.MM.y"}}
                     </td>
                 <td>
                     {{re.request.currentStatus.arabicName}}
