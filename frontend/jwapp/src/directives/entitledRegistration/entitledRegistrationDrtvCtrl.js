@@ -60,24 +60,36 @@ module.exports = function (app) {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.submission(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            messageFcty.showSuccessMessage();
             vm.reLoad();
-        });
+        }), function error(response) {
+            messageFcty.handleErrorMessage(response);
+            blockUI.stop();
+        };
     };
 
     vm.inCompletion = function () {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.inCompletion(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data;
+            messageFcty.showSuccessMessage();
             vm.reLoad(); 
-        });
+        }), function error(response) {
+            messageFcty.handleErrorMessage(response);
+            blockUI.stop();
+        };
     };
 
     vm.rejection = function () {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.rejection(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            messageFcty.showSuccessMessage();
             vm.reLoad();
-        });
+        }), function error(response) {
+            messageFcty.handleErrorMessage(response);
+            blockUI.stop();
+        };
     };
 
     vm.inProgress = function () {
@@ -85,9 +97,13 @@ module.exports = function (app) {
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.inProgress(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 
+            messageFcty.showSuccessMessage();
             vm.reLoad();
             blockUI.stop();
-        });
+        }), function error(response) {
+            messageFcty.handleErrorMessage(response);
+            blockUI.stop();
+        };
     };
     
         if (vm.serial) {

@@ -282,20 +282,24 @@ a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
 }
-input[type="file"]{
-    display: table-cell;
-    border: 1px solid  #ccc;
-    cursor: pointer;
-    -webkit-border-radius: 5px;
-}
-::-webkit-file-upload-button {
-    color: #a59c9c;
-background-color: #f7f2fb;
-    padding: 5px;
-    -webkit-border-radius: 10px;
-    padding: .9rem 2rem;
-  }
   
+  .inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+    cursor: pointer;
+}
+
     .row img {
       border: 0 none;
       margin: 10px;

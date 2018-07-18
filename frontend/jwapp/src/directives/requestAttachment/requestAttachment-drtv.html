@@ -13,11 +13,11 @@
                                 </span> 
                             </div>
                              <div class="form-group file-loading" >
-                                    <label for="attachmentType" class="required"> {{$parent.messages.label.AddAttachment}}</label>
-                            <input ng-disabled="{{noteditable}}" type="file" id="file" name="files"   ng-file="requestAttachmentDrtvCtrl.requestAttachment.file"   required/>
-                    
-                            
-                            <span ng-show="requestAttachmentForm.files.$touched && requestAttachmentForm.files.$error.required" >
+                                    <label style="margin-top: 30;" for="file" class="btn btn-default required"> {{$parent.messages.label.AddAttachment}}</label>
+                                    
+                                    <input class="inputfile" ng-disabled="{{noteditable}}" type="file" id="file" name="file" ng-file="requestAttachmentDrtvCtrl.requestAttachment.file" required/>
+                           
+                            <span ng-show="requestAttachmentForm.file.$touched && requestAttachmentForm.file.$error.required" >
                                     {{$parent.messages.label.required}}
                                 </span> 
                             </div>
