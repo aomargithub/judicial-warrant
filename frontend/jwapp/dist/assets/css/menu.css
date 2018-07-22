@@ -299,7 +299,8 @@ a.article:hover {
     display: inline-block;
     cursor: pointer;
 }
-
+input::-webkit-datetime-edit{ color: transparent; }
+input:focus::-webkit-datetime-edit{ color: #000; }
     .row img {
       border: 0 none;
       margin: 10px;
@@ -313,7 +314,10 @@ a.article:hover {
     .shadow-textarea textarea.form-control {
         padding-left: 0.8rem;
     }
-    
+    #file{
+        border-radius: 3px;
+
+    }
    
 /* ---------------------------------------------------
     CONTENT STYLE
