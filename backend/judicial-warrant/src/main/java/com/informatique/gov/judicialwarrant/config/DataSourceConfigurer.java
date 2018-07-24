@@ -29,6 +29,6 @@ public class DataSourceConfigurer {
 	@Profile({ "test", "staging", "prod"})
 	public DataSource dataSourceLookup() throws Exception {
 	    JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
-	    return dataSourceLookup.getDataSource(environment.getRequiredProperty("app.datasource.name"));
+	    return dataSourceLookup.getDataSource(environment.getRequiredProperty("app.datasource.lookup-name"));
 	}
 }

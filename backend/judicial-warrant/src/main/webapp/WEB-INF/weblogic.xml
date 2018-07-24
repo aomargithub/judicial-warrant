@@ -5,6 +5,7 @@
 	<container-descriptor>
 		<prefer-application-packages>
 			<package-name>org.springframework.*</package-name>
+			<package-name>com.fasterxml.*</package-name>
 			<package-name>org.slf4j.*</package-name>
 		</prefer-application-packages>
 		<!-- <prefer-web-inf-classes>true</prefer-web-inf-classes> -->

@@ -1,5 +1,6 @@
 package com.informatique.gov.judicialwarrant.config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -98,9 +99,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	private ActiveDirectoryLdapAuthenticationProvider authenticationProvider() {
+	public ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
 		return new ActiveDirectoryLdapAuthenticationProvider(
-				environment.getRequiredProperty("app.security.activedirectory.domain"),
+				formatDomain(environment.getRequiredProperty("app.security.activedirectory.domain")),
 				environment.getRequiredProperty("app.security.activedirectory.url"));
 	}
 
@@ -136,14 +137,14 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	public LdapContextSource contextSource() {
 	    LdapContextSource contextSource = new LdapContextSource();
 	     
-	    contextSource.setUrl(environment.getRequiredProperty("ldap.urls"));
+	    contextSource.setUrl(environment.getRequiredProperty("app.security.activedirectory.url"));
 	    contextSource.setBase(
-	    		environment.getRequiredProperty("ldap.base"));
+	    		environment.getRequiredProperty("app.security.activedirectory.domain"));
 	    contextSource.setUserDn(
-	    		environment.getRequiredProperty("ldap.username"));
+	    		environment.getRequiredProperty("app.security.activedirectory.admin.username"));
 	    contextSource.setPassword(
-	    		environment.getRequiredProperty("ldap.password"));
-	     
+	    		environment.getRequiredProperty("app.security.activedirectory.admin.password"));
+	    
 	    return contextSource;
 	}
 	
@@ -151,6 +152,22 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	public LdapTemplate ldapTemplate() {
 	    return new LdapTemplate(contextSource());
 	}
+	
+	private  String formatDomain(String domain) {
+		String domainStr=domain.substring(domain.indexOf("dc="), domain.length());
+		String ds[]=domainStr.split(",");
+		List<String> d=new ArrayList<>();
+		String output="";
+		for(int i=0;i<ds.length;i++)
+		{
+			d.add(ds[i].substring(ds[i].indexOf("=")+1));
+		}
+		for(String s:d) {
+			output+=s+".";
+		}
+		output=output.substring(0, output.length()-1);
+		return output;
+	}	
 	
 	@Bean
 	public List<JudicialWarrantGrantedAuthority> authorities(){
