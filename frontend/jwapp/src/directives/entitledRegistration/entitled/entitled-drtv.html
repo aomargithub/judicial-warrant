@@ -205,14 +205,30 @@
                                             {{$parent.messages.label.required}}
                                         </span> 
                                     </div>
-                                     <div class="form-group file-loading" >
+                                    <div class="form-group file-loading">
+                                            <label for="attachmentType" class="required"> {{$parent.messages.label.AddAttachment}}</label>
+                                            <div class="input-group">
+                                                <label class="input-group-btn">
+                                                    <span class="col-sm-offset-2 btn btn-default" id="file">
+                                                     {{$parent.messages.label.uploadFile}} <input type="file" name="file"  ng-disabled="{{noteditable}}"  ng-file="entitledDrtvCtrl.entitledAttachment.file" style="display: none;">
+                                                    </span>
+                                                </label>
+                                                <div class="col-sm-offset-3 col-sm-9"> 
+                                                <input type="text"  class="form-control" readonly>
+                                            </div>
+                                            </div>   
+                                            <span ng-show="entitledAttachmentForm.file.$touched && entitledAttachmentForm.file.$error.required" >
+                                                    {{$parent.messages.label.required}}
+                                                </span> 
+                                        </div>
+                                     <!-- <div class="form-group file-loading" >
                                             <label for="attachmentType" class="required"> {{$parent.messages.label.AddAttachment}}</label>
                                     <input ng-disabled="{{noteditable}}" type="file" id="file" name="file"   ng-file="entitledDrtvCtrl.entitledAttachment.file"  required/>
                                                      
                                     <span ng-show="entitledAttachmentForm.file.$touched && entitledAttachmentForm.file.$error.required" >
                                             {{$parent.messages.label.required}}
                                         </span> 
-                                    </div>
+                                    </div> -->
                                  </div>
                                 
                              <div class="btn-group rigth">

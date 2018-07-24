@@ -2,22 +2,33 @@
     <div class="page-header">
         <h3>{{messages.VIEWMYREQUESTS}}</h3>
     </div>
+   
     <div class="row">
         <div class="panel-primary">
-
-            <!-- <div class="pull-right">
-                <div class="form-group col-md-6">
-                    <label for="requestCode"> {{messages.label.DocumentName}}</label>
-                    <select class="form-control choice" ng-model="myRequestDrtvCtrl.search" ng-options=" requestCode| localeFltr for requestCode in myRequestDrtvCtrl.requests.type  track by requestCode.arabicName">
-
-                    </select>
-                </div>
-            </div> -->
             <div class="table-responsive">
                 <table class="table table-striped table-bordered  table-hover">
+                       
                     <thead>
-
-
+                            <tr class="filters" >
+                                    <th><input type="text" class="form-control" ng-model="myRequestDrtvCtrl.filters.serial" ></th>
+                                   
+                                    <th> <select class="form-control choice requiredField" ng-options="request | localeFltr for request in myRequestDrtvCtrl.requestTypes track by request.arabicName"  ng-model="myRequestDrtvCtrl.filters.type.arabicName">
+                                            <option value="" disabled selected> </option>
+                                        </select></th>
+    
+                                    <th><input type="date" class="form-control" ng-model="myRequestDrtvCtrl.filters.createDate"></th>
+                                   
+                                    <th><select class="form-control choice requiredField" ng-options="statusName | localeFltr for statusName in statues track by statusName.arabicName" ng-model="myRequestDrtvCtrl.filters.currentStatus.arabicName">
+                                            <option value="" disabled selected></option>
+                                        </select></th>
+                                    <th>
+                                            <div>
+                                        
+                                                    <button class="btn btn-default" ng-click="myRequestDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                                 
+                                                </div>
+                                        </th>
+                                </tr>
                         <tr>
                             <th>
                                 {{messages.label.RequestSerial}}
@@ -36,9 +47,9 @@
                             </th>
                             
                         </tr>
-                    </thead>
+                        </thead>
                     <tbody>
-                        <tr ng-repeat="re in myRequestDrtvCtrl.requests | paginationFltr:myRequestDrtvCtrl.page.start:myRequestDrtvCtrl.page.end track by re.id">
+                        <tr ng-repeat="re in myRequestDrtvCtrl.requests | filter:{serial: myRequestDrtvCtrl.filters.serial , type: myRequestDrtvCtrl.filters.type.arabicName , currentStatus: myRequestDrtvCtrl.filters.currentStatus.arabicName , createDate: myRequestDrtvCtrl.filters.createDate } | paginationFltr:myRequestDrtvCtrl.page.start:myRequestDrtvCtrl.page.end track by re.id">
                             <td>
                                 {{re.serial}}
                             </td>
@@ -65,7 +76,7 @@
                 </table>
                 <td colspan="5">
                     <pagination items-size="myRequestDrtvCtrl.requests.length" page="myRequestDrtvCtrl.page">
-                    </pagination>
+                    </pagination> 
                 </td>
             </div>
         </div>

@@ -30,9 +30,33 @@
                 </th>
                 
             </tr>
+            <tr class="filters" >
+                    <th><input type="text" class="form-control" ng-model="requestEntitledRegistrationDrtvCtrl.filters.request.serial" ></th>
+
+                    <th> <select class="form-control choice requiredField" ng-options="request | localeFltr for request in requestEntitledRegistrationDrtvCtrl.requestTypes track by request.arabicName"  ng-model="requestEntitledRegistrationDrtvCtrl.filters.request.type.arabicName">
+                            <option value="" disabled selected> </option>
+                        </select></th>
+
+                        <th><select class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in requestEntitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="requestEntitledRegistrationDrtvCtrl.filters.capacityDelegation.jobTitle">
+                                <option value="" disabled selected> </option>
+                            </select></th>
+
+                    <th><input type="date" class="form-control" ng-model="requestEntitledRegistrationDrtvCtrl.filters.request.createDate" ></th>
+
+                    <th><select class="form-control choice requiredField" ng-options="statusName | localeFltr for statusName in statues track by statusName.arabicName" ng-model="requestEntitledRegistrationDrtvCtrl.filters.request.currentStatus.arabicName">
+                            <option value="" disabled selected> </option>
+                        </select></th>
+                    <th>
+                            <div>
+                        
+                                    <button class="btn btn-default" ng-click="requestEntitledRegistrationDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                 
+                                </div>
+                        </th>
+                </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="re in requestEntitledRegistrationDrtvCtrl.requestEntitledRegistrations  | paginationFltr:requestEntitledRegistrationDrtvCtrl.page.start:requestEntitledRegistrationDrtvCtrl.page.end track by re.id">
+            <tr ng-repeat="re in requestEntitledRegistrationDrtvCtrl.requestEntitledRegistrations | filter:{request: {serial: requestEntitledRegistrationDrtvCtrl.filters.request.serial},request: {type: requestEntitledRegistrationDrtvCtrl.filters.request.type.arabicName}, capacityDelegation: {jobTitle: requestEntitledRegistrationDrtvCtrl.filters.capacityDelegation.jobTitle} , request: {createDate: requestEntitledRegistrationDrtvCtrl.filters.request.createDate} , request: {currentStatus: requestEntitledRegistrationDrtvCtrl.filters.request.currentStatus.arabicName}}| paginationFltr:requestEntitledRegistrationDrtvCtrl.page.start:requestEntitledRegistrationDrtvCtrl.page.end track by re.id">
                 <td>
                     {{re.request.serial}}
                 </td>

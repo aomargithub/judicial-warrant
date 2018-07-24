@@ -55,6 +55,22 @@
      <div class="table-responsive">
         <table class="table table-striped table-bordered  table-hover">
             <thead >
+                    <tr class="filters" >
+                            <th><input type="text" class="form-control" ng-model="organizationUnitDrtvCtrl.filters.arabicName" ></th>
+    
+                            <th> <input type="text" class="form-control" ng-model="organizationUnitDrtvCtrl.filters.englishName" ></th>
+    
+                                <th><select class="form-control choice requiredField" ng-options="IsActive as IsActive for IsActive in organizationUnitDrtvCtrl.status" ng-model="organizationUnitDrtvCtrl.filters.isActive">
+                                        <option value="" disabled selected> </option>
+                                    </select></th>                                         
+                            <th colspan="2">
+                                    <div>
+                                
+                                            <button class="btn btn-default" ng-click="organizationUnitDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                         
+                                        </div>
+                                </th>
+                        </tr>
                 <tr>
                     <th>
                         {{messages.label.arabicName}}
@@ -72,9 +88,10 @@
                         {{messages.label.delete}}
                     </th>
                 </tr>
+                
             </thead>
             <tbody>
-                <tr ng-repeat="ou in organizationUnitDrtvCtrl.organizationUnits | paginationFltr:organizationUnitDrtvCtrl.page.start:organizationUnitDrtvCtrl.page.end track by ou.id">
+                <tr ng-repeat="ou in organizationUnitDrtvCtrl.organizationUnits | filter:{arabicName: organizationUnitDrtvCtrl.filters.arabicName , englishName: organizationUnitDrtvCtrl.filters.englishName, isActive: organizationUnitDrtvCtrl.filters.isActive} | paginationFltr:organizationUnitDrtvCtrl.page.start:organizationUnitDrtvCtrl.page.end track by ou.id">
                     <td>
                         {{ou.arabicName}}
                     </td>

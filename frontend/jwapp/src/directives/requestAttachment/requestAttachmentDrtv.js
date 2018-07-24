@@ -21,7 +21,7 @@ module.exports = function(app){
             element.bind('change', function(event){
               //  var files = event.target.files;
              // scope[attrs.ngFile] = loadEvent.target.result;
-            $parse(attrs.ngFile).assign(scope,element.files)
+            $parse(attrs.ngFile).assign(scope,element.files);
             scope.$apply();
             scope.$watch(attrs.ngFile, function(files) {
                 element.val(files);

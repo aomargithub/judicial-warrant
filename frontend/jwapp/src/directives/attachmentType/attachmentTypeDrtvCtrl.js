@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function($rootScope,messageFcty, $scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function(messageFcty,$state,$scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;
@@ -9,6 +9,9 @@ module.exports = function(app){
             start: 0,
             end: 0
         }
+        vm.filters={}; 
+        vm.status= [true,false];
+
         attachmentTypeSrvc.getAll().then(function(response){
             vm.attachmentTypes = response.data;
         });
@@ -108,5 +111,10 @@ module.exports = function(app){
         vm.closeMessage = function(){
             vm.message = null;
         };
+
+
+        vm.reLoad = function() {
+            return $state.go("home.attachmentTypes",{},{reload: "home.attachmentTypes"});
+        }
     });
 }

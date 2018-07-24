@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('organizationUnitDrtvCtrl', function($rootScope, $scope,messageFcty, OrganizationUnit, organizationUnitSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('organizationUnitDrtvCtrl', function($state, $scope,messageFcty, OrganizationUnit, organizationUnitSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.organizationUnit = new OrganizationUnit();
         vm.editId = null;
@@ -9,6 +9,11 @@ module.exports = function(app){
             start: 0,
             end: 0
         }
+        
+        
+        vm.filters={}; 
+        vm.status= [true, false];
+
         organizationUnitSrvc.getAll().then(function(response){
             vm.organizationUnits = response.data;
         });
@@ -101,6 +106,8 @@ module.exports = function(app){
             }
             resetEntryForm();
         };
-
+        vm.reLoad = function() {
+            return $state.go("home.organizationUnits",{},{reload: "home.organizationUnits"});
+        }
     });
 }

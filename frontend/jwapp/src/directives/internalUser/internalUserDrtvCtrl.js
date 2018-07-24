@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($rootScope,messageFcty, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('internalUserDrtvCtrl', function($state,messageFcty, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
@@ -8,8 +8,9 @@ module.exports = function(app){
         vm.mobilePattern="/^[0-9]{10,10}$/";
         vm.users = [];
         vm.roles = [];
-        
-       
+
+        vm.filters={}; 
+        vm.status= [true,false];
 
         vm.page = {
             start: 0,
@@ -116,7 +117,9 @@ module.exports = function(app){
             resetEntryForm();
         };
 
-       
+        vm.reLoad = function() {
+            return $state.go("home.internalUsers",{},{reload: "home.internalUsers"});
+        }
 
     });
 };

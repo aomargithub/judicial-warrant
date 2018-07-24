@@ -117,6 +117,29 @@
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover text-center"> 
             <thead>
+                    <tr class="filters" >
+                            <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.arabicName" ></th>
+                            <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.englishName" ></th>
+    
+                            <th><select class="form-control choice requiredField" ng-options="IsActive as IsActive for IsActive in internalUserDrtvCtrl.status" ng-model="internalUserDrtvCtrl.filters.isActive">
+                                    <option value="" disabled selected> </option>
+                                </select></th>
+                                <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.mobileNumber1" ></th>
+                                <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.mobileNumber2" ></th>
+                                <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.emailAddress" ></th>
+                                <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.civilId" ></th>
+                                <th><input type="text" class="form-control" ng-model="internalUserDrtvCtrl.filters.loginName" ></th>
+                                <th> <select class="form-control choice requiredField" ng-options="role | localeFltr for role in internalUserDrtvCtrl.roles track by role.code" ng-model="internalUserDrtvCtrl.filters.role" required>
+                                        <option value="" disabled selected></option>
+                                    </select></th>
+                                <th colspan="2">
+                                        <div>
+                                    
+                                                <button class="btn btn-default" ng-click="internalUserDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                             
+                                            </div>
+                                    </th>   
+                            </tr>
                 <tr>
                     <th>
                         {{messages.label.arabicName}}
@@ -155,7 +178,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="u in internalUserDrtvCtrl.users |paginationFltr:internalUserDrtvCtrl.page.start:internalUserDrtvCtrl.page.end track by u.id">
+                <tr ng-repeat="u in internalUserDrtvCtrl.users| filter:{arabicName: internalUserDrtvCtrl.filters.arabicName , englishName: internalUserDrtvCtrl.filters.englishName , isActive: internalUserDrtvCtrl.filters.isActive , mobileNumber1: internalUserDrtvCtrl.filters.mobileNumber1 , mobileNumber2: internalUserDrtvCtrl.filters.mobileNumber2 , emailAddress: internalUserDrtvCtrl.filters.emailAddress , civilId: internalUserDrtvCtrl.filters.civilId , loginName: internalUserDrtvCtrl.filters.loginName , role: internalUserDrtvCtrl.filters.role } |paginationFltr:internalUserDrtvCtrl.page.start:internalUserDrtvCtrl.page.end track by u.id">
                     <td>
                         {{u.arabicName}}
                     </td>

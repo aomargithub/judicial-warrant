@@ -16,7 +16,12 @@ module.exports = function (app) {
             end: 0
         };
 
-        requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('home.', '')).then(function success(response) {
+        var resetEntryForm = function(){
+            $scope.entitledForm.$setPristine();
+            $scope.entitledForm.$setUntouched();
+        }
+
+             requestTypeAttachmentTypeSrvc.getAttachmentTypesByRequestTypeCode($state.current.name.replace('home.', '')).then(function success(response) {
             vm.attachmentTypes=response.data;
     
         });
@@ -35,6 +40,7 @@ module.exports = function (app) {
                         vm.entitleds = vm.entitleds || [];
                         vm.entitleds.push(response.data);
                         vm.entitled = new Entitled();
+                        resetEntryForm();
                         messageFcty.showSuccessMessage();
                     }, function error(response) {
                         messageFcty.handleErrorMessage(response);
@@ -113,8 +119,8 @@ module.exports = function (app) {
             entitledRegistrationSrvc.acceptEntitled($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
                 vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
-                    if (e.id === vm.entitled.id) {
-                        vm.entitleds[index] = vm.entitled;
+                    if (e.id === vm.entitledForAttachmentsDialog.id) {
+                        vm.entitleds[index] = vm.entitledForAttachmentsDialog;
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
                 });
@@ -128,7 +134,7 @@ module.exports = function (app) {
             entitledRegistrationSrvc.cardRecievedEntitledCardRecieved($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
                 vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
-                    if (e.id === vm.entitled.id) {
+                    if (e.id === vm.entitledForAttachmentsDialog.id) {
                         vm.entitleds[index] = vm.entitledForAttachmentsDialog;
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
@@ -143,7 +149,7 @@ module.exports = function (app) {
             entitledRegistrationSrvc.rejectionEntitled($scope.serial, vm.entitledForAttachmentsDialog.id, vm.changeStatusRequest).then(function success(response) {
                 vm.entitledForAttachmentsDialog = response.data;
                 vm.entitleds.forEach(function (e, index) {
-                    if (e.id === vm.entitled.id) {
+                    if (e.id === vm.entitledForAttachmentsDialog.id) {
                         vm.entitleds[index] = vm.entitledForAttachmentsDialog;
                         vm.entitledForAttachmentsDialog = new Entitled();
                     }
@@ -190,6 +196,27 @@ module.exports = function (app) {
         
         };
 
-
+        $(function() {
+            $(document).on('change', ':file', function() {
+              var input = $(this),
+                  numFiles = input.get().files ? input.get().files.length : 1,
+                  label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+              input.trigger('fileselect', [numFiles, label]);
+            });
+          
+            $(document).ready( function() {
+                $(':file').on('fileselect', function(event, numFiles, label) {
+          
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+          
+                    if( input.length ) {
+                        input.val(log);
+                    } 
+          
+                });
+            });
+            
+          });
     });
 };

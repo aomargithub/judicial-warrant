@@ -61,6 +61,26 @@
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover text-center">
         <thead>
+                <tr class="filters" >               
+                        <th>   <select class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestTypeAttachmentTypeDrtvCtrl.attachments track by attachmentType.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.filters.attachmentType" required>
+                              <option value="" disabled selected></option>
+                          </select></th>
+  
+                      <th><select class="form-control choice requiredField" ng-options="request | localeFltr for request in requestTypeAttachmentTypeDrtvCtrl.requests track by request.arabicName" ng-model="requestTypeAttachmentTypeDrtvCtrl.filters.requestType" required>
+                              <option value="" disabled selected></option>
+                          </select></th>
+  
+                      <th><select class="form-control choice requiredField" ng-options="IsActive as IsActive for IsActive in requestTypeAttachmentTypeDrtvCtrl.status" ng-model="requestTypeAttachmentTypeDrtvCtrl.filters.isActive">
+                              <option value="" disabled selected> </option>
+                          </select></th>
+                      <th colspan="2">
+                              <div>
+                          
+                                      <button class="btn btn-default" ng-click="requestTypeAttachmentTypeDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                   
+                                  </div>
+                          </th>
+                  </tr>
             <tr>
                 <th>
                     {{messages.label.DocumentName}}
@@ -80,7 +100,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="ra in requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentTypes | paginationFltr:requestTypeAttachmentTypeDrtvCtrl.page.start:requestTypeAttachmentTypeDrtvCtrl.page.end track by ra.id">
+            <tr ng-repeat="ra in requestTypeAttachmentTypeDrtvCtrl.requestTypeAttachmentTypes | filter:{attachmentType: requestTypeAttachmentTypeDrtvCtrl.filters.attachmentType , requestType: requestTypeAttachmentTypeDrtvCtrl.filters.requestType, isActive: requestTypeAttachmentTypeDrtvCtrl.filters.isActive} | paginationFltr:requestTypeAttachmentTypeDrtvCtrl.page.start:requestTypeAttachmentTypeDrtvCtrl.page.end track by ra.id">
                 <td>
                     {{ra.attachmentType.arabicName}}
                 </td>

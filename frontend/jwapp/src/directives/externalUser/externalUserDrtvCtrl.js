@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('externalUserDrtvCtrl', function($rootScope,messageFcty, $scope, User, externalUserSrvc,httpStatusSrvc,stringUtilSrvc,organizationUnitSrvc,roleSrvc){
+    app.controller('externalUserDrtvCtrl', function($state,messageFcty, $scope, User, externalUserSrvc,stringUtilSrvc,organizationUnitSrvc,roleSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
@@ -11,6 +11,8 @@ module.exports = function(app){
         vm.organizations = []; 
         vm.roles = [];
        
+        vm.filters={}; 
+        vm.status= [true,false];
 
         vm.page = {
             start: 0,
@@ -111,6 +113,10 @@ module.exports = function(app){
                 resetEntryForm();
             }); 
         };
+
+        vm.reLoad = function() {
+            return $state.go("home.externalUsers",{},{reload: "home.externalUsers"});
+        }
 
         vm.cancel = function(){
             vm.user = new User();

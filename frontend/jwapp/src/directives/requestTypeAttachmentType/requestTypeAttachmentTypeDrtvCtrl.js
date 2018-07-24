@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($rootScope,$scope,  messageFcty,RequestTypeAttachmentType,requestTypeAttachmentTypeSrvc,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc){
+    app.controller('requestTypeAttachmentTypeDrtvCtrl', function($state,$scope,messageFcty,RequestTypeAttachmentType,requestTypeAttachmentTypeSrvc,httpStatusSrvc,stringUtilSrvc,attachmentTypeSrvc,requestTypeSrvc){
         var vm = this;
         vm.requestTypeAttachmentType = new RequestTypeAttachmentType();
         vm.editId = null;
@@ -13,6 +13,9 @@ module.exports = function(app){
             end: 0
         };
         
+        vm.filters={}; 
+        vm.status= [true,false];
+
         attachmentTypeSrvc.getAll().then(function(response){
             vm.attachments=response.data;
         });
@@ -117,5 +120,10 @@ module.exports = function(app){
             }
             resetEntryForm();
         };
+
+        
+        vm.reLoad = function() {
+            return $state.go("home.requestTypeAttachmentTypes",{},{reload: "home.requestTypeAttachmentTypes"});
+        }
     });
 }
