@@ -30,15 +30,15 @@ module.exports = function(app){
                         message = $rootScope.messages[status.text];
                     }  else if (status.code === httpStatusSrvc.internalServerError.code) {
                         messageWithLink = false;
-                        messageDiscription = response.data.errorId;
+                        messageDiscription = response.data.errorId; 
                         message = $rootScope.messages[status.text];
                     } else if (status.code === httpStatusSrvc.badRequest.code) {
                         messageWithLink = false;
-                        messageDiscription = response.data.errorDescription;
+                        // messageDiscription = response.data.errorDescription;
                         message = $rootScope.messages[status.text];
                     }  else {
                         messageWithLink = false;
-                        messageDiscription = response.data.message ? response.data.message.split(":")[0] : response.data.errorDescription;
+                        // messageDiscription = response.data.message ? response.data.message.split(":")[0] : response.data.errorDescription;
                         message = $rootScope.messages[status.text];
                     };
             },
