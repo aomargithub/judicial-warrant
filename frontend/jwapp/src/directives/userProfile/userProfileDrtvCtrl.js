@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('userProfileDrtvCtrl', function($rootScope,internalUserSrvc,  messageFcty,PasswordChange, $scope, User,appSessionSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('userProfileDrtvCtrl', function(internalUserSrvc,  messageFcty,PasswordChange, User,stringUtilSrvc){
         var vm = this;
         vm.message = null;
         vm.CurrentUser = new User();
@@ -26,7 +26,7 @@ module.exports = function(app){
         vm.update = function(){
             internalUserSrvc.update(vm.currentUser).then(function success(response){
                 vm.currentUser = response.data;
-                messageFcty.showSuccessMessage();
+                messageFcty.showSuccessMessage(); 
             }, function error(response){
                 
                 messageFcty.handleErrorMessage(response);
@@ -35,6 +35,7 @@ module.exports = function(app){
 if(vm.passwordChange.newPassword === vm.passwordChange.confirmNewPassword){
         vm.updatePassword = function(){
             internalUserSrvc.updatePassword(vm.currentUser.id,vm.passwordChange).then(function success(response){
+                vm.passwordChange=response.data;
                 messageFcty.showSuccessMessage();
             }, function error(response){
                 
