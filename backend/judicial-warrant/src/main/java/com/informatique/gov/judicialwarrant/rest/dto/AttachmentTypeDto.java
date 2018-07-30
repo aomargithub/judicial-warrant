@@ -1,5 +1,10 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -17,11 +22,19 @@ public class AttachmentTypeDto implements UserModel<Long> {
 	private static final long serialVersionUID = 6131509027915511341L;
 
 	private Long id;
+	@NotBlank
 	private String englishName;
+	@NotBlank
 	private String arabicName;
+	@NotNull
 	private Boolean isActive;
-	private Boolean isCandidateAttachment;
-	private Byte listOrder;
+	@NotNull
+	private Boolean isEntitledAttachment;
+	@NotNull
+	private Boolean isMandatory;
+	
+	@Min(0)
+	private Long listOrder;
 	
 	@JsonIgnore
 	private Short version;

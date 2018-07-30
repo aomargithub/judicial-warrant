@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.RequestType;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestTypeDto;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Component
 public class RequestTypeMapper extends AbstractModelMapper<RequestType, RequestTypeDto, Byte>{
 

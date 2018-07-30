@@ -2,18 +2,15 @@ module.exports = function(app){
     app.directive('messageDrtv', function(){
         return {
             controllerAs : 'messageDrtvCtrl',
-            controller: function(){
-                
-            },
-            bindToController : true,
+            controller : 'messageDrtvCtrl',
+            template : require('./message-drtv.html'),
+            replace: true,
             scope : {
-                message: '=',
                 closeCallback: '=',
                 refetchCallback : '=',
-                editId: '='
-            },
-            template : require('./message-drtv.html'),
-            replace: true
-        }
+                editId: '=',
+                mode: '='
+            }
+                }
     });
 };

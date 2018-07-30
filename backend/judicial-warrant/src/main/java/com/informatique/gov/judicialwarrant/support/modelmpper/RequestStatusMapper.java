@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 import com.informatique.gov.judicialwarrant.domain.RequestStatus;
 import com.informatique.gov.judicialwarrant.rest.dto.RequestStatusDto;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
 @Component
-public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, RequestStatusDto, Byte>{
+public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, RequestStatusDto, Short>{
 
 	/**
 	 * 
@@ -22,7 +20,7 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 		if(isConvertable(entity)) {
 			dto = new RequestStatusDto();
 			dto.setArabicName(entity.getArabicName());
-			dto.setCode(entity.getEnglishName());
+			dto.setCode(entity.getCode());
 			dto.setEnglishName(entity.getEnglishName());
 			dto.setId(entity.getId());
 		}
@@ -37,7 +35,7 @@ public class RequestStatusMapper extends AbstractModelMapper<RequestStatus, Requ
 		if(isConvertable(dto)) {
 			entity = new RequestStatus();
 			entity.setArabicName(dto.getArabicName());
-			entity.setCode(dto.getEnglishName());
+			entity.setCode(dto.getCode());
 			entity.setEnglishName(dto.getEnglishName());
 			entity.setId(dto.getId());
 		}

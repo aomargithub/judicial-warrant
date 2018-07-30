@@ -1,0 +1,82 @@
+package com.informatique.gov.judicialwarrant.support.validator;
+
+import org.springframework.stereotype.Component;
+
+import com.informatique.gov.judicialwarrant.domain.EntitledRegistration;
+import com.informatique.gov.judicialwarrant.exception.InvalidRequestStatusException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
+import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.support.dataenum.RequestInternalStatusEnum;
+import com.informatique.gov.judicialwarrant.support.dataenum.RequestStatusEnum;
+
+import lombok.AllArgsConstructor;
+
+
+@Component
+@AllArgsConstructor
+public class EntitledRegistrationWorkflowValidator {
+
+	private EntitledRegistrationAttachmentsValidator entitledRegistrationAttachmentsValidator;
+	
+	public void validate(EntitledRegistration entitledRegistration, RequestInternalStatusEnum requiredInternalStatusEnum)
+			throws JudicialWarrantException {
+		try {
+			String serial = entitledRegistration.getRequest().getSerial();
+			RequestInternalStatusEnum currentInternalStatus = RequestInternalStatusEnum
+					.getByCode(entitledRegistration.getRequest().getCurrentInternalStatus().getCode());
+			RequestInternalStatusEnum requiredInternalStatus = RequestInternalStatusEnum
+					.getByCode(requiredInternalStatusEnum.getCode());
+			switch (currentInternalStatus) {
+			case DRAFT : 
+				if (!requiredInternalStatusEnum.equals(RequestInternalStatusEnum.RECIEVED)) {
+					throw new InvalidRequestStatusException(serial,
+							RequestInternalStatusEnum.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode()));
+				} else {
+					entitledRegistrationAttachmentsValidator.validate(entitledRegistration);
+				}
+				break;
+			case RECIEVED:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.INCOMPLETE)
+						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)
+						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.INPROGRESS)) {
+					throw new InvalidRequestStatusException(serial, currentInternalStatus);
+				}
+				break;
+			case INCOMPLETE:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.RECIEVED)) {
+					throw new InvalidRequestStatusException(serial, currentInternalStatus);
+				}
+				break;
+			case REJECTED:
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
+			case INPROGRESS:
+				if (!requiredInternalStatus.equals(RequestInternalStatusEnum.REJECTED)
+						&& !requiredInternalStatus.equals(RequestInternalStatusEnum.INPROGRESS)) {
+					throw new InvalidRequestStatusException(serial, currentInternalStatus);
+				}
+				break;
+			default:
+				throw new InvalidRequestStatusException(serial, currentInternalStatus);
+			}
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+	}
+
+	public void validateForUpdate(EntitledRegistration entitledRegistration) throws JudicialWarrantException {
+		try {
+			RequestStatusEnum currentStatus = RequestStatusEnum
+					.getByCode(entitledRegistration.getRequest().getCurrentStatus().getCode());
+			if (!currentStatus.equals(RequestStatusEnum.DRAFT) && !currentStatus.equals(RequestStatusEnum.INCOMPLETE)) {
+				String serial = entitledRegistration.getRequest().getSerial();
+				throw new InvalidRequestStatusException(serial, currentStatus);
+			}
+		} catch (JudicialWarrantException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+	}
+}

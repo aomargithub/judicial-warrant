@@ -91,4 +91,20 @@ public class RequestTypeServiceImpl implements RequestTypeService{
 
         return dtos;
     }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<RequestTypeDto> getByIsActiveAndIsInternal(Boolean isActive, Boolean isInternal) throws JudicialWarrantException {
+        List<RequestTypeDto> dtos = null;
+        List<RequestType> entities = null;
+
+        try{
+            entities = requestTypeRepository.findByIsActiveAndIsInternal(isActive, isInternal);
+            dtos = requestTypeMapper.toDto(entities);
+        }catch(Exception e){
+            throw new JudicialWarrantInternalException(e);
+        }
+
+        return dtos;
+    }
 }

@@ -12,8 +12,10 @@ import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.OrganizationUnitRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserDetailsDto;
 import com.informatique.gov.judicialwarrant.service.InternalOrganizationUnitService;
 import com.informatique.gov.judicialwarrant.service.OrganizationUnitService;
+import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService, Int
 	 */
 	private static final long serialVersionUID = 5559454993806874431L;
 
+	private SecurityService securityService;
 	private OrganizationUnitRepository organizationUnitRepository;
 	private ModelMapper<OrganizationUnit, OrganizationUnitDto, Short> organizationUnitMapper;
 
@@ -57,6 +60,23 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService, Int
 			throw new JudicialWarrantInternalException(e);
 		}
 		return dto;
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true)
+	public OrganizationUnit getByCurrentUser() throws JudicialWarrantException {
+		OrganizationUnit entity =  null;
+		try {
+			UserDetailsDto userDetailsDto = securityService.getUserDetails();
+			OrganizationUnitDto organizationUnitDto = userDetailsDto.getOrganizationUnit();
+			Short organizationUnitId = organizationUnitDto.getId();
+			entity =  organizationUnitRepository.getOne(organizationUnitId);			
+		} catch (JudicialWarrantException e) {
+			throw new JudicialWarrantInternalException(e);
+		} catch (Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		return entity;
 	}
 	
 	@Override
@@ -124,43 +144,17 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService, Int
 			throw new JudicialWarrantInternalException(e);
 		}
 	}
-	
-	/*@Override
-	@Transactional(rollbackFor = Exception.class)
-	public OrganizationUnitDto updateIfNotModified(final OrganizationUnitDto dto, Short id) throws JudicialWarrantException {
-		OrganizationUnitDto savedDto = null;
 
+	@Override
+	public List<OrganizationUnitDto> getByIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		List<OrganizationUnitDto> dtos = null;
 		try {
-			notNull(dto, "dto must be set");
-			notNull(id, "id must be set");
-			notNull(dto.getVersion(), "version of dto must be set");
-			
-			
-			Short realVersion = organizationUnitRepository.findVersionById(id);
-				
-			if(realVersion == null) {
-				throw new ResourceNotFoundException(id);
-			}else {
-				if(!realVersion.equals(dto.getVersion())) {
-					throw new ResourceModifiedException(id, dto.getVersion(), realVersion);
-				}
-			}
-			
-
-			OrganizationUnit entiry = organizationUnitMapper.toNewEntity(dto);
-			
-			entiry.setId(id);
-			
-			entiry = organizationUnitRepository.save(entiry);
-			
-			savedDto = organizationUnitMapper.toDto(entiry);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
+			List<OrganizationUnit> entities = organizationUnitRepository.findByIsInternal(isInternal);
+			dtos = organizationUnitMapper.toDto(entities);
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
+		return dtos;
+	}
 
-		return savedDto;
-	}*/
 }

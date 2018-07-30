@@ -24,6 +24,8 @@ public class RoleMapper extends AbstractModelMapper<Role, RoleDto, Byte> {
 			dto.setId(entity.getId());
 			dto.setIsActive(entity.getIsActive());
 			dto.setListOrder(entity.getListOrder());
+			
+			dto.setIsInternal(entity.getIsInternal());
 		}
 		return dto;
 	}
@@ -39,6 +41,8 @@ public class RoleMapper extends AbstractModelMapper<Role, RoleDto, Byte> {
 			entity.setId(dto.getId());
 			entity.setIsActive(dto.getIsActive());
 			entity.setListOrder(dto.getListOrder());
+		
+			entity.setIsInternal(dto.getIsInternal());
 		}
 		return entity;
 	}

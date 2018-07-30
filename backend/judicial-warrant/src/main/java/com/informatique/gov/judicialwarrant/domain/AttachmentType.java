@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,7 +21,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "arabicName", "englishName"})
 @EqualsAndHashCode(of = {"arabicName", "englishName"}, callSuper = false)
-public class AttachmentType extends DomainEntity<Long> {
+public class AttachmentType extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable {
 	
 	/**
 	 * 
@@ -46,8 +47,11 @@ public class AttachmentType extends DomainEntity<Long> {
 	@Column(name = "IS_ACTIVE")
 	private Boolean isActive;
 	
-	@Column(name = "IS_CANDIDATE_ATTACHMENT")
-	private Boolean isCandidateAttachment;
+	@Column(name = "IS_ENTITLED_ATTACHMENT")
+	private Boolean isEntitledAttachment;
+	
+	@Column(name = "IS_MANDATORY")
+	private Boolean isMandatory;
 	
 	@Embedded
 	private CreateLog createLog;
@@ -56,5 +60,12 @@ public class AttachmentType extends DomainEntity<Long> {
 	private UpdateLog updateLog;
 	
 	@Column(name = "LIST_ORDER")
-	private Byte listOrder;
+	private Long listOrder;
+	
+	@PostPersist
+	private void setListOrder() {
+	    this.listOrder = id;
+	}
+
+	
 }

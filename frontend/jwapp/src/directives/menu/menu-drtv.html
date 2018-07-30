@@ -1,17 +1,22 @@
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>{{messages['sidebare.header']}}</h3>
-        <strong class= "glyphicon glyphicon-menu-hamburger"></strong>
-    </div>
+<nav id="sidebar" class="active menu-toggle">
+        <div class="overlay" ng-click="menuDrtvCtrl.closeMenu();"/>
+        <div class="menu-toggle sidebar-header">
+            <h3 class = "menu-toggle">{{messages.sidebareHeader}}</h3>
+            <strong class= "glyphicon glyphicon-menu-hamburger menu-toggle"></strong>
+        </div>
     <ul class="list-unstyled components">
         <li ng-repeat="item in menuDrtvCtrl.items track by item.code">
-            <a href="#{{item.route}}" onclick="event.preventDefault();" data-toggle="collapse" aria-expanded="false">
+            <a ng-if="!item.hasSubItems()" href="" ui-sref="{{item.route}}" onclick="event.preventDefault();" ng-click="menuDrtvCtrl.closeMenu();">
+                <i ng-class="item.classes"/>
+                {{item.title}}
+            </a>
+            <a ng-if="item.hasSubItems()" href="#{{item.route}}" onclick="event.preventDefault();" data-toggle="collapse" aria-expanded="false">
                 <i ng-class="item.classes"></i>
                 {{item.title}}
             </a>
-            <ul class="collapse list-unstyled" id="{{item.route}}">
+            <ul ng-if="item.hasSubItems()" class="collapse list-unstyled" id="{{item.route}}">
                 <li ng-repeat="subItem in item.subItems">
-                    <a href="" ui-sref="{{subItem.route}}">{{subItem.title}}</a>
+                    <a href="" ui-sref="{{subItem.route}}" ng-click="menuDrtvCtrl.closeMenu();">{{subItem.title}}</a>
                 </li>
             </ul>
         </li>

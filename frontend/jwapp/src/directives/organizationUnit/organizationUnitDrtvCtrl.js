@@ -1,14 +1,19 @@
 module.exports = function(app){
-    app.controller('organizationUnitDrtvCtrl', function($rootScope, $scope, OrganizationUnit, organizationUnitSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('organizationUnitDrtvCtrl', function($state, $scope,messageFcty, OrganizationUnit, organizationUnitSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.organizationUnit = new OrganizationUnit();
         vm.editId = null;
         vm.editOrganizationUnit = null;
-        vm.message = null;
+        vm.organizationUnits = [];
         vm.page = {
             start: 0,
             end: 0
         }
+        
+        
+        vm.filters={}; 
+        vm.status= [true, false];
+
         organizationUnitSrvc.getAll().then(function(response){
             vm.organizationUnits = response.data;
         });
@@ -22,6 +27,10 @@ module.exports = function(app){
             organizationUnitSrvc.save(vm.organizationUnit).then(function(response){
                 vm.organizationUnits.push(response.data);
                 vm.organizationUnit = new OrganizationUnit();
+                messageFcty.showSuccessMessage();
+                resetEntryForm();
+            },function error (response){
+                messageFcty.handleErrorMessage(response);
                 resetEntryForm();
             });
         };
@@ -36,12 +45,11 @@ module.exports = function(app){
         };
 
         vm.refetch = function(id){
-            console.log('refetch',$scope.organizationUnitForm);
             organizationUnitSrvc.getById(id).then(function(response){
                 vm.editOrganizationUnit = response.data;
                 vm.editOrganizationUnit.version = stringUtilSrvc.removeQuotes(response.headers('ETag'));
                 vm.organizationUnit = angular.copy(vm.editOrganizationUnit);
-                vm.message = null;
+                messageFcty.resetMessage(response);
                 resetEntryForm();
             });
         };
@@ -58,16 +66,12 @@ module.exports = function(app){
                         vm.organizationUnits[index] = tempOrganizationUnit;
                     }
                 });
-
+                messageFcty.showSuccessMessage();
                 resetEntryForm();
             }, function error(response){
                 
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
-
-                resetEntryForm();
+                messageFcty.handleErrorMessage(response);
+                                resetEntryForm();
             });
         };
 
@@ -82,11 +86,7 @@ module.exports = function(app){
 
                 resetEntryForm();
             }, function error(response){
-                
-                var status = httpStatusSrvc.getStatus(response.status);
-                if(status.code === httpStatusSrvc.preconditionFailed.code){
-                    vm.message = $rootScope.messages[status.text];
-                };
+                messageFcty.handleErrorMessage(response);
 
                 resetEntryForm();
             });
@@ -95,12 +95,10 @@ module.exports = function(app){
         vm.cancel = function(){
             vm.organizationUnit = new OrganizationUnit();
             vm.editOrganizationUnit = null;
-            vm.message = null;
             resetEntryForm();
         };
 
         vm.reset = function(){
-            console.log('reset', $scope.organizationUnitForm);
             if(vm.editOrganizationUnit){
                 vm.organizationUnit = angular.copy(vm.editOrganizationUnit);
             }else{
@@ -108,9 +106,8 @@ module.exports = function(app){
             }
             resetEntryForm();
         };
-
-        vm.closeMessage = function(){
-            vm.message = null;
-        };
+        vm.reLoad = function() {
+            return $state.go("home.organizationUnits",{},{reload: "home.organizationUnits"});
+        }
     });
 }

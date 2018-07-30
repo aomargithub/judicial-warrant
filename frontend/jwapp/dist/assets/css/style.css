@@ -1,8 +1,8 @@
 
 .message-bar{
-    background-color: red;
-    color: white;
-    height: 40px;
+  background-color: #fff ;
+    color: #373737;
+    background-image: url(../imgs/wall.png);
 }
 .message-bar.ng-enter,
 .message-bar.ng-leave {
@@ -11,7 +11,7 @@
 }
 .message-bar.ng-enter,
 .message-bar.ng-leave.ng-leave-active {
-  opacity: 0;
+  opacity: 0; 
 }
 .message-bar.ng-leave,
 .message-bar.ng-enter.ng-enter-active { 
@@ -20,10 +20,52 @@
 
 .message-bar-content{
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 0px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  font-weight: bold;
-  font-size: 20px;
+  margin-top: -70px;
+  background-color: lightgray;
+  width: 420px;
+  height: 65px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+  border-top-right-radius: 1px;
 }
+.message-bar-content button span{
+
+  color: #d82929  !important;
+  height: 17px;
+  font-size: 30px;
+  margin-top: -10px;
+  margin-right: -.3px;
+}
+.message-bar-content .close{
+  margin-top: -64px;
+  margin-left: 360px;
+  padding: 0px !important;
+  height: 22px;
+  width: 17px;
+  border-radius: 10px;
+  background-color: #020202;
+}
+
+
+.message-bar-content a {
+  color: burlywood;
+  text-decoration-line: underline;
+  font-size: 12px;
+  margin-right: 5px;
+}
+.message-bar-content h5{
+  margin-right: -320px;
+  font-weight: bold;
+}
+
+.zindex {
+  z-index: 22000 !important;
+}
+
+
+

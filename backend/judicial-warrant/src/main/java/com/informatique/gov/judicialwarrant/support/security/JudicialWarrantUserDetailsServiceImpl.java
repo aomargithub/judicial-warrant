@@ -5,7 +5,6 @@ import static org.springframework.util.Assert.notNull;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import com.informatique.gov.judicialwarrant.domain.User;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
+import com.informatique.gov.judicialwarrant.persistence.repository.UserCredentialsRepository;
 import com.informatique.gov.judicialwarrant.service.InternalUserService;
+import com.informatique.gov.judicialwarrant.support.dataenum.UserTypeEnum;
 
 import lombok.AllArgsConstructor;
 
@@ -26,22 +27,23 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 	 */
 	private static final long serialVersionUID = -2167322879669809169L;
 	private InternalUserService userService;
+	private UserCredentialsRepository userCredentialsRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		JudicialWarrantUserDetails userDetails = null;
 		User user = null;
 		try {
 			notNull(username, "username must be set");
 			user = userService.getByLoginName(username);
-			
-			if(user == null) {
+
+			if (user == null) {
 				throw new UsernameNotFoundException(username);
 			}
-			
+
 			userDetails = toUserDetails(user);
-			
+
 		} catch (JudicialWarrantInternalException e) {
 			throw new UsernameNotFoundException(username, e);
 		} catch (UsernameNotFoundException e) {
@@ -53,13 +55,13 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 	}
 
 	private JudicialWarrantUserDetails toUserDetails(User user) {
-		
+
 		notNull(user, "user must be set");
-		
+
 		JudicialWarrantUserDetails userDetails = new JudicialWarrantUserDetails();
-		
+
 		userDetails.setArabicName(user.getArabicName());
-		userDetails.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole().getCode())));
+		userDetails.setAuthorities(Arrays.asList(new JudicialWarrantGrantedAuthority(user.getRole().getCode(),user.getRole().getLdapSecurityGroup())));
 		userDetails.setCivilId(user.getCivilId());
 		userDetails.setEmailAddress(user.getEmailAddress());
 		userDetails.setEnabled(user.getIsActive());
@@ -68,7 +70,11 @@ public class JudicialWarrantUserDetailsServiceImpl implements UserDetailsService
 		userDetails.setMobileNumber2(user.getMobileNumber2());
 		userDetails.setOrganizationUnit(user.getOrganizationUnit());
 		userDetails.setUsername(user.getLoginName());
-		// token to be set later in more convenient place where we can get the session id easily.
+		userDetails.setUserType(user.getUserType());
+		if(user.getUserType().getCode().equalsIgnoreCase(UserTypeEnum.EXTERNAL.getCode())) {
+			String password = userCredentialsRepository.findById(user.getId()).get().getPassword();
+			userDetails.setPassword(password);
+		}
 		return userDetails;
 	}
 }

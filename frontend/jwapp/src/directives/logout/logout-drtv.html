@@ -1,0 +1,14 @@
+<div>
+    <!-- <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More<span class="caret glyphicon glyphicon-user"></span></a>
+        </li>
+      </ul> -->
+  <!-- <ul class="nav  nav-stacked ">
+    <li class="active"><a  href="#!/home/userProfiles" data-target-id="profile"><i class="glyphicon glyphicon-user"></i>{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }}</a></li>
+  </ul> -->
+    <a href="#!/home/userProfiles" ui-serf="home.userProfiles" class="left" ><i class="glyphicon glyphicon-user"></i>{{messages.label.hello}} {{ logoutDrtvCtrl.currentUser | localeFltr }}</a>
+  <button href="#" ng-click="logoutDrtvCtrl.doLogout()" class="btn btn-default">
+  <span class="glyphicon glyphicon-log-out"></span> {{messages.label.logOut}}
+</button>
+</div>

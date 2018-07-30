@@ -25,7 +25,8 @@ create table ORGANIZATION_UNIT
   update_by    VARCHAR2(200),
   update_date  TIMESTAMP(6),
   is_active    NUMBER(1) not null,
-  list_order   NUMBER(4)
+  list_order   NUMBER(4),
+  IS_INTERNAL  NUMBER(1) not null
 );
 alter table ORGANIZATION_UNIT
   add constraint ORGANIZATION_UNIT_PK primary key (ID);
@@ -69,7 +70,7 @@ alter table APP_USER
 
 create table ATTACHMENT_TYPE
 (
-  id                      NUMBER(2) not null,
+  id                      NUMBER not null,
   version                 NUMBER(3) not null,
   create_by               VARCHAR2(200) not null,
   create_date             TIMESTAMP(6) not null,
@@ -79,7 +80,8 @@ create table ATTACHMENT_TYPE
   english_name            VARCHAR2(200) not null,
   is_active               NUMBER(1) not null,
   is_candidate_attachment NUMBER(1) not null,
-  list_order              NUMBER(2)
+  list_order              NUMBER(2),
+  is_mandatory            NUMBER(1) not null
 );
 alter table ATTACHMENT_TYPE
   add constraint ATTACHMENT_TYPE_PK primary key (ID);
@@ -102,8 +104,6 @@ alter table CANDIDATE_STATUS
 create table REQUEST_STATUS
 (
   code         VARCHAR2(50) not null,
-  create_by    VARCHAR2(200) not null,
-  create_date  TIMESTAMP(6) not null,
   english_name VARCHAR2(100) not null,
   arabic_name  VARCHAR2(100) not null,
   id           NUMBER(2) not null
@@ -114,6 +114,28 @@ alter table REQUEST_STATUS
   add constraint REQUEST_STATUS_CODE_UN unique (CODE);
 
 
+  CREATE TABLE REQUEST_INTERNAL_STATUS 
+(
+  ID NUMBER(2, 0) NOT NULL 
+, CODE VARCHAR2(50 BYTE) NOT NULL 
+, ARABIC_NAME VARCHAR2(100 BYTE) NOT NULL 
+, ENGLISH_NAME VARCHAR2(100 BYTE) NOT NULL 
+, CONSTRAINT REQUEST_INTERNAL_STATUS_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE REQUEST_INTERNAL_STATUS
+ADD CONSTRAINT REQUEST_INTERNAL_STATUS_UK1 UNIQUE 
+(
+  CODE 
+)
+ENABLE;
+
+  
+  
 create table REQUEST_TYPE
 (
   create_by             VARCHAR2(200) not null,
@@ -124,7 +146,8 @@ create table REQUEST_TYPE
   list_order            NUMBER(2) not null,
   arabic_name           VARCHAR2(200) not null,
   id                    NUMBER(2) not null,
-  request_number_prefix VARCHAR2(100) not null
+  request_serial_prefix VARCHAR2(100) not null,
+  is_internal NUMBER(1) not null
 );
 alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_PK primary key (ID);
@@ -132,6 +155,9 @@ alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_CODE_UN unique (CODE);
 alter table REQUEST_TYPE
   add constraint REQUEST_TYPE_DSPLY_ORDR_UN unique (LIST_ORDER);
+  
+
+
 
 
 create table REQUEST
@@ -143,6 +169,7 @@ create table REQUEST
   version              NUMBER(3) not null,
   id                   NUMBER not null,
   current_status_id    NUMBER(2) not null,
+  CURRENT_INTERNAL_STATUS_ID NUMBER(2),
   type_id              NUMBER(2) not null,
   organization_unit_id NUMBER(4) not null,
   serial               VARCHAR2(200)
@@ -161,6 +188,19 @@ alter table REQUEST
   add constraint REQUEST_REQUEST_TYPE_FK foreign key (TYPE_ID)
   references REQUEST_TYPE (ID);
 
+ALTER TABLE REQUEST
+ADD CONSTRAINT REQUEST_INTERNAL_STATUS_FK1 FOREIGN KEY
+(
+  CURRENT_INTERNAL_STATUS_ID 
+)
+REFERENCES REQUEST_INTERNAL_STATUS
+(
+  ID 
+)
+ENABLE;
+
+
+
 create table CANDIDATE
 (
   id                   NUMBER not null,
@@ -177,7 +217,7 @@ create table CANDIDATE
   mobile_number2       VARCHAR2(15) not null,
   email_address        VARCHAR2(100) not null,
   request_id           NUMBER not null,
-  current_status_id    NUMBER(1) not null
+  current_status_id    NUMBER(1) 
 );
 alter table CANDIDATE
   add constraint CANDIDATE_PK primary key (ID);
@@ -216,7 +256,7 @@ create table CANDIDATE_HISTORY_LOG
 (
   id                  NUMBER not null,
   candidate_id        NUMBER not null,
-  candidate_status_id NUMBER(1) not null,
+  candidate_status_id NUMBER(1) null,
   create_by           NUMBER not null,
   create_date         TIMESTAMP(6) not null,
   note                VARCHAR2(500)
@@ -274,12 +314,26 @@ alter table NOTIFICATION_CHANNEL
 alter table NOTIFICATION_CHANNEL
   add constraint NOTIFICATION_CHANNEL_CODE_UN unique (CODE);
 
+  
+CREATE TABLE ENTITLED_ATTACHMENT
+   (	ID NUMBER NOT NULL , 
+	ENTITLED_ID NUMBER NOT NULL , 
+	ATTACHMENT_TYPE_ID NUMBER(2,0) NOT NULL , 
+	UCM_DOCUMENT_ID VARCHAR2(50) NOT NULL , 
+	CREATE_BY VARCHAR2(200) NOT NULL , 
+	CREATE_DATE TIMESTAMP (6) NOT NULL , 
+	UPDATE_BY VARCHAR2(200), 
+	UPDATE_DATE TIMESTAMP (6), 
+	VERSION NUMBER(3,0) NOT NULL , 
+	FILE_NAME VARCHAR2(200) NOT NULL
+);
 create table REQUEST_ATTACHMENT
 (
   id                 NUMBER not null,
   request_id         NUMBER not null,
   attachment_type_id NUMBER(2) not null,
   ucm_document_id    VARCHAR2(50) not null,
+  FILE_NAME VARCHAR2(200) NOT NULL,
   create_by          VARCHAR2(200) not null,
   create_date        TIMESTAMP(6) not null,
   update_by          VARCHAR2(200),
@@ -300,6 +354,7 @@ create table REQUEST_HISTORY_LOG
   id                NUMBER not null,
   request_id        NUMBER not null,
   request_status_id NUMBER(2) not null,
+  INTERNAL_STATUS_ID NUMBER(2) ,
   create_by         NUMBER not null,
   create_date       TIMESTAMP(6) not null,
   note              VARCHAR2(500)
@@ -316,6 +371,17 @@ alter table REQUEST_HISTORY_LOG
   add constraint RQST_HSTRY_RQST_STS_FK foreign key (REQUEST_STATUS_ID)
   references REQUEST_STATUS (ID);
 
+  ALTER TABLE REQUEST_HISTORY_LOG
+ADD CONSTRAINT RQST_HSTRY_RQST_INT_STS_FK FOREIGN KEY
+(
+  INTERNAL_STATUS_ID 
+)
+REFERENCES REQUEST_INTERNAL_STATUS
+(
+  ID 
+)
+ENABLE;
+  
 create table REQUEST_TYPE_ATTACHMENT_TYPE
 (
   id                 NUMBER(4) not null,
@@ -325,7 +391,7 @@ create table REQUEST_TYPE_ATTACHMENT_TYPE
   create_date        TIMESTAMP(6) not null,
   is_active          NUMBER(1) not null,
   list_order         NUMBER(4) not null,
-  is_required        NUMBER(1) not null,
+ 
   update_by          VARCHAR2(200),
   update_date        TIMESTAMP(6),
   version            NUMBER(3) not null
@@ -352,7 +418,17 @@ create table SPRING_SESSION
 create index SPRING_SESSION_IX1 on SPRING_SESSION (LAST_ACCESS_TIME);
 alter table SPRING_SESSION
   add constraint SPRING_SESSION_PK primary key (SESSION_ID);
-
+  
+  
+CREATE TABLE ENTITLED_STATUS
+   (  ID NUMBER(2,0) NOT NULL ENABLE, 
+  CODE VARCHAR2(50) NOT NULL ENABLE, 
+  CREATE_BY VARCHAR2(200) NOT NULL ENABLE, 
+  CREATE_DATE TIMESTAMP (6) NOT NULL ENABLE, 
+  ENGLISH_NAME VARCHAR2(100) NOT NULL ENABLE, 
+  ARABIC_NAME VARCHAR2(100) NOT NULL ENABLE, 
+   CONSTRAINT CNDT_ENTITLEMENT_STATUS_PK PRIMARY KEY (ID)
+   );
 create table SPRING_SESSION_ATTRIBUTES
 (
   session_id      CHAR(36) not null,
@@ -366,7 +442,126 @@ alter table SPRING_SESSION_ATTRIBUTES
   add constraint SPRING_SESSION_ATTRIBUTES_FK foreign key (SESSION_ID)
   references SPRING_SESSION (SESSION_ID) on delete cascade;
 
+  
+  CREATE TABLE NATIONALITY 
+(
+  ID NUMBER(4) NOT NULL 
+, ARABIC_NAME VARCHAR2(20) NOT NULL 
+, ENGLISH_NAME VARCHAR2(20) NOT NULL 
+, CODE VARCHAR2(3) NOT NULL 
+, ISO NUMBER(3, 0) NOT NULL
+, CONSTRAINT NATIONALITY_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
 
+
+  CREATE TABLE APP_USER_CREDENTIALS 
+   (	PASSWORD VARCHAR2(200), 
+	ID NUMBER(20,0) NOT NULL ENABLE, 
+	 CONSTRAINT APP_USER_CREDENTIALS_PK PRIMARY KEY (ID)
+   );
+   
+
+   
+
+alter table NATIONALITY
+  add constraint NATIONALITY_CODE unique (CODE);
+alter table NATIONALITY
+  add constraint NATIONALITY_ISO unique (ISO);
+
+  
+CREATE TABLE CAPACITY_DELEGATION 
+(
+  ID NUMBER NOT NULL 
+, JOB_TITLE VARCHAR2(300) NOT NULL
+, version NUMBER(3) not null
+, ministerial_decree_number VARCHAR2(20) NOT NULL
+, DECREE_DATE DATE NOT NULL
+);
+
+ALTER TABLE CAPACITY_DELEGATION
+ADD CONSTRAINT CAPACITY_DELEGATION_PK PRIMARY KEY 
+(
+  ID 
+)
+ENABLE;
+
+ALTER TABLE CAPACITY_DELEGATION
+ADD CONSTRAINT CAPACITY_DELEGATION_REQUEST_FK FOREIGN KEY
+(
+  ID 
+)
+REFERENCES REQUEST
+(
+  ID 
+)
+ENABLE;
+
+  
+
+CREATE TABLE REQUEST_SERIAL 
+(
+  ID NUMBER NOT NULL 
+, LAST_NUMBER NUMBER(5) NOT NULL 
+, YEAR NUMBER NOT NULL 
+, VERSION NUMBER NOT NULL 
+, REQUEST_TYPE_ID NUMBER(2, 0) NOT NULL
+, CONSTRAINT REQUEST_SERIAL_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE REQUEST_SERIAL
+ADD CONSTRAINT REQUEST_TYPE_FK1 FOREIGN KEY
+(
+  REQUEST_TYPE_ID 
+)
+REFERENCES REQUEST_TYPE
+(
+  ID 
+)
+ENABLE;
+
+
+CREATE TABLE ER_REQUEST 
+(
+  ID NUMBER NOT NULL 
+, CAPACITY_DELEGATION_ID NUMBER NOT NULL 
+, CONSTRAINT ER_REQUEST_PK PRIMARY KEY 
+  (
+    ID 
+  )
+  ENABLE 
+);
+
+ALTER TABLE ER_REQUEST
+ADD CONSTRAINT ER_REQUEST_CAP_DEL_FK FOREIGN KEY
+(
+  CAPACITY_DELEGATION_ID 
+)
+REFERENCES CAPACITY_DELEGATION
+(
+  ID 
+)
+ENABLE;
+
+ALTER TABLE ER_REQUEST
+ADD CONSTRAINT ER_REQUEST_REQUEST_FK FOREIGN KEY
+(
+  ID 
+)
+REFERENCES REQUEST
+(
+  ID 
+)
+ENABLE;
+
+  
 create sequence APP_USER_SEQ
 minvalue 1
 maxvalue 9999999999999999999999999999
@@ -439,6 +634,18 @@ increment by 1
 cache 20;
 
 create sequence RQUST_TYPE_ATTACHMENT_TYPE_SEQ
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+cache 20;
+
+CREATE SEQUENCE REQUEST_SERIAL_SEQ INCREMENT BY 1 start with 1 MAXVALUE 99999999999999999999 MINVALUE 1 CACHE 20;
+
+
+
+
+create sequence APP_USER_CREDS_SEQ
 minvalue 1
 maxvalue 9999999999999999999999999999
 start with 1

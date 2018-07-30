@@ -1,19 +1,30 @@
-<div>
-    <div>
-        <p>{{messages[loginDrtvCtrl.statusText]}}</p>
-    </div>
-    <form action = "#" name="login_form" autocomplete="off">
+<div class="login-dev">
+        
+    <form action = "#" name="login_form" autocomplete="off" id="login-form">
+              
         <fieldset ng-disabled="loginInProgress">
-            <div>
-                <label for="username">{{messages.username}}</label>
-                <input type="text" id="username" ng-model="loginDrtvCtrl.credentials.username"/>
+                <div class="avatarLogin">
+                        <img src=".\assets\imgs\judical.png" class="" alt="Avatar" style="width: 205px 205px;">
+                    </div>     
+                    <h4 class="text-center h3">{{messages.projectname}}</h4> 
+            <div class="form-group">
+                    <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" id="username" ng-model="loginDrtvCtrl.credentials.username" class="form-control" placeholder="Enter UserName" required/>
+            </div> 
+        </div>
+            <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                <input type="password" id="password" ng-model="loginDrtvCtrl.credentials.password" class="form-control" placeholder="Enter PassWord" required/>
             </div>
+        </div>
             <div>
-                <label for="password">{{messages.password}}</label>
-                <input type="password" id="password" ng-model="loginDrtvCtrl.credentials.password"/>
+            <div>
+                <button ng-click="loginDrtvCtrl.doLogin();$event.preventDefault();" class="btn btn-default btn-block btn-lg">{{messages.login}}</button>
             </div>
-            <div>
-                <button ng-click="loginDrtvCtrl.doLogin();$event.preventDefault();">{{messages.login}}</button>
+           
+                <h4>{{messages[loginDrtvCtrl.statusText]}}</h4>
             </div>
         </fieldset>
     </form> <!-- login_form -->

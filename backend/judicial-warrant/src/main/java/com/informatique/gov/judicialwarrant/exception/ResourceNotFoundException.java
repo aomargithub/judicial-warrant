@@ -14,7 +14,7 @@ public class ResourceNotFoundException extends JudicialWarrantException{
 	@Getter
 	private final Serializable id;
 	public ResourceNotFoundException(Serializable id) {
-		super(JudicialWarrantExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION.getCode(), JudicialWarrantExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION.getDescription(), JudicialWarrantExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION.getFixSuggestion());
+		super(JudicialWarrantExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION);
 		this.id = id;
 	}
 

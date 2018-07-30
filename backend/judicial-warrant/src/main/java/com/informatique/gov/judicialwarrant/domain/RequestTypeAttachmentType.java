@@ -9,10 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Version;
+import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +25,14 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "requestType", "attachmentType"})
 @EqualsAndHashCode(of = {"requestType", "attachmentType"}, callSuper = false)
-public class RequestTypeAttachmentType extends DomainEntity<Short> {
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "RequestTypeAttachmentType.fat",
+					  attributeNodes = {
+							  @NamedAttributeNode(value = "requestType"),
+							  @NamedAttributeNode(value = "attachmentType")
+					  })
+})
+public class RequestTypeAttachmentType extends DomainEntity<Short> implements CreationAuditable, UpdateAuditable{
 	
 	/**
 	 * 

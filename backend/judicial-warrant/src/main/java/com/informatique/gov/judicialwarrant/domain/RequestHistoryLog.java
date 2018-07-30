@@ -22,7 +22,7 @@ import lombok.ToString;
 @Data
 @ToString(of = {"id", "request", "status"})
 @EqualsAndHashCode(of = {"request", "status"}, callSuper = false)
-public class RequestHistoryLog extends DomainEntity<Long> {
+public class RequestHistoryLog extends DomainEntity<Long> implements CreationAuditable, UpdateAuditable{
 	
 	/**
 	 * 
@@ -37,6 +37,10 @@ public class RequestHistoryLog extends DomainEntity<Long> {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "REQUEST_ID")
 	private Request request;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "INTERNAL_STATUS_ID")
+	private RequestInternalStatus internalStatus;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "REQUEST_STATUS_ID")

@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RequestStatusServiceImpl implements RequestStatusService {
 	private RequestStatusRepository requestStatusRepository;
-	private ModelMapper<RequestStatus, RequestStatusDto, Byte> requestStatusMapper;
+	private ModelMapper<RequestStatus, RequestStatusDto, Short> requestStatusMapper;
 
 	/**
 	 * 

@@ -10,5 +10,6 @@ import com.informatique.gov.judicialwarrant.domain.RequestType;
 @Repository
 public interface RequestTypeRepository extends JpaRepository<RequestType, Byte>{
 	List<RequestType> findByIsActive(Boolean isActive);
+	List<RequestType> findByIsActiveAndIsInternal(Boolean isActive, Boolean isInternal);
 	RequestType findByCode(String code);
 }

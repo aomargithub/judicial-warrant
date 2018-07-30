@@ -26,6 +26,7 @@ public class OrganizationUnitMapper extends AbstractModelMapper<OrganizationUnit
 			dto.setArabicName(entity.getArabicName());
 			dto.setVersion(entity.getVersion());
 			dto.setListOrder(entity.getListOrder());
+			dto.setIsInternal(entity.getIsInternal());
 		}
 		
 		return dto;
@@ -45,6 +46,7 @@ public class OrganizationUnitMapper extends AbstractModelMapper<OrganizationUnit
 			entity.setArabicName(dto.getArabicName());
 			entity.setListOrder(dto.getListOrder());
 			entity.setVersion(dto.getVersion());
+			entity.setIsInternal(dto.getIsInternal());
 		}
 		
 		return entity;

@@ -12,11 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
-import org.springframework.data.annotation.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,10 +33,11 @@ import lombok.ToString;
 	@NamedEntityGraph(name = "User.fat",
 					  attributeNodes = {
 							  @NamedAttributeNode(value = "organizationUnit"),
-							  @NamedAttributeNode(value = "role")
+							  @NamedAttributeNode(value = "role"),
+							  @NamedAttributeNode(value = "userType")
 					  })
 })
-public class User extends DomainEntity<Integer> {
+public class User extends DomainEntity<Integer> implements CreationAuditable{
 	
 	
 	/**
@@ -77,6 +79,17 @@ public class User extends DomainEntity<Integer> {
 	@Column(name="EMAIL_ADDRESS")
 	private String emailAddress;
 	
+	@Column(name = "CIVIL_ID")
+	private Long civilId;
+	
+	@NaturalId
+	@Column(name = "LOGIN_NAME")
+	private String loginName;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="TYPE_ID")
+	private UserType userType;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "ORGANIZATION_UNIT_ID")
 	private OrganizationUnit organizationUnit;
@@ -85,11 +98,6 @@ public class User extends DomainEntity<Integer> {
 	@JoinColumn(name = "ROLE_ID")
 	private Role role;
 	
-	@Column(name = "CIVIL_ID")
-	private Long civilId;
-	
-	@NaturalId
-	@Column(name = "LOGIN_NAME")
-	private String loginName;
-
+	@OneToOne(mappedBy = "user")
+	private UserCredentials credentials;
 }

@@ -14,7 +14,7 @@ public class PreConditionRequiredException extends JudicialWarrantException{
 	@Getter
 	private final Serializable id;
 	public PreConditionRequiredException(Serializable id) {
-		super(JudicialWarrantExceptionEnum.PRE_CONDITION_REQUIRED.getCode(), JudicialWarrantExceptionEnum.PRE_CONDITION_REQUIRED.getDescription(), JudicialWarrantExceptionEnum.PRE_CONDITION_REQUIRED.getFixSuggestion());
+		super(JudicialWarrantExceptionEnum.PRE_CONDITION_REQUIRED);
 		this.id = id;
 	}
 

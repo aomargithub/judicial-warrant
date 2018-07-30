@@ -12,11 +12,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.informatique.gov.judicialwarrant.domain.OrganizationUnit;
+import com.informatique.gov.judicialwarrant.domain.UserType;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.rest.dto.AuthenticationTokenDto;
 import com.informatique.gov.judicialwarrant.rest.dto.OrganizationUnitDto;
 import com.informatique.gov.judicialwarrant.rest.dto.UserDetailsDto;
+import com.informatique.gov.judicialwarrant.rest.dto.UserTypeDto;
 import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.security.AuthenticationToken;
 import com.informatique.gov.judicialwarrant.support.security.JudicialWarrantUserDetails;
@@ -50,6 +52,21 @@ public class SecurityServiceImpl implements SecurityService{
 	}
 	
 	@Override
+	public UserDetailsDto getUserDetails() throws JudicialWarrantException {
+		UserDetailsDto userDetailsDto = null;
+		try {
+			Principal principal = SecurityContextHolder.getContext().getAuthentication();
+			UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken)principal;
+			JudicialWarrantUserDetails userDetails = (JudicialWarrantUserDetails)authenticationToken.getDetails();
+			userDetailsDto = toUserDetailsDto(userDetails);
+		}catch(Exception e) {
+			throw new JudicialWarrantInternalException(e);
+		}
+		
+		return userDetailsDto;
+	}
+	
+	@Override
 	public String getPrincipal() throws JudicialWarrantInternalException {
 		String username = null;
 		try {
@@ -74,8 +91,10 @@ public class SecurityServiceImpl implements SecurityService{
 		userDetailsDto.setEnglishName(userDetails.getEnglishName());
 		userDetailsDto.setMobileNumber1(userDetails.getMobileNumber1());
 		userDetailsDto.setMobileNumber2(userDetails.getMobileNumber2());
+		userDetailsDto.setUsername(userDetails.getUsername());
 		userDetailsDto.setOrganizationUnit(toDto(userDetails.getOrganizationUnit()));
 		userDetailsDto.setRole(userDetails.getAuthorities().iterator().next().getAuthority());
+		userDetailsDto.setUserType(toDto(userDetails.getUserType()));
 		userDetailsDto.setToken(new AuthenticationTokenDto(userDetails.getToken().getValue(), userDetails.getToken().getMaxInactiveInterval()));
 		return userDetailsDto;
 	}
@@ -88,8 +107,21 @@ public class SecurityServiceImpl implements SecurityService{
 			dto.setArabicName(entity.getArabicName());
 			dto.setEnglishName(entity.getEnglishName());
 			dto.setId(entity.getId());
+			dto.setIsActive(entity.getIsActive());
+			dto.setListOrder(entity.getListOrder());
 		}
 		
+		return dto;
+	}
+	
+	private UserTypeDto toDto(UserType entity) {
+		// TODO Auto-generated method stub
+		UserTypeDto dto=null;
+		if(entity!=null) {
+			dto=new UserTypeDto();
+			dto.setId(entity.getId());
+			dto.setCode(entity.getCode());
+		}
 		return dto;
 	}
 

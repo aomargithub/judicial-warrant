@@ -1,5 +1,5 @@
 package com.informatique.gov.judicialwarrant.support.dataenum;
 
 public enum ExceptionClassNameEnum {
-	PreConditionRequiredException, ResourceModifiedException, ResourceNotFoundException, ResourceNotModifiedException, JudicialWarrantInternalException
+	PreConditionRequiredException, ResourceModifiedException, ResourceNotFoundException, ResourceNotModifiedException, JudicialWarrantInternalException, InvalidRequestStatusException, SingleResourceVersionNotProvidedException, SingleResourceModifiedException, SingleResourceNotFoundException
 }

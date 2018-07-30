@@ -23,5 +23,7 @@ public interface OrganizationUnitService extends Serializable{
 	Short getVersionById(Short id) throws JudicialWarrantException;
 
 	void delete(Short id) throws JudicialWarrantException;
+	
+	List<OrganizationUnitDto> getByIsInternal(Boolean isInternal)throws JudicialWarrantException;
 
 }

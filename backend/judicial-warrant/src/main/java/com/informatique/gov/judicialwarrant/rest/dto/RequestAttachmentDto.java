@@ -1,5 +1,7 @@
 package com.informatique.gov.judicialwarrant.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,4 +19,7 @@ public class RequestAttachmentDto implements UserModel<Long> {
 	private RequestDto request;
 	private AttachmentTypeDto attachmentType;
 	private String ucmDocumentId;
+	private String fileName;
+	@JsonIgnore
+	private Short version;
 }

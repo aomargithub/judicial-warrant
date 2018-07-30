@@ -1,15 +1,15 @@
-<div>
+<div class="form-inline">
         <a href ng-click="paginationDrtvCtrl.first()" title="{{$parent.messages.label.first}}">
-                <span aria-hidden="true">&laquo;</span>
+                <span class="glyphicon glyphicon-forward btn-sm" aria-hidden="true"></span>
         </a>
         <a href ng-click="paginationDrtvCtrl.previous()" title="{{$parent.messages.label.previous}}">
-                <span aria-hidden="true">&lsaquo;</span>
+                <span class="glyphicon glyphicon-chevron-right btn-sm" aria-hidden="true"></span>
         </a>
-        <select ng-options="pageNumber for pageNumber in paginationDrtvCtrl.pages" ng-model="paginationDrtvCtrl.currentPage" ng-change="paginationDrtvCtrl.goTo()"></select>
+        <select class="form-control choice requiredField" ng-options="pageNumber for pageNumber in paginationDrtvCtrl.pages" ng-model="paginationDrtvCtrl.currentPage" ng-change="paginationDrtvCtrl.goTo()"></select>
         <a href ng-click="paginationDrtvCtrl.next()" title="{{$parent.messages.label.next}}">
-                <span aria-hidden="true">&rsaquo;</span>
+                <span class="glyphicon glyphicon-chevron-left btn-sm" aria-hidden="true"></span>
         </a>
         <a href ng-click="paginationDrtvCtrl.last()" title="{{$parent.messages.label.last}}">
-                <span aria-hidden="true">&raquo;</span>
+                <span class="glyphicon glyphicon-backward btn-sm" aria-hidden="true"></span>
         </a>
 </div>

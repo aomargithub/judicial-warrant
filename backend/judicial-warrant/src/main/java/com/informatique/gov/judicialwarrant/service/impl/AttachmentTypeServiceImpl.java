@@ -2,22 +2,17 @@ package com.informatique.gov.judicialwarrant.service.impl;
 
 import static org.springframework.util.Assert.notNull;
 
-import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.informatique.gov.judicialwarrant.domain.AttachmentType;
-import com.informatique.gov.judicialwarrant.domain.CreateLog;
-import com.informatique.gov.judicialwarrant.domain.UpdateLog;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantInternalException;
 import com.informatique.gov.judicialwarrant.persistence.repository.AttachmentTypeRepository;
 import com.informatique.gov.judicialwarrant.rest.dto.AttachmentTypeDto;
 import com.informatique.gov.judicialwarrant.service.AttachmentTypeService;
-import com.informatique.gov.judicialwarrant.service.SecurityService;
 import com.informatique.gov.judicialwarrant.support.modelmpper.ModelMapper;
 
 import lombok.AllArgsConstructor;
@@ -27,8 +22,6 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 	private AttachmentTypeRepository attachmentTypeRepository;
 	private ModelMapper<AttachmentType, AttachmentTypeDto, Long> attachmentTypeMapper;
 
-	@Autowired
-	private SecurityService securityService;
 
 	/**
 	 * 
@@ -57,9 +50,8 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 		try {
 			notNull(dto, "dto must be set");
 
-			AttachmentType entiry = attachmentTypeMapper.toNewEntity(dto);
-						
-			entiry.setCreateLog(new CreateLog(securityService.getPrincipal(), new Date()));	
+			AttachmentType entiry = attachmentTypeMapper.toNewEntity(dto);						
+			
 			entiry = attachmentTypeRepository.save(entiry);
 			
 			savedDto = attachmentTypeMapper.toDto(entiry);
@@ -96,8 +88,7 @@ public class AttachmentTypeServiceImpl implements AttachmentTypeService {
 			notNull(dto, "dto must be set");			
 
 			AttachmentType entiry = attachmentTypeMapper.toEntity(dto);
-			// TODO, to be enhanced
-			entiry.setUpdateLog(new UpdateLog(securityService.getPrincipal(), new Date()));
+
 			entiry = attachmentTypeRepository.save(entiry);
 			
 			savedDto = attachmentTypeMapper.toDto(entiry);

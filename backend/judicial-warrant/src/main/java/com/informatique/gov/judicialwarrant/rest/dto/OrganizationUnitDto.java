@@ -23,6 +23,7 @@ public class OrganizationUnitDto implements UserModel<Short> {
 	private String arabicName;
 	private Boolean isActive;
 	private Short listOrder;
+	private Boolean isInternal;
 	
 	@JsonIgnore
 	private Short version;

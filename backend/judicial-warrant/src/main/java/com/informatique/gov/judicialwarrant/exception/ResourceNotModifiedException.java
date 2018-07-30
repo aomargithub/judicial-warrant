@@ -12,10 +12,10 @@ public class ResourceNotModifiedException extends JudicialWarrantException{
 	private static final long serialVersionUID = -6849614432000571777L;
 
 	@Getter
-	private final Short realVersion;
-	public ResourceNotModifiedException(Serializable id, Short realVersion) {
-		super(JudicialWarrantExceptionEnum.RESOURCE_NOT_MODIFIED_EXCEPTION.getCode(), JudicialWarrantExceptionEnum.RESOURCE_NOT_MODIFIED_EXCEPTION.getDescription(), JudicialWarrantExceptionEnum.RESOURCE_NOT_MODIFIED_EXCEPTION.getFixSuggestion());
-		this.realVersion = realVersion;
+	private final Short currentVersion;
+	public ResourceNotModifiedException(Serializable id, Short currentVersion) {
+		super(JudicialWarrantExceptionEnum.RESOURCE_NOT_MODIFIED_EXCEPTION);
+		this.currentVersion = currentVersion;
 	}
 
 }

@@ -1,25 +1,21 @@
 module.exports = function(app){
     app.factory('appRoleFcty', function(){
         return {
-            mojAdmin : {
-                code : 'MOJ_ADMIN',
+            admin : {
+                code : 'ROLE_ADMIN',
                 description : ''
             },
-            moj : {
-                code : 'MOJ',
+            officer : {
+                code : 'ROLE_OFFICER',
                 description : ''
             },
-            mla : {
-                code : 'MLA',
+            user : {
+                code : 'ROLE_USER',
                 description : ''
             },
-            client : {
-                code : 'CLIENT',
-                description : ''
-            },
-            jti : {
-                code : 'JTI',
-                description : ''
+             training : {
+            code : 'ROLE_TRAINING_INSTITUTE',
+            description : ''
             }
         };
     });

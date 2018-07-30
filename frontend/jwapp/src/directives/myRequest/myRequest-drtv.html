@@ -1,0 +1,84 @@
+<div>
+    <div class="page-header">
+        <h3>{{messages.VIEWMYREQUESTS}}</h3>
+    </div>
+   
+    <div class="row">
+        <div class="panel-primary">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered  table-hover">
+                       
+                    <thead>
+                            <tr class="filters" >
+                                    <th><input type="text" class="form-control" ng-model="myRequestDrtvCtrl.filters.serial" ></th>
+                                   
+                                    <th> <select class="form-control choice requiredField" ng-options="request | localeFltr for request in myRequestDrtvCtrl.requestTypes track by request.arabicName"  ng-model="myRequestDrtvCtrl.filters.type.arabicName">
+                                            <option value="" disabled selected> </option>
+                                        </select></th>
+    
+                                    <th><input type="date" class="form-control" ng-model="myRequestDrtvCtrl.filters.createDate"></th>
+                                   
+                                    <th><select class="form-control choice requiredField" ng-options="statusName | localeFltr for statusName in statues track by statusName.arabicName" ng-model="myRequestDrtvCtrl.filters.currentStatus.arabicName">
+                                            <option value="" disabled selected></option>
+                                        </select></th>
+                                    <th>
+                                            <div>
+                                        
+                                                    <button class="btn btn-default" ng-click="myRequestDrtvCtrl.reLoad()"><span class="glyphicon glyphicon-refresh"></span></button>
+                                                 
+                                                </div>
+                                        </th>
+                                </tr>
+                        <tr>
+                            <th>
+                                {{messages.label.RequestSerial}}
+                            </th>
+                            <th>
+                                {{messages.label.RequestArabicName}}
+                            </th>
+                            <th>
+                                    {{messages.label.requestcreateDate}}
+                          </th>
+                            <th>
+                                {{messages.label.RequestStatus}}
+                            </th>
+                            <th>
+                                {{messages.label.edit}}
+                            </th>
+                            
+                        </tr>
+                        </thead>
+                    <tbody>
+                        <tr ng-repeat="re in myRequestDrtvCtrl.requests | filter:{serial: myRequestDrtvCtrl.filters.serial , type: myRequestDrtvCtrl.filters.type.arabicName , currentStatus: myRequestDrtvCtrl.filters.currentStatus.arabicName , createDate: myRequestDrtvCtrl.filters.createDate } | paginationFltr:myRequestDrtvCtrl.page.start:myRequestDrtvCtrl.page.end track by re.id">
+                            <td>
+                                {{re.serial}}
+                            </td>
+                            <td>
+                                {{re.type.arabicName}}
+                            </td>
+                            <td>
+                                    {{re.createDate  | date :"dd.MM.y"}}
+                                </td>
+                            <td>
+                                {{re.currentStatus.arabicName}}
+                            </td>
+                            <td>
+                                <div>
+                                    
+                                    <button class="btn btn-default" ng-click="myRequestDrtvCtrl.route(re)"><span class="glyphicon glyphicon-edit"></span></button>
+                                 
+                                </div>
+                            </td>
+                            
+                        </tr>
+
+                    </tbody>
+                </table>
+                <td colspan="5">
+                    <pagination items-size="myRequestDrtvCtrl.requests.length" page="myRequestDrtvCtrl.page">
+                    </pagination> 
+                </td>
+            </div>
+        </div>
+    </div>
+</div>

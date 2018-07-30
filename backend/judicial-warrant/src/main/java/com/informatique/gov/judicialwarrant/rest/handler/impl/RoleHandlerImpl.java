@@ -1,4 +1,3 @@
-
 package com.informatique.gov.judicialwarrant.rest.handler.impl;
 
 import static org.springframework.util.Assert.notNull;
@@ -19,9 +18,9 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class RoleHandlerImpl implements RoleHandler {
+public class RoleHandlerImpl implements RoleHandler{
 
-	private RoleService roleService;
+	private RoleService roleService; 
 	/**
 	 * 
 	 */
@@ -38,24 +37,24 @@ public class RoleHandlerImpl implements RoleHandler {
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
-		return response;
+		return response;		
 	}
 
 	@Override
-	public ResponseEntity<RoleDto> getById(Byte id, Short etag) throws JudicialWarrantException {
+	public ResponseEntity<RoleDto> getById(Byte id) throws JudicialWarrantException {
 		ResponseEntity<RoleDto> response = null;
 		try {
 			notNull(id, "id must be set");
 			RoleDto dto = null;
-
+			
 			dto = roleService.getById(id);
-
-			if (dto == null) {
+			
+			if(dto == null) {
 				throw new ResourceNotFoundException(id);
 			}
-
+			
 			response = ResponseEntity.ok().body(dto);
-
+			
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
@@ -64,60 +63,27 @@ public class RoleHandlerImpl implements RoleHandler {
 
 		return response;
 	}
-
+	
 	@Override
-	public ResponseEntity<RoleDto> update(RoleDto dto, Byte id, Short etag) throws JudicialWarrantException {
-		ResponseEntity<RoleDto> response = null;
+	public ResponseEntity<List<RoleDto>> getByIsInternal(Boolean isInternal) throws JudicialWarrantException {
+		ResponseEntity<List<RoleDto>> response = null;
 		try {
-			notNull(dto, "roledto must be set");
-			notNull(id, "id must be set");
-
-			dto.setId(id);
-
-			RoleDto savedDto = roleService.update(dto);
-
-			response = ResponseEntity.ok().body(savedDto);
-
+			notNull(isInternal, "isInternal must be set");
+			List<RoleDto> dtos = roleService.getByIsInternal(isInternal);
+			
+			
+			response = ResponseEntity.ok().body(dtos);
+			
 		} catch (JudicialWarrantException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new JudicialWarrantInternalException(e);
 		}
+
 		return response;
 	}
 
-	@Override
-	public ResponseEntity<RoleDto> save(RoleDto dto) throws JudicialWarrantException {
-		ResponseEntity<RoleDto> response = null;
-		try {
-
-			RoleDto savedDto = roleService.save(dto);
-
-			response = ResponseEntity.ok(savedDto);
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<Void> delete(Byte id) throws JudicialWarrantException {
-		ResponseEntity<Void> response = null;
-		try {
-
-			roleService.delete(id);
-
-			response = ResponseEntity.ok().build();
-
-		} catch (JudicialWarrantException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new JudicialWarrantInternalException(e);
-		}
-		return response;
-	}
+	
+	
 
 }

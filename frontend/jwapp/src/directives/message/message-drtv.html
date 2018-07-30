@@ -1,7 +1,17 @@
-<div>
-    <div class="message-bar-content">
-            {{$parent.messages.label.error}} {{messageDrtvCtrl.message}}
-        <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)">{{$parent.messages.label.refetch}}</a>
-        <button type="button" class="close" ng-click="messageDrtvCtrl.closeCallback()"><span >&times;</span></button>
+<div ng-show="messageFcty.getMessage() || messageFcty.getSuccessMessage()">
+    <!-- erorr message -->
+    <div class="message-bar-content" ng-show="messageFcty.getMessage()">
+           <h5>{{$parent.messages.label.error}}</h5> {{messageFcty.getMessage()}}
+       <a href ng-click="messageDrtvCtrl.refetchCallback(messageDrtvCtrl.editId)" ng-show="messageFcty.getMessageWithLink()" >{{$parent.messages.label.refetch}}</a>
+       <p>{{messageFcty.getMessageDiscription()}}</p>
+        <button type="button" class="close" ng-click="messageDrtvCtrl.closeMessage()"><span>&times;</span></button>
     </div>
+
+    <!-- success message -->
+    <div class="message-bar-content" ng-show="messageFcty.getSuccessMessage()">
+        <br/>
+        <h5 style="margin-right: 0;">{{messageFcty.getSuccessMessage()}}</h5> 
+        <button type="button" class="close" ng-click="messageDrtvCtrl.closeSuccessMessage()"><span>&times;</span></button>
+    </div>
+
 </div>

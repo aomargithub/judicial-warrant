@@ -1,0 +1,107 @@
+<div>
+        <div class="page-header">
+                <h3>{{messages.ENTITLEDREGISTRATION}}</h3>  
+        </div>
+    
+    <div class="btn-group btn-group-justified">
+        <form name="entitledRegistrationForm" novalidate> 
+            <div class="row">
+                    <div class="form-group col-md-6">
+                            <label for="capacityDelegation" class="required"> {{messages.label.JobTitle}} </label>
+                            <select ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
+                                <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                            </select>
+                            <span ng-show="entitledRegistrationForm.capacityDelegation.$touched && entitledRegistrationForm.capacityDelegation.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>               
+        </div>
+        <div class="btn-group rigth" >
+             
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inProgress')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.inProgress}}</button>
+                </div>
+            </div>
+
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'"
+                     ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('rejection')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.rejection}}</button>
+                </div>
+            </div>
+           
+            <div class="btn-group row" >
+                <div class="col-sm-10">
+                    <button ng-hide="!entitledRegistrationDrtvCtrl.isNotUser" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'RECIEVED'" 
+                    ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('inCompletion')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" type="submit" >{{messages.label.inComplete}}</button>
+                </div>
+            </div>
+
+            <div class="btn-group row" >
+                 <div class="col-sm-10">
+                       <button ng-hide="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.prepareBeforeworkFlowProccess('submission')" class="btn btn-default" data-toggle="modal" data-target="#entitledRegstrationWorkFlowDialog" 
+                       type="submit" ng-disabled="entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'DRAFT' && entitledRegistrationDrtvCtrl.entitledRegistration.request.currentStatus.code != 'INCOMPLETE'">{{messages.label.sendRequest}}</button>
+                 </div>
+             </div>
+
+             <div class="btn-group row" >
+                 <div class="col-sm-10">
+                        <button ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" ng-click="entitledRegistrationDrtvCtrl.save()" class="btn btn-default" ng-disabled="entitledRegistrationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                  </div>
+              </div>
+            </div>
+        </form>
+
+
+        <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion btn btn-default" data-target="#bot"><i class="more-less pull-right glyphicon glyphicon-chevron-down"></i>{{messages.label.AddAttachmentLable}}</button>
+        <div id="bot" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
+            <request-Attachment urlPerfix = "entitledRegistrations"  
+            serial = "{{entitledRegistrationDrtvCtrl.serial}}"
+             notEditable = "{{entitledRegistrationDrtvCtrl.isNotUser}}" ></request-Attachment>
+         </div>
+
+
+    <br/>
+    <br/>
+
+    <!-- entitled Section -->
+    <button data-toggle="collapse" ng-disabled="!entitledRegistrationDrtvCtrl.entitledRegistration.id" class="accordion btn btn-default" data-target="#entitledShow"><i class="more-less pull-right glyphicon glyphicon-chevron-down"></i>{{messages.label.addEntitles}}</button>
+    <div id="entitledShow" class="collapse" ng-show="entitledRegistrationDrtvCtrl.entitledRegistration.id">
+
+            <entitled 
+            serial = "{{entitledRegistrationDrtvCtrl.serial}}"
+             notEditable = "{{entitledRegistrationDrtvCtrl.isNotUser}}" 
+             workflow = "{{entitledRegistrationDrtvCtrl.isNotUser}}"></entitled>
+
+    </div>    
+
+                 <!-- submission dialog -->
+        <div  id="entitledRegstrationWorkFlowDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <form>
+                            <div class="form-group shadow-textarea">
+                                    <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
+                                    <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="entitledRegistrationDrtvCtrl.entitledRegistrationChangeStatusRequest.note"></textarea>
+                                </div>
+                       
+                        </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="entitledRegistrationDrtvCtrl.workFlowProccess()">{{messages.label.implementRequest}}</button>
+                    <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
+                </div>
+            </div>
+            </div>
+            </div>
+            <!--  -->
+
+
+    </div>
+    </div>

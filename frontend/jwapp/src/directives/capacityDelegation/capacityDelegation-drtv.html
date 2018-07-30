@@ -1,0 +1,112 @@
+<div>
+        <div class="page-header">
+                <h3>{{messages.label.CAPACITYDELEGATION}}</h3>  
+        </div>
+    <message-drtv close-callback="capacityDelegationDrtvCtrl.closeMessage" 
+                  refetch-callback = "capacityDelegationDrtvCtrl.refetch" 
+                  message="capacityDelegationDrtvCtrl.message" 
+                  ng-if="capacityDelegationDrtvCtrl.message" 
+                  edit-id="capacityDelegationDrtvCtrl.editCapacityDelegation.id"
+                  withlink = "{{capacityDelegationDrtvCtrl.messageWithLink}}"
+                  discription="{{capacityDelegationDrtvCtrl.messageDiscription}}"
+                  class="message-bar" >
+    </message-drtv>
+   
+    <div class="btn-group btn-group-justified">
+        <form name="capacityDelegationForm" novalidate> 
+            <div class="row">
+                    <div class="form-group col-md-6">
+                            <label for="jobTitle" class="required"> {{messages.label.JobTitle}} </label>
+                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.jobTitle" placeholder={{messages.placeHolders.JobTitlePH}} required/>
+                            <span ng-show="capacityDelegationForm.jobTitle.$touched && capacityDelegationForm.jobTitle.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ministerialDecreeNumber" class="required">{{messages.label.MinisterialDecreeNumber}} </label>
+                            <input type="text" class="form-control" id="ministerialDecreeNumber" name="ministerialDecreeNumber" prevent-e ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeNumber" placeholder={{messages.placeHolders.MinisterialDecreeNumberPH}} required/>
+                            <span ng-show="capacityDelegationForm.ministerialDecreeNumber.$touched && capacityDelegationForm.ministerialDecreeNumber.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>
+            </div>
+
+            <div class="row">
+                    <div class="form-group col-md-6">
+                            <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
+                            <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in capacityDelegationDrtvCtrl.organizationUnites track by organizationUnit.arabicName" ng-model="capacityDelegationDrtvCtrl.capacityDelegation.request.organizationUnit" required>
+                                <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>
+                            </select>
+                            <span ng-show="capacityDelegationForm.organizationUnit.$touched && capacityDelegationForm.organizationUnit.$error.required" >
+                                {{messages.label.required}}
+                            </span>
+                        </div>
+                         <div class="form-group  col-md-4">
+                            <label  for="ministerialDecreeDate" class="required">{{messages.label.MinisterialDecreeDate}}</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+                                <input class="form-control" name="ministerialDecreeDate" id="ministerialDecreeDate" type="date" data-format="dd/MM/yyyy"   ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeDate"   required>
+                           
+                            </div>
+                            <span ng-show="capacityDelegationForm.ministerialDecreeDate.$touched && capacityDelegationForm.ministerialDecreeDate.$error.required" >
+                                    {{messages.label.required}}
+                                </span>
+                        </div>
+               
+        </div>
+        <div class="btn-group rigth" >
+                
+                <!-- <div class="btn-group row">
+                        <div class="col-sm-10">
+                            <button ng-click="capacityDelegationDrtvCtrl.reset()" class="btn btn-default">{{messages.label.reset}}</button>
+                        </div>
+                    </div> -->
+                       <!-- submission dialog -->
+                       <div class="btn-group row" >
+                            <div class="col-sm-10">
+                                <button ng-click="" class="btn btn-default" data-toggle="modal" data-target="#myNote" type="submit" ng-disabled="capacityDelegationDrtvCtrl.capacityDelegation.request.currentStatus.code != 'DRAFT'">{{messages.label.sendRequest}}</button>
+                            </div>
+                        </div>
+                        <div id="myNote" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="modal-title">{{messages.label.sendRequest}}</h3>
+                                </div>
+                                <div class="modal-body" id="modal-body">
+                                    <form>
+                                            <div class="form-group shadow-textarea">
+                                                    <label for="exampleFormControlTextarea6">{{messages.label.notes}}</label>
+                                                    <textarea class="form-control z-depth-1" id="note" rows="3" name="note" ng-model="capacityDelegationDrtvCtrl.capacityDelegationChangeStatusRequest.note"></textarea>
+                                                </div>
+                                       
+                                        </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="capacityDelegationDrtvCtrl.submission()">{{messages.label.implementRequest}}</button>
+                                    <button class="btn btn-warning" type="button" data-dismiss="modal">{{messages.label.closePopup}}</button>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+
+                              <!--             -->
+                              <div class="btn-group row" ng-if="!capacityDelegationDrtvCtrl.editCapacityDelegation">
+                                <div class="col-sm-10">
+                                    <button ng-click="capacityDelegationDrtvCtrl.save()" class="btn btn-default" ng-disabled="capacityDelegationForm.$invalid" type="submit">{{messages.label.Save}}</button>
+                                </div>
+                            </div>
+            </div>
+        </form>
+    <div> 
+
+        
+    <button data-toggle="collapse" ng-disabled="!capacityDelegationDrtvCtrl.capacityDelegation.id" class="accordion btn-default btn" data-target="#bot"><i class="more-less pull-right glyphicon glyphicon-chevron-down"></i>{{messages.label.AddAttachmentLable}}</button>
+    <div id="bot" class="collapse">
+            <request-Attachment urlPerfix = "capacityDelegations"  
+            serial = "{{capacityDelegationDrtvCtrl.serial}}"
+             notEditable = "{{capacityDelegationDrtvCtrl.isNotUser}}" ></request-Attachment>
+    </div>
+
+
+    </div>

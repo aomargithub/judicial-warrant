@@ -3,53 +3,52 @@ package com.informatique.gov.judicialwarrant.rest.controller;
 import java.io.Serializable;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.informatique.gov.judicialwarrant.exception.JudicialWarrantException;
-import com.informatique.gov.judicialwarrant.rest.dto.RoleDto;
 import com.informatique.gov.judicialwarrant.rest.handler.RoleHandler;
+import com.informatique.gov.judicialwarrant.support.validator.RoleValidator;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RoleController implements Serializable{
 
 	private RoleHandler roleHandler;
 	
+	private RoleValidator roleDtoValidator;
+	
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	@InitBinder("roleDto")
+	private void roleInitBinder(WebDataBinder binder) {
+		binder.addValidators(roleDtoValidator);
+	}
+	
     @GetMapping
 	public ResponseEntity<?> getAll() throws JudicialWarrantException {
 		return roleHandler.getAll();
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable Byte id,
-			@RequestHeader(name = "If-None-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return roleHandler.getById(id, eTag);
+	public ResponseEntity<?> getById(@PathVariable Byte id
+			) throws JudicialWarrantException {
+		return roleHandler.getById(id);
+	}
+	
+	@GetMapping(params = {"isInternal"})
+	public ResponseEntity<?> getByIsInternal(@RequestParam Boolean isInternal) throws JudicialWarrantException {
+		return roleHandler.getByIsInternal(isInternal);
 	}
 
-	@PostMapping
-	public ResponseEntity<?> save(@RequestBody RoleDto roleDto) throws JudicialWarrantException {
-		return roleHandler.save(roleDto);
-	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody RoleDto roleDto, @PathVariable Byte id,
-			@RequestHeader(name = "If-Match", required = false) Short eTag) throws JudicialWarrantException {
-		return roleHandler.update(roleDto, id, eTag);
-	}
-
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Byte id) throws JudicialWarrantException {
-		return roleHandler.delete(id);
-	}
 }

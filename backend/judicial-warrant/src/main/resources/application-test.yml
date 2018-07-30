@@ -1,3 +1,46 @@
+server: 
+  servlet:
+    path: /api
+    
 app:
+  default-password-length: 6
+  moj-ou-id: 1
+  security:
+    activedirectory:
+      domain: ou=jw,dc=oman,dc=local
+      url: ldap://192.168.0.41:389/
+      admin:
+        username: CN=JW Supper Admin,OU=JW,DC=oman,DC=local
+        password: P@ssw0rd
+    basicauthentication:
+      realm-name: Oman MOJ Judicial Warrant
+    max-inactive-interval: 12000
   datasource:
-    name: jdbc/judicialwarrant-ds
+    lookup-name: jdbc/jw
+  ucm:
+    ip: 192.168.0.44
+    port: 4444
+    username: weblogic
+    password: welcome1    
+
+  lawaffairs:
+      email: noreply@informatique-eg.com
+   
+spring:
+  mail:
+   host: mail.informatique-eg.com
+   port: 25
+   username: noreply@informatique-eg.com
+   password: "#$NrPw567"
+   protocol: smtp
+   test-connection: true
+   properties:
+      mail:
+        smtp:
+          auth: true 
+          from: noreply@informatique-eg.com
+        debug: false
+  
+
+
+    
