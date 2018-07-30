@@ -24,4 +24,5 @@ module.exports = function(app){
     require('./requestAttachmentSrvc')(app);
     require('./requestSrvc')(app);
     require('./messageFcty')(app);
+    require('./webSocket')(app);
 };

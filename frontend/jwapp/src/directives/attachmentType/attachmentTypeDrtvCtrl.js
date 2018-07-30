@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('attachmentTypeDrtvCtrl', function(messageFcty,$state,$scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
+    app.controller('attachmentTypeDrtvCtrl', function(webSocket,messageFcty,$state,$scope,messageFcty, AttachmentType, attachmentTypeSrvc, httpStatusSrvc, stringUtilSrvc){
         var vm = this;
         vm.attachmentType = new AttachmentType();
         vm.editId = null;
@@ -9,6 +9,17 @@ module.exports = function(app){
             start: 0,
             end: 0
         }
+
+         
+          $scope.connect = function() {
+            webSocket.connect();
+          }
+         
+          $scope.send = function() {
+            webSocket.send(vm.attachmentType);
+          }
+
+
         vm.filters={}; 
         vm.status= [true,false];
 
@@ -114,7 +125,7 @@ module.exports = function(app){
 
 
         vm.reLoad = function() {
-            return $state.go("home.attachmentTypes",{},{reload: "home.attachmentTypes"});
+            return $state.go("home.attachmentTypes",{},{reload: "home.attachmentTypes"}); 
         }
     });
 }
