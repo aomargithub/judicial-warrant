@@ -48,7 +48,7 @@ module.exports = function(app){
             
             if (vm.code ==='ENTITLED_REGISTRATION')
             {
-              return    $state.go('home.entitledTrainnings',{serial:vm.serial});
+              return    $state.go('home.entitledTrainnings',{serial:vm.serial},{ inherit: false });
 
             }
         }

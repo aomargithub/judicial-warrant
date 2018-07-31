@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('requestDrtvCtrl', function($filter,requestSrcv,$state,OrganizationUnit,$scope,requestTypeSrvc,organizationUnitSrvc){
+    app.controller('requestDrtvCtrl', function($stateParams,capacityDelegationSrvc,messageFcty,$stateParams,requestSrcv,$state,OrganizationUnit,$scope,requestTypeSrvc,organizationUnitSrvc){
         var vm = this;
         
         vm.filters={}; 
@@ -33,23 +33,24 @@ module.exports = function(app){
         requestTypeSrvc.getAll().then(function (response){
             vm.requestTypes = response.data;
         });
-        
+
         vm.reLoad = function() {
             return $state.go("home.requests",{},{reload: "home.requests"});
         }
-
+    
         vm.route = function(request){
             vm.code = request.type.code;
             vm.serial = request.serial;
             if (vm.code ==='CAPACITY_DELEGATION')
             {
-              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial});
+              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial},{ inherit: false });
             }
             else(vm.code ==='ENTITLED_REGISTRATION')
             {
-              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial});
+              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial},{ inherit: false });
 
             }
+           
         }
 
     

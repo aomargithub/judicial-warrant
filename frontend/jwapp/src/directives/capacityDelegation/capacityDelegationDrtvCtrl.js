@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('capacityDelegationDrtvCtrl', function ($rootScope,messageFcty, $stateParams, $state, $scope, requestTypeSrvc, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc,httpStatusSrvc, stringUtilSrvc, modalSrvc, messageFcty) {
+    app.controller('capacityDelegationDrtvCtrl', function ($stateParams, $state, $scope, organizationUnitSrvc, requestTypeAttachmentTypeSrvc, CapacityDelegation, RequestAttachment, CapacityDelegationChangeStatusRequest, capacityDelegationSrvc, stringUtilSrvc, modalSrvc, messageFcty) {
         var vm = this;
         vm.capacityDelegation = new CapacityDelegation();
         vm.requestAttachment = new RequestAttachment();
@@ -21,7 +21,7 @@ module.exports = function (app) {
             $scope.capacityDelegationForm.$setPristine();
             $scope.capacityDelegationForm.$setUntouched();
         };
-
+     
         //===================================
 
         organizationUnitSrvc.getExternal().then(function (response) {
@@ -82,7 +82,7 @@ module.exports = function (app) {
         if (vm.serial) {
             vm.getCapacityDelegations();
         }
-
+       
 
         //================================
 
@@ -115,7 +115,7 @@ module.exports = function (app) {
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
-            return $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial},{reload: true});
+            return $state.go("home.CAPACITY_DELEGATION",{serial:vm.serial},{reload: "home.CAPACITY_DELEGATION"});
         }
 
 

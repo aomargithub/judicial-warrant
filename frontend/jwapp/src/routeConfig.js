@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.config(function($stateProvider, $urlRouterProvider, templateSrvcProvider){
+    app.config(function($stateProvider, $urlRouterProvider, templateSrvcProvider,){
         $urlRouterProvider.otherwise('/login');
         $stateProvider
             .state('login', {
@@ -84,6 +84,16 @@ module.exports = function(app){
                 url : '/capacityDelegations/:serial',
                 params: {
                     serial: null
+                },  resolve: {
+                    requests: ['$stateParams', 'capacityDelegationSrvc',
+                        function($stateParams,capacityDelegationSrvc) {
+        
+                        return capacityDelegationSrvc.getCapacityDelegations($stateParams.serial).then(function (response) {                 
+                                return   response.data;
+ 
+                        })
+                    }]
+                   
                 },
                 views : {
                     content : {
@@ -99,6 +109,16 @@ module.exports = function(app){
                 url : '/entitledRegistrations/:serial',
                 params: {
                     serial: null
+                }, resolve: {
+                    entitleds: ['$stateParams', 'entitledRegistrationSrvc',
+                        function($stateParams, entitledRegistrationSrvc) {
+        
+                            return entitledRegistrationSrvc.getBySerial($stateParams.serial).then(function success(response) {
+                                return  response.data;    
+                               });
+                              
+                    }]
+                   
                 },
                 views : {
                     content : {
@@ -137,6 +157,16 @@ module.exports = function(app){
                 url : '/entitledTrainnings/:serial',
                 params: {
                     serial: null
+                }, resolve: {
+                    entitledTrainnings: ['$stateParams', 'entitledRegistrationSrvc',
+                        function($stateParams, entitledRegistrationSrvc) {
+        
+                            return entitledRegistrationSrvc.getEntitleds($stateParams.serial).then(function(response){
+                                return  vm.entitleds = response.data;
+                            });
+                              
+                    }]
+                   
                 },
                 views : {
                     content : {

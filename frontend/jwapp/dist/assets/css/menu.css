@@ -299,8 +299,8 @@ a.article:hover {
     display: inline-block;
     cursor: pointer;
 }
-input::-webkit-datetime-edit{ color: transparent; }
-input:focus::-webkit-datetime-edit{ color: #000; }
+/* input::-webkit-datetime-edit{ color: transparent; }
+input:focus::-webkit-datetime-edit{ color: #000; } */
     .row img {
       border: 0 none;
       margin: 10px;

@@ -38,12 +38,12 @@ module.exports = function(app){
             if (vm.code ==='CAPACITY_DELEGATION')
             {
              
-              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial});
+              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial},{ inherit: false });
             }
             else(vm.code ==='ENTITLED_REGISTRATION')
             {
                
-              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial});
+              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial},{ inherit: false });
 
             }
         }
