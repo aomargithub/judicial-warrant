@@ -6,7 +6,7 @@
     <div class="btn-group btn-group-justified">
         <form name="entitledRegistrationForm" novalidate> 
             <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" ng-class="{ 'has-error': entitledRegistrationForm.capacityDelegation.$touched && entitledRegistrationForm.capacityDelegation.$error.required}">
                             <label for="capacityDelegation" class="required"> {{messages.label.JobTitle}} </label>
                             <select ng-disabled="entitledRegistrationDrtvCtrl.isNotUser" class="form-control choice requiredField" ng-options="capacityDelegation as capacityDelegation.jobTitle for capacityDelegation in entitledRegistrationDrtvCtrl.capacityDelegations track by capacityDelegation.id" ng-model="entitledRegistrationDrtvCtrl.entitledRegistration.capacityDelegation" nonvalidate required>
                                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>

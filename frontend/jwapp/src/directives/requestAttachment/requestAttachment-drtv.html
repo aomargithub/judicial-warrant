@@ -3,7 +3,7 @@
 
         <form   name="requestAttachmentForm" novalidate  enctype="multipart/form-data">
                 <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6" ng-class="{ 'has-error': requestAttachmentForm.attachmentType.$touched && requestAttachmentForm.attachmentType.$error.required}">
                                 <label for="attachmentType" class="required"> {{$parent.messages.label.DocumentType}}</label>
                                 <select ng-disabled="{{noteditable}}" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in requestAttachmentDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="requestAttachmentDrtvCtrl.requestAttachment.attachmentType" novalidate required>
                                     <option value="" disabled selected>{{$parent.messages.placeHolders.selectMessage}}</option>

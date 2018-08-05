@@ -1,5 +1,6 @@
 module.exports = function(app){
-    app.config(function($stateProvider, $urlRouterProvider, templateSrvcProvider,){
+    app.config(function($stateProvider, $urlRouterProvider, templateSrvcProvider,$qProvider){
+        $qProvider.errorOnUnhandledRejections(false);
         $urlRouterProvider.otherwise('/login');
         $stateProvider
             .state('login', {

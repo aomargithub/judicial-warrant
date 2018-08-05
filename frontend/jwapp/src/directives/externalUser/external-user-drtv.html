@@ -5,14 +5,14 @@
 <div class="btn-group btn-group-justified ">
     <form name="userForm"  novalidate>
         <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error':  userForm.arabicName.$touched && userForm.arabicName.$error.required}">
             <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
             <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="externalUserDrtvCtrl.user.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
             <span ng-show="userForm.arabicName.$touched && userForm.arabicName.$error.required" >
                 {{messages.label.required}}
             </span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error':  userForm.englishName.$touched && userForm.englishName.$error.required}">
             <label for="englishName" class="required">{{messages.label.englishName}}</label>
             <input type="text" class="form-control" id="englishName" name="englishName" ng-model="externalUserDrtvCtrl.user.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
             <span ng-show="userForm.englishName.$touched && userForm.englishName.$error.required" >
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error':  userForm.mobileNumber1.$invalid && userForm.mobileNumber1.$error.maxlength || userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required}">
             <label for="mobileNumber1" class="required">{{messages.label.mobileNumber1}}</label>
             <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber1" name="mobileNumber1" ng-model="externalUserDrtvCtrl.user.mobileNumber1" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
             <span ng-show="userForm.mobileNumber1.$touched && userForm.mobileNumber1.$error.required" >
@@ -32,7 +32,7 @@
                   </span>
             
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error': userForm.mobileNumber2.$touched && userForm.mobileNumber2.$invalid || userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required}">
             <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
             <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber2" name="mobileNumber2" ng-model="externalUserDrtvCtrl.user.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
             <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error':  userForm.emailAddress.$error.email && userForm.emailAddress.$invalid || userForm.emailAddress.$touched && userForm.emailAddress.$error.required}">
             <label for="emailAddress" class="required">{{messages.label.emailAddress}}</label>
             <input type="email" class="form-control" id="emailAddress" name="emailAddress" ng-model="externalUserDrtvCtrl.user.emailAddress" ng-pattern="emailPattern" placeholder={{messages.placeHolders.emailPH}} required/>
             <span ng-show="userForm.emailAddress.$touched && userForm.emailAddress.$error.required" >
@@ -54,9 +54,9 @@
                 {{messages.label.emailError}}
             </span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error':  userForm.civilId.$error.maxlength && userForm.civilId.$invalid || userForm.civilId.$touched && userForm.civilId.$error.required}">
             <label for="civilId" class="required">{{messages.label.civilId}}</label>
-            <input type="number" class="form-control civilID" prevent-e id="civilId" name="civilId" ng-model="externalUserDrtvCtrl.user.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
+            <input type="text" class="form-control civilID" prevent-e id="civilId" name="civilId" ng-model="externalUserDrtvCtrl.user.civilId" ng-maxlength="15" placeholder={{messages.placeHolders.civilIDPH}} required/>
             <span ng-show="userForm.civilId.$touched && userForm.civilId.$error.required " >
                 {{messages.label.required}}
             </span>
@@ -66,14 +66,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error': userForm.loginName.$touched && userForm.loginName.$error.required}">
             <label for="loginName" class="required">{{messages.label.loginName}}</label>
             <input type="text" class="form-control" id="loginName" name="loginName" ng-model="externalUserDrtvCtrl.user.loginName" placeholder={{messages.placeHolders.logInNamePH}} required/>
             <span ng-show="userForm.loginName.$touched && userForm.loginName.$error.required" >
                 {{messages.label.required}}
             </span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" ng-class="{ 'has-error': userForm.organizationUnit.$touched && userForm.organizationUnit.$error.required}">
             <label for="organizationUnit" class="required"> {{messages.label.organizationUnit}}</label>
             <select class="form-control choice requiredField" ng-options="organizationUnit | localeFltr for organizationUnit in externalUserDrtvCtrl.organizations track by organizationUnit.arabicName" ng-model="externalUserDrtvCtrl.user.organizationUnit" required>
                 <option value="" disabled selected>{{messages.placeHolders.selectMessage}}</option>

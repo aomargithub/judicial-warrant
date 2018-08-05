@@ -3,14 +3,14 @@
 
             <form ng-disabled="{{noteditable}}" name="entitledForm" novalidate> 
                     <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" ng-class="{ 'has-error': entitledForm.arabicName.$touched && entitledForm.arabicName.$error.required}">
                                     <label for="arabicName" class="required">{{$parent.messages.label.arabicName}}</label>
                                     <input ng-disabled="{{noteditable}}" type="text" class="form-control"  id="arabicName" name="arabicName" ng-model="entitledDrtvCtrl.entitled.arabicName" placeholder={{$parent.messages.placeHolders.arabicNamePH}} required/>
                                     <span ng-show="entitledForm.arabicName.$touched && entitledForm.arabicName.$error.required" >
                                         {{$parent.messages.label.required}}
                                     </span>
                                 </div>
-                            <div class="form-group col-md-6">    
+                            <div class="form-group col-md-6" ng-class="{ 'has-error': entitledForm.englishName.$touched && entitledForm.englishName.$error.required}">    
                                     <label for="englishName" class="required">{{$parent.messages.label.englishName}}</label>
                                     <input ng-disabled="{{noteditable}}" type="text" class="form-control" id="englishName" name="englishName" ng-model="entitledDrtvCtrl.entitled.englishName" placeholder={{$parent.messages.placeHolders.englishNamePH}} required/>
                                     <span ng-show="entitledForm.englishName.$touched && entitledForm.englishName.$error.required" >
@@ -19,7 +19,7 @@
                             </div>
                     </div>
                     <div class="row">
-                            <div class="form-group col-md-6">                
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':  entitledForm.civilId.$error.maxlength && entitledForm.civilId.$invalid || entitledForm.civilId.$touched && entitledForm.civilId.$error.required}">                
                                     <label for="civilId" class="required">{{$parent.messages.label.civilId}}</label>
                                     <input ng-disabled="{{noteditable}}" type="number" prevent-e  class="form-control" id="civilId" name="civilId" ng-model="entitledDrtvCtrl.entitled.civilId" ng-maxlength="15" placeholder={{$parent.messages.placeHolders.civilIDPH}} required/>
                                     <span ng-show="entitledForm.civilId.$touched && entitledForm.civilId.$error.required" >
@@ -29,7 +29,7 @@
                                         {{$parent.messages.label.civilError}}
                                     </span>
                                 </div>
-                            <div class="form-group col-md-6">    
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':  entitledForm.mobileNumber1.$error.maxlength && entitledForm.mobileNumber1.$invalid || entitledForm.mobileNumber1.$touched && entitledForm.mobileNumber1.$error.required}">    
                                     <label for="mobileNumber1" class="required"> {{$parent.messages.label.mobileNumber1}}</label>
                                     <input ng-disabled="{{noteditable}}" type="number" prevent-e class="form-control" id="mobileNumber1" name="mobileNumber1" ng-model="entitledDrtvCtrl.entitled.mobileNumber1" ng-maxlength="8"  placeholder={{$parent.messages.placeHolders.mobileNumberPH}} required/>
                                     <span ng-show="entitledForm.mobileNumber1.$touched && entitledForm.mobileNumber1.$error.required" >
@@ -41,7 +41,7 @@
                                 </div>
                     </div>             
                     <div class="row">
-                            <div class="form-group col-md-6">                
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':  entitledForm.mobileNumber2.$error.maxlength && entitledForm.mobileNumber2.$invalid || entitledForm.mobileNumber2.$touched && entitledForm.mobileNumber2.$error.required}">                
                                     <label for="mobileNumber2" class="required"> {{$parent.messages.label.mobileNumber2}}</label>
                                     <input ng-disabled="{{noteditable}}" type="number" prevent-e class="form-control" id="mobileNumber2" name="mobileNumber2" ng-model="entitledDrtvCtrl.entitled.mobileNumber2" ng-maxlength="8"  placeholder={{$parent.messages.placeHolders.mobileNumberPH}} required/>
                                     <span ng-show="entitledForm.mobileNumber2.$touched && entitledForm.mobileNumber2.$error.required" >
@@ -51,7 +51,7 @@
                                             {{$parent.messages.label.mobileError}}        
                                                     </span>
                                 </div>
-                            <div class="form-group col-md-6">    
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':  entitledForm.emailAddress.$error.maxlength && entitledForm.emailAddress.$invalid || entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required}">    
                                     <label for="emailAddress" class="required">{{$parent.messages.label.emailAddress}}</label>
                                     <input ng-disabled="{{noteditable}}" type="email" class="form-control" id="emailAddress" name="emailAddress"  ng-model="entitledDrtvCtrl.entitled.emailAddress" placeholder={{$parent.messages.placeHolders.emailPH}} required/>
                                     <span ng-show="entitledForm.emailAddress.$touched && entitledForm.emailAddress.$error.required" >
@@ -196,7 +196,7 @@
                 <div class="modal-body" id="modal-body">
                     <form ng-disabled="{{noteditable}}"  name="entitledAttachmentForm" novalidate  enctype="multipart/form-data">
                         <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" ng-class="{ 'has-error':  entitledForm.attachmentType.$touched && entitledForm.attachmentType.$error.required}">
                                         <label for="attachmentType" class="required"> {{$parent.messages.label.DocumentName}}</label>
                                         <select ng-disabled="{{noteditable}}" class="form-control choice requiredField" ng-options="attachmentType | localeFltr for attachmentType in entitledDrtvCtrl.attachmentTypes track by attachmentType.arabicName" ng-model="entitledDrtvCtrl.entitledAttachment.attachmentType" novalidate required>
                                             <option value="" disabled selected>{{$parent.messages.placeHolders.selectMessage}}</option>
