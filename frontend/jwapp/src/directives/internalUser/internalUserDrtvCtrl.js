@@ -118,7 +118,7 @@ module.exports = function(app){
         };
 
         vm.reLoad = function() {
-            return $state.go("home.internalUsers",{},{reload: "home.internalUsers"});
+            return $state.go("internalUsers",{},{reload: "internalUsers"});
         }
 
     });

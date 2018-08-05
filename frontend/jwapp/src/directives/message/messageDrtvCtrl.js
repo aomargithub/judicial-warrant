@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    app.controller('messageDrtvCtrl', function ($filter,$rootScope,blockUIConfig, $scope, messageFcty) {
+    app.controller('messageDrtvCtrl', function ($filter,$state,$rootScope,blockUIConfig, $scope, messageFcty) {
         var vm = this;
         $scope.messageFcty = messageFcty;
 

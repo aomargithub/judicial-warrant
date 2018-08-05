@@ -107,7 +107,7 @@ module.exports = function(app){
             resetEntryForm();
         };
         vm.reLoad = function() {
-            return $state.go("home.organizationUnits",{},{reload: "home.organizationUnits"});
+            return $state.go("organizationUnits",{},{reload: "organizationUnits"});
         }
     });
 }

@@ -123,7 +123,7 @@ module.exports = function(app){
 
         
         vm.reLoad = function() {
-            return $state.go("home.requestTypeAttachmentTypes",{},{reload: "home.requestTypeAttachmentTypes"});
+            return $state.go("requestTypeAttachmentTypes",{},{reload: "requestTypeAttachmentTypes"});
         }
     });
 }

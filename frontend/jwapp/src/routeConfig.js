@@ -20,7 +20,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('home')
                     }
                 }
-            }).state('home.organizationUnits', {
+            }).state('organizationUnits', {
                 parent: 'home',
                 data: {
                     label : 'organizationUnits'
@@ -31,7 +31,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('organizationUnits')
                     }
                 }
-            }).state('home.attachmentTypes', {
+            }).state('attachmentTypes', {
                 parent: 'home',
                 data: {
                     label : 'attachmentTypes'
@@ -42,7 +42,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('attachmentTypes')
                     }
                 }
-            }).state('home.internalUsers', {
+            }).state('internalUsers', {
                 parent: 'home',
                 data: {
                     label : 'internalUsers'
@@ -53,7 +53,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('internalUsers')
                     }
                 }
-            }).state('home.externalUsers', {
+            }).state('externalUsers', {
                 parent: 'home',
                 data: {
                     label : 'externalUsers'
@@ -64,7 +64,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('externalUsers')
                     }
                 }
-            }).state('home.requestTypeAttachmentTypes',{
+            }).state('requestTypeAttachmentTypes',{
                 parent: 'home',
                 data: {
                     label :'requestTypeAttachmentTypes' 
@@ -76,7 +76,19 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('home.CAPACITY_DELEGATION',{
+            }).state('CAPACITY_DELEGATION',{
+                parent: 'home',
+                data: {
+                    label :'capacityDelegations'
+                },
+                url : '/capacityDelegations',
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('capacityDelegations')
+                    }
+                    
+                }
+            }).state('EDITE_CAPACITY_DELEGATION',{
                 parent: 'home',
                 data: {
                     label :'capacityDelegations'
@@ -101,7 +113,7 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('home.ENTITLED_REGISTRATION',{
+            }).state('ENTITLED_REGISTRATION',{
                 parent: 'home',
                 data: {
                     label :'entitledRegistrations'
@@ -109,14 +121,29 @@ module.exports = function(app){
                 url : '/entitledRegistrations/:serial',
                 params: {
                     serial: null
-                }, resolve: {
-                    entitleds: ['$stateParams', 'entitledRegistrationSrvc',
-                        function($stateParams, entitledRegistrationSrvc) {
+                },
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('entitledRegistrations')
+                    }
+                    
+                }
+            }).state('EDITE_ENTITLED_REGISTRATION',{
+                parent: 'home',
+                data: {
+                    label :'entitledRegistrations'
+                },
+                url : '/entitledRegistrations/:serial',
+                params: {
+                    serial: null
+                },  resolve: {
+                    requests: ['$stateParams', 'entitledRegistrationSrvc',
+                        function($stateParams,entitledRegistrationSrvc) {
         
-                            return entitledRegistrationSrvc.getBySerial($stateParams.serial).then(function success(response) {
-                                return  response.data;    
-                               });
-                              
+                        return entitledRegistrationSrvc.getBySerial($stateParams.serial).then(function (response) {                 
+                                return   response.data;
+ 
+                        })
                     }]
                    
                 },
@@ -126,7 +153,7 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('home.requests',{
+            }).state('requests',{
                 parent: 'home',
                 data: {
                     label :'requests'
@@ -138,7 +165,7 @@ module.exports = function(app){
                     }
                     
                 }
-            }).state('home.myRequests',{
+            }).state('myRequests',{
                 parent : 'home',
                 data: {
                     label: 'myRequests'
@@ -149,7 +176,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('myRequests')
                     }
                 }
-            }).state('home.entitledTrainnings',{
+            }).state('entitledTrainnings',{
                 parent : 'home',
                 data: {
                     label: 'entitledTrainnings'
@@ -157,14 +184,29 @@ module.exports = function(app){
                 url : '/entitledTrainnings/:serial',
                 params: {
                     serial: null
-                }, resolve: {
-                    entitledTrainnings: ['$stateParams', 'entitledRegistrationSrvc',
-                        function($stateParams, entitledRegistrationSrvc) {
+                },
+                views : {
+                    content : {
+                        template : templateSrvcProvider.getTemplate('entitledTrainnings')
+                    }
+                }
+            }).state('editeEntitledTrainnings',{
+                parent : 'home',
+                data: {
+                    label: 'entitledTrainnings'
+                },
+                url : '/entitledTrainnings/:serial',
+                params: {
+                    serial: null
+                },  resolve: {
+                    requests: ['$stateParams', 'entitledRegistrationSrvc',
+                        function($stateParams,entitledRegistrationSrvc) {
         
-                            return entitledRegistrationSrvc.getEntitleds($stateParams.serial).then(function(response){
-                                return  vm.entitleds = response.data;
-                            });
-                              
+                        return    entitledRegistrationSrvc.getEntitleds($stateParams.serial).then(function(response){
+                             return   vm.entitleds = response.data;
+                            
+ 
+                        })
                     }]
                    
                 },
@@ -173,7 +215,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('entitledTrainnings')
                     }
                 }
-            }).state('home.requestEntitledRegistrations',{
+            }).state('requestEntitledRegistrations',{
                 parent : 'home',
                 data: {
                     label: 'requestEntitledRegistrations'
@@ -184,7 +226,7 @@ module.exports = function(app){
                         template : templateSrvcProvider.getTemplate('requestEntitledRegistrations')
                     }
                 }
-            }).state('home.userProfiles',{
+            }).state('userProfiles',{
                 parent : 'home',
                 data: {
                     label: 'userProfiles'

@@ -25,5 +25,5 @@ module.exports = function(app){
     require('./requestSrvc')(app);
     require('./messageFcty')(app);
     require('./webSocket')(app);
-    require('./stateEvents')(app);
+    require('./stateTransitions')(app);
 };

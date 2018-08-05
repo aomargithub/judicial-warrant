@@ -125,7 +125,7 @@ module.exports = function(app){
 
 
         vm.reLoad = function() {
-            return $state.go("home.attachmentTypes",{},{reload: "home.attachmentTypes"}); 
+            return $state.go("attachmentTypes",{},{reload: "attachmentTypes"}); 
         }
     });
 }

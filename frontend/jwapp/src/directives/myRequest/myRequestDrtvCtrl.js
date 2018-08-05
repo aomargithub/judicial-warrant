@@ -28,7 +28,7 @@ module.exports = function(app){
             vm.requests = response.data;
         });
         vm.reLoad = function() {
-            return $state.go("home.myRequests",{},{reload: "home.myRequests"});
+            return $state.go("myRequests",{},{reload: "myRequests"});
         }
 
 
@@ -38,12 +38,12 @@ module.exports = function(app){
             if (vm.code ==='CAPACITY_DELEGATION')
             {
              
-              return    $state.go('home.CAPACITY_DELEGATION',{serial:vm.serial},{ inherit: false });
+              return    $state.go('EDITE_CAPACITY_DELEGATION',{serial:vm.serial},{ inherit: false });
             }
             else(vm.code ==='ENTITLED_REGISTRATION')
             {
                
-              return    $state.go('home.ENTITLED_REGISTRATION',{serial:vm.serial},{ inherit: false });
+              return    $state.go('EDITE_ENTITLED_REGISTRATION',{serial:vm.serial},{ inherit: false });
 
             }
         }

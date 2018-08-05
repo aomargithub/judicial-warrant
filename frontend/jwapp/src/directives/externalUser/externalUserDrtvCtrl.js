@@ -115,7 +115,7 @@ module.exports = function(app){
         };
 
         vm.reLoad = function() {
-            return $state.go("home.externalUsers",{},{reload: "home.externalUsers"});
+            return $state.go("externalUsers",{},{reload: "externalUsers"});
         }
 
         vm.cancel = function(){

@@ -3,7 +3,7 @@
     <h3>{{messages.HOME}}</h3>
   </div>
   <div class="avatar" ng-repeat="requestType in requestTypesMenuDrtvCtrl.items track by requestType.code">
-    <a href="" ui-sref=".{{requestType.code}}">
+    <a href="" ui-sref="{{requestType.code}}">
       <div class="">
         <img src=".\assets\imgs\{{requestType.code}}.png" alt="{{requestType.arabicName}}">
       </div>

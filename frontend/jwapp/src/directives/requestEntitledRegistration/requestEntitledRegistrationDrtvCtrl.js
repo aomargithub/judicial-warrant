@@ -39,7 +39,7 @@ module.exports = function(app){
 
       
         vm.reLoad = function() {
-            return $state.go("home.requestEntitledRegistrations",{},{reload: "home.requestEntitledRegistrations"});
+            return $state.go("requestEntitledRegistrations",{},{reload: "requestEntitledRegistrations"});
         }
 
         vm.route = function(entitledRegistration){
@@ -48,7 +48,7 @@ module.exports = function(app){
             
             if (vm.code ==='ENTITLED_REGISTRATION')
             {
-              return    $state.go('home.entitledTrainnings',{serial:vm.serial},{ inherit: false });
+              return    $state.go('editeEntitledTrainnings',{serial:vm.serial},{ inherit: false });
 
             }
         }

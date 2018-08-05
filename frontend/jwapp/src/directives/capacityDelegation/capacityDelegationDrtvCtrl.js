@@ -115,7 +115,7 @@ module.exports = function (app) {
         vm.reLoad = function() {
             // set serial in url to make user can refresh page and with same data
             // and refetch data to two change status
-            return $state.go("home.CAPACITY_DELEGATION",{serial:vm.serial},{reload: "home.CAPACITY_DELEGATION"});
+            return $state.go("CAPACITY_DELEGATION",{serial:vm.serial},{reload: "CAPACITY_DELEGATION"});
         }
 
 
