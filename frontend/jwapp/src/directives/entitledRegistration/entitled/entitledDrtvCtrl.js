@@ -79,6 +79,7 @@ module.exports = function (app) {
 
         vm.resetEntitled = function () {
             vm.entitled = new Entitled();
+            resetEntryForm();
         }
 
         vm.showEntitledAttachmentImage = function (entitledAttachment) {
