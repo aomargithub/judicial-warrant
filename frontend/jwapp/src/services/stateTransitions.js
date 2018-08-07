@@ -8,8 +8,10 @@ module.exports = function(app){
       });
     
         $transitions.onSuccess({}, function($transition){
-            console.log($transition.$from());
-            console.log($transition.$to());
+         
+            messageFcty.resetMessage();
+               // console.log($transition.$from());
+            // console.log($transition.$to());
         });
         $transitions.onError({},function($transition){
             
@@ -21,7 +23,7 @@ module.exports = function(app){
         });
         
          $transitions.onStart({}, function($transition){
-             console.log($transition.params());
+             //console.log($transition.params());
             //  return $q.reject();
             
         });
