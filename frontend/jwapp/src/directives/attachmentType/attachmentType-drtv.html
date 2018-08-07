@@ -7,14 +7,14 @@
         <form name="attachmentTypeForm" novalidate> 
             <div class="form-group col-md-6" ng-class="{ 'has-error': attachmentTypeForm.arabicName.$touched && attachmentTypeForm.arabicName.$error.required}">
                 <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="attachmentTypeDrtvCtrl.attachmentType.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
+                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="attachmentTypeDrtvCtrl.attachmentType.arabicName" placeholder={{messages.placeHolders.attachmentTypeArabicPH}} required/>
                 <span ng-show="attachmentTypeForm.arabicName.$touched && attachmentTypeForm.arabicName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6" ng-class="{ 'has-error': attachmentTypeForm.englishName.$touched && attachmentTypeForm.englishName.$error.required}">
                 <label for="englishName" class="required">{{messages.label.englishName}}</label>
-                <input type="text" class="form-control" id="englishName" name="englishName" ng-model="attachmentTypeDrtvCtrl.attachmentType.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                <input type="text" class="form-control" id="englishName" name="englishName" ng-model="attachmentTypeDrtvCtrl.attachmentType.englishName" placeholder={{messages.placeHolders.attachmentTypeEnglishPH}} required/>
                 <span ng-show="attachmentTypeForm.englishName.$touched && attachmentTypeForm.englishName.$error.required" >
                     {{messages.label.required}}
                 </span>

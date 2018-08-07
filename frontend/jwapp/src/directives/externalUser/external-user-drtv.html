@@ -32,13 +32,11 @@
                   </span>
             
         </div>
-        <div class="form-group col-md-6" ng-class="{ 'has-error': userForm.mobileNumber2.$touched && userForm.mobileNumber2.$invalid || userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required}">
-            <label for="mobileNumber2" class="required">{{messages.label.mobileNumber2}}</label>
-            <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber2" name="mobileNumber2" ng-model="externalUserDrtvCtrl.user.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}} required/>
-            <span ng-show="userForm.mobileNumber2.$touched && userForm.mobileNumber2.$error.required" >
-                {{messages.label.required}}
-            </span>
-            <span ng-show="userForm.mobileNumber2.$error.maxlength && userForm.mobileNumber2.$invalid" >
+        <div class="form-group col-md-6">
+            <label for="mobileNumber2">{{messages.label.mobileNumber2}}</label>
+            <input type="text" class="form-control mobileNumber" prevent-e id="mobileNumber2" name="mobileNumber2" ng-model="externalUserDrtvCtrl.user.mobileNumber2" ng-maxlength="8" ng-minlength="8" ng-pattern="mobilePattern" placeholder={{messages.placeHolders.mobileNumberPH}}/>
+            
+            <span ng-show="userForm.mobileNumber2.$error.maxlength" >
                     {{messages.label.mobileError}}
                 </span>
         </div>
@@ -186,7 +184,7 @@
                     {{eu.englishName}}
                 </td>
                 <td>
-                    {{eu.isActive}}
+                    {{eu.isActive | localeFltr}}
                 </td>
                 <td>
                     {{eu.mobileNumber1}}

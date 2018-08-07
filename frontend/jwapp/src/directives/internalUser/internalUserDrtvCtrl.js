@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('internalUserDrtvCtrl', function($state,messageFcty, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
+    app.controller('internalUserDrtvCtrl', function($state,$rootScope,$filter,messageFcty, $scope, User, internalUserSrvc, roleSrvc,httpStatusSrvc,stringUtilSrvc){
         var vm = this;
         vm.user = new User();
         vm.editId = null;
@@ -10,13 +10,13 @@ module.exports = function(app){
         vm.roles = [];
 
         vm.filters={}; 
-        vm.status= [true,false];
+        vm.status= [$rootScope.messages.isActive['ArabicName'],$rootScope.messages.isActive['EnglishName']];
 
         vm.page = {
             start: 0,
             end: 0
         };
-
+       
         internalUserSrvc.getAll().then(function(response){ 
             vm.users = response.data;
         });

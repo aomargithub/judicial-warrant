@@ -34,7 +34,7 @@ module.exports = function(app){
                         message = $rootScope.messages[status.text];
                     } else if (status.code === httpStatusSrvc.badRequest.code) {
                         messageWithLink = false;
-                        // messageDiscription = response.data.errorDescription;
+                         messageDiscription =$rootScope.messages[response.data[0].errorCode];
                         message = $rootScope.messages[status.text];
                     }  else {
                         messageWithLink = false;

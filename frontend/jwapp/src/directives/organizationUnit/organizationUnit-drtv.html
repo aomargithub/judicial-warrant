@@ -6,14 +6,14 @@
         <form name="organizationUnitForm" novalidate>
             <div  class="form-group col-md-6" ng-class="{ 'has-error': organizationUnitForm.arabicName.$touched && organizationUnitForm.arabicName.$error.required}">
                 <label for="arabicName" class="required">{{messages.label.arabicName}}</label>
-                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" placeholder={{messages.placeHolders.arabicNamePH}} required/>
+                <input type="text" class="form-control" id="arabicName" name="arabicName" ng-model="organizationUnitDrtvCtrl.organizationUnit.arabicName" placeholder={{messages.placeHolders.organizationUnitArabicPH}} required/>
                 <span ng-show="organizationUnitForm.arabicName.$touched && organizationUnitForm.arabicName.$error.required" >
                     {{messages.label.required}}
                 </span>
             </div>
             <div class="form-group col-md-6" ng-class="{ 'has-error': organizationUnitForm.englishName.$touched && organizationUnitForm.englishName.$error.required}">
                 <label for="englishName" class="required">{{messages.label.englishName}}</label>
-                <input type="text" class="form-control " id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" placeholder={{messages.placeHolders.englishNamePH}} required/>
+                <input type="text" class="form-control " id="englishName" name="englishName" ng-model="organizationUnitDrtvCtrl.organizationUnit.englishName" placeholder={{messages.placeHolders.organizationUnitEnglishPH}} required/>
                 <span ng-show="organizationUnitForm.englishName.$touched && organizationUnitForm.englishName.$error.required" >
                         {{messages.label.required}}
                 </span>

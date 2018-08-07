@@ -10,7 +10,7 @@
                   withlink = "{{capacityDelegationDrtvCtrl.messageWithLink}}"
                   discription="{{capacityDelegationDrtvCtrl.messageDiscription}}"
                   class="message-bar" >
-    </message-drtv>
+    </message-drtv> 
    
     <div class="btn-group btn-group-justified">
         <form name="capacityDelegationForm" novalidate> 
@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group col-md-6" ng-class="{ 'has-error': capacityDelegationForm.ministerialDecreeNumber.$touched && capacityDelegationForm.ministerialDecreeNumber.$error.required}">
                             <label for="ministerialDecreeNumber" class="required">{{messages.label.MinisterialDecreeNumber}} </label>
-                            <input type="text" class="form-control" id="ministerialDecreeNumber" name="ministerialDecreeNumber" prevent-e ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeNumber" placeholder={{messages.placeHolders.MinisterialDecreeNumberPH}} required/>
+                            <input type="text" class="form-control" id="ministerialDecreeNumber" name="ministerialDecreeNumber"  ng-model="capacityDelegationDrtvCtrl.capacityDelegation.ministerialDecreeNumber" placeholder={{messages.placeHolders.MinisterialDecreeNumberPH}} required/>
                             <span ng-show="capacityDelegationForm.ministerialDecreeNumber.$touched && capacityDelegationForm.ministerialDecreeNumber.$error.required" >
                                 {{messages.label.required}}
                             </span>

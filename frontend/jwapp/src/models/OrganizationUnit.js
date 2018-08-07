@@ -8,6 +8,7 @@ module.exports = function(app){
             self.isActive = false;
             self.listOrder = null;
             self.version = null;
+            self.isInternal=false;
         }
     });
 };
