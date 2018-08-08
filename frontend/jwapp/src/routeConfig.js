@@ -204,7 +204,7 @@ module.exports = function(app){
                         function($stateParams,entitledRegistrationSrvc) {
         
                         return    entitledRegistrationSrvc.getEntitleds($stateParams.serial).then(function(response){
-                             return   vm.entitleds = response.data;
+                             return   response.data;
                             
  
                         })
