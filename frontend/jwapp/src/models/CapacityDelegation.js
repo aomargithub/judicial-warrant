@@ -7,7 +7,7 @@ module.exports = function(app){
             self.isActive = false;
             self.ministerialDecreeNumber = null;
             self.version = null;
-            self.ministerialDecreeDate = new Date();
+            self.ministerialDecreeDate = new Date('YYYY-MM-DD');
             self.request = new Request();
             self.requestType = null;
             
