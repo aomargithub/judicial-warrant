@@ -93,7 +93,7 @@ module.exports = function (app) {
     };
 
     vm.inProgress = function () {
-        blockUI.start();
+       // blockUI.start();
         vm.entitledRegistrationChangeStatusRequest.entitledRegistration = vm.entitledRegistration;
         entitledRegistrationSrvc.inProgress(vm.entitledRegistration.request.serial, vm.entitledRegistrationChangeStatusRequest).then(function (response) {
             vm.entitledRegistration = response.data; 

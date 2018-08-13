@@ -1,5 +1,5 @@
 module.exports = function(app){
-    app.controller('entitledTrainningDrtvCtrl', function(ChangeStatusRequest,$stateParams,appSessionSrvc,appRoleFcty,Entitled,entitledRegistrationSrvc){
+    app.controller('entitledTrainningDrtvCtrl', function(ChangeStatusRequest,messageFcty,$stateParams,appSessionSrvc,appRoleFcty,Entitled,entitledRegistrationSrvc){
         var vm = this;
         vm.message = null;
         vm.entitled = new Entitled();
@@ -44,7 +44,11 @@ module.exports = function(app){
                         vm.entitleds[index] = tempEntitled;
                     }
                 });
-            });
+                messageFcty.showSuccessMessage();
+            }), function error(response) {
+                messageFcty.handleErrorMessage(response);
+                blockUI.stop();
+            };
         };
     
         vm.getEntitledPassed = function () {
@@ -56,7 +60,11 @@ module.exports = function(app){
                         vm.entitleds[index] = tempEntitled;
                     }
                 }); 
-            });
+                messageFcty.showSuccessMessage();
+            }), function error(response) {
+                messageFcty.handleErrorMessage(response);
+                blockUI.stop();
+            };
         };
     
         vm.getEntitledFailture = function () {
@@ -68,7 +76,11 @@ module.exports = function(app){
                         vm.entitleds[index] = tempEntitled;
                     }
                 }); 
-            });
+                messageFcty.showSuccessMessage();
+            }), function error(response) {
+                messageFcty.handleErrorMessage(response);
+                blockUI.stop();
+            };
         };
     
 

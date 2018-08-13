@@ -1,6 +1,6 @@
 module.exports = function(app){
     app.run(function(messageFcty,$state,$transitions,$trace,$q){
-    
+
     // $trace.enable('TRANSITION');
     $state.defaultErrorHandler(function(error) {
         // console.error(error);           
@@ -10,12 +10,13 @@ module.exports = function(app){
         $transitions.onSuccess({}, function($transition){
          
             messageFcty.resetMessage();
+            messageFcty.resetSuccessMessage();
                // console.log($transition.$from());
             // console.log($transition.$to());
         });
         $transitions.onError({},function($transition){
             
-                return $q.reject();
+               // return $q.reject();
                          
              //  $transition.abort();
             // $state.go($transition.$from.name);
