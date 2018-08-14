@@ -130,7 +130,7 @@
         
                                 <td>
                                     <div>
-                                        <button ng-disabled="{{noteditable}}  || (e.currentStatus.code != 'DRAFT' && e.currentStatus.code != 'INCOMPLETE')" class="btn btn-default" ng-click="entitledDrtvCtrl.deleteEntitled(e.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                                        <button ng-disabled="{{noteditable}}  || (e.currentStatus.code != 'DRAFT' && e.currentStatus.code != 'INCOMPLETE')" class="btn btn-default" confirm ng-click="entitledDrtvCtrl.deleteEntitled(e.id)"><span class="glyphicon glyphicon-trash"></span></button>
                                     </div>
                                 </td>
         
